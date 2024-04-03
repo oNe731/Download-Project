@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum VNNPC { NPC_SIA, NPC_SOYUL, NPC_JIU, NPC_END };
-
 public class VisualNovelManager : MonoBehaviour
 {
     private static VisualNovelManager m_instance = null;
@@ -38,14 +36,18 @@ public class VisualNovelManager : MonoBehaviour
             m_instance = this;
     }
 
-    void Start()
+    private void Start()
     {
-        npcHeart = new int[(int)VNNPC.NPC_END];
-        for(int i = 0; i < (int)VNNPC.NPC_END; i++)
+        npcHeart = new int[(int)OWNER_TYPE.OT_END];
+        for(int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
             npcHeart[i] = 5;
+
+        npcHeart[0] = 1;
+        npcHeart[1] = 4;
+        npcHeart[2] = 6;
     }
 
-    void Update()
+    private void Update()
     {
         Update_Input();
     }
