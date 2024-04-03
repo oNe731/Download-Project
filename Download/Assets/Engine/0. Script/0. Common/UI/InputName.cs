@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Input_Name : MonoBehaviour
+public class InputName : MonoBehaviour
 {
     [Header("Namebox")]
     [SerializeField] private GameObject m_namebox;
