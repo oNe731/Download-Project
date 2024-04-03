@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
-    private float DeltaTime = 0.0f;
+    private float m_deltaTime = 0.0f;
 
     void Awake()
     {
@@ -14,7 +14,7 @@ public class FPS : MonoBehaviour
     void Update()
     {
         //#if UNITY_EDITOR
-        DeltaTime += (Time.unscaledDeltaTime - DeltaTime) * 0.1f;
+        m_deltaTime += (Time.unscaledDeltaTime - m_deltaTime) * 0.1f;
         //#endif
     }
 
@@ -31,7 +31,7 @@ public class FPS : MonoBehaviour
         Style.normal.textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
         //float Msec = DeltaTime * 1000.0f;
-        float Fps = 1.0f / DeltaTime;
+        float Fps = 1.0f / m_deltaTime;
         //string Text = string.Format("{0:0.0} ms ({1:0.} fps)", Msec, Fps);
         string Text = string.Format("{0:0.} FPS", Fps);
 
