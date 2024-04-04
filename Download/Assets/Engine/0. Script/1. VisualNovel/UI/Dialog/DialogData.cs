@@ -9,19 +9,19 @@ public enum PORTRAT_INDEX { PI_SIA, PI_SOYUL, PI_JIU, PI_END };
 [Serializable]
 public class DialogData
 {
-    public OWNER_TYPE Owner;
+    public OWNER_TYPE  owner;
+    public DIALOG_TYPE dialogType;
+
+    public bool useName;
+    public string nameText;
+    public string dialogText;
 
     public int standingCount;
     public List<STANDING_INDEX> standingIndex;
 
-    public DIALOG_TYPE dialogType;
-
-    public string nameText;           // 이름 정보
-    public string dialogText;         // 다이얼로그 정보
-
     public PORTRAT_INDEX portraitIndex;
-    public bool darkPanel;
 
-    public List<string> choiceText;   // 선택지 문항 텍스트
-    public List<string> choiceDialog; // 선택지 문항에 따른 다음 다이얼로그 경로
+    public List<string> choiceText;
+    public List<string> choiceDialog;
+    public bool darkPanel;
 }

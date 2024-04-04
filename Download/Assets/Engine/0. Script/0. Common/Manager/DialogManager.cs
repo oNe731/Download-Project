@@ -18,12 +18,6 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    [Header("SaveData")]
-    [SerializeField] private string m_filePath;
-    [SerializeField] private DialogData[] m_saveData;
-
-    private DialogData[] m_loadData;
-
     private void Awake()
     {
         if (null == m_instance)
@@ -32,36 +26,17 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
-        //Save_Data(FilePath);
     }
 
-    public void Create_Dialog(string filePath)
+    public void Save_Data(string filePath, DialogData[] saveData)
     {
-        //GameObject Clone = Instantiate(Prefab_Dialog);
-        //if (Clone)
-        //{
-        //    Dialog DialogCom = Clone.GetComponent<Dialog>();
-        //    if (DialogCom)
-        //    {
-        //        Load_Data(filePath);
-        //        DialogCom.Dialogs = LoadData;
-        //    }
-        //}
-    }
-
-    private void Save_Data(string filePath)
-    {
-        var Result = JsonConvert.SerializeObject(m_saveData);
+        var Result = JsonConvert.SerializeObject(saveData);
         File.WriteAllText(filePath, Result);
-
-        Debug.Log("JSON 파일 저장 : " + filePath);
     }
 
-    private void Load_Data(string filePath)
+    public DialogData[] Load_Data(string filePath)
     {
         string Result = File.ReadAllText(filePath); // JSON 파일 읽기
-        m_loadData = JsonConvert.DeserializeObject<DialogData[]>(Result); // JSON 문자열을 DialogData 배열로 역직렬화
-
-        Debug.Log("JSON 파일 불러오기 : " + filePath);
+        return JsonConvert.DeserializeObject<DialogData[]>(Result); // JSON 문자열을 DialogData 배열로 역직렬화
     }
 }

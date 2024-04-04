@@ -14,15 +14,18 @@ public class Dialog : MonoBehaviour
 
     [Header("DialogBox_Sp")]
     [SerializeField] private GameObject m_dialogBox_Sp;
+    [SerializeField] private GameObject m_nameBox_Sp;
     [SerializeField] private TMP_Text m_nameTxt_Sp;
     [SerializeField] private TMP_Text m_dialogTxt_Sp;
+    [SerializeField] private GameObject m_arrow_Sp;
 
     [Header("DialogBox_Bs")]
     [SerializeField] private GameObject m_dialogBox_Bs;
     [SerializeField] private GameObject m_portrait_Bs;
     [SerializeField] private TMP_Text m_nameTxt_Bs;
     [SerializeField] private TMP_Text m_dialogTxt_Bs;
-    [SerializeField] private DialogHeart m_dialogHeart;
+    [SerializeField] private DialogHeart m_dialogHeart_Bs;
+    [SerializeField] private GameObject m_arrow_Bs;
 
     [Header("Prefab")]
     [SerializeField] private GameObject m_choiceButton;
@@ -37,8 +40,9 @@ public class Dialog : MonoBehaviour
 
     private bool m_isTyping = false;
     private bool m_cancelTyping = false;
-    private int m_dialogIndex = 0;
+    private int  m_dialogIndex = 0;
     private float m_typeSpeed = 0.05f;
+    private float m_arrowSpeed = 0.5f;
     private List<GameObject> m_choice_Button = new List<GameObject>();
 
     private void Awake()
@@ -65,7 +69,9 @@ public class Dialog : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+        {
             Update_Dialog();
+        }
     }
 
     private void Update_Dialog(bool indexUpdate = true)
@@ -87,13 +93,20 @@ public class Dialog : MonoBehaviour
                 // 개별 업데이트
                 if (DIALOG_TYPE.DT_Simple == m_dialogs[m_dialogIndex].dialogType)
                 {
+                    // 이름 박스 미/사용 (나레이션 등 사용)
+                    if (m_dialogs[m_dialogIndex].useName)
+                        m_nameBox_Sp.SetActive(true);
+                    else
+                        m_nameBox_Sp.SetActive(false);
+
                     m_dialogBox_Sp.SetActive(true);
                     m_dialogBox_Bs.SetActive(false);
 
                     m_nameTxt_Sp.text = m_dialogs[m_dialogIndex].nameText;
 
                     // 다이얼로그 업데이트
-                    StartCoroutine(TypeText(m_dialogTxt_Sp));
+                    m_arrow_Sp.SetActive(false);
+                    StartCoroutine(Type_Text(m_dialogTxt_Sp, m_arrow_Sp));
                 }
                 else if (DIALOG_TYPE.DT_Basic == m_dialogs[m_dialogIndex].dialogType)
                 {
@@ -103,13 +116,14 @@ public class Dialog : MonoBehaviour
                     m_nameTxt_Bs.text = m_dialogs[m_dialogIndex].nameText;
 
                     // 다이얼로그 업데이트
-                    StartCoroutine(TypeText(m_dialogTxt_Bs));
+                    m_arrow_Bs.SetActive(false);
+                    StartCoroutine(Type_Text(m_dialogTxt_Bs, m_arrow_Bs));
 
                     // 캐릭터 이미지 업데이트
                     m_portrait_Bs_Image.sprite = m_portraitImage[(int)m_dialogs[m_dialogIndex].portraitIndex];
 
                     // 호감도 업데이트
-                    m_dialogHeart.Set_Owner(m_dialogs[m_dialogIndex].Owner);
+                    m_dialogHeart_Bs.Set_Owner(m_dialogs[m_dialogIndex].owner);
                 }
             }
             else // 다이얼로그 종료
@@ -198,7 +212,7 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    IEnumerator TypeText(TMP_Text currentText)
+    IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
     {
         m_isTyping = true;
         m_cancelTyping = false;
@@ -218,6 +232,16 @@ public class Dialog : MonoBehaviour
         }
 
         m_isTyping = false;
+        StartCoroutine(Use_Arrow(arrow));
+    }
+
+    IEnumerator Use_Arrow(GameObject arrow)
+    {
+        while (false == m_isTyping)
+        {
+            arrow.SetActive(!arrow.activeSelf);
+            yield return new WaitForSeconds(m_arrowSpeed);
+        }
     }
 
     private void Click_Button(int index)

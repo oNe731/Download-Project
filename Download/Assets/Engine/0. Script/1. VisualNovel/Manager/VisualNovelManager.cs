@@ -26,10 +26,6 @@ public class VisualNovelManager : MonoBehaviour
         set { npcHeart = value; }
     }
 
-    // TestCode
-    [Header("Test")]
-    [SerializeField] private string m_dialogDataPath;
-
     private void Awake()
     {
         if (null == m_instance)
@@ -56,10 +52,6 @@ public class VisualNovelManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
             Active_Popup();
-
-        // TestCode
-        if (Input.GetKeyDown(KeyCode.A))
-            DialogManager.Instance.Create_Dialog(m_dialogDataPath);
     }
 
     public void Active_Popup()

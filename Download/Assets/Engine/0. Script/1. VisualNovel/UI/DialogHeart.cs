@@ -18,15 +18,12 @@ public class DialogHeart : MonoBehaviour
 
     public void Set_Owner(OWNER_TYPE index)
     {
-        m_Update = true;
+        m_Update = true; // 시작하자마자 싱글톤 매니저에게 접근하기 위한 차선책
         m_npcIndex = index;
     }
 
     private void Awake()
     {
-        if (OWNER_TYPE.OT_END == m_npcIndex)
-            return;
-
         if (null == m_images)
         {
             m_images = new Image[m_heart.Length];
@@ -55,6 +52,9 @@ public class DialogHeart : MonoBehaviour
 
     private void Update()
     {
+        if (OWNER_TYPE.OT_END == m_npcIndex)
+            return;
+
         if (true == m_Update)
         {
             m_Update = false;
@@ -64,9 +64,6 @@ public class DialogHeart : MonoBehaviour
 
     public void Update_Heart()
     {
-        if (OWNER_TYPE.OT_END == m_npcIndex)
-            return;
-
         int currentCount = VisualNovelManager.Instance.NpcHeart[(int)m_npcIndex];
         for (int i = 0; i < currentCount; i++)
         {
