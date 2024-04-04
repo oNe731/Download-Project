@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public enum OWNER_TYPE { OT_SIA, OT_SOYUL, OT_JIU, OT_END };
 public enum DIALOG_TYPE { DT_Simple, DT_Basic, DT_END };
+public enum CHOICEEVENT_TYPE { CET_DIALOG, CET_CLOSE, CET_END };
 public enum STANDING_INDEX { SI_SIA, SI_SOYUL, SI_JIU, SI_END };
 public enum PORTRAT_INDEX { PI_SIA, PI_SOYUL, PI_JIU, PI_END };
 
@@ -21,7 +22,7 @@ public class DialogData
 
     public PORTRAT_INDEX portraitIndex;
 
+    public CHOICEEVENT_TYPE choiceEventType;
     public List<string> choiceText;
     public List<string> choiceDialog;
-    public bool darkPanel;
 }

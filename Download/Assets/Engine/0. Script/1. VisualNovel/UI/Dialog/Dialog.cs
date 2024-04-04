@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -33,6 +34,7 @@ public class Dialog : MonoBehaviour
     [Header("Resource")]
     [SerializeField] private Sprite[] m_standingImage;
     [SerializeField] private Sprite[] m_portraitImage;
+    [SerializeField] private Sprite[] m_choiceButtonImage;
     [SerializeField] private DialogData[] m_dialogs;
 
     private Image[] m_standing_Image;
@@ -43,6 +45,8 @@ public class Dialog : MonoBehaviour
     private int  m_dialogIndex = 0;
     private float m_typeSpeed = 0.05f;
     private float m_arrowSpeed = 0.5f;
+
+    private int m_choiceIndex = 0;
     private List<GameObject> m_choice_Button = new List<GameObject>();
 
     private void Awake()
@@ -55,23 +59,16 @@ public class Dialog : MonoBehaviour
 
     private void OnEnable()
     {
-        m_isTyping     = false;
-        m_cancelTyping = false;
-        m_dialogIndex  = 0;
-
-        for(int i = 0; i < m_choice_Button.Count; ++i)
-            Destroy(m_choice_Button[i]);
-        m_choice_Button.Clear();
-
-        Update_Dialog(false);
+        Reset_Dialog();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
-        {
             Update_Dialog();
-        }
+
+        if (0 < m_choice_Button.Count && false == m_isTyping)
+            Update_Button();
     }
 
     private void Update_Dialog(bool indexUpdate = true)
@@ -197,6 +194,10 @@ public class Dialog : MonoBehaviour
                 Clone.transform.localPosition = new Vector3(10f, (-100 * (i)), 0f);
                 Clone.transform.localScale    = new Vector3(1f, 1f, 1f);
 
+                Button_Choice ButtonChoice = Clone.GetComponent<Button_Choice>();
+                ButtonChoice.ButtonIndex = i;
+                ButtonChoice.Ownerdialog = this;
+
                 TMP_Text TextCom = Clone.GetComponentInChildren<TMP_Text>();
                 if (TextCom)
                 {
@@ -210,6 +211,9 @@ public class Dialog : MonoBehaviour
                 }
             }
         }
+
+        m_choiceIndex = 0;
+        m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = m_choiceButtonImage[1];
     }
 
     IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
@@ -244,12 +248,72 @@ public class Dialog : MonoBehaviour
         }
     }
 
+    private void Update_Button()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            Click_Button(m_choiceIndex);
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            m_choiceIndex--;
+            if (m_choiceIndex < 0)
+                m_choiceIndex = m_choice_Button.Count - 1;
+            Set_Button();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            m_choiceIndex++;
+            if (m_choiceIndex > m_choice_Button.Count - 1)
+                m_choiceIndex = 0;
+            Set_Button();
+        }
+    }
+
+    public void Enter_Button(int index)
+    {
+        m_choiceIndex = index;
+        Set_Button();
+    }
+
+    public void Set_Button()
+    {
+        // 현재 인덱스 버튼을 제외한 모든 버튼 Off 이미지로 초기화
+        for (int i = 0; i < m_choice_Button.Count; ++i)
+        {
+            if (i == m_choiceIndex)
+                m_choice_Button[i].GetComponent<Image>().sprite = m_choiceButtonImage[1]; // 버튼 On
+            else
+                m_choice_Button[i].GetComponent<Image>().sprite = m_choiceButtonImage[0]; // 버튼 Off
+        }
+    }
+
     private void Click_Button(int index)
     {
-        Close_Dialog();
+        switch(m_dialogs[m_dialogIndex].choiceEventType)
+        {
+            case CHOICEEVENT_TYPE.CET_DIALOG:
+                m_dialogs = DialogManager.Instance.Load_Data(m_dialogs[m_dialogIndex].choiceDialog[index - 1]);
+                Reset_Dialog();
+                break;
 
-        // 선택된 버튼에 따른 해당 다이얼로그 생성
-        //DialogManager.Instance.Create_Dialog(m_dialogs[m_dialogIndex].choiceDialog[index - 1]);
+            case CHOICEEVENT_TYPE.CET_CLOSE:
+                Close_Dialog();
+                break;
+            }
+    }
+
+    private void Reset_Dialog()
+    {
+        m_isTyping     = false;
+        m_cancelTyping = false;
+        m_dialogIndex = 0;
+        m_choiceIndex = 0;
+
+        for (int i = 0; i < m_choice_Button.Count; ++i)
+            Destroy(m_choice_Button[i]);
+        m_choice_Button.Clear();
+
+        Update_Dialog(false);
     }
 
     private void Close_Dialog()

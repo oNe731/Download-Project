@@ -19,11 +19,11 @@ public class VisualNovelManager : MonoBehaviour
     [SerializeField] private GameObject m_likeability;
     [SerializeField] private DialogHeart[] m_dialogHeart;
 
-    public int[] npcHeart;
+    private int[] m_npcHeart;
     public int[] NpcHeart
     {
-        get { return npcHeart; }
-        set { npcHeart = value; }
+        get { return m_npcHeart; }
+        set { m_npcHeart = value; }
     }
 
     private void Awake()
@@ -34,13 +34,13 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
-        npcHeart = new int[(int)OWNER_TYPE.OT_END];
+        m_npcHeart = new int[(int)OWNER_TYPE.OT_END];
         for(int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
-            npcHeart[i] = 5;
+            m_npcHeart[i] = 5;
 
-        npcHeart[0] = 1;
-        npcHeart[1] = 4;
-        npcHeart[2] = 6;
+        m_npcHeart[0] = 1;
+        m_npcHeart[1] = 4;
+        m_npcHeart[2] = 6;
     }
 
     private void Update()
