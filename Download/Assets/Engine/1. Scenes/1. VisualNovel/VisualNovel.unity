@@ -11260,8 +11260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8871d655dc0c21b418c83eaf3559c1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 5
-  m_turnSpeed: 500
+  MainCamera: {fileID: 963194225}
+  MoveSpeed: 5
+  TurnSpeed: 600
 --- !u!54 &931092676
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11287,7 +11288,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 2
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!136 &931092677
 CapsuleCollider:
@@ -11296,7 +11297,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931092673}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7dd5e183ead14934ba6f3c98a94dccd7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -26058,12 +26059,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d8c94710df4e44ab7e92bbea7f95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTr: {fileID: 963194228}
-  targetTr: {fileID: 931092674}
-  positionDistance: 0.3
-  positionHeight: 1.6
-  lookAtHeight: 1.6
-  damping: 0
+  MainCamera: {fileID: 963194225}
+  CameraTarget: {fileID: 931092673}
+  Offset: {x: 0, y: 1.3, z: 0}
+  MouseSpeed: 200
+  LerpSpeed: 100
 --- !u!1001 &2129330619
 PrefabInstance:
   m_ObjectHideFlags: 0

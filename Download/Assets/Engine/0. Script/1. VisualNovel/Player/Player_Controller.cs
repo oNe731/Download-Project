@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float m_moveSpeed = 5.0f;
-    [SerializeField] private float m_turnSpeed = 500.0f;
+    [SerializeField] private GameObject MainCamera;   // 메인 카메라
+    [SerializeField] private float MoveSpeed = 5.0f;
+    [SerializeField] private float TurnSpeed = 600.0f;
 
-    private Rigidbody m_rigidbodyCom;
+    private Rigidbody RigidbodyCom;
 
-    void Awake()
+    void Start()
     {
-        m_rigidbodyCom = GetComponent<Rigidbody>();
+        RigidbodyCom = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+
     }
 
     void Update()
@@ -23,17 +29,21 @@ public class PlayerController : MonoBehaviour
     {
         float InputX = Input.GetAxis("Horizontal");
         float InputZ = Input.GetAxis("Vertical");
-        float MouseX = Input.GetAxis("Mouse X");
 
-        // 플레이어 이동
         if (InputX != 0.0f || InputZ != 0.0f)
         {
-            Vector3 Dir = (transform.forward * InputZ) + (transform.right * InputX);
-            // transform.Translate(Dir.normalized * m_moveSpeed * Time.deltaTime);
-            m_rigidbodyCom.MovePosition(transform.position + Dir.normalized * m_moveSpeed * Time.deltaTime); // MovePosition : 지속적인 움직임 표현할 때 사용
-        }
+            // 카메라가 바라보는 방향으로 회전
+            Vector3 CameraDirection = MainCamera.transform.forward;
+            CameraDirection.y = 0f;
+            Quaternion Rotation = Quaternion.LookRotation(CameraDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, Time.deltaTime * TurnSpeed);
 
-        // 플레이어 회전
-        transform.Rotate(Vector3.up * m_turnSpeed * Time.deltaTime * MouseX);
+            // 회전이 완료되면 이동
+            if (Quaternion.Angle(transform.rotation, Rotation) < 0.1f)
+            {
+                Vector3 Velocity = (transform.forward * InputZ + transform.right * InputX).normalized * MoveSpeed;
+                RigidbodyCom.MovePosition(transform.position + Velocity * Time.deltaTime); // MovePosition : 지속적인 움직임 표현할 때 사용
+            }
+        }
     }
 }

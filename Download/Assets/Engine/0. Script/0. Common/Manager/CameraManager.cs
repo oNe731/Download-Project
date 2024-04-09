@@ -6,21 +6,18 @@ public enum CameraTypes { Follow, Cutscene };
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTr; // 메인 카메라
-    [SerializeField] private Transform targetTr; // 카메라 타겟
+    [SerializeField] private GameObject MainCamera;   // 메인 카메라
+    [SerializeField] private GameObject CameraTarget; // 카메라 타겟
 
-    [SerializeField] private float positionDistance;
-    [SerializeField] private float positionHeight;
-    [SerializeField] private float lookAtHeight;
+    [SerializeField] private Vector3 Offset = new Vector3(0.0f, 1.5f, 3.0f);
+    [SerializeField] private float MouseSpeed = 100.0f;
+    [SerializeField] private float LerpSpeed = 5.0f;
 
-    [SerializeField] private float damping = 10.0f;
-
-    private Vector3 velocity = Vector3.zero;
     private CameraTypes CameraType;
 
     void Start()
     {
-        //CameraType = CameraTypes.Follow;
+        CameraType = CameraTypes.Follow;
 
         // 마우스 커서 고정
         // Cursor.lockState = CursorLockMode.Locked;
@@ -41,12 +38,20 @@ public class CameraManager : MonoBehaviour
 
     private void Follow_Camera()
     {
-        Vector3 pos = targetTr.position
-            + (-targetTr.forward * positionDistance)
-            + (Vector3.up * positionHeight);
-        cameraTr.position = Vector3.SmoothDamp(cameraTr.position, pos, ref velocity, damping);
+        float MouseX = Input.GetAxis("Mouse X") * MouseSpeed * Time.deltaTime;
+        float MouseY = Input.GetAxis("Mouse Y") * MouseSpeed * Time.deltaTime;
 
-        cameraTr.LookAt(targetTr.position + (targetTr.up * lookAtHeight));
+        Vector3 TargetPos = CameraTarget.transform.position;
+        TargetPos.x += Offset.x;
+        TargetPos.y += Offset.y;
+
+        // 카메라 회전
+        MainCamera.transform.RotateAround(TargetPos, Vector3.up, MouseX);                  // 수평 회전
+        //MainCamera.transform.RotateAround(TargetPos, MainCamera.transform.right, -MouseY); // 수직 회전
+
+        // 타겟 따라가기
+        Vector3 Position = TargetPos - MainCamera.transform.forward * Offset.z; // 타겟 주위로 카메라 이동
+        MainCamera.transform.position = Vector3.Lerp(MainCamera.transform.position, Position, Time.deltaTime * LerpSpeed); // 이동 보간
     }
 
     private void Change_Camera(CameraTypes type)
