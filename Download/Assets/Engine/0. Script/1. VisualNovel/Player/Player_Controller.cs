@@ -4,51 +4,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject MainCamera;   // 메인 카메라
-    [SerializeField] private float MoveSpeed = 5.0f;
-    [SerializeField] private float TurnSpeed = 600.0f;
-
-    private Rigidbody RigidbodyCom;
-
-    void Start()
-    {
-        RigidbodyCom = GetComponent<Rigidbody>();
-    }
+    [SerializeField] private Transform m_mainCamera;
+    [SerializeField] private float m_moveSpeed = 5.0f;
 
     void FixedUpdate()
-    {
-
-    }
-
-    void Update()
     {
         Input_Player();
     }
 
     private void Input_Player()
     {
+        // 회전
+        transform.rotation = m_mainCamera.rotation;
+
+        // 이동
         float InputX = Input.GetAxis("Horizontal");
         float InputZ = Input.GetAxis("Vertical");
-
-        Vector3 Velocity = (transform.forward * InputZ + transform.right * InputX).normalized;
-        if (InputX != 0.0f || InputZ != 0.0f)
+        if(InputX != 0.0f || InputZ != 0.0f)
         {
-            // 카메라가 바라보는 방향으로 회전
-            //Vector3 CameraDirection = MainCamera.transform.forward;
-            //CameraDirection.y = 0f;
-            //Quaternion Rotation = Quaternion.LookRotation(CameraDirection, Vector3.up);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Rotation, Time.deltaTime * TurnSpeed);
-            //transform.rotation = MainCamera.transform.rotation;
-            // 회전이 완료되면 이동
-            //if (Quaternion.Angle(transform.rotation, Rotation) < 0.1f)
-            //{
+            Vector3 localDirection = new Vector3(InputX, 0, InputZ);
+            localDirection.Normalize();
+            Vector3 worldDirection = transform.TransformDirection(localDirection); // 이동 방향을 플레이어의 로컬 좌표계에서 월드 좌표계로 변환
+            worldDirection.Normalize();
 
-                RigidbodyCom.MovePosition(transform.position + Velocity * MoveSpeed * Time.deltaTime); // MovePosition : 지속적인 움직임 표현할 때 사용
-
-
-            //}
+            Vector3 rayOrigin = transform.position + new Vector3(0, 0.5f, 0);
+#if UNITY_EDITOR
+            Debug.DrawRay(rayOrigin, worldDirection * 0.4f, Color.red); // 레이 디버그 렌더
+#endif
+            if (!Physics.Raycast(rayOrigin, worldDirection, 0.4f, LayerMask.GetMask("Wall"))) // 벽이 없으면 해당 방향으로 이동.
+                transform.Translate(localDirection * m_moveSpeed * Time.deltaTime);           // Translate은 해당 방향에 콜라이더 여부를 검사하지 않고 이동함.
         }
+    }
 
-        transform.forward = MainCamera.transform.forward;
+    private void OnCollisionEnter(Collision collision)
+    {
     }
 }
