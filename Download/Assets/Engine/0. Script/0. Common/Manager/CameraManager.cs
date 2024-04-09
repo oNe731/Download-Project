@@ -46,7 +46,7 @@ public class CameraManager : MonoBehaviour
         TargetPos.y += Offset.y;
 
         // 카메라 회전
-        MainCamera.transform.RotateAround(TargetPos, Vector3.up, MouseX);                  // 수평 회전
+        MainCamera.transform.RotateAround(TargetPos, Vector3.up, MouseX);                    // 수평 회전
         //MainCamera.transform.RotateAround(TargetPos, MainCamera.transform.right, -MouseY); // 수직 회전
 
         // 타겟 따라가기
