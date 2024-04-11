@@ -8,13 +8,13 @@ public class HallwayLight : MonoBehaviour
     private float time;
     private float changeTime;
 
-    void Start()
+    private void Start()
     {
         light = GetComponent<Light>();
         changeTime = Random.Range(1.0f, 3.0f);
     }
 
-    void Update()
+    private void Update()
     {
         time += Time.deltaTime;
         if (time > changeTime)

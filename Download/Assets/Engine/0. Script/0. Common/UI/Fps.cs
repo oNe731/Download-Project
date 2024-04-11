@@ -6,19 +6,19 @@ public class FPS : MonoBehaviour
 {
     private float m_deltaTime = 0.0f;
 
-    void Awake()
+    private void Awake()
     {
         Application.targetFrameRate = 144;
     }
 
-    void Update()
+    private void Update()
     {
         //#if UNITY_EDITOR
         m_deltaTime += (Time.unscaledDeltaTime - m_deltaTime) * 0.1f;
         //#endif
     }
 
-    void OnGUI()
+    private void OnGUI()
     {
         //#if UNITY_EDITOR
         int Width = Screen.width;

@@ -15,7 +15,7 @@ public class CameraManager : MonoBehaviour
 
     private CameraTypes CameraType;
 
-    void Start()
+    private void Start()
     {
         CameraType = CameraTypes.Follow;
 
@@ -23,7 +23,7 @@ public class CameraManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         switch (CameraType)
         {

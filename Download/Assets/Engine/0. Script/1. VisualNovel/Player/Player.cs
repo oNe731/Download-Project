@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private Transform m_mainCamera;
     [SerializeField] private float m_moveSpeed = 5.0f;
@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody m_rigidbody;
 
-    void Start()
+    private void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Input_Player();
         m_Minimap.Update_Minimap(); // 미니맵 업데이트
@@ -61,5 +61,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
     }
 }
