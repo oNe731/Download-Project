@@ -11,6 +11,12 @@ public class Monster : MonoBehaviour
     [SerializeField] private State m_state = State.ST_CHASE;
     [SerializeField] private float m_attackDist = 2.0f;
     [SerializeField] private bool m_attacked = false;
+    [SerializeField] private bool m_stop = false;
+
+    [SerializeField] private GameObject m_minimapIcon;
+    [SerializeField] private GameObject m_stopLight;
+    private float m_retryTime = 5f;
+    private float m_time;
 
     private Transform m_playerTr;
     private Transform m_monsterTr;
@@ -25,8 +31,23 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        Check_State();  // 몬스터 상태 체크
-        Update_State(); // 몬스터 상태 업데이트
+        if (m_stop)
+        {
+            m_time += Time.deltaTime;
+            if (m_time > m_retryTime)
+            {
+                m_time = 0.0f;
+                m_stop = false;
+
+                m_minimapIcon.SetActive(false);
+                m_stopLight.SetActive(false);
+            }
+        }
+        else
+        {
+            Check_State();
+            Update_State();
+        }
     }
 
     private void Check_State()
@@ -46,18 +67,27 @@ public class Monster : MonoBehaviour
         switch(m_state)
         {
             case State.ST_CHASE:
-                m_Agent.destination = m_playerTr.position; // 추격 대상 위치를 설정
+                m_Agent.destination = m_playerTr.position;
                 break;
 
-            case State.ST_ATTCK: // 공격 실행
+            case State.ST_ATTCK:
                 m_attacked = true;
                 break;
         }
     }
 
+    public void Use_Lever()
+    {
+        m_stop = true;
+        m_Agent.destination = m_Agent.transform.position;
+        m_minimapIcon.SetActive(true);
+        m_stopLight.SetActive(true);
+
+        // 파티클 생성
+    }
+
     private void OnDrawGizmos()
     {
-        // 공격 범위 표시
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_attackDist);
     }

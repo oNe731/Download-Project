@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HallwayLight : MonoBehaviour
 {
-    private Light light;
+    private new Light light;
     private float time;
     private float changeTime;
 

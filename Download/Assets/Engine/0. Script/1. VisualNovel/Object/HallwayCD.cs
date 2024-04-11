@@ -8,6 +8,8 @@ public class HallwayCD : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            // 대사 출력
+
             VisualNovelManager.Instance.Add_CD();
             Destroy(gameObject);
         }

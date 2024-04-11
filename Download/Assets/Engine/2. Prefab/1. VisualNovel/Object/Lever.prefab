@@ -92,6 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 691405196562265467}
+  - component: {fileID: 4218183641023482438}
+  - component: {fileID: 7226687806379736655}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -117,6 +119,41 @@ Transform:
   - {fileID: 7360000547058218482}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4218183641023482438
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672549527119313748}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7226687806379736655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672549527119313748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29446bd9df7b8b342b68baaf734d473f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_level: {fileID: 3106099266974814676}
+  m_rotationSpeed: 5
 --- !u!1 &3106099266974814676
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7360000547058218482}
   - component: {fileID: 1646864164367793349}
+  - component: {fileID: 4291442802037794709}
   m_Layer: 31
   m_Name: Minimap_Icon_Item
   m_TagString: Untagged
@@ -284,6 +322,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4291442802037794709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8167758746483354817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1d9695c998efe45a4446968f6a4459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8501325451376603318
 GameObject:
   m_ObjectHideFlags: 0
