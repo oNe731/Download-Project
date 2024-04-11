@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_moveSpeed = 5.0f;
     [SerializeField] private float m_lerpSpeed = 5.0f;
 
+    [SerializeField] private Minimap m_Minimap;
+
     private Rigidbody m_rigidbody;
 
     void Start()
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Input_Player();
+        m_Minimap.Update_Minimap(); // 미니맵 업데이트
     }
 
     private void Input_Player()
