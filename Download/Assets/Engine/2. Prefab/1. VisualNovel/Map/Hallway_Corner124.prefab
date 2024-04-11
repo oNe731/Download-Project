@@ -13,12 +13,13 @@ GameObject:
   - component: {fileID: 9057544990642469877}
   - component: {fileID: 7154744581459328710}
   - component: {fileID: 5579915419138152841}
+  - component: {fileID: 5272816023776262238}
   m_Layer: 7
   m_Name: wall_door_frame012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7804898168261954143
 Transform:
@@ -127,6 +128,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13, y: 1.7, z: 0.05}
   m_Center: {x: 0.23, y: 0.00000011920929, z: 0}
+--- !u!114 &5272816023776262238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287413512898921750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &2143423021271122869
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,12 +160,13 @@ GameObject:
   - component: {fileID: 3926331560915640533}
   - component: {fileID: 6578167218649720028}
   - component: {fileID: 5557366576885141666}
+  - component: {fileID: 2709081083736941684}
   m_Layer: 7
   m_Name: wall_door_frame011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8932603803955610328
 Transform:
@@ -254,6 +275,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13, y: 1.7, z: 0.05}
   m_Center: {x: 0.23, y: 0.00000011920929, z: 0}
+--- !u!114 &2709081083736941684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143423021271122869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &2358076567486311434
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,12 +306,13 @@ GameObject:
   - component: {fileID: 3048792228159669471}
   - component: {fileID: 6170081713709071973}
   - component: {fileID: 7986455860382093005}
+  - component: {fileID: 8487723720202323465}
   m_Layer: 7
   m_Name: wall005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1581667563145526839
 Transform:
@@ -359,6 +400,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55, y: 0.38, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8487723720202323465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358076567486311434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5081238076222657733
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +433,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3407127207693418796
 Transform:
@@ -526,12 +586,13 @@ GameObject:
   - component: {fileID: 3500162039109948130}
   - component: {fileID: 7449902784555667623}
   - component: {fileID: 3632093472163459324}
+  - component: {fileID: 5649049853125252117}
   m_Layer: 7
   m_Name: wall_door_frame013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3170219511257375744
 Transform:
@@ -640,6 +701,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13, y: 1.7, z: 0.05}
   m_Center: {x: 0.23, y: 0.00000011920929, z: 0}
+--- !u!114 &5649049853125252117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7169002187850125123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7334198459883395637
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,12 +815,13 @@ GameObject:
   - component: {fileID: 3962877078048695731}
   - component: {fileID: 8344507132184556527}
   - component: {fileID: 671123744463192425}
+  - component: {fileID: 8787276893329773487}
   m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5228357605754975227
 Transform:
@@ -828,6 +909,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.65, y: 0.35, z: 0.002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8787276893329773487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8267389294929473768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &7746297817860972822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -891,6 +991,10 @@ PrefabInstance:
     - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
       propertyPath: m_Name
       value: Hallway_Light_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

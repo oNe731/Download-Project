@@ -49,12 +49,13 @@ GameObject:
   - component: {fileID: 5986608548276432010}
   - component: {fileID: 5571204292142381951}
   - component: {fileID: 7955276857085815501}
+  - component: {fileID: 1704205165276078577}
   m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6215057799443409108
 Transform:
@@ -142,6 +143,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55, y: 1.45, z: 0.002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1704205165276078577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455955164478884320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &956713823863904569
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,12 +175,13 @@ GameObject:
   - component: {fileID: 5998003481492126747}
   - component: {fileID: 8459021070180652974}
   - component: {fileID: 8809809890883534942}
+  - component: {fileID: 1669110423891054666}
   m_Layer: 7
   m_Name: wall_door_frame004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5270007143247525736
 Transform:
@@ -269,6 +290,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 1.5, z: 0.05}
   m_Center: {x: -0.22, y: 0, z: 0}
+--- !u!114 &1669110423891054666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956713823863904569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1833024728772182527
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,12 +521,13 @@ GameObject:
   - component: {fileID: 6606304089423352813}
   - component: {fileID: 6589320775695637258}
   - component: {fileID: 1739820070723540310}
+  - component: {fileID: 6970590451043418603}
   m_Layer: 7
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8160331075947583713
 Transform:
@@ -574,6 +615,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55, y: 1.45, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6970590451043418603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3839073886815795632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &3875017884449716990
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +731,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1864020794007144791
 Transform:
@@ -989,12 +1049,13 @@ GameObject:
   - component: {fileID: 4495546333183656239}
   - component: {fileID: 6173390786381628640}
   - component: {fileID: 5842786616972191842}
+  - component: {fileID: 2719046996578165877}
   m_Layer: 7
   m_Name: wall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1130901151343945389
 Transform:
@@ -1082,6 +1143,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55, y: 1.45, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2719046996578165877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594264995630296309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6925360722210825470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,12 +1258,13 @@ GameObject:
   - component: {fileID: 5128799114220529002}
   - component: {fileID: 8301322840091060977}
   - component: {fileID: 1112807400301996301}
+  - component: {fileID: 5909533735910297901}
   m_Layer: 7
   m_Name: wall_door_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5855206873448797229
 Transform:
@@ -1292,6 +1373,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 1.5, z: 0.05}
   m_Center: {x: -0.22, y: 0, z: 0}
+--- !u!114 &5909533735910297901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370154034774660268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &4053564349202906258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1343,6 +1443,10 @@ PrefabInstance:
     - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
       propertyPath: m_Name
       value: Hallway_Light_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1406,6 +1510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallway_Light_1
       objectReference: {fileID: 0}
+    - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1467,6 +1575,10 @@ PrefabInstance:
     - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
       propertyPath: m_Name
       value: Hallway_Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974529249015695057, guid: 267771778818b2f45a342533f72ce4a8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
