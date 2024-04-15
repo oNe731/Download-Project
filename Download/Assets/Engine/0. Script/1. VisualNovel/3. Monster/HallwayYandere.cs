@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class HallwayYandere : MonoBehaviour
 {
     public enum State { ST_CHASE, ST_ATTCK, ST_END }
 
@@ -15,6 +14,7 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private GameObject m_minimapIcon;
     [SerializeField] private GameObject m_stopLight;
+
     private float m_retryTime = 5f;
     private float m_time;
 
@@ -71,12 +71,13 @@ public class Monster : MonoBehaviour
                 break;
 
             case State.ST_ATTCK:
+                // 공격 실행
                 m_attacked = true;
                 break;
         }
     }
 
-    public void Use_Lever()
+    public void Used_Lever()
     {
         m_stop = true;
         m_Agent.destination = m_Agent.transform.position;
@@ -88,7 +89,9 @@ public class Monster : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_attackDist);
+#endif
     }
 }

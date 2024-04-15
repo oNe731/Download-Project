@@ -13,12 +13,12 @@ public class DialogHeart : MonoBehaviour
     [SerializeField] private Sprite m_heart_Off;
     [SerializeField] private Sprite m_heart_On;
 
-    private bool m_Update = false;
+    private bool    m_update = false;
     private Image[] m_images = null;
 
     public void Set_Owner(OWNER_TYPE index)
     {
-        m_Update = true; // 시작하자마자 싱글톤 매니저에게 접근하기 위한 차선책
+        m_update = true; // 시작하자마자 싱글톤 매니저에게 접근하기 어려워 다른 차선책
         m_npcIndex = index;
     }
 
@@ -55,9 +55,9 @@ public class DialogHeart : MonoBehaviour
         if (OWNER_TYPE.OT_END == m_npcIndex)
             return;
 
-        if (true == m_Update)
+        if (true == m_update)
         {
-            m_Update = false;
+            m_update = false;
             Update_Heart();
         }
     }

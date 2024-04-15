@@ -175,45 +175,25 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    private void Create_ChoiceButton()
+    private void Update_Button()
     {
-        if (0 >= m_dialogs[m_dialogIndex].choiceText.Count)
-            return;
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            Click_Button(m_choiceIndex);
 
-        m_darkPanel.SetActive(true);
-
-        // 선택지 버튼 생성
-        for (int i = 0; i < m_dialogs[m_dialogIndex].choiceText.Count; ++i)
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            int ButtonIndex = i + 1; // 버튼 고유 인덱스
-
-            GameObject Clone = Instantiate(m_choiceButton);
-            if (Clone)
-            {
-                Clone.transform.SetParent(gameObject.transform);
-                Clone.transform.localPosition = new Vector3(10f, (-100 * (i)), 0f);
-                Clone.transform.localScale    = new Vector3(1f, 1f, 1f);
-
-                Button_Choice ButtonChoice = Clone.GetComponent<Button_Choice>();
-                ButtonChoice.ButtonIndex = i;
-                ButtonChoice.Ownerdialog = this;
-
-                TMP_Text TextCom = Clone.GetComponentInChildren<TMP_Text>();
-                if (TextCom)
-                {
-                    TextCom.text = m_dialogs[m_dialogIndex].choiceText[i];
-
-                    Button button = Clone.GetComponent<Button>();
-                    if (button) // 이벤트 핸들러 추가
-                        button.onClick.AddListener(() => Click_Button(ButtonIndex));
-
-                    m_choice_Button.Add(Clone);
-                }
-            }
+            m_choiceIndex--;
+            if (m_choiceIndex < 0)
+                m_choiceIndex = m_choice_Button.Count - 1;
+            Set_Button();
         }
-
-        m_choiceIndex = 0;
-        m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = m_choiceButtonImage[1];
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            m_choiceIndex++;
+            if (m_choiceIndex > m_choice_Button.Count - 1)
+                m_choiceIndex = 0;
+            Set_Button();
+        }
     }
 
     IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
@@ -248,31 +228,67 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    private void Update_Button()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-            Click_Button(m_choiceIndex);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+    private void Create_ChoiceButton()
+    {
+        if (0 >= m_dialogs[m_dialogIndex].choiceText.Count)
+            return;
+
+        m_darkPanel.SetActive(true);
+
+        // 선택지 버튼 생성
+        for (int i = 0; i < m_dialogs[m_dialogIndex].choiceText.Count; ++i)
         {
-            m_choiceIndex--;
-            if (m_choiceIndex < 0)
-                m_choiceIndex = m_choice_Button.Count - 1;
-            Set_Button();
+            int ButtonIndex = i + 1; // 버튼 고유 인덱스
+
+            GameObject Clone = Instantiate(m_choiceButton);
+            if (Clone)
+            {
+                Clone.transform.SetParent(gameObject.transform);
+                Clone.transform.localPosition = new Vector3(10f, (-100 * (i)), 0f);
+                Clone.transform.localScale = new Vector3(1f, 1f, 1f);
+
+                Button_Choice ButtonChoice = Clone.GetComponent<Button_Choice>();
+                ButtonChoice.ButtonIndex = i;
+                ButtonChoice.Ownerdialog = this;
+
+                TMP_Text TextCom = Clone.GetComponentInChildren<TMP_Text>();
+                if (TextCom)
+                {
+                    TextCom.text = m_dialogs[m_dialogIndex].choiceText[i];
+
+                    Button button = Clone.GetComponent<Button>();
+                    if (button) // 이벤트 핸들러 추가
+                        button.onClick.AddListener(() => Click_Button(ButtonIndex));
+
+                    m_choice_Button.Add(Clone);
+                }
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            m_choiceIndex++;
-            if (m_choiceIndex > m_choice_Button.Count - 1)
-                m_choiceIndex = 0;
-            Set_Button();
-        }
+
+        m_choiceIndex = 0;
+        m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = m_choiceButtonImage[1];
     }
 
     public void Enter_Button(int index)
     {
         m_choiceIndex = index;
         Set_Button();
+    }
+
+    private void Click_Button(int index)
+    {
+        switch(m_dialogs[m_dialogIndex].choiceEventType)
+        {
+            case CHOICEEVENT_TYPE.CET_DIALOG:
+                m_dialogs = GameManager.Instance.Load_Data(m_dialogs[m_dialogIndex].choiceDialog[index - 1]);
+                Reset_Dialog();
+                break;
+
+            case CHOICEEVENT_TYPE.CET_CLOSE:
+                Close_Dialog();
+                break;
+            }
     }
 
     public void Set_Button()
@@ -287,20 +303,6 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    private void Click_Button(int index)
-    {
-        switch(m_dialogs[m_dialogIndex].choiceEventType)
-        {
-            case CHOICEEVENT_TYPE.CET_DIALOG:
-                m_dialogs = DialogManager.Instance.Load_Data(m_dialogs[m_dialogIndex].choiceDialog[index - 1]);
-                Reset_Dialog();
-                break;
-
-            case CHOICEEVENT_TYPE.CET_CLOSE:
-                Close_Dialog();
-                break;
-            }
-    }
 
     private void Reset_Dialog()
     {

@@ -14,7 +14,7 @@ public class InputName : MonoBehaviour
 
     private string[] m_randomnames;
 
-    private void Start()
+    private void Awake()
     {
         // 추천 닉네임
         m_randomnames = new string[10];
@@ -36,6 +36,12 @@ public class InputName : MonoBehaviour
             Select_Name();
     }
 
+    public void Random_Name()
+    {
+        float randomNumber = Random.Range(0.0f, 9.9f);
+        m_playerNameInput.text = m_randomnames[(int)randomNumber];
+    }
+
     public void Select_Name()
     {
         if (m_playerNameInput.text.Length <= 0)
@@ -43,12 +49,6 @@ public class InputName : MonoBehaviour
 
         m_guide.text = "\"" + m_playerNameInput.text + "\"" + "로 결정하시겠습니까?";
         m_popup.SetActive(true);
-    }
-
-    public void Random_Name()
-    {
-        float randomNumber = Random.Range(0.0f, 9.9f);
-        m_playerNameInput.text = m_randomnames[(int)randomNumber];
     }
 
     public void Popup_Yes()

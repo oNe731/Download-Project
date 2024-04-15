@@ -6,8 +6,9 @@ public class HallwayLever : MonoBehaviour
 {
     [SerializeField] private GameObject m_level;
     [SerializeField] private float m_rotationSpeed = 5.0f;
-    private bool m_use      = false;
-    private bool m_rotation = false;
+
+    private bool m_rotation  = false;
+    private bool m_use       = false;
     private float m_waitTime = 2f;
     private float m_time;
 
@@ -37,15 +38,16 @@ public class HallwayLever : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             m_rotation = true;
-
             // 파티클 생성
+
         }
     }
 
     private void OnDrawGizmos()
     {
-        // 아이템 표시
+#if UNITY_EDITOR
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 5.0f);
+#endif
     }
 }

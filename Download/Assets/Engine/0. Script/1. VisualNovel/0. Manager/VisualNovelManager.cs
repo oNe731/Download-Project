@@ -6,7 +6,7 @@ using TMPro;
 
 public class VisualNovelManager : MonoBehaviour
 {
-    enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_FINISH, LS_END };
+    enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
 
     private static VisualNovelManager m_instance = null;
     public static VisualNovelManager Instance
@@ -79,7 +79,7 @@ public class VisualNovelManager : MonoBehaviour
             Active_Popup();
     }
 
-    private void Active_Popup()
+    public void Active_Popup()
     {
         // 호감도창 비/활성화
         m_likeability.SetActive(!m_likeability.activeSelf);
@@ -121,7 +121,13 @@ public class VisualNovelManager : MonoBehaviour
             // 추격 게임 종료
         }
         else
+        {
+            // 대사 출력
+
+            // UI 업데이트
             m_CdTextCount.text = m_CdCurrentCount.ToString();
+        }
+
     }
 
     private void Create_Lever(int count)
@@ -144,14 +150,15 @@ public class VisualNovelManager : MonoBehaviour
                     break;
             }
 
-            m_Levers.Add(Instantiate(m_Lever, NewPosition, Quaternion.identity));
+            GameObject level = Instantiate(m_Lever, NewPosition, Quaternion.identity);
+            m_Levers.Add(level);
         }
     }
 
     public void Use_Lever(GameObject self)
     {
         // 아이템 효과 적용
-        m_boss.GetComponent<Monster>().Use_Lever();
+        m_boss.GetComponent<HallwayYandere>().Used_Lever();
 
         // 현재 아이템 삭제
         for (int i = 0; i < m_Levers.Count; i++)

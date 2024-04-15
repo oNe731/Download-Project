@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HallwayCD : MonoBehaviour
@@ -8,8 +6,6 @@ public class HallwayCD : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            // 대사 출력
-
             VisualNovelManager.Instance.Add_CD();
             Destroy(gameObject);
         }
@@ -17,8 +13,9 @@ public class HallwayCD : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // 아이템 표시
+#if UNITY_EDITOR
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, 10.0f);
+#endif
     }
 }

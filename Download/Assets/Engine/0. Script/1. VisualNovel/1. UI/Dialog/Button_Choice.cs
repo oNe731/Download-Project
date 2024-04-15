@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,15 +10,15 @@ public class Button_Choice : MonoBehaviour, IPointerEnterHandler
         set { m_buttonIndex = value; }
     }
 
-    public Dialog m_ownerdialog;
+    public Dialog m_ownerDialog;
     public Dialog Ownerdialog
     {
-        set { m_ownerdialog = value; }
+        set { m_ownerDialog = value; }
     }
 
     // 커서와 충돌했을 때
     public void OnPointerEnter(PointerEventData eventData)
     {
-        m_ownerdialog.Enter_Button(m_buttonIndex);
+        m_ownerDialog.Enter_Button(m_buttonIndex);
     }
 }

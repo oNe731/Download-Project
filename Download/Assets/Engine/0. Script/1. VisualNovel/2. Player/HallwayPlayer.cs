@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class HallwayPlayer : MonoBehaviour
 {
     [SerializeField] private Transform m_mainCamera;
     [SerializeField] private float m_moveSpeed = 5.0f;
@@ -57,10 +57,5 @@ public class Player : MonoBehaviour
         //     if (!Physics.Raycast(rayOrigin, worldDirection, 0.4f, LayerMask.GetMask("Wall"))) // 벽이 없으면 해당 방향으로 이동.
         //          transform.Translate(localDirection * m_moveSpeed * Time.deltaTime);           // Translate은 해당 방향에 콜라이더 여부를 검사하지 않고 이동함.
         //     }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
     }
 }

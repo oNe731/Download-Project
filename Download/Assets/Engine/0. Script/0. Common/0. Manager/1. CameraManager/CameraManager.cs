@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
         CameraType = CameraTypes.Follow;
 
         // 마우스 커서 고정
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void LateUpdate()
