@@ -50,7 +50,8 @@ public class CameraManager : MonoBehaviour
     public void Change_Camera(CAMERATYPE type)
     {
         // ≈ª√‚
-        m_cameras[(int)m_currentCameraType].Exit_Camera();
+        if(m_currentCameraType != CAMERATYPE.CT_END)
+            m_cameras[(int)m_currentCameraType].Exit_Camera();
 
         // ±≥√º
         m_currentCameraType = type;
