@@ -88,7 +88,7 @@ public class Dialog : MonoBehaviour
                 Create_ChoiceButton();
 
                 // 개별 업데이트
-                if (DIALOG_TYPE.DT_Simple == m_dialogs[m_dialogIndex].dialogType)
+                if (DIALOG_TYPE.DT_SIMPLE == m_dialogs[m_dialogIndex].dialogType)
                 {
                     // 이름 박스 미/사용 (나레이션 등 사용)
                     if (m_dialogs[m_dialogIndex].useName)
@@ -105,7 +105,7 @@ public class Dialog : MonoBehaviour
                     m_arrow_Sp.SetActive(false);
                     StartCoroutine(Type_Text(m_dialogTxt_Sp, m_arrow_Sp));
                 }
-                else if (DIALOG_TYPE.DT_Basic == m_dialogs[m_dialogIndex].dialogType)
+                else if (DIALOG_TYPE.DT_BASIC == m_dialogs[m_dialogIndex].dialogType)
                 {
                     m_dialogBox_Sp.SetActive(false);
                     m_dialogBox_Bs.SetActive(true);
