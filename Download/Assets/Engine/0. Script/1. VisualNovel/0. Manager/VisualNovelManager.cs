@@ -54,8 +54,8 @@ public class VisualNovelManager : MonoBehaviour
     [SerializeField] private Transform[] m_RandomPos;
 
     private List<GameObject> m_Levers = new List<GameObject>();
-    private GameObject m_boss;
     private Transform m_playerTr;
+    private GameObject m_boss;
 #endregion
 
     private void Awake()
@@ -202,7 +202,6 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Update_ChaseGame()
     {
-
     }
 
     private void Finish_ChaseGame()

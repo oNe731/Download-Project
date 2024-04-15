@@ -16712,6 +16712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 839761024}
   - component: {fileID: 839761025}
+  - component: {fileID: 839761026}
   m_Layer: 31
   m_Name: Minimap_Icon_Monster
   m_TagString: Untagged
@@ -16786,6 +16787,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &839761026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839761023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f42d717595a914f9ace79ffe6a0e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lerpSpeed: 20
 --- !u!1001 &845458814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18970,9 +18984,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mainCamera: {fileID: 963194228}
-  m_moveSpeed: 400
+  m_moveSpeed: 500
   m_lerpSpeed: 5
-  m_Minimap: {fileID: 1564926667}
 --- !u!54 &931092676
 Rigidbody:
   m_ObjectHideFlags: 0
