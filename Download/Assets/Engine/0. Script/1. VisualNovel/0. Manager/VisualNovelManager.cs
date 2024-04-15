@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
+public enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
+
 public class VisualNovelManager : MonoBehaviour
 {
-    enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
-
     private static VisualNovelManager m_instance = null;
     public static VisualNovelManager Instance
     {
@@ -19,29 +19,12 @@ public class VisualNovelManager : MonoBehaviour
         }
     }
 
-    [Header("[ Basic ]")]
     [SerializeField] private LEVELSTATE m_LevelState;
 
-    [Header("[ Likeability ]")]
+#region LS_NOVEL
+    [Header("[ LS_NOVEL ]")]
     [SerializeField] private GameObject m_likeability;
     [SerializeField] private DialogHeart[] m_dialogHeart;
-
-    [Header("[ CD ]")]
-    [SerializeField] private GameObject m_CD;
-    [SerializeField] private TMP_Text m_CdTextCount;
-    [SerializeField] private int m_CdMaxCount = 5;
-    [SerializeField] private int m_CdCurrentCount = 0;
-    [SerializeField] private float m_CdMinDistance = 20.0f;
-    [SerializeField] private float m_CdMaxDistance = 200.0f;
-
-    [Header("[ Item ]")]
-    [SerializeField] private GameObject m_Lever;
-    [SerializeField] private int m_LeverMaxCount = 2;
-    [SerializeField] private Transform[] m_RandomPos;
-    private List<GameObject> m_Levers = new List<GameObject>();
-
-    private Transform m_playerTr;
-    private GameObject m_boss;
 
     private int[] m_npcHeart;
     public int[] NpcHeart
@@ -49,6 +32,31 @@ public class VisualNovelManager : MonoBehaviour
         get { return m_npcHeart; }
         set { m_npcHeart = value; }
     }
+#endregion
+
+#region LS_SHOOT
+    [Header("[ LS_SHOOT ]")]
+    [SerializeField] private GameObject m_shootGame;
+#endregion
+
+#region LS_CHASE
+    [Header("[ LS_CHASE ]")]
+    [SerializeField] private GameObject m_chaseGame;
+    [SerializeField] private GameObject m_Cd;
+    [SerializeField] private TMP_Text m_CdTextCount;
+    [SerializeField] private int m_CdMaxCount = 5;
+    [SerializeField] private int m_CdCurrentCount = 0;
+    [SerializeField] private float m_CdMinDistance = 20.0f;
+    [SerializeField] private float m_CdMaxDistance = 200.0f;
+
+    [SerializeField] private GameObject m_Lever;
+    [SerializeField] private int m_LeverMaxCount = 2;
+    [SerializeField] private Transform[] m_RandomPos;
+
+    private List<GameObject> m_Levers = new List<GameObject>();
+    private GameObject m_boss;
+    private Transform m_playerTr;
+#endregion
 
     private void Awake()
     {
@@ -58,25 +66,94 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
-        m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        m_boss = GameObject.FindWithTag("Boss");
-
-        m_npcHeart = new int[(int)OWNER_TYPE.OT_END];
-        for(int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
-            m_npcHeart[i] = 5;
-
-        Start_ChaseGame();
+        // Temp
+        Change_Level(LEVELSTATE.LS_CHASE);
     }
 
     private void Update()
     {
-        Update_Input();
+        Update_Level(m_LevelState);
     }
 
-    private void Update_Input()
+    public void Change_Level(LEVELSTATE level)
+    {
+        Finish_Level(m_LevelState);
+
+        m_LevelState = level;
+
+        Start_Level(m_LevelState);
+    }
+
+    private void Start_Level(LEVELSTATE level)
+    {
+        switch (level)
+        {
+            case LEVELSTATE.LS_NOVEL:
+                Start_NovelGame();
+                break;
+
+            case LEVELSTATE.LS_SHOOT:
+                Start_ShootGame();
+                break;
+
+            case LEVELSTATE.LS_CHASE:
+                Start_ChaseGame();
+                break;
+        }
+    }
+
+    private void Update_Level(LEVELSTATE level)
+    {
+        switch (level)
+        {
+            case LEVELSTATE.LS_NOVEL:
+                Update_NovelGame();
+                break;
+
+            case LEVELSTATE.LS_SHOOT:
+                Update_ShootGame();
+                break;
+
+            case LEVELSTATE.LS_CHASE:
+                Update_ChaseGame();
+                break;
+        }
+    }
+
+    private void Finish_Level(LEVELSTATE level)
+    {
+        switch (level)
+        {
+            case LEVELSTATE.LS_NOVEL:
+                Finish_NovelGame();
+                break;
+
+            case LEVELSTATE.LS_SHOOT:
+                Finish_ShootGame();
+                break;
+
+            case LEVELSTATE.LS_CHASE:
+                Finish_ChaseGame();
+                break;
+        }
+    }
+
+#region LS_NOVEL
+    private void Start_NovelGame()
+    {
+        m_npcHeart = new int[(int)OWNER_TYPE.OT_END];
+        for (int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
+            m_npcHeart[i] = 7;
+    }
+
+    private void Update_NovelGame()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
             Active_Popup();
+    }
+
+    private void Finish_NovelGame()
+    {
     }
 
     public void Active_Popup()
@@ -90,14 +167,47 @@ public class VisualNovelManager : MonoBehaviour
                 m_dialogHeart[i].Update_Heart();
         }
     }
+#endregion
 
-    // # Start_Chase ---------------------------------------------------------------------------
-    private void Start_ChaseGame() // 추후에 레벨상태에 따라 [도입, 진행, 탈출] 함수 분리해서 사용
+#region LS_SHOOT
+    private void Start_ShootGame()
     {
+        m_chaseGame.SetActive(false);
+        m_shootGame.SetActive(true);
+    }
+
+    private void Update_ShootGame()
+    {
+    }
+
+    private void Finish_ShootGame()
+    {
+    }
+#endregion
+
+#region LS_CHASE
+    private void Start_ChaseGame()
+    {
+        m_shootGame.SetActive(false);
+        m_chaseGame.SetActive(true);
+
+        m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        m_boss = GameObject.FindWithTag("Boss");
+
         Create_CD();
         Create_Lever(m_LeverMaxCount);
 
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
+    }
 
+    private void Update_ChaseGame()
+    {
+
+    }
+
+    private void Finish_ChaseGame()
+    {
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_END);
     }
 
     private void Create_CD()
@@ -108,34 +218,17 @@ public class VisualNovelManager : MonoBehaviour
         for (int i = 0; i < m_CdMaxCount; i++)
         {
             Vector3 newPosition = Get_RandomPositionOnNavMesh(beforePosition);
-            Instantiate(m_CD, newPosition, Quaternion.identity);
+            Instantiate(m_Cd, newPosition, Quaternion.identity);
             beforePosition.Add(newPosition);
         }
     }
 
-    public void Add_CD()
-    {
-        m_CdCurrentCount++;
-        if (m_CdCurrentCount >= m_CdMaxCount)
-        {
-            // 추격 게임 종료
-        }
-        else
-        {
-            // 대사 출력
-
-            // UI 업데이트
-            m_CdTextCount.text = m_CdCurrentCount.ToString();
-        }
-
-    }
-
     private void Create_Lever(int count)
     {
-        for(int i = 0; i < count; ++i)
+        for (int i = 0; i < count; ++i)
         {
             Vector3 NewPosition = Vector3.zero;
-            while(true)
+            while (true)
             {
                 NewPosition = m_RandomPos[Random.Range(0, 20)].position;
 
@@ -153,6 +246,23 @@ public class VisualNovelManager : MonoBehaviour
             GameObject level = Instantiate(m_Lever, NewPosition, Quaternion.identity);
             m_Levers.Add(level);
         }
+    }
+
+    public void Get_CD()
+    {
+        m_CdCurrentCount++;
+        if (m_CdCurrentCount >= m_CdMaxCount)
+        {
+            // 추격 게임 종료
+        }
+        else
+        {
+            // 대사 출력
+
+            // UI 업데이트
+            m_CdTextCount.text = m_CdCurrentCount.ToString();
+        }
+
     }
 
     public void Use_Lever(GameObject self)
@@ -203,7 +313,7 @@ public class VisualNovelManager : MonoBehaviour
                 if (!distMin)
                 {
                     position = hit.position;
-                    select   = true;
+                    select = true;
                 }
             }
 
@@ -213,4 +323,5 @@ public class VisualNovelManager : MonoBehaviour
 
         return position;
     }
+#endregion
 }

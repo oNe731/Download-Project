@@ -13,12 +13,12 @@ public class CameraFollow : CameraBase
 
     public override void Initialize_Camera()
     {
-        m_mainCamera   = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
-        m_cameraTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        m_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
     }
 
     public override void Enter_Camera()
     {
+        m_cameraTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
     }
 

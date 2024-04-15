@@ -4141,7 +4141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &219702788
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6031,7 +6031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &298844201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18971,7 +18971,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_mainCamera: {fileID: 963194228}
   m_moveSpeed: 400
-  m_rotationSpeed: 5
   m_lerpSpeed: 5
   m_Minimap: {fileID: 1564926667}
 --- !u!54 &931092676
@@ -23636,7 +23635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1157692424
 Transform:
   m_ObjectHideFlags: 0
@@ -32257,7 +32256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1616901901
 Transform:
   m_ObjectHideFlags: 0
@@ -32548,7 +32547,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1627372300}
   - component: {fileID: 1627372299}
-  - component: {fileID: 1627372301}
   m_Layer: 0
   m_Name: StageManager
   m_TagString: Untagged
@@ -32574,7 +32572,9 @@ MonoBehaviour:
   - {fileID: 1792825144}
   - {fileID: 1186022771}
   - {fileID: 1377947288}
-  m_CD: {fileID: 7502156817115982813, guid: 8e2ace860d58ef447925a14b2e113f55, type: 3}
+  m_shootGame: {fileID: 2137913914}
+  m_chaseGame: {fileID: 1157692423}
+  m_Cd: {fileID: 7502156817115982813, guid: 8e2ace860d58ef447925a14b2e113f55, type: 3}
   m_CdTextCount: {fileID: 1710255513}
   m_CdMaxCount: 5
   m_CdCurrentCount: 0
@@ -32618,23 +32618,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1627372301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627372298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d8c94710df4e44ab7e92bbea7f95be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_mainCamera: {fileID: 963194228}
-  m_cameraTarget: {fileID: 931092674}
-  m_offset: {x: 0, y: 1.3, z: 0}
-  m_mouseSpeed: 250
-  m_lerpSpeed: 100
 --- !u!1001 &1633943393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43981,6 +43964,7 @@ GameObject:
   - component: {fileID: 2122252108}
   - component: {fileID: 2122252110}
   - component: {fileID: 2122252109}
+  - component: {fileID: 2122252111}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44027,6 +44011,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c11241972a7a4c49a2331d60e4592e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2122252111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122252107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d8c94710df4e44ab7e92bbea7f95be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentCameraType: 0
 --- !u!1001 &2129330619
 PrefabInstance:
   m_ObjectHideFlags: 0
