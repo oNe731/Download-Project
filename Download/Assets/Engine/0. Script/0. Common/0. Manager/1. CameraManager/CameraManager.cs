@@ -18,7 +18,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    [SerializeField] private CAMERATYPE m_currentCameraType = CAMERATYPE.CT_END;
+    private CAMERATYPE m_currentCameraType = CAMERATYPE.CT_END;
     private CameraBase[] m_cameras;
 
 

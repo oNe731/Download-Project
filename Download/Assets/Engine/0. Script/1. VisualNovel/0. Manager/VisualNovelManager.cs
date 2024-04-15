@@ -75,7 +75,7 @@ public class VisualNovelManager : MonoBehaviour
     private void Start()
     {
         // Temp
-        Change_Level(LEVELSTATE.LS_CHASE);
+        Change_Level(LEVELSTATE.LS_SHOOT);
     }
 
     private void Update()
