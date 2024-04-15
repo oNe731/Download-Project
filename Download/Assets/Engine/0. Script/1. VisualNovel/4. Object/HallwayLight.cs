@@ -8,14 +8,26 @@ public class HallwayLight : MonoBehaviour
     private float m_changeTime;
     private float m_time;
 
-    private void Start()
+    [SerializeField] private bool m_blink = false;
+    public bool Blink
+    {
+        get { return m_blink; }
+        set { m_blink = value; }
+    }
+
+    private void Awake()
     {
         m_light = GetComponent<Light>();
         m_changeTime = Random.Range(1.0f, 3.0f);
+
+        VisualNovelManager.Instance.Light.Add(this);
     }
 
     private void Update()
     {
+        if (false == m_blink)
+            return;
+
         m_time += Time.deltaTime;
         if (m_time > m_changeTime)
         {

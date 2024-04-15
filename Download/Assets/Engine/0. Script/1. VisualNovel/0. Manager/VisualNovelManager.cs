@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using System.Linq;
 
 public enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
 
@@ -52,6 +53,13 @@ public class VisualNovelManager : MonoBehaviour
     [SerializeField] private GameObject m_Lever;
     [SerializeField] private int m_LeverMaxCount = 2;
     [SerializeField] private Transform[] m_RandomPos;
+
+    [SerializeField] private List<HallwayLight> m_Light; // 464
+    public List<HallwayLight> Light
+    {
+        get { return m_Light; }
+        set { m_Light = value; }
+    }
 
     private List<GameObject> m_Levers = new List<GameObject>();
     private Transform m_playerTr;
@@ -253,13 +261,20 @@ public class VisualNovelManager : MonoBehaviour
         if (m_CdCurrentCount >= m_CdMaxCount)
         {
             // 추격 게임 종료
+            Finish_ChaseGame();
         }
         else
         {
-            // 대사 출력
-
             // UI 업데이트
             m_CdTextCount.text = m_CdCurrentCount.ToString();
+
+            // 조명 업데이트 Max 464
+            m_Light.Shuffle();
+            int OnCount = (int)(464 / (m_CdMaxCount - 1)) * m_CdCurrentCount;
+            for (int i = 0; i < OnCount; ++i)
+                m_Light[i].Blink = true;
+
+            // 대사 출력
         }
 
     }
