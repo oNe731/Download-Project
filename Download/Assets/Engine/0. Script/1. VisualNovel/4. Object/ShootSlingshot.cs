@@ -74,7 +74,27 @@ public class ShootSlingshot : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            Vector3 NewPosition = Vector3.zero;
+
+            Vector3 mousePosition = Input.mousePosition;
+            float screenWidth = Screen.width;
+            float sectionWidth = screenWidth / 3f;
+            int section = (int)(mousePosition.x / sectionWidth);
+            switch (section)
+            {
+                case 0:
+                    NewPosition = new Vector3(7.948f, -4.5f, 0f); 
+                    break;
+                case 1:
+                    NewPosition = new Vector3(6.861f, -4.5f, 0f);
+                    break;
+                case 2:
+                    NewPosition = new Vector3(5.7f, -4.5f, 0f);
+                    break;
+            }
+
             GameObject ball = Instantiate(m_ball);
+            ball.GetComponent<Transform>().position = NewPosition;
             ball.GetComponent<ShootBall>().TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
             ball.GetComponent<ShootBall>().Speed = m_curSpeed;
 

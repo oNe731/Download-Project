@@ -21,16 +21,25 @@ public class ShootBall : MonoBehaviour
     private void Start()
     {
         m_startPosition = transform.position;
+
+        // 각도에 따른 속도 조절
+        float angle = Vector3.Angle((m_startPosition - m_targetPosition).normalized, Vector3.up);
+        // Debug.Log("1 : " + angle.ToString());
+        if (angle < 90)
+            angle = 90 + (90 - angle);
+        // Debug.Log("2 : " + angle.ToString());
+        float result = (90 - Mathf.Abs(angle - 90));
+        // Debug.Log("3 : " + result.ToString());
+        m_speed *= result;
     }
 
     private void Update()
     {
-        float x0 = m_startPosition.x;
-        float x1 = m_targetPosition.x;
-        float distance = x1 - x0;
-        float nextX = Mathf.MoveTowards(transform.position.x, x1, m_speed * Time.deltaTime);
-        float baseY = Mathf.Lerp(m_startPosition.y, m_targetPosition.y, (nextX - x0) / distance);
-        float arc = m_heightArc * (nextX - x0) * (nextX - x1) / (-0.25f * distance * distance);
+        float nextX = Mathf.MoveTowards(transform.position.x, m_targetPosition.x, m_speed * Time.deltaTime);
+
+        float distance = m_targetPosition.x - m_startPosition.x;
+        float baseY = Mathf.Lerp(m_startPosition.y, m_targetPosition.y, (nextX - m_startPosition.x) / distance);
+        float arc = m_heightArc * (nextX - m_startPosition.x) * (nextX - m_targetPosition.x) / (-0.25f * distance * distance);
 
         Vector3 nextPosition = new Vector3(nextX, baseY + arc, transform.position.z);
         transform.rotation = LookAt2D(nextPosition - transform.position);
