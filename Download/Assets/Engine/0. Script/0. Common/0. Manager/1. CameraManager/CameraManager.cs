@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CAMERATYPE { CT_FOLLOW, CT_END };
+public enum CAMERATYPE { CT_BASIC_2D, CT_FOLLOW, CT_END };
 
 public class CameraManager : MonoBehaviour
 {
@@ -30,6 +30,8 @@ public class CameraManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject); //씬 전환이 되더라도 파괴되지 않음
 
             m_cameras = new CameraBase[CAMERATYPE.GetValues(typeof(CAMERATYPE)).Length]; // 초기화
+            m_cameras[(int)CAMERATYPE.CT_BASIC_2D] = new CameraBasic_2D();
+            m_cameras[(int)CAMERATYPE.CT_BASIC_2D].Initialize_Camera();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW] = new CameraFollow();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW].Initialize_Camera();
         }

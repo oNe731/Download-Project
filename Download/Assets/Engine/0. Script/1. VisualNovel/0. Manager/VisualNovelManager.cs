@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
-using System.Linq;
 
 public enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
 
@@ -182,6 +181,9 @@ public class VisualNovelManager : MonoBehaviour
     {
         m_chaseGame.SetActive(false);
         m_shootGame.SetActive(true);
+
+        Cursor.visible = false;
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
     }
 
     private void Update_ShootGame()
