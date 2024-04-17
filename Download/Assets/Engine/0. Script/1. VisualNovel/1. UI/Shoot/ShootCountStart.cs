@@ -7,6 +7,7 @@ public class ShootCountStart : MonoBehaviour
 {
     [Header("GameObject")]
     [SerializeField] private GameObject m_count;
+    [SerializeField] private ShootContainerBelt m_containerBelt;
 
     [Header("Resource")]
     [SerializeField] private Sprite[] m_image;
@@ -66,6 +67,8 @@ public class ShootCountStart : MonoBehaviour
     {
         // 해당 게임 커서 이미지 할당
         // Cursor.SetCursor(m_cursor, new Vector2(m_cursor.width / 2, m_cursor.height / 2), CursorMode.Auto);
+
+        m_containerBelt.Start_Belt();
 
         VisualNovelManager.Instance.ShootGameStart = true;
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);

@@ -18,9 +18,19 @@ public class ShootSlingshot : MonoBehaviour
     [SerializeField] private float m_maxSpeed = 8.0f;
     [SerializeField] private float m_gaugeSpeed = 7.0f;
 
+    [SerializeField] private float m_shakeTime   = 0.2f;
+    [SerializeField] private float m_shakeAmount = 10.0f; // 세기
+
+    private Vector3 m_StartPosition;
     private SpriteRenderer m_spriteRenderer;
     private Slider m_barSlider;
     private bool m_Up = true;
+
+    private bool m_use = true;
+    public bool Use
+    {
+        set { m_use = value; }
+    }
 
     void Start()
     {
@@ -28,6 +38,7 @@ public class ShootSlingshot : MonoBehaviour
         m_barSlider = m_gauge.GetComponent<Slider>();
 
         m_curSpeed = m_minSpeed;
+        m_StartPosition = transform.position;
     }
 
     private void Update()
@@ -35,6 +46,14 @@ public class ShootSlingshot : MonoBehaviour
         if (!VisualNovelManager.Instance.ShootGameStart)
             return;
 
+        if (m_use)
+            Ok_Use();
+        else
+            No_Use();
+    }
+
+    private void Ok_Use()
+    {
         if (Input.GetMouseButton(0))
         {
             // 마우스의 현재 위치를 가져옴
@@ -86,7 +105,7 @@ public class ShootSlingshot : MonoBehaviour
             switch (section)
             {
                 case 0:
-                    NewPosition = new Vector3(7.948f, -4.5f, 0f); 
+                    NewPosition = new Vector3(7.948f, -4.5f, 0f);
                     break;
                 case 1:
                     NewPosition = new Vector3(6.861f, -4.5f, 0f);
@@ -96,15 +115,39 @@ public class ShootSlingshot : MonoBehaviour
                     break;
             }
 
-            GameObject ball = Instantiate(m_ball);
-            ball.GetComponent<Transform>().position = NewPosition;
-            ball.GetComponent<ShootBall>().TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
-            ball.GetComponent<ShootBall>().Speed = m_curSpeed;
+            GameObject clone = Instantiate(m_ball);
+            clone.GetComponent<Transform>().position = NewPosition;
+            ShootBall ball = clone.GetComponent<ShootBall>();
+            ball.Owner = this;
+            ball.TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+            ball.Speed = m_curSpeed;
+            m_use = false;
 
             m_spriteRenderer.sprite = m_Image[0];
-
             m_curSpeed = m_minSpeed;
             m_barSlider.value = m_curSpeed;
         }
+    }
+
+    private void No_Use()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
+        }
+    }
+
+    IEnumerator Shake(float ShakeAmount, float ShakeTime)
+    {
+        float timer = 0;
+        while (timer <= ShakeTime)
+        {
+            Vector3 randomPoint = m_StartPosition + Random.insideUnitSphere * m_shakeAmount;
+            transform.localPosition = Vector3.Lerp(m_StartPosition, randomPoint, Time.deltaTime);
+            yield return null;
+
+            timer += Time.deltaTime;
+        }
+        transform.localPosition = m_StartPosition;
     }
 }

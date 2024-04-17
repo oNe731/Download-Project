@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class ShootBall : MonoBehaviour
 {
+    private ShootSlingshot m_Owner;
     private Vector3 m_startPosition  = new Vector3(0f, 0f, 0f);
     private Vector3 m_targetPosition = new Vector3(0f, 0f, 0f);
     private float m_heightArc = 5.0f;
     private float m_speed = 2.0f;
+    private float m_time = 0;
+    private bool m_arrived = false;
+    private SphereCollider m_collider;
 
+    public ShootSlingshot Owner
+    {
+        set { m_Owner = value; }
+    }
     public Vector3 TargetPosition
     {
         set { m_targetPosition = value; }
@@ -21,6 +29,7 @@ public class ShootBall : MonoBehaviour
     private void Start()
     {
         m_startPosition = transform.position;
+        m_collider = GetComponent<SphereCollider>();
 
         // 각도에 따른 속도 조절
         float angle = Vector3.Angle((m_startPosition - m_targetPosition).normalized, Vector3.up);
@@ -45,8 +54,17 @@ public class ShootBall : MonoBehaviour
         transform.rotation = LookAt2D(nextPosition - transform.position);
         transform.position = nextPosition;
 
-        if (nextPosition == m_targetPosition)
-            Arrived();
+        if (!m_arrived)
+        {
+            if (nextPosition == m_targetPosition)
+                Arrived();
+        }
+        else
+        {
+            m_time += Time.deltaTime;
+            if (m_time > 0.1f)
+                Destroy(gameObject);
+        }
     }
 
     private Quaternion LookAt2D(Vector2 forward)
@@ -56,6 +74,9 @@ public class ShootBall : MonoBehaviour
 
     private void Arrived()
     {
-        Destroy(gameObject);
+        m_arrived = true;
+
+        m_collider.enabled = true;
+        m_Owner.Use = true;
     }
 }
