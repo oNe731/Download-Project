@@ -32,6 +32,9 @@ public class ShootSlingshot : MonoBehaviour
 
     private void Update()
     {
+        if (!VisualNovelManager.Instance.ShootGameStart)
+            return;
+
         if (Input.GetMouseButton(0))
         {
             // 마우스의 현재 위치를 가져옴
@@ -72,7 +75,7 @@ public class ShootSlingshot : MonoBehaviour
             }
             m_barSlider.value = m_curSpeed;
         }
-        else if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector3 NewPosition = Vector3.zero;
 

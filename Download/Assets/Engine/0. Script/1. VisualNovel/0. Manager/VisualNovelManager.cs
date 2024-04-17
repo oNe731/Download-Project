@@ -37,6 +37,15 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_SHOOT
     [Header("[ LS_SHOOT ]")]
     [SerializeField] private GameObject m_shootGame;
+    [SerializeField] private TMP_Text m_countTxt;
+    private bool m_shootGameStart = false;
+    public bool ShootGameStart
+    {
+        get { return m_shootGameStart; }
+        set { m_shootGameStart = value; }
+    }
+    private float m_time    = 0f;
+    private float m_maxTime = 30f;
 #endregion
 
 #region LS_CHASE
@@ -182,16 +191,41 @@ public class VisualNovelManager : MonoBehaviour
         m_chaseGame.SetActive(false);
         m_shootGame.SetActive(true);
 
-        Cursor.visible = false;
-        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+        m_time = m_maxTime;
     }
 
     private void Update_ShootGame()
     {
+        if (!m_shootGameStart)
+            return;
+
+        // 게임 진행
+        Update_Count();
     }
 
     private void Finish_ShootGame()
     {
+        // 커서 이미지 초기화
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+        Destroy(m_shootGame);
+    }
+
+    private void Update_Count()
+    {
+        m_time -= Time.deltaTime;
+        if(m_time <= 0f)
+        {
+            int Count = 0;
+            m_countTxt.text = Count.ToString();
+
+            Finish_ShootGame();
+        }
+        else
+        {
+            int Count = (int)m_time;
+            m_countTxt.text = Count.ToString();
+        }
     }
 #endregion
 
