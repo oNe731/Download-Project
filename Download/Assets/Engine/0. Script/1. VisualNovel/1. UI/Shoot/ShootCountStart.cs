@@ -65,14 +65,11 @@ public class ShootCountStart : MonoBehaviour
 
     private void Finish_Count()
     {
-        // 해당 게임 커서 이미지 할당
-        // Cursor.SetCursor(m_cursor, new Vector2(m_cursor.width / 2, m_cursor.height / 2), CursorMode.Auto);
-
-        m_containerBelt.Start_Belt();
-
         VisualNovelManager.Instance.ShootGameStart = true;
+        CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
 
+        m_containerBelt.Start_Belt();
         Destroy(gameObject);
     }
 }

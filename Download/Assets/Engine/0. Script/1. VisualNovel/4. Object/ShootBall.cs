@@ -5,17 +5,25 @@ using UnityEngine;
 public class ShootBall : MonoBehaviour
 {
     private ShootSlingshot m_Owner;
+    private GameObject m_targetUI;
+
     private Vector3 m_startPosition  = new Vector3(0f, 0f, 0f);
     private Vector3 m_targetPosition = new Vector3(0f, 0f, 0f);
+
     private float m_heightArc = 5.0f;
     private float m_speed = 2.0f;
     private float m_time = 0;
     private bool m_arrived = false;
+
     private SphereCollider m_collider;
 
     public ShootSlingshot Owner
     {
         set { m_Owner = value; }
+    }
+    public GameObject TargetUI
+    {
+        set { m_targetUI = value; }
     }
     public Vector3 TargetPosition
     {
@@ -62,7 +70,7 @@ public class ShootBall : MonoBehaviour
         else
         {
             m_time += Time.deltaTime;
-            if (m_time > 0.1f)
+            if (m_time > 0.01f)
                 Destroy(gameObject);
         }
     }
@@ -78,5 +86,7 @@ public class ShootBall : MonoBehaviour
 
         m_collider.enabled = true;
         m_Owner.Use = true;
+
+        Destroy(m_targetUI);
     }
 }

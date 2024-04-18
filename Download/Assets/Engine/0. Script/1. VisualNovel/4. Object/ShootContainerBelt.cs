@@ -13,17 +13,20 @@ public class ShootContainerBelt : MonoBehaviour
     private bool m_startBelt = false;
     private float m_speed = 6f;
 
+    private float m_UpLineDir   = -1f;
     private float m_DownLineDir = 1f;
-    private float m_DownTime = 0f;
-    private float m_DownChang = 0f;
-    private float m_DownChangMin = 6f;
-    private float m_DownChangMax = 7f;
+    private float m_Time = 0f;
+    private float m_Chang = 0f;
+    private float m_ChangMin = 6f;
+    private float m_ChangMax = 7f;
 
-    private float m_UpLineDir = -1f;
-    private float m_UpTime = 0f;
-    private float m_UpChang = 3f;
-    private float m_UpChangMin = 12f;
-    private float m_UpChangMax = 15f;
+    private bool m_TurnEvent = false;
+    private float m_EventTime = 0f;
+    private float m_EventChang = 0f;
+    private float m_EventChangMin = 2f;
+    private float m_EventChangMax = 4f;
+    private float m_TurnTime = 0f;
+    private float m_TurnDuration = 0.2f;
 
     private ShootDoll[] m_doll;
 
@@ -33,44 +36,61 @@ public class ShootContainerBelt : MonoBehaviour
         for (int i = 0; i < m_Dolls.Length; ++i)
             m_doll[i] = m_Dolls[i].GetComponent<ShootDoll>();
 
-        m_DownChang = Random.Range(m_DownChangMin, m_DownChangMax);
-        m_UpChang = m_DownChang;// Random.Range(m_UpChangMin, m_UpChangMax);
+        m_Chang = Random.Range(m_ChangMin, m_ChangMax);
+        m_EventChang = Random.Range(m_EventChangMin, m_EventChangMax);
     }
 
     private void Update()
     {
-        //if (!m_startBelt)
-        //    return;
+        if (!m_startBelt)
+            return;
 
-        m_DownTime += Time.deltaTime;
-        if (m_DownTime >= m_DownChang)
+        // 움직임 이벤트 발생
+        m_EventTime += Time.deltaTime;
+        if (m_EventTime >= m_EventChang)
         {
-            m_DownTime = 0f;
-            m_DownChang = Random.Range(m_DownChangMin, m_DownChangMax);
+            m_EventTime = 0f;
+            m_EventChang = Random.Range(m_EventChangMin, m_EventChangMax);
 
-            m_DownLineDir *= -1;
-            m_UpLineDir *= -1;
+            m_TurnEvent = true;
         }
 
-        //m_UpTime += Time.deltaTime;
-        //if (m_UpTime >= m_UpChang)
-        //{
-        //    m_UpTime = 0;
-        //    m_UpChang = Random.Range(m_UpChangMin, m_UpChangMax);
-
-        //    m_UpLineDir *= -1;
-        //}
-
-
-        for (int i = 0; i < m_doll.Length; ++i)
+        if (m_TurnEvent)
         {
-            if(m_doll[i].Line == 1)
+            for (int i = 0; i < m_doll.Length; ++i)
             {
-                m_Dolls[i].transform.Translate((m_DownLineDir * m_speed) * Time.deltaTime, 0, 0);
+                if (m_doll[i].Line == 1)
+                    m_Dolls[i].transform.Translate((m_DownLineDir * -1 * m_speed) * Time.deltaTime, 0, 0);
+                else if (m_doll[i].Line == 2)
+                    m_Dolls[i].transform.Translate((m_UpLineDir * -1 * m_speed) * Time.deltaTime, 0, 0);
             }
-            else if(m_doll[i].Line == 2)
+
+            m_TurnTime += Time.deltaTime;
+            if (m_TurnTime >= m_TurnDuration)
             {
-                m_Dolls[i].transform.Translate((m_UpLineDir * m_speed) * Time.deltaTime, 0, 0);
+                m_TurnTime = 0f;
+                m_TurnEvent = false;
+            }
+        }
+        else
+        {
+            // 움직임 전환 발생
+            m_Time += Time.deltaTime;
+            if (m_Time >= m_Chang)
+            {
+                m_Time = 0f;
+                m_Chang = Random.Range(m_ChangMin, m_ChangMax);
+
+                m_DownLineDir *= -1;
+                m_UpLineDir *= -1;
+            }
+
+            for (int i = 0; i < m_doll.Length; ++i)
+            {
+                if (m_doll[i].Line == 1)
+                    m_Dolls[i].transform.Translate((m_DownLineDir * m_speed) * Time.deltaTime, 0, 0);
+                else if (m_doll[i].Line == 2)
+                    m_Dolls[i].transform.Translate((m_UpLineDir * m_speed) * Time.deltaTime, 0, 0);
             }
         }
     }

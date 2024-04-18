@@ -8,6 +8,7 @@ public class ShootSlingshot : MonoBehaviour
     [Header("GameObject")]
     [SerializeField] private GameObject m_gauge;
     [SerializeField] private GameObject m_ball;
+    [SerializeField] private GameObject m_target;
 
     [Header("Resource")]
     [SerializeField] private Sprite[] m_Image;
@@ -115,17 +116,25 @@ public class ShootSlingshot : MonoBehaviour
                     break;
             }
 
-            GameObject clone = Instantiate(m_ball);
-            clone.GetComponent<Transform>().position = NewPosition;
-            ShootBall ball = clone.GetComponent<ShootBall>();
+            Vector3 targetPosition =  Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
+            Transform canvasTransform = GameObject.Find("Canvas").transform;
+
+            GameObject targetUI = Instantiate(m_target, Vector2.zero, Quaternion.identity, canvasTransform);
+            targetUI.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(targetPosition);
+
+            GameObject ballObject = Instantiate(m_ball);
+            ballObject.GetComponent<Transform>().position = NewPosition;
+
+            ShootBall ball = ballObject.GetComponent<ShootBall>();
             ball.Owner = this;
-            ball.TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+            ball.TargetUI = targetUI;
+            ball.TargetPosition = targetPosition;
             ball.Speed = m_curSpeed;
-            m_use = false;
 
             m_spriteRenderer.sprite = m_Image[0];
-            m_curSpeed = m_minSpeed;
             m_barSlider.value = m_curSpeed;
+            m_curSpeed = m_minSpeed;
+            m_use = false;
         }
     }
 
