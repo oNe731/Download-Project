@@ -10,7 +10,13 @@ public class ShootContainerBelt : MonoBehaviour
     [Header("Resource")]
     [SerializeField] private GameObject m_Hpbar;
 
-    private bool m_startBelt = false;
+    private bool m_useBelt = false;
+    public bool UseBelt
+    {
+        get { return m_useBelt; }
+        set { m_useBelt = value; }
+    }
+
     private float m_speed = 6f;
 
     private float m_UpLineDir   = -1f;
@@ -28,13 +34,22 @@ public class ShootContainerBelt : MonoBehaviour
     private float m_TurnTime = 0f;
     private float m_TurnDuration = 0.2f;
 
+    private bool m_overEffect = false;
+    public bool OverEffect
+    {
+        get { return m_overEffect; }
+    }
+
     private ShootDoll[] m_doll;
 
     private void Start()
     {
         m_doll = new ShootDoll[m_Dolls.Length];
         for (int i = 0; i < m_Dolls.Length; ++i)
+        {
             m_doll[i] = m_Dolls[i].GetComponent<ShootDoll>();
+            m_doll[i].Belt = this;
+        }
 
         m_Chang = Random.Range(m_ChangMin, m_ChangMax);
         m_EventChang = Random.Range(m_EventChangMin, m_EventChangMax);
@@ -42,7 +57,7 @@ public class ShootContainerBelt : MonoBehaviour
 
     private void Update()
     {
-        if (!m_startBelt)
+        if (!m_useBelt)
             return;
 
         // 움직임 이벤트 발생
@@ -97,6 +112,9 @@ public class ShootContainerBelt : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!m_useBelt)
+            return;
+
         // 커튼 속으로 들어가면 다른 라인 시작 위치로 이동해서 해당 라인 이동 방향으로 이동
         for (int i = 0; i < m_doll.Length; ++i)
         {
@@ -107,15 +125,15 @@ public class ShootContainerBelt : MonoBehaviour
                 {
                     Vector3 targetPos = Vector3.zero;
                     if (m_UpLineDir == 1f)
-                        targetPos = new Vector3(-5f, 1.25f, 0f);
+                        targetPos = new Vector3(-5f, 1.35f, 0f);
                     else if (m_UpLineDir == -1f)
-                        targetPos = new Vector3(5f, 1.25f, 0f);
+                        targetPos = new Vector3(5f, 1.35f, 0f);
 
                     // 이동할 라인의 시작점에 가까운 인형이랑 최소 거리가 확보되었는지 검사
                     float dist = 10f;
                     for (int j = 0; j < m_doll.Length; ++j)
                     {
-                        if(m_doll[j].Line == 2) // 이동하려는 라인 인형일 때
+                        if (m_doll[j].Line == 2) // 이동하려는 라인 인형일 때
                         {
                             float newDist = Vector3.Distance(targetPos, m_Dolls[j].transform.position);
                             if (dist > newDist)
@@ -138,9 +156,9 @@ public class ShootContainerBelt : MonoBehaviour
                 {
                     Vector3 targetPos = Vector3.zero;
                     if (m_DownLineDir == 1f)
-                        targetPos = new Vector3(-8f, -2f, 0f);
+                        targetPos = new Vector3(-8f, -2.1f, 0f);
                     else if (m_DownLineDir == -1f)
-                        targetPos = new Vector3(8f, -2f, 0f);
+                        targetPos = new Vector3(8f, -2.1f, 0f);
 
                     // 이동할 라인의 시작점에 가까운 인형이랑 최소 거리가 확보되었는지 검사
                     float dist = 10f;
@@ -158,10 +176,7 @@ public class ShootContainerBelt : MonoBehaviour
                     {
                         // 확보 상태일 시 이동
                         m_doll[i].Line = 1;
-                        if (m_DownLineDir == 1f)
-                            m_Dolls[i].transform.position = new Vector3(-8f, -2f, 0f);
-                        else if (m_DownLineDir == -1f)
-                            m_Dolls[i].transform.position = new Vector3(8f, -2f, 0f);
+                        m_Dolls[i].transform.position = targetPos;
                     }
                 }
             }
@@ -176,8 +191,23 @@ public class ShootContainerBelt : MonoBehaviour
         {
             GameObject clone = Instantiate(m_Hpbar, Vector2.zero, Quaternion.identity, CanvasTransform);
             clone.GetComponent<ShootDollHpbar>().Owner = m_Dolls[i];
+            m_doll[i].Hpbar = clone;
         }
 
-        m_startBelt = true;
+        m_useBelt = true;
+    }
+
+    public void Over_Game(ShootDoll self = null)
+    {
+        if (m_overEffect)
+            return;
+
+        for (int i = 0; i < m_doll.Length; ++i)
+        {
+            if(m_doll[i] != self)
+                m_doll[i].Explode_Doll();
+        }
+
+        m_overEffect = true;
     }
 }

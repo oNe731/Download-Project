@@ -27,6 +27,12 @@ public class ShootDollHpbar : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(m_Owner == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.position = Camera.main.WorldToScreenPoint(m_Owner.transform.position + new Vector3(0, 1.5f, 0));
         m_barSlider.value = m_ownerDoll.Hp;
     }

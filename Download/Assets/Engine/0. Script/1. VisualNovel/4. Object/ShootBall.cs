@@ -71,7 +71,21 @@ public class ShootBall : MonoBehaviour
         {
             m_time += Time.deltaTime;
             if (m_time > 0.01f)
+            {
+                Destroy(m_targetUI);
                 Destroy(gameObject);
+            }
+                
+        }
+    }
+
+    private void LateUpdate()
+    {
+        // 게임 종료 시 존재하는 공 삭제
+        if (VisualNovelManager.Instance.ShootGameOver)
+        {
+            Destroy(m_targetUI);
+            Destroy(gameObject);
         }
     }
 

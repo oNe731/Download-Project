@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public enum LEVELSTATE { LS_NOVEL, LS_SHOOT, LS_CHASE, LS_END };
+// # 미연시 -> 사격 -> 미연시 -> 추격 ==> 서부(다음 씬)
+public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END };
 
 public class VisualNovelManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class VisualNovelManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private LEVELSTATE m_LevelState;
+    [SerializeField] private LEVELSTATE m_LevelState = LEVELSTATE.LS_END;
 
 #region LS_NOVEL
     [Header("[ LS_NOVEL ]")]
@@ -38,14 +39,28 @@ public class VisualNovelManager : MonoBehaviour
     [Header("[ LS_SHOOT ]")]
     [SerializeField] private GameObject m_shootGame;
     [SerializeField] private TMP_Text m_countTxt;
+    [SerializeField] private ShootContainerBelt m_belt;
     private bool m_shootGameStart = false;
+    private bool m_shootGameOver = false;
+    private bool m_shootGameStop = false;
     public bool ShootGameStart
     {
         get { return m_shootGameStart; }
         set { m_shootGameStart = value; }
     }
+    public bool ShootGameOver
+    {
+        get { return m_shootGameOver; }
+        set { m_shootGameOver = value; }
+    }
+    public bool ShootGameStop
+    {
+        get { return m_shootGameStop; }
+        set { m_shootGameStop = value; }
+    }
     private float m_time    = 0f;
     private float m_maxTime = 30f;
+    private float m_overTime = 0f;
 #endregion
 
 #region LS_CHASE
@@ -82,8 +97,11 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
-        // Temp
-        Change_Level(LEVELSTATE.LS_SHOOT);
+        // 미연시 게임 시작
+        // Change_Level(LEVELSTATE.LS_NOVELBEGIN);
+
+        // Test
+        Change_Level(LEVELSTATE.LS_SHOOTGAME);
     }
 
     private void Update()
@@ -91,9 +109,11 @@ public class VisualNovelManager : MonoBehaviour
         Update_Level(m_LevelState);
     }
 
+#region Basic
     public void Change_Level(LEVELSTATE level)
     {
-        Finish_Level(m_LevelState);
+        if(m_LevelState != LEVELSTATE.LS_END)
+            Finish_Level(m_LevelState);
 
         m_LevelState = level;
 
@@ -104,15 +124,19 @@ public class VisualNovelManager : MonoBehaviour
     {
         switch (level)
         {
-            case LEVELSTATE.LS_NOVEL:
-                Start_NovelGame();
+            case LEVELSTATE.LS_NOVELBEGIN:
+                Start_NovelBegin();
                 break;
 
-            case LEVELSTATE.LS_SHOOT:
+            case LEVELSTATE.LS_SHOOTGAME:
                 Start_ShootGame();
                 break;
 
-            case LEVELSTATE.LS_CHASE:
+            case LEVELSTATE.LS_NOVELEND:
+                Start_NovelEnd();
+                break;
+
+            case LEVELSTATE.LS_CHASEGAME:
                 Start_ChaseGame();
                 break;
         }
@@ -122,15 +146,19 @@ public class VisualNovelManager : MonoBehaviour
     {
         switch (level)
         {
-            case LEVELSTATE.LS_NOVEL:
-                Update_NovelGame();
+            case LEVELSTATE.LS_NOVELBEGIN:
+                Update_NovelBegin();
                 break;
 
-            case LEVELSTATE.LS_SHOOT:
+            case LEVELSTATE.LS_SHOOTGAME:
                 Update_ShootGame();
                 break;
 
-            case LEVELSTATE.LS_CHASE:
+            case LEVELSTATE.LS_NOVELEND:
+                Update_NovelEnd();
+                break;
+
+            case LEVELSTATE.LS_CHASEGAME:
                 Update_ChaseGame();
                 break;
         }
@@ -140,35 +168,43 @@ public class VisualNovelManager : MonoBehaviour
     {
         switch (level)
         {
-            case LEVELSTATE.LS_NOVEL:
-                Finish_NovelGame();
+            case LEVELSTATE.LS_NOVELBEGIN:
+                Finish_NovelBegin();
                 break;
 
-            case LEVELSTATE.LS_SHOOT:
+            case LEVELSTATE.LS_SHOOTGAME:
                 Finish_ShootGame();
                 break;
 
-            case LEVELSTATE.LS_CHASE:
+            case LEVELSTATE.LS_NOVELEND:
+                Finish_NovelEnd();
+                break;
+
+            case LEVELSTATE.LS_CHASEGAME:
                 Finish_ChaseGame();
                 break;
         }
     }
+#endregion
 
-#region LS_NOVEL
-    private void Start_NovelGame()
+#region LS_NOVELBEGIN
+    private void Start_NovelBegin()
     {
         m_npcHeart = new int[(int)OWNER_TYPE.OT_END];
         for (int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
             m_npcHeart[i] = 7;
     }
 
-    private void Update_NovelGame()
+    private void Update_NovelBegin()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
             Active_Popup();
+
+        // 사격 게임 해보자 다이얼로그 나온 후에 클릭 등 입력 시 미연시 종료/ 사격 게임 시작
+        // Change_Level(LEVELSTATE.LS_SHOOTGAME);
     }
 
-    private void Finish_NovelGame()
+    private void Finish_NovelBegin()
     {
     }
 
@@ -185,7 +221,7 @@ public class VisualNovelManager : MonoBehaviour
     }
 #endregion
 
-#region LS_SHOOT
+#region LS_SHOOTGAME
     private void Start_ShootGame()
     {
         m_chaseGame.SetActive(false);
@@ -196,30 +232,32 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Update_ShootGame()
     {
-        if (!m_shootGameStart)
+        if (!m_shootGameStart || m_shootGameStop)
             return;
 
-        // 게임 진행
-        Update_Count();
+        if (!m_shootGameOver)
+            Update_Count();
+        else
+            GameOver_ShootGame();
     }
 
     private void Finish_ShootGame()
     {
-        // 커서 이미지 초기화
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
+        CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_ORIGIN);
         Destroy(m_shootGame);
     }
 
     private void Update_Count()
     {
         m_time -= Time.deltaTime;
-        if(m_time <= 0f)
+        if(m_time <= 0.5f)
         {
             int Count = 0;
             m_countTxt.text = Count.ToString();
 
-            Finish_ShootGame();
+            m_shootGameOver = true;
+            m_belt.UseBelt = false; // 1) 인형 일시 정지
+
         }
         else
         {
@@ -227,9 +265,40 @@ public class VisualNovelManager : MonoBehaviour
             m_countTxt.text = Count.ToString();
         }
     }
+
+    private void GameOver_ShootGame()
+    {
+        // 인형 또는 쓰레기 1개 이상 획득해도 사격 게임 종료/ 미연시 시작 : 맞춘 종류에 따라 다음 대사가 다름.
+        m_overTime += Time.deltaTime;
+        if (m_overTime > 1.5f)
+        {
+            if(!m_belt.OverEffect)
+                m_belt.Over_Game(); // 2) 1.5초 뒤 인형 전부 폭발
+            else if(m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
+                Change_Level(LEVELSTATE.LS_NOVELEND);
+        }
+    }
 #endregion
 
-#region LS_CHASE
+#region LS_NOVELEND
+    private void Start_NovelEnd()
+    {
+
+    }
+
+    private void Update_NovelEnd()
+    {
+        // 어 잠이 온다 다이얼로그 나온 후에 암전, 클릭 등 입력 시 미연시 종료/ 추격 게임 시작
+        // Change_Level(LEVELSTATE.LS_CHASEGAME); 
+    }
+
+    private void Finish_NovelEnd()
+    {
+
+    }
+#endregion
+
+#region LS_CHASEGAME
     private void Start_ChaseGame()
     {
         m_shootGame.SetActive(false);
@@ -246,6 +315,9 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Update_ChaseGame()
     {
+        // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환(다음 씬 서부로 전환)
+
+        // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작(재도전 UI 출력)
     }
 
     private void Finish_ChaseGame()
