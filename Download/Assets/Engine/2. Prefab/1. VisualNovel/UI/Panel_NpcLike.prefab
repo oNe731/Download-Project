@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 8952366742369988145}
   - component: {fileID: 3874200877973672834}
   - component: {fileID: 367323034338722478}
-  - component: {fileID: 2960049669259665246}
+  - component: {fileID: 2912051291898279179}
   m_Layer: 5
   m_Name: Panel_NpcLike
   m_TagString: Untagged
@@ -659,8 +659,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2960049669259665246
+--- !u!114 &2912051291898279179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8157071083610308264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53c7727e1d67d2e4c9a9f6a90bea8f50, type: 3}
+  m_Script: {fileID: 11500000, guid: a46cd74d36e94d84b9659b40249ea46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_npcIndex: 3
@@ -691,8 +691,14 @@ MonoBehaviour:
   - {fileID: 6197253953837021289}
   - {fileID: 8394617232800334789}
   m_nameTxt: {fileID: 7297795531798095741}
-  m_heart_Off: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
-  m_heart_On: {fileID: 21300000, guid: 439f260a866664e44907e840c23ce5ce, type: 3}
+  m_heart_Off:
+  - {fileID: 21300000, guid: b32b8c46efdad7d43a4e1b174fca716e, type: 3}
+  - {fileID: 21300000, guid: b15fb964f7aa3c847befac7533069e7f, type: 3}
+  - {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
+  m_heart_On:
+  - {fileID: 21300000, guid: 10e0e25a00b471c4b8f03b5eb5f36e13, type: 3}
+  - {fileID: 21300000, guid: 44d6903248903bb47aa0b2d3555dcd19, type: 3}
+  - {fileID: 21300000, guid: ab7e5d6829f3d7c40a4f02391f5c41e1, type: 3}
 --- !u!1 &8394617232800334789
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +764,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb7eec8c364f32843809984ed22843e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acca258413e6ffd49a73176218ed4c8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -780,7 +786,7 @@ GameObject:
   - component: {fileID: 5779155430855753379}
   - component: {fileID: 7205220068608679019}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Image_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
