@@ -7,7 +7,7 @@ public class Button_StartScene : MonoBehaviour
 {
     public void Button_Start()
     {
-        SceneManager.LoadScene("VisualNovel");
+        SceneManager.LoadScene("VisualNovel"); // Intro
     }
 
     public void Button_Exit()

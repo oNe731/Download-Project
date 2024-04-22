@@ -20,7 +20,8 @@ public class VisualNovelManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private LEVELSTATE m_LevelState = LEVELSTATE.LS_END;
+    [SerializeField] private LEVELSTATE m_StartState = LEVELSTATE.LS_END;
+    private LEVELSTATE m_LevelState = LEVELSTATE.LS_END;
 
 #region LS_NOVEL
     [Header("[ LS_NOVEL ]")]
@@ -97,11 +98,7 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
-        // 미연시 게임 시작
-        // Change_Level(LEVELSTATE.LS_NOVELBEGIN);
-
-        // Test
-        Change_Level(LEVELSTATE.LS_SHOOTGAME);
+        Change_Level(m_StartState);
     }
 
     private void Update()
@@ -315,14 +312,21 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Update_ChaseGame()
     {
-        // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환(다음 씬 서부로 전환)
-
-        // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작(재도전 UI 출력)
     }
 
     private void Finish_ChaseGame()
     {
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_END);
+    }
+
+    private void Clear_ChaseGame()
+    {
+        // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환(다음 씬 서부로 전환)
+    }
+
+    private void Fail_ChaseGame()
+    {
+        // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작(재도전 UI 출력)
     }
 
     private void Create_CD()
