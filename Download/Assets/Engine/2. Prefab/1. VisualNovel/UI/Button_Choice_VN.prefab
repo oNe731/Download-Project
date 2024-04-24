@@ -65,11 +65,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBAA8\uB2C8\uCE74\uB97C \uC88B\uC544\uD55C\uB2E4\uACE0 \uC194\uC9C1\uD558\uAC8C
-    \uB9D0\uD55C\uB2E4."
+  m_text: "\uC120\uD0DD\uC9C0"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6af6029440f146342af4bf5d83e3da10, type: 2}
-  m_sharedMaterial: {fileID: 2375448984745642402, guid: 6af6029440f146342af4bf5d83e3da10, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 483734969a04c18429b62a8c7a3967c7, type: 2}
+  m_sharedMaterial: {fileID: 5170780126091607606, guid: 483734969a04c18429b62a8c7a3967c7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -151,7 +150,7 @@ GameObject:
   - component: {fileID: 6799098108532083259}
   - component: {fileID: 4657632627985719671}
   m_Layer: 5
-  m_Name: Button_Choice
+  m_Name: Button_Choice_VN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 043ce73c1bb3e784a84b372aa71e02de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 253ae51e09f97894d8a521446fb91924, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -244,10 +243,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 565323e149f9c624c9c0ff099f92735f, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 565323e149f9c624c9c0ff099f92735f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 565323e149f9c624c9c0ff099f92735f, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: 565323e149f9c624c9c0ff099f92735f, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: b758ad71be3aacb42bc3b16bfeb405a7, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b758ad71be3aacb42bc3b16bfeb405a7, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: b758ad71be3aacb42bc3b16bfeb405a7, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: b758ad71be3aacb42bc3b16bfeb405a7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -311,3 +310,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852418244ee14414bb94345c8efc8a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_buttonIndex: 0
+  m_ownerDialog: {fileID: 0}
