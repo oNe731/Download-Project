@@ -6,6 +6,7 @@ using TMPro;
 
 // # 미연시 -> 사격 -> 미연시 -> 추격 ==> 서부(다음 씬)
 public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END };
+public enum NPCTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
 
 public class VisualNovelManager : MonoBehaviour
 {
@@ -25,8 +26,9 @@ public class VisualNovelManager : MonoBehaviour
 
 #region LS_NOVEL
     [Header("[ LS_NOVEL ]")]
+    [SerializeField] private GameObject m_dialog;
     [SerializeField] private GameObject m_likeability;
-    [SerializeField] private DialogHeart[] m_dialogHeart;
+    [SerializeField] private NpcLike[] m_dialogHeart;
 
     private int[] m_npcHeart;
     public int[] NpcHeart
@@ -90,10 +92,35 @@ public class VisualNovelManager : MonoBehaviour
     private GameObject m_boss;
 #endregion
 
+#region Resource
+    private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_standingSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_portraitSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_boxISpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_ellipseSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_arrawSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_choiceButtonSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_heartSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, TMP_FontAsset> m_fontAst = new Dictionary<string, TMP_FontAsset>();
+
+    public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; }}
+    public Dictionary<string, Sprite> StandingSpr { get { return m_standingSpr; }}
+    public Dictionary<string, Sprite> PortraitSpr { get { return m_portraitSpr; }}
+    public Dictionary<string, Sprite> BoxISpr { get { return m_boxISpr; }}
+    public Dictionary<string, Sprite> EllipseSpr { get { return m_ellipseSpr; }}
+    public Dictionary<string, Sprite> ArrawSpr { get { return m_arrawSpr; } }
+    public Dictionary<string, Sprite> ChoiceButtonSpr { get { return m_choiceButtonSpr; }}
+    public Dictionary<string, Sprite> HeartSpr { get { return m_heartSpr; } }
+    public Dictionary<string, TMP_FontAsset> FontAst { get { return m_fontAst; } }
+
+    #endregion
+
     private void Awake()
     {
         if (null == m_instance)
             m_instance = this;
+
+        Load_Resource();
     }
 
     private void Start()
@@ -187,9 +214,9 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_NOVELBEGIN
     private void Start_NovelBegin()
     {
-        m_npcHeart = new int[(int)OWNER_TYPE.OT_END];
-        for (int i = 0; i < (int)OWNER_TYPE.OT_END; i++)
-            m_npcHeart[i] = 7;
+        m_npcHeart = new int[(int)NPCTYPE.OT_END];
+        for (int i = 0; i < (int)NPCTYPE.OT_END; i++)
+            m_npcHeart[i] = 0;
     }
 
     private void Update_NovelBegin()
@@ -221,10 +248,13 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_SHOOTGAME
     private void Start_ShootGame()
     {
+        m_dialog.SetActive(false);
         m_chaseGame.SetActive(false);
         m_shootGame.SetActive(true);
 
         m_time = m_maxTime;
+
+        UIManager.Instance.Start_FadeIn(1f, Color.black);
     }
 
     private void Update_ShootGame()
@@ -449,5 +479,68 @@ public class VisualNovelManager : MonoBehaviour
 
         return position;
     }
-#endregion
+    #endregion
+
+    private void Load_Resource()
+    {
+        // 배경 이미지 할당
+        m_backgroundSpr.Add("BackGround_SchoolWay", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));
+        m_backgroundSpr.Add("BackGround_School",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_School"));
+        m_backgroundSpr.Add("BackGround_NightMarket", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_NightMarket"));
+
+        // 스탠딩 이미지 할당
+        m_standingSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Blue"));
+        m_standingSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Pink"));
+        m_standingSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Yellow"));
+
+        // 프로필 이미지 할당
+        m_portraitSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Blue"));
+        m_portraitSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Pink"));
+        m_portraitSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Yellow"));
+        m_portraitSpr.Add("White",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/White"));
+
+        // 박스 이미지 할당
+        m_boxISpr.Add("UI_VisualNovel_Blue_ChatBox",        Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/ChatBox/UI_VisualNovel_Blue_ChatBox"));
+        m_boxISpr.Add("UI_VisualNovel_Pink_ChatBox",        Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/ChatBox/UI_VisualNovel_Pink_ChatBox"));
+        m_boxISpr.Add("UI_VisualNovel_White_ChatBox",       Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/ChatBox/UI_VisualNovel_White_ChatBox"));
+        m_boxISpr.Add("UI_VisualNovel_Yellow_ChatBox",      Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/ChatBox/UI_VisualNovel_Yellow_ChatBox"));
+        m_boxISpr.Add("UI_VisualNovel_Blue_NarrationBox",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/NarrationBox/UI_VisualNovel_Blue_NarrationBox"));
+        m_boxISpr.Add("UI_VisualNovel_Pink_NarrationBox",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/NarrationBox/UI_VisualNovel_Pink_NarrationBox"));
+        m_boxISpr.Add("UI_VisualNovel_White_NarrationBox",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/NarrationBox/UI_VisualNovel_White_NarrationBox"));
+        m_boxISpr.Add("UI_VisualNovel_Yellow_NarrationBox", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/NarrationBox/UI_VisualNovel_Yellow_NarrationBox"));
+
+        // 원 아이콘 이미지 할당
+        m_ellipseSpr.Add("UI_VisualNovel_Blue_Ellipse",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Blue_Ellipse"));
+        m_ellipseSpr.Add("UI_VisualNovel_Pink_Ellipse",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Pink_Ellipse"));
+        m_ellipseSpr.Add("UI_VisualNovel_White_Ellipse",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_White_Ellipse"));
+        m_ellipseSpr.Add("UI_VisualNovel_Yellow_Ellipse", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Yellow_Ellipse"));
+
+        // 넘김표시 이미지 할당
+        m_arrawSpr.Add("UI_VisualNovel_Blue_Ellipse",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Blue_Ellipse"));
+        m_arrawSpr.Add("UI_VisualNovel_Pink_Ellipse",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Pink_Ellipse"));
+        m_arrawSpr.Add("UI_VisualNovel_White_Ellipse",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_White_Ellipse"));
+        m_arrawSpr.Add("UI_VisualNovel_Yellow_Ellipse", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Ellipse/UI_VisualNovel_Yellow_Ellipse"));
+
+        // 버튼 이미지 할당
+        m_choiceButtonSpr.Add("UI_VisualNovel_White_ButtonOFF", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Button/UI_VisualNovel_White_ButtonOFF"));
+        m_choiceButtonSpr.Add("UI_VisualNovel_White_ButtonON",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Button/UI_VisualNovel_White_ButtonON"));
+
+        // 하트 이미지 할당
+        m_heartSpr.Add("UI_VisualNovel_Blue_FriendshipHeartOFF",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Blue_FriendshipHeartOFF"));
+        m_heartSpr.Add("UI_VisualNovel_Blue_FriendshipHeartON",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Blue_FriendshipHeartON"));
+        m_heartSpr.Add("UI_VisualNovel_Pink_FriendshipHeartOFF",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Pink_FriendshipHeartOFF"));
+        m_heartSpr.Add("UI_VisualNovel_Pink_FriendshipHeartON",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Pink_FriendshipHeartON"));
+        m_heartSpr.Add("UI_VisualNovel_Yellow_FriendshipHeartOFF", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Yellow_FriendshipHeartOFF"));
+        m_heartSpr.Add("UI_VisualNovel_Yellow_FriendshipHeartON",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Heart/UI_VisualNovel_Yellow_FriendshipHeartON"));
+
+        // 폰트 에셋 할당
+        m_fontAst.Add("VN_Basic_Blue",    Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Blue/VN_Basic_Blue"));
+        m_fontAst.Add("VN_Basic_RBlue",   Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Blue/VN_Basic_RBlue"));
+        m_fontAst.Add("VN_Basic_Pink",    Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Pink/VN_Basic_Pink"));
+        m_fontAst.Add("VN_Basic_RPink",   Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Pink/VN_Basic_RPink"));
+        m_fontAst.Add("VN_Basic_White",   Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/White/VN_Basic_White"));
+        m_fontAst.Add("VN_Basic_RWhite",  Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/White/VN_Basic_RWhite"));
+        m_fontAst.Add("VN_Basic_Yellow",  Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Yellow/VN_Basic_Yellow"));
+        m_fontAst.Add("VN_Basic_RYellow", Resources.Load<TMP_FontAsset>("3. Font/FontAsset/1. VisualNovel/Yellow/VN_Basic_RYellow"));
+    }
 }

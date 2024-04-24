@@ -53,7 +53,7 @@ public class InputName : MonoBehaviour
 
     public void Popup_Yes()
     {
-        GameManager.Instance.PlayerName = m_playerNameInput.text;
+        //GameManager.Instance.PlayerName = m_playerNameInput.text;
         gameObject.SetActive(false);
     }
 

@@ -16,21 +16,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    private string m_playerName = null;
-    public string PlayerName
-    {
-        get 
-        { 
-            return m_playerName;
-        }
-        set
-        {
-            if(value.Length > 0)
-                m_playerName = value;
-        }
-    }
-
+    //private string m_playerName = null;
+    //public string PlayerName
+    //{
+    //    get 
+    //    { 
+    //        return m_playerName;
+    //    }
+    //    set
+    //    {
+    //        if(value.Length > 0)
+    //            m_playerName = value;
+    //    }
+    //}
 
     private void Awake()
     {
@@ -55,15 +53,15 @@ public class GameManager : MonoBehaviour
     {
     }
 
-    public void Save_Data(string filePath, DialogData[] saveData)
+    public void Save_JsonData<T>(string filePath, T[] saveData)
     {
         var Result = JsonConvert.SerializeObject(saveData);
         File.WriteAllText(filePath, Result);
     }
 
-    public DialogData[] Load_Data(string filePath)
+    public T[] Load_JsonData<T>(string filePath)
     {
-        string Result = File.ReadAllText(filePath); // JSON 파일 읽기
-        return JsonConvert.DeserializeObject<DialogData[]>(Result); // JSON 문자열을 DialogData 배열로 역직렬화
+        string Result = File.ReadAllText(filePath);        // JSON 파일 읽기
+        return JsonConvert.DeserializeObject<T[]>(Result); // JSON 문자열을 제너릭 타입 배열로 역직렬화
     }
 }
