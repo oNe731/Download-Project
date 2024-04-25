@@ -6,10 +6,18 @@ public enum DIALOGEVENT_TYPE
     DET_NONE, // 0
     DET_FADEIN, DET_FADEOUT, DET_FADEINOUT, DET_FADEOUTIN, // 1 2 3 4
     DET_STARTSHOOT, DET_STARTCHASE, // 5 6
-    DET_SHAKING, // 7
-    DET_END };
+    DET_SHAKING, DET_PLAYCHASE, // 7 8
 
-public enum CHOICEEVENT_TYPE { CET_CLOSE, CET_DIALOG, CET_END };
+    DET_END 
+};
+
+public enum CHOICEEVENT_TYPE 
+{ 
+    CET_CLOSE, // 0
+    CET_DIALOG, // 1
+
+    CET_END 
+};
 
 [Serializable]
 public class DialogData_VN
@@ -31,7 +39,7 @@ public class DialogData_VN
     public string dialogFont;
 
     // 선택지 관련
-    public CHOICEEVENT_TYPE choiceEventType;
+    public List<CHOICEEVENT_TYPE> choiceEventType;
     public List<string> choiceText;
     public List<string> choiceDialog;
 }

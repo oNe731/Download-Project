@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum DOLLTYPE { DT_TRASH, DT_BIRD, BT_SHEEP, BT_CAT, BT_END };
+public enum DOLLTYPE { DT_FAIL, DT_BIRD, DT_SHEEP, DT_CAT, DT_END };
 
 public class ShootDoll : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class ShootDoll : MonoBehaviour
     [SerializeField] private GameObject m_PanelObject;
     [SerializeField] private GameObject m_ClearObject;
 
-    [SerializeField] private DOLLTYPE m_dollType = DOLLTYPE.BT_END;
+    [SerializeField] private DOLLTYPE m_dollType = DOLLTYPE.DT_END;
     [SerializeField] private int m_line = 0;
     public int Line
     {
@@ -40,19 +40,27 @@ public class ShootDoll : MonoBehaviour
 
     private int m_blinkCount = 2;
     private SpriteRenderer m_spriteRenderer;
+    private CapsuleCollider m_collider;
+    public CapsuleCollider Collider
+    {
+        get { return m_collider; }
+        set { m_collider = value; }
+    }
 
     private bool m_clear = false;
     private bool m_clearImage = false;
     private float m_clearTime = 0f;
+    private bool m_over = false;
 
     private void Start()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_collider = GetComponent<CapsuleCollider>();
     }
 
     private void Update()
     {
-        if(m_clear)
+        if (m_clear)
         {
             m_clearTime += Time.deltaTime;
             if (m_clearTime > 1.5f)
@@ -71,8 +79,28 @@ public class ShootDoll : MonoBehaviour
                     m_ClearObject.SetActive(true);
                     m_ClearObject.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
                 }
-                else if (m_clearTime > 4.5) // 4) 1.5초 뒤 페이드 아웃으로 전환
-                    VisualNovelManager.Instance.Change_Level(LEVELSTATE.LS_NOVELEND);
+                else if (!m_over && m_clearTime > 4.5) // 4) 1.5초 뒤 페이드 아웃으로 전환
+                {
+                    m_over = true;
+                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.Change_Level(LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                }
+            }
+        }
+        else
+        {
+            if (m_line == 1) // 아래 라인 좌측 또는 우측으로 이동했을 시
+            {
+                if (transform.position.x >= -6f && transform.position.x <= 6f)
+                    m_collider.enabled = true;
+                else
+                    m_collider.enabled = false;
+            }
+            else if (m_line == 2) // 상단 라인 좌측 또는 우측으로 이동했을 시
+            {
+                if (transform.position.x >= -3f && transform.position.x <= 3f)
+                    m_collider.enabled = true;
+                else
+                    m_collider.enabled = false;
             }
         }
     }
@@ -85,6 +113,7 @@ public class ShootDoll : MonoBehaviour
             if(m_hp <= 0) // 게임 종료
             {
                 VisualNovelManager.Instance.ShootGameStop = true;
+                VisualNovelManager.Instance.DollType = m_dollType;
                 m_belt.UseBelt = false; // 1) 인형 일시 정지
                 m_clear = true;
             }
@@ -92,6 +121,8 @@ public class ShootDoll : MonoBehaviour
             {
                 StartCoroutine(Blink());
             }
+
+            other.gameObject.GetComponent<ShootBall>().Arrived();
 
             Destroy(other.gameObject);
             Create_Particle();
@@ -137,5 +168,11 @@ public class ShootDoll : MonoBehaviour
     {
         Create_Particle();
         Destroy(gameObject);
+    }
+
+    public void Change_Line(int line, Vector3 targetPosition)
+    {
+        m_line = line;
+        transform.position = targetPosition;
     }
 }

@@ -46,6 +46,7 @@ public class VisualNovelManager : MonoBehaviour
     private bool m_shootGameStart = false;
     private bool m_shootGameOver = false;
     private bool m_shootGameStop = false;
+    private bool m_shootGameNext = false;
     public bool ShootGameStart
     {
         get { return m_shootGameStart; }
@@ -62,8 +63,14 @@ public class VisualNovelManager : MonoBehaviour
         set { m_shootGameStop = value; }
     }
     private float m_time    = 0f;
-    private float m_maxTime = 30f;
+    private float m_maxTime = 60f;
     private float m_overTime = 0f;
+    [SerializeField] private DOLLTYPE m_dollType = DOLLTYPE.DT_END;
+    public DOLLTYPE DollType
+    {
+        get { return m_dollType; }
+        set { m_dollType = value; }
+    }
 #endregion
 
 #region LS_CHASE
@@ -121,6 +128,7 @@ public class VisualNovelManager : MonoBehaviour
             m_instance = this;
 
         Load_Resource();
+        Create_NpcHeart();
     }
 
     private void Start()
@@ -212,20 +220,25 @@ public class VisualNovelManager : MonoBehaviour
 #endregion
 
 #region LS_NOVELBEGIN
-    private void Start_NovelBegin()
+    private void Create_NpcHeart()
     {
         m_npcHeart = new int[(int)NPCTYPE.OT_END];
         for (int i = 0; i < (int)NPCTYPE.OT_END; i++)
-            m_npcHeart[i] = 0;
+            m_npcHeart[i] = 2;//0;
+    }
+
+    private void Start_NovelBegin()
+    {
+        m_dialog.SetActive(true);
+
+        m_dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog1_SchoolWay.json"));
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
     }
 
     private void Update_NovelBegin()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
             Active_Popup();
-
-        // 사격 게임 해보자 다이얼로그 나온 후에 클릭 등 입력 시 미연시 종료/ 사격 게임 시작
-        // Change_Level(LEVELSTATE.LS_SHOOTGAME);
     }
 
     private void Finish_NovelBegin()
@@ -253,8 +266,17 @@ public class VisualNovelManager : MonoBehaviour
         m_shootGame.SetActive(true);
 
         m_time = m_maxTime;
+        m_countTxt.text = m_time.ToString();
 
         UIManager.Instance.Start_FadeIn(1f, Color.black);
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+    }
+
+    public void Play_ShootGame()
+    {
+        m_shootGameStart = true;
+        CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
+        m_belt.Start_Belt();
     }
 
     private void Update_ShootGame()
@@ -271,7 +293,7 @@ public class VisualNovelManager : MonoBehaviour
     private void Finish_ShootGame()
     {
         CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_ORIGIN);
-        Destroy(m_shootGame);
+        Destroy(m_shootGame); // 재시작하지 않을 시 삭제
     }
 
     private void Update_Count()
@@ -285,6 +307,8 @@ public class VisualNovelManager : MonoBehaviour
             m_shootGameOver = true;
             m_belt.UseBelt = false; // 1) 인형 일시 정지
 
+            m_dollType = DOLLTYPE.DT_FAIL;
+
         }
         else
         {
@@ -295,14 +319,20 @@ public class VisualNovelManager : MonoBehaviour
 
     private void GameOver_ShootGame()
     {
+        if (m_shootGameNext)
+            return;
+
         // 인형 또는 쓰레기 1개 이상 획득해도 사격 게임 종료/ 미연시 시작 : 맞춘 종류에 따라 다음 대사가 다름.
         m_overTime += Time.deltaTime;
         if (m_overTime > 1.5f)
         {
             if(!m_belt.OverEffect)
                 m_belt.Over_Game(); // 2) 1.5초 뒤 인형 전부 폭발
-            else if(m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
-                Change_Level(LEVELSTATE.LS_NOVELEND);
+            else if(!m_shootGameNext && m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
+            {
+                m_shootGameNext = true;
+                UIManager.Instance.Start_FadeOut(1f, Color.black, () => Change_Level(LEVELSTATE.LS_NOVELEND), 0.5f, false);
+            }
         }
     }
 #endregion
@@ -310,13 +340,32 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_NOVELEND
     private void Start_NovelEnd()
     {
+        switch (m_dollType)
+        {
+            case DOLLTYPE.DT_BIRD:
+                m_dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog2_DollBird.json"));
+                break;
 
+            case DOLLTYPE.DT_SHEEP:
+                m_dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog2_DollSheep.json"));
+                break;
+
+            case DOLLTYPE.DT_CAT:
+                m_dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog2_DollCat.json"));
+                break;
+
+            case DOLLTYPE.DT_FAIL:
+                m_dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog2_DollFail.json"));
+                break;
+        }
+
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
     }
 
     private void Update_NovelEnd()
     {
-        // 어 잠이 온다 다이얼로그 나온 후에 암전, 클릭 등 입력 시 미연시 종료/ 추격 게임 시작
-        // Change_Level(LEVELSTATE.LS_CHASEGAME); 
+        if (Input.GetKeyDown(KeyCode.Tab))
+            Active_Popup();
     }
 
     private void Finish_NovelEnd()
@@ -328,20 +377,37 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_CHASEGAME
     private void Start_ChaseGame()
     {
-        m_shootGame.SetActive(false);
-        m_chaseGame.SetActive(true);
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+        CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+        camera.Change_Position(new Vector3(0f, 1.4f, -2.8f));
+        camera.Change_Rotation(new Vector3(8.5f, 0f, 0f));
 
+        // 지하실 다이얼로그 시작 (페이드 인)
+        Dialog_VN dialog = m_dialog.GetComponent<Dialog_VN>();
+        dialog.Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog5_Cellar.json"));
+        dialog.Close_Background();
+
+        //// m_shootGame.SetActive(false);
+        m_chaseGame.SetActive(true);
         m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         m_boss = GameObject.FindWithTag("Boss");
+    }
+
+    public void Play_ChaseGame()
+    {
+        m_dialog.SetActive(false);
 
         Create_CD();
         Create_Lever(m_LeverMaxCount);
 
+        UIManager.Instance.Start_FadeIn(1f, Color.black);
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
     }
 
     private void Update_ChaseGame()
     {
+
     }
 
     private void Finish_ChaseGame()
@@ -484,10 +550,14 @@ public class VisualNovelManager : MonoBehaviour
     private void Load_Resource()
     {
         // 배경 이미지 할당
-        m_backgroundSpr.Add("BackGround_SchoolWay", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));
-        m_backgroundSpr.Add("BackGround_School",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_School"));
+        m_backgroundSpr.Add("BackGround_SchoolWay",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));
+        m_backgroundSpr.Add("BackGround_School",      Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_School"));
         m_backgroundSpr.Add("BackGround_NightMarket", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_NightMarket"));
-
+        m_backgroundSpr.Add("BackGround_Festival",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Festival"));
+        m_backgroundSpr.Add("BackGround_PlayerHome",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PlayerHome"));
+        m_backgroundSpr.Add("BackGround_PinkHome",    Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PinkHome"));
+        m_backgroundSpr.Add("BackGround_Cellar",      Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Cellar"));
+        
         // 스탠딩 이미지 할당
         m_standingSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Blue"));
         m_standingSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Pink"));

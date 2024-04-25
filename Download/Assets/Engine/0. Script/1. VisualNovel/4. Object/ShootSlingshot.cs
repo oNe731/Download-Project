@@ -59,6 +59,12 @@ public class ShootSlingshot : MonoBehaviour
         {
             // 마우스의 현재 위치를 가져옴
             Vector3 mousePosition = Input.mousePosition;
+            if (mousePosition.y <= 255f)
+            {
+                Reset_Use();
+                StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
+                return;
+            }
 
             // 화면의 가로 길이를 3등분하여 각 섹션의 경계를 계산
             float screenWidth = Screen.width;
@@ -100,6 +106,13 @@ public class ShootSlingshot : MonoBehaviour
             Vector3 NewPosition = Vector3.zero;
 
             Vector3 mousePosition = Input.mousePosition;
+            if (mousePosition.y <= 255f)
+            {
+                Reset_Use();
+                StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
+                return;
+            }
+
             float screenWidth = Screen.width;
             float sectionWidth = screenWidth / 3f;
             int section = (int)(mousePosition.x / sectionWidth);
@@ -131,9 +144,7 @@ public class ShootSlingshot : MonoBehaviour
             ball.TargetPosition = targetPosition;
             ball.Speed = m_curSpeed;
 
-            m_spriteRenderer.sprite = m_Image[0];
-            m_barSlider.value = m_curSpeed;
-            m_curSpeed = m_minSpeed;
+            Reset_Use();
             m_use = false;
         }
     }
@@ -144,6 +155,13 @@ public class ShootSlingshot : MonoBehaviour
         {
             StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
         }
+    }
+
+    private void Reset_Use()
+    {
+        m_spriteRenderer.sprite = m_Image[0];
+        m_curSpeed = m_minSpeed;
+        m_barSlider.value = m_curSpeed;
     }
 
     IEnumerator Shake(float ShakeAmount, float ShakeTime)

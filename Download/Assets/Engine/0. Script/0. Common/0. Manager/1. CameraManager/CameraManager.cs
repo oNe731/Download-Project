@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CAMERATYPE { CT_BASIC_2D, CT_FOLLOW, CT_END };
+public enum CAMERATYPE { CT_BASIC_2D, CT_BASIC_3D, CT_CUTSCENE, CT_FOLLOW, CT_END };
 
 public class CameraManager : MonoBehaviour
 {
@@ -32,6 +32,10 @@ public class CameraManager : MonoBehaviour
             m_cameras = new CameraBase[CAMERATYPE.GetValues(typeof(CAMERATYPE)).Length]; // 초기화
             m_cameras[(int)CAMERATYPE.CT_BASIC_2D] = new CameraBasic_2D();
             m_cameras[(int)CAMERATYPE.CT_BASIC_2D].Initialize_Camera();
+            m_cameras[(int)CAMERATYPE.CT_BASIC_3D] = new CameraBasic_3D();
+            m_cameras[(int)CAMERATYPE.CT_BASIC_3D].Initialize_Camera();
+            m_cameras[(int)CAMERATYPE.CT_CUTSCENE] = new CameraCutscene();
+            m_cameras[(int)CAMERATYPE.CT_CUTSCENE].Initialize_Camera();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW] = new CameraFollow();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW].Initialize_Camera();
         }
@@ -51,6 +55,9 @@ public class CameraManager : MonoBehaviour
 
     public void Change_Camera(CAMERATYPE type)
     {
+        if (type == m_currentCameraType)
+            return;
+
         // 탈출
         if(m_currentCameraType != CAMERATYPE.CT_END)
             m_cameras[(int)m_currentCameraType].Exit_Camera();
@@ -60,5 +67,10 @@ public class CameraManager : MonoBehaviour
 
         // 진입
         m_cameras[(int)m_currentCameraType].Enter_Camera();
+    }
+
+    public CameraBase Get_CurCamera()
+    {
+        return m_cameras[(int)m_currentCameraType];
     }
 }

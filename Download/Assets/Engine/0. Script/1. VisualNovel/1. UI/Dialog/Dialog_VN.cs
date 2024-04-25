@@ -56,8 +56,6 @@ public class Dialog_VN : MonoBehaviour
 
     private void Start()
     {
-        m_dialogs = GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog1_SchoolWay.json");
-        Reset_Dialog();
     }
 
     private void Update()
@@ -69,9 +67,9 @@ public class Dialog_VN : MonoBehaviour
             Update_Button();
     }
 
-    private void Update_Dialog()
+    private void Update_Dialog(bool IsPonter = true)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) // 커서가 UI 위치상에 존재할 시 반환
+        if (IsPonter && EventSystem.current.IsPointerOverGameObject()) // 커서가 UI 위치상에 존재할 시 반환
             return;
 
         if (m_isTyping)
@@ -91,12 +89,24 @@ public class Dialog_VN : MonoBehaviour
                         Update_FadeIn();
                         break;
 
+                    case DIALOGEVENT_TYPE.DET_FADEOUT:
+                        Update_FadeOut();
+                        break;
+
                     case DIALOGEVENT_TYPE.DET_FADEOUTIN:
                         Update_FadeOutIn();
                         break;
 
                     case DIALOGEVENT_TYPE.DET_STARTSHOOT:
                         Start_ShootGame();
+                        break;
+
+                    case DIALOGEVENT_TYPE.DET_STARTCHASE:
+                        Start_ChaseGame();
+                        break;
+
+                    case DIALOGEVENT_TYPE.DET_PLAYCHASE:
+                        Play_ChaseGame();
                         break;
 
                     case DIALOGEVENT_TYPE.DET_SHAKING:
@@ -129,7 +139,7 @@ public class Dialog_VN : MonoBehaviour
         // 리소스 업데이트
         if (!string.IsNullOrEmpty(m_dialogs[index].backgroundSpr))
             m_backgroundImg.sprite = VisualNovelManager.Instance.BackgroundSpr[m_dialogs[index].backgroundSpr];
-        Update_Standing();
+        Update_Standing(index);
         if (!string.IsNullOrEmpty(m_dialogs[index].portraitSpr))
         {
             m_portraitObj.SetActive(true);
@@ -143,10 +153,6 @@ public class Dialog_VN : MonoBehaviour
             m_ellipseImg.sprite = VisualNovelManager.Instance.EllipseSpr[m_dialogs[index].ellipseSpr];
         if (!string.IsNullOrEmpty(m_dialogs[index].arrawSpr))
             m_arrowImg.sprite = VisualNovelManager.Instance.ArrawSpr[m_dialogs[index].arrawSpr];
-
-        // 선택지 생성
-        if (0 < m_dialogs[m_dialogIndex].choiceText.Count)
-            Create_ChoiceButton();
     }
 
     private void Update_None()
@@ -171,6 +177,21 @@ public class Dialog_VN : MonoBehaviour
         Update_Dialog();
     }
 
+    private void Update_FadeOut()
+    {
+        if (!string.IsNullOrEmpty(m_dialogs[m_dialogIndex].choiceDialog[0]))
+        {   
+            UIManager.Instance.Start_FadeOut(1f, Color.black, 
+                () => Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex].choiceDialog[0])), 0f, false);
+        }
+        else
+        {
+            // 비어있을 시 페이드 아웃만 진행
+            UIManager.Instance.Start_FadeOut(1f, Color.black);
+        }
+
+    }
+
     private void Update_FadeOutIn()
     {
         UIManager.Instance.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
@@ -182,6 +203,18 @@ public class Dialog_VN : MonoBehaviour
             () => VisualNovelManager.Instance.Change_Level(LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
     }
 
+    private void Start_ChaseGame()
+    {
+        UIManager.Instance.Start_FadeOut(1f, Color.black,
+            () => VisualNovelManager.Instance.Change_Level(LEVELSTATE.LS_CHASEGAME), 0.5f, false);
+    }
+
+    private void Play_ChaseGame()
+    {
+        UIManager.Instance.Start_FadeOut(1f, Color.black,
+            () => VisualNovelManager.Instance.Play_ChaseGame(), 0.5f, false);
+    }
+
     private void Update_Shaking()
     {
         Update_None();
@@ -190,9 +223,9 @@ public class Dialog_VN : MonoBehaviour
     }
 
 #region Etc
-    private void Update_Standing()
+    private void Update_Standing(int index)
     {
-        switch (m_dialogs[m_dialogIndex].standingSpr.Count)
+        switch (m_dialogs[index].standingSpr.Count)
         {
             case 0:
                 m_standingObj[0].SetActive(false);
@@ -203,7 +236,7 @@ public class Dialog_VN : MonoBehaviour
             case 1:
                 m_standingObj[0].SetActive(true);
                 m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[0]];
+                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
                 m_standingObj[1].SetActive(false);
                 m_standingObj[2].SetActive(false);
                 break;
@@ -211,23 +244,23 @@ public class Dialog_VN : MonoBehaviour
             case 2:
                 m_standingObj[0].SetActive(true);
                 m_standingObj[0].transform.localPosition = new Vector3(-300.0f, -460.0f, 0.0f);
-                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[0]];
+                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
                 m_standingObj[1].SetActive(true);
                 m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
-                m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[1]];
+                m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
                 m_standingObj[2].SetActive(false);
                 break;
 
             case 3:
                 m_standingObj[0].SetActive(true);
                 m_standingObj[0].transform.localPosition = new Vector3(-500.0f, -460.0f, 0.0f);
-                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[0]];
+                m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
                 m_standingObj[1].SetActive(true);
                 m_standingObj[1].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[1]];
+                m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
                 m_standingObj[2].SetActive(true);
                 m_standingObj[2].transform.localPosition = new Vector3(500.0f, -460.0f, 0.0f);
-                m_standingImg[2].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[m_dialogIndex].standingSpr[2]];
+                m_standingImg[2].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[2]];
                 break;
         }
     }
@@ -273,6 +306,10 @@ public class Dialog_VN : MonoBehaviour
 
         m_isTyping = false;
         StartCoroutine(Use_Arrow(arrow));
+
+        // 타이핑 끝난 상태일 시 선택지 생성
+        if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
+            Create_ChoiceButton();
     }
 
     IEnumerator Use_Arrow(GameObject arrow)
@@ -289,7 +326,7 @@ public class Dialog_VN : MonoBehaviour
         m_darkPanelObj.SetActive(true);
 
         // 선택지 버튼 생성
-        for (int i = 0; i < m_dialogs[m_dialogIndex].choiceText.Count; ++i)
+        for (int i = 0; i < m_dialogs[m_dialogIndex - 1].choiceText.Count; ++i)
         {
             int ButtonIndex = i + 1; // 버튼 고유 인덱스
 
@@ -297,8 +334,8 @@ public class Dialog_VN : MonoBehaviour
             if (Clone)
             {
                 Clone.transform.SetParent(gameObject.transform);
-                Clone.transform.localPosition = new Vector3(10f, (-100 * (i)), 0f);
-                Clone.transform.localScale = new Vector3(1f, 1f, 1f);
+                Clone.transform.localPosition = new Vector3(0f, (130 + (i * -130)), 0f); // 130 / 0 / -130
+                Clone.transform.localScale    = new Vector3(1f, 1f, 1f);
 
                 ButtonChoice_VN ButtonChoice = Clone.GetComponent<ButtonChoice_VN>();
                 ButtonChoice.ButtonIndex = i;
@@ -307,7 +344,7 @@ public class Dialog_VN : MonoBehaviour
                 TMP_Text TextCom = Clone.GetComponentInChildren<TMP_Text>();
                 if (TextCom)
                 {
-                    TextCom.text = m_dialogs[m_dialogIndex].choiceText[i];
+                    TextCom.text = m_dialogs[m_dialogIndex - 1].choiceText[i];
 
                     Button button = Clone.GetComponent<Button>();
                     if (button) // 이벤트 핸들러 추가
@@ -330,15 +367,14 @@ public class Dialog_VN : MonoBehaviour
 
     private void Click_Button(int index)
     {
-        switch (m_dialogs[m_dialogIndex].choiceEventType)
+        switch (m_dialogs[m_dialogIndex - 1].choiceEventType[index - 1])
         {
-            case CHOICEEVENT_TYPE.CET_CLOSE:
+            case CHOICEEVENT_TYPE.CET_CLOSE: // 다이얼로그 종료
                 Close_Dialog();
                 break;
 
-            case CHOICEEVENT_TYPE.CET_DIALOG:
-                m_dialogs = GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex].choiceDialog[index - 1]);
-                Reset_Dialog();
+            case CHOICEEVENT_TYPE.CET_DIALOG: // 다음 다이얼로그 불러오고 해당 다이얼로그로 이어서 출력
+                Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex - 1].choiceDialog[index - 1])); ;
                 break;
         }
     }
@@ -355,18 +391,29 @@ public class Dialog_VN : MonoBehaviour
         }
     }
 
-    private void Reset_Dialog()
+    public void Start_Dialog(DialogData_VN[] dialogs = null)
     {
+        m_dialogs = dialogs;
+
         m_isTyping = false;
         m_cancelTyping = false;
         m_dialogIndex = 0;
         m_choiceIndex = 0;
 
+        m_standingObj[0].SetActive(false);
+        m_standingObj[1].SetActive(false);
+        m_standingObj[2].SetActive(false);
+
+        m_darkPanelObj.SetActive(false);
+
         for (int i = 0; i < m_choice_Button.Count; ++i)
             Destroy(m_choice_Button[i]);
         m_choice_Button.Clear();
 
-        Update_Dialog();
+        gameObject.SetActive(true);
+        m_backgroundObj.SetActive(true);
+
+        Update_Dialog(false);
     }
 
     private void Close_Dialog()
@@ -382,6 +429,11 @@ public class Dialog_VN : MonoBehaviour
         m_choice_Button.Clear();
 
         m_dialogBoxObj.SetActive(false);
+    }
+
+    public void Close_Background()
+    {
+        m_backgroundObj.SetActive(false);
     }
 #endregion
 }

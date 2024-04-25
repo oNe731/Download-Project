@@ -141,12 +141,8 @@ public class ShootContainerBelt : MonoBehaviour
                         }
                     }
 
-                    if (dist > 5f)
-                    {
-                        // 확보 상태일 시 이동
-                        m_doll[i].Line = 2;
-                        m_Dolls[i].transform.position = targetPos;
-                    }
+                    if (dist > 5f) // 확보 상태일 시 이동
+                        m_doll[i].Change_Line(2, targetPos);
                 }
             }
             else if (m_doll[i].Line == 2) // 상단 라인일 때
@@ -172,12 +168,8 @@ public class ShootContainerBelt : MonoBehaviour
                         }
                     }
 
-                    if (dist > 5f)
-                    {
-                        // 확보 상태일 시 이동
-                        m_doll[i].Line = 1;
-                        m_Dolls[i].transform.position = targetPos;
-                    }
+                    if (dist > 5f) // 확보 상태일 시 이동
+                        m_doll[i].Change_Line(1, targetPos);
                 }
             }
         }

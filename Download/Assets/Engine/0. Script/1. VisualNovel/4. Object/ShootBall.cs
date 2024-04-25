@@ -12,7 +12,6 @@ public class ShootBall : MonoBehaviour
 
     private float m_heightArc = 5.0f;
     private float m_speed = 2.0f;
-    private float m_time = 0;
     private bool m_arrived = false;
 
     private SphereCollider m_collider;
@@ -64,18 +63,13 @@ public class ShootBall : MonoBehaviour
 
         if (!m_arrived)
         {
-            if (nextPosition == m_targetPosition)
-                Arrived();
-        }
-        else
-        {
-            m_time += Time.deltaTime;
-            if (m_time > 0.01f)
+            float targetDist = Vector3.Distance(nextPosition, m_targetPosition);
+            if (targetDist <= 0.5f)
             {
-                Destroy(m_targetUI);
-                Destroy(gameObject);
+                m_collider.enabled = true;
+                if (nextPosition == m_targetPosition)
+                    Arrived();
             }
-                
         }
     }
 
@@ -94,13 +88,11 @@ public class ShootBall : MonoBehaviour
         return Quaternion.Euler(0, 0, Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg);
     }
 
-    private void Arrived()
+    public void Arrived()
     {
-        m_arrived = true;
-
-        m_collider.enabled = true;
+        m_arrived   = true;
         m_Owner.Use = true;
-
         Destroy(m_targetUI);
+        Destroy(gameObject);
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class CameraBasic_2D : CameraBase
+public class CameraBasic_3D : CameraBase
 {
     public override void Initialize_Camera()
     {
@@ -9,7 +9,7 @@ public class CameraBasic_2D : CameraBase
 
     public override void Enter_Camera()
     {
-        Set_Renderer(0); // 2D
+        Set_Renderer(1); // 3D
     }
 
     public override void Update_Camera()
@@ -18,7 +18,7 @@ public class CameraBasic_2D : CameraBase
 
     public override void Exit_Camera()
     {
-
+        
     }
 
     private void Set_Renderer(int rendererindex)

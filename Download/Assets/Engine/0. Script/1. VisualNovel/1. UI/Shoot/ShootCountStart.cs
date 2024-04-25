@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShootCountStart : MonoBehaviour
 {
     [Header("GameObject")]
     [SerializeField] private GameObject m_count;
-    [SerializeField] private ShootContainerBelt m_containerBelt;
 
     [Header("Resource")]
     [SerializeField] private Sprite[] m_image;
-    [SerializeField] Texture2D m_cursor;
 
     private bool  m_click = false;
     private int   m_Index = 0;
@@ -29,6 +28,9 @@ public class ShootCountStart : MonoBehaviour
     {
         if(!m_click)
         {
+            if (EventSystem.current.IsPointerOverGameObject()) // 커서가 UI 위치상에 존재할 시 반환
+                return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 m_click = true;
@@ -65,11 +67,7 @@ public class ShootCountStart : MonoBehaviour
 
     private void Finish_Count()
     {
-        VisualNovelManager.Instance.ShootGameStart = true;
-        CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
-        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
-
-        m_containerBelt.Start_Belt();
+        VisualNovelManager.Instance.Play_ShootGame();
         Destroy(gameObject);
     }
 }
