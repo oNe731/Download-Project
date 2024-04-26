@@ -112,6 +112,10 @@ public class Dialog_VN : MonoBehaviour
                     case DIALOGEVENT_TYPE.DET_SHAKING:
                         Update_Shaking();
                         break;
+
+                    case DIALOGEVENT_TYPE.DET_LIKEADD:
+                        Update_None();
+                        break;
                 }
             }
             else // 다이얼로그 종료
@@ -310,6 +314,13 @@ public class Dialog_VN : MonoBehaviour
         // 타이핑 끝난 상태일 시 선택지 생성
         if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
             Create_ChoiceButton();
+
+        // 다이얼로그 이벤트가 호감도 증가일 시 타이핑 종료 시 호감도 증가
+        if (m_dialogs[m_dialogIndex - 1].dialogEvent == DIALOGEVENT_TYPE.DET_LIKEADD)
+        {
+            VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[m_dialogIndex - 1].owner]++;
+            m_heartScr.Set_Owner(m_dialogs[m_dialogIndex - 1].owner);
+        }
     }
 
     IEnumerator Use_Arrow(GameObject arrow)
