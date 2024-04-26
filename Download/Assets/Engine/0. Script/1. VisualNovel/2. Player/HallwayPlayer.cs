@@ -8,6 +8,7 @@ public class HallwayPlayer : MonoBehaviour
     [SerializeField] private float m_moveSpeed = 5.0f;
     [SerializeField] private float m_lerpSpeed = 5.0f;
 
+    private bool m_isLock = true;
     private Rigidbody m_rigidbody;
 
     private void Awake()
@@ -17,7 +18,8 @@ public class HallwayPlayer : MonoBehaviour
 
     public void Update()
     {
-        Input_Player();
+        if(!m_isLock)
+            Input_Player();
     }
 
     private void Input_Player()
@@ -36,9 +38,18 @@ public class HallwayPlayer : MonoBehaviour
             Velocity += transform.right * m_moveSpeed * Time.deltaTime;
         else if (Input.GetKey(KeyCode.A))
             Velocity += -transform.right * m_moveSpeed * Time.deltaTime;
-        m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, Velocity, Time.deltaTime * m_lerpSpeed);
 
-# region 기존 이동 코드
+        if (Velocity == Vector3.zero)
+        {
+            m_rigidbody.isKinematic = true;
+        }
+        else
+        {
+            m_rigidbody.isKinematic = false;
+            m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, Velocity, Time.deltaTime * m_lerpSpeed);
+        }
+
+        #region 기존 이동 코드
         // float InputX = Input.GetAxis("Horizontal");
         // float InputZ = Input.GetAxis("Vertical");
         // if(InputX != 0.0f || InputZ != 0.0f)
@@ -55,6 +66,13 @@ public class HallwayPlayer : MonoBehaviour
         //     if (!Physics.Raycast(rayOrigin, worldDirection, 0.4f, LayerMask.GetMask("Wall"))) // 벽이 없으면 해당 방향으로 이동.
         //          transform.Translate(localDirection * m_moveSpeed * Time.deltaTime);           // Translate은 해당 방향에 콜라이더 여부를 검사하지 않고 이동함.
         //     }
-# endregion
+        #endregion
+    }
+
+    public void Set_Lock(bool isLock)
+    {
+        m_isLock = isLock;
+        if (isLock)
+            m_rigidbody.isKinematic = true;
     }
 }
