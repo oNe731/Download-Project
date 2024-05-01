@@ -6,17 +6,17 @@ using TMPro;
 
 public class NpcLike : MonoBehaviour
 {
-    [SerializeField] private NPCTYPE m_npcIndex = NPCTYPE.OT_END;
+    [SerializeField] private VisualNovelManager.NPCTYPE m_npcIndex = VisualNovelManager.NPCTYPE.OT_END;
     [SerializeField] private GameObject[] m_heart;
 
     private bool    m_update = false;
     private Image[] m_images = null;
 
-    public void Set_Owner(NPCTYPE index)
+    public void Set_Owner(VisualNovelManager.NPCTYPE index)
     {
-        if (index == NPCTYPE.OT_END)
+        if (index == VisualNovelManager.NPCTYPE.OT_END)
             return;
-        else if (index == NPCTYPE.OT_WHITE)
+        else if (index == VisualNovelManager.NPCTYPE.OT_WHITE)
         {
             Active_Heart(false);
             return;
@@ -39,7 +39,7 @@ public class NpcLike : MonoBehaviour
 
     private void Update()
     {
-        if (NPCTYPE.OT_END == m_npcIndex)
+        if (VisualNovelManager.NPCTYPE.OT_END == m_npcIndex)
             return;
 
         if (true == m_update)
@@ -58,17 +58,17 @@ public class NpcLike : MonoBehaviour
         Sprite spriteOff = null;
         switch (m_npcIndex)
         {
-            case NPCTYPE.OT_BLUE:
+            case VisualNovelManager.NPCTYPE.OT_BLUE:
                 spriteOn  = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartON"];
                 spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartOFF"];
                 break;
 
-            case NPCTYPE.OT_YELLOW:
+            case VisualNovelManager.NPCTYPE.OT_YELLOW:
                 spriteOn  = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartON"];
                 spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartOFF"];
                 break;
 
-            case NPCTYPE.OT_PINK:
+            case VisualNovelManager.NPCTYPE.OT_PINK:
                 spriteOn  = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartON"];
                 spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartOFF"];
                 break;

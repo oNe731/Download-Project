@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private GameObject m_fadePanalObj;
+    [SerializeField] private GameObject m_fadeCanvas;
     private Image m_fadeImg; // 페이드에 사용할 이미지
 
     private bool isFade = false;
@@ -25,9 +25,19 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if (null == m_instance)
+        {
             m_instance = this;
+            DontDestroyOnLoad(this.gameObject);
 
-        m_fadeImg = m_fadePanalObj.GetComponent<Image>();
+            m_fadeImg = m_fadeCanvas.GetComponentInChildren<Image>();
+            DontDestroyOnLoad(m_fadeCanvas);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+
     }
 
     public void Start_FadeIn(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -65,7 +75,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator FadeCoroutine(float startAlpha, float targetAlpha, float duration, Color color, Action onComplete, float waitTime, bool panalOff)
     {
         isFade = true;
-        m_fadePanalObj.SetActive(true);
+        m_fadeCanvas.SetActive(true);
         float currentTime = 0f;
 
         Color startColor = color;
@@ -86,7 +96,7 @@ public class UIManager : MonoBehaviour
 
         if (panalOff)
         {
-            m_fadePanalObj.SetActive(false);
+            m_fadeCanvas.SetActive(false);
         }
 
         if (onComplete != null)

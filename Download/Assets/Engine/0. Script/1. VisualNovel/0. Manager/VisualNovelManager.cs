@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using UnityEngine;
 using TMPro;
-
-// # 미연시 -> 사격 -> 미연시 -> 추격 ==> 서부(다음 씬)
-public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END };
-public enum NPCTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
 
 public class VisualNovelManager : MonoBehaviour
 {
@@ -21,6 +18,11 @@ public class VisualNovelManager : MonoBehaviour
         }
     }
 
+    // 미연시 -> 사격 -> 미연시 -> 추격 => 서부 레벨
+    public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END };
+    public enum NPCTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
+
+    [SerializeField] GameObject m_StartPanel;
     [SerializeField] private LEVELSTATE m_StartState = LEVELSTATE.LS_END;
     private LEVELSTATE m_LevelState = LEVELSTATE.LS_END;
 
@@ -141,7 +143,7 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
-        Change_Level(m_StartState);
+        //Change_Level(m_StartState);
     }
 
     private void Update()
@@ -582,6 +584,17 @@ public class VisualNovelManager : MonoBehaviour
         return position;
     }
     #endregion
+
+    public void Button_Start()
+    {
+        Destroy(m_StartPanel);
+        Change_Level(m_StartState);
+    }
+
+    public void Button_Exit()
+    {
+        SceneManager.LoadScene("Window");
+    }
 
     private void Load_Resource()
     {

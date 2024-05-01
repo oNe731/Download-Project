@@ -23,7 +23,14 @@ public class CursorManager : MonoBehaviour
     private void Awake()
     {
         if (null == m_instance)
+        {
             m_instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void Change_Cursor(CURSORTYPE type)

@@ -24,7 +24,7 @@ public class DialogData_VN
 {
     public DIALOGEVENT_TYPE dialogEvent;
 
-    public NPCTYPE owner;
+    public VisualNovelManager.NPCTYPE owner;
     public string nameText;
     public string dialogText;
 

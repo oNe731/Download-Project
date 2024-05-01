@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Button_StartScene : MonoBehaviour
+public class StartManager : MonoBehaviour
 {
     public void Button_Start()
     {
-        SceneManager.LoadScene("VisualNovel"); // Intro
+        SceneManager.LoadScene("Window"); // Intro
     }
 
     public void Button_Exit()
