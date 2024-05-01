@@ -95,8 +95,16 @@ public class VisualNovelManager : MonoBehaviour
     }
 
     private List<GameObject> m_Levers = new List<GameObject>();
+
+    [SerializeField] private GameObject m_playerObj;
+    private GameObject m_yandereObj;
+    private HallwayPlayer m_player;
+    private HallwayYandere m_yandere;
     private Transform m_playerTr;
-    private GameObject m_boss;
+    private Transform m_yandereTr;
+    public GameObject PlayerObj { get { return m_playerObj; } }
+    public HallwayPlayer Player { get { return m_player; } }
+    public Transform PlayerTr { get { return m_playerTr; } }
 #endregion
 
 #region Resource
@@ -377,6 +385,9 @@ public class VisualNovelManager : MonoBehaviour
 #region LS_CHASEGAME
     private void Start_ChaseGame()
     {
+        m_player   = m_playerObj.GetComponent<HallwayPlayer>();
+        m_playerTr = m_playerObj.GetComponent<Transform>();
+
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
         CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
@@ -390,8 +401,6 @@ public class VisualNovelManager : MonoBehaviour
 
         //// m_shootGame.SetActive(false);
         m_chaseGame.SetActive(true);
-        m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        m_boss = GameObject.FindWithTag("Boss");
     }
 
     public void Play_ChaseGame()
@@ -400,6 +409,7 @@ public class VisualNovelManager : MonoBehaviour
 
         Create_CD();
         Create_Lever(m_LeverMaxCount);
+        m_player.Set_Lock(false);
 
         UIManager.Instance.Start_FadeIn(1f, Color.black);
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
@@ -423,6 +433,31 @@ public class VisualNovelManager : MonoBehaviour
     private void Fail_ChaseGame()
     {
         // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작(재도전 UI 출력)
+    }
+
+    public void Create_Monster()
+    {
+        // 캐릭터 락
+        m_player.Set_Lock(true);
+
+        // 카메라 교체 및 설정
+        CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+        CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+        camera.Change_Position(new Vector3(0f, 1.2f, 20f));
+        camera.Change_Rotation(new Vector3(0f, -180f, 25f));
+
+        // 얀데레 생성
+        m_yandereObj = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Character/Yandere"));
+        m_yandere = m_yandereObj.GetComponent<HallwayYandere>();
+        m_yandereTr = m_yandereObj.GetComponent<Transform>();
+        m_yandereTr.position = new Vector3(0f, 0f, 2.8f);
+
+        // 페이드 인
+        UIManager.Instance.Start_FadeIn(1f, Color.black);
+        // 돌면서 특정거리까지 줌인
+        camera.Start_Cutscene(new Vector3(0f, 1.2f, 5.5f), new Vector3(0f, 180f, -16f), 2f, 0.5f);  
+        // 캐릭터가 말을 할때 얀데레 얼굴 클로즈업
+        // 
     }
 
     private void Create_CD()
@@ -490,7 +525,8 @@ public class VisualNovelManager : MonoBehaviour
     public void Use_Lever(GameObject self)
     {
         // 아이템 효과 적용
-        m_boss.GetComponent<HallwayYandere>().Used_Lever();
+        if(m_yandereObj != null)
+            m_yandere.Used_Lever();
 
         // 현재 아이템 삭제
         for (int i = 0; i < m_Levers.Count; i++)
