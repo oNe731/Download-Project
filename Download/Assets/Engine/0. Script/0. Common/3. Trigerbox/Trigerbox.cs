@@ -23,7 +23,7 @@ public class Trigerbox : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             // 달리면서 페이드 아웃
-            UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.Create_Monster(), 1f, false);
+            UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Create_Monster(), 1f, false);
             Destroy(gameObject);
         }
     }

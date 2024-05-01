@@ -15,7 +15,7 @@ public class Yandere_Chase : State<HallwayYandere>
     {
         m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
         m_ownerTr = m_stateMachine.Owner.GetComponent<Transform>();
-        m_playerTr = VisualNovelManager.Instance.PlayerTr;
+        m_playerTr = VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().PlayerTr;
     }
 
     public override void Enter_State()

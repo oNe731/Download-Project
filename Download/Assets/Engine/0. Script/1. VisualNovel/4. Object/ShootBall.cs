@@ -76,7 +76,7 @@ public class ShootBall : MonoBehaviour
     private void LateUpdate()
     {
         // 게임 종료 시 존재하는 공 삭제
-        if (VisualNovelManager.Instance.ShootGameOver)
+        if (VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameOver)
         {
             Destroy(m_targetUI);
             Destroy(gameObject);

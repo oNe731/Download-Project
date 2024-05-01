@@ -67,7 +67,7 @@ public class ShootCountStart : MonoBehaviour
 
     private void Finish_Count()
     {
-        VisualNovelManager.Instance.Play_ShootGame();
+        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
         Destroy(gameObject);
     }
 }

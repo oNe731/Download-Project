@@ -35,12 +35,11 @@ public class StateMachine<T> where T : class
     public void Change_State(int stateIndex)
     {
         if (m_curState != -1)
-        {
-            m_preState = m_curState;
             m_states[(int)m_curState].Exit_State();
-        }
 
+        m_preState = m_curState;
         m_curState = stateIndex;
+
         m_states[(int)m_curState].Enter_State();
     }
 

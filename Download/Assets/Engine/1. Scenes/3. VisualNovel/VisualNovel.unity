@@ -23090,7 +23090,7 @@ GameObject:
   - component: {fileID: 1123472720}
   - component: {fileID: 1123472721}
   m_Layer: 0
-  m_Name: Background
+  m_Name: Background_ContainerBelt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32911,26 +32911,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartPanel: {fileID: 954649935}
-  m_StartState: 0
   m_dialog: {fileID: 1439278259}
-  m_likeability: {fileID: 1226568886}
-  m_dialogHeart:
+  m_likeabilityPanel: {fileID: 1226568886}
+  m_likeabilityHeartPanel:
   - {fileID: 1792825147}
   - {fileID: 1186022774}
   - {fileID: 1623270577}
   m_shootGame: {fileID: 2137913914}
   m_countTxt: {fileID: 894188824}
-  m_belt: {fileID: 1123472721}
-  m_dollType: 0
+  m_containerBelt: {fileID: 1123472721}
   m_chaseGame: {fileID: 1157692423}
-  m_Cd: {fileID: 7502156817115982813, guid: 8e2ace860d58ef447925a14b2e113f55, type: 3}
-  m_CdTextCount: {fileID: 1710255513}
-  m_CdMaxCount: 5
-  m_CdCurrentCount: 0
-  m_CdMinDistance: 20
-  m_CdMaxDistance: 200
-  m_Lever: {fileID: 1672549527119313748, guid: 363e17ab520c56647a87a97d86d7bb8c, type: 3}
-  m_LeverMaxCount: 2
+  m_cdCountTxt: {fileID: 1710255513}
+  m_playerObj: {fileID: 276210097}
   m_RandomPos:
   - {fileID: 145065089}
   - {fileID: 310356926}
@@ -32952,8 +32944,6 @@ MonoBehaviour:
   - {fileID: 1088552292}
   - {fileID: 1379647168}
   - {fileID: 300985421}
-  m_Light: []
-  m_playerObj: {fileID: 276210097}
 --- !u!4 &1627372300
 Transform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class HallwayCD : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            VisualNovelManager.Instance.Get_CD();
+            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD();
             Destroy(gameObject);
         }
     }

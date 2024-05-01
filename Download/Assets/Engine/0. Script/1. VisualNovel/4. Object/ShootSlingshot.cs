@@ -44,7 +44,7 @@ public class ShootSlingshot : MonoBehaviour
 
     private void Update()
     {
-        if (!VisualNovelManager.Instance.ShootGameStart || VisualNovelManager.Instance.ShootGameStop)
+        if (!VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStart || VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop)
             return;
 
         if (m_use)

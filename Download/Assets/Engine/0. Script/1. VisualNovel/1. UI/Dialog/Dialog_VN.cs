@@ -204,19 +204,19 @@ public class Dialog_VN : MonoBehaviour
     private void Start_ShootGame()
     {
         UIManager.Instance.Start_FadeOut(1f, Color.black,
-            () => VisualNovelManager.Instance.Change_Level(VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
+            () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
     }
 
     private void Start_ChaseGame()
     {
         UIManager.Instance.Start_FadeOut(1f, Color.black,
-            () => VisualNovelManager.Instance.Change_Level(VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
+            () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
     }
 
     private void Play_ChaseGame()
     {
         UIManager.Instance.Start_FadeOut(1f, Color.black,
-            () => VisualNovelManager.Instance.Play_ChaseGame(), 0.5f, false);
+            () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level(), 0.5f, false);
     }
 
     private void Update_Shaking()

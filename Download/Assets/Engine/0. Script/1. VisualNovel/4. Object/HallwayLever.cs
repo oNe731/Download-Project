@@ -23,7 +23,7 @@ public class HallwayLever : MonoBehaviour
                 m_time += Time.deltaTime;
                 if (m_time > m_waitTime)
                 {
-                    VisualNovelManager.Instance.Use_Lever(gameObject);
+                    VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Use_Lever(gameObject);
                     m_use = true;
                 }
             }

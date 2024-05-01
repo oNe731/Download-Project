@@ -33,7 +33,7 @@ public class Yandere_Wait : State<HallwayYandere>
     private void Continue_Play() // 컷씬 재생 후 게임 재진행
     {
         CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
-        VisualNovelManager.Instance.Player.Set_Lock(false);
+        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Player.Set_Lock(false);
 
         m_stateMachine.Change_State((int)HallwayYandere.YandereState.ST_CHASE);
 

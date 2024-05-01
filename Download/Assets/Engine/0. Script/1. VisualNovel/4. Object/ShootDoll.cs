@@ -82,7 +82,7 @@ public class ShootDoll : MonoBehaviour
                 else if (!m_over && m_clearTime > 4.5) // 4) 1.5초 뒤 페이드 아웃으로 전환
                 {
                     m_over = true;
-                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.Change_Level(VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
                 }
             }
         }
@@ -112,8 +112,8 @@ public class ShootDoll : MonoBehaviour
             m_hp--;
             if(m_hp <= 0) // 게임 종료
             {
-                VisualNovelManager.Instance.ShootGameStop = true;
-                VisualNovelManager.Instance.DollType = m_dollType;
+                VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop = true;
+                VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().DollType = m_dollType;
                 m_belt.UseBelt = false; // 1) 인형 일시 정지
                 m_clear = true;
             }

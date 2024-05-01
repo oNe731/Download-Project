@@ -15,12 +15,12 @@ public class HallwayLight : MonoBehaviour
         set { m_blink = value; }
     }
 
-    private void Awake()
+    private void Start()
     {
         m_light = GetComponent<Light>();
         m_changeTime = Random.Range(1.0f, 3.0f);
 
-        VisualNovelManager.Instance.Light.Add(this);
+        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Light.Add(this);
     }
 
     private void Update()
