@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Dialog_VN : MonoBehaviour
+public class Dialog_VN : Dialog<DialogData_VN>
 {
     [Header("GameObject")]
     [SerializeField] private GameObject m_darkPanelObj;
@@ -17,12 +17,7 @@ public class Dialog_VN : MonoBehaviour
     [SerializeField] private GameObject m_arrowObj;
     [SerializeField] private TMP_Text m_nameTxt;
     [SerializeField] private TMP_Text m_dialogTxt;
-    [SerializeField] private NpcLike m_heartScr;
-
-    [Header("Prefab")]
-    [SerializeField] private GameObject m_choiceButtonPre;
-
-    public DialogData_VN[] m_dialogs;
+    [SerializeField] private NpcLike  m_heartScr;
 
     private Image m_backgroundImg;
     private Image[] m_standingImg;
@@ -30,12 +25,6 @@ public class Dialog_VN : MonoBehaviour
     private Image m_dialogBoxImg;
     private Image m_ellipseImg;
     private Image m_arrowImg;
-
-    private bool m_isTyping = false;
-    private bool m_cancelTyping = false;
-    private int  m_dialogIndex = 0;
-    private float m_typeSpeed = 0.05f;
-    private float m_arrowSpeed = 0.5f;
 
     private int m_choiceIndex = 0;
     private List<GameObject> m_choice_Button = new List<GameObject>();
@@ -81,39 +70,39 @@ public class Dialog_VN : MonoBehaviour
             {
                 switch(m_dialogs[m_dialogIndex].dialogEvent)
                 {
-                    case DIALOGEVENT_TYPE.DET_NONE:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_NONE:
                         Update_None();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_FADEIN:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_FADEIN:
                         Update_FadeIn();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_FADEOUT:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_FADEOUT:
                         Update_FadeOut();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_FADEOUTIN:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_FADEOUTIN:
                         Update_FadeOutIn();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_STARTSHOOT:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_STARTSHOOT:
                         Start_ShootGame();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_STARTCHASE:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_STARTCHASE:
                         Start_ChaseGame();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_PLAYCHASE:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_PLAYCHASE:
                         Play_ChaseGame();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_SHAKING:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_SHAKING:
                         Update_Shaking();
                         break;
 
-                    case DIALOGEVENT_TYPE.DET_LIKEADD:
+                    case DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD:
                         Update_None();
                         break;
                 }
@@ -128,6 +117,7 @@ public class Dialog_VN : MonoBehaviour
         }
     }
 
+    #region Update
     private void Update_Basic(int index)
     {
         if (!string.IsNullOrEmpty(m_dialogs[index].nameFont))
@@ -225,8 +215,9 @@ public class Dialog_VN : MonoBehaviour
 
         // 카메라 쉐이킹
     }
+    #endregion
 
-#region Etc
+    #region Each
     private void Update_Standing(int index)
     {
         switch (m_dialogs[index].standingSpr.Count)
@@ -290,48 +281,6 @@ public class Dialog_VN : MonoBehaviour
         }
     }
 
-    IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
-    {
-        m_isTyping = true;
-        m_cancelTyping = false;
-
-        currentText.text = "";
-        foreach (char letter in m_dialogs[m_dialogIndex].dialogText.ToCharArray())
-        {
-            if (m_cancelTyping)
-            {
-                currentText.text = m_dialogs[m_dialogIndex - 1].dialogText;
-                break;
-            }
-
-            currentText.text += letter;
-            yield return new WaitForSeconds(m_typeSpeed);
-        }
-
-        m_isTyping = false;
-        StartCoroutine(Use_Arrow(arrow));
-
-        // 타이핑 끝난 상태일 시 선택지 생성
-        if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
-            Create_ChoiceButton();
-
-        // 다이얼로그 이벤트가 호감도 증가일 시 타이핑 종료 시 호감도 증가
-        if (m_dialogs[m_dialogIndex - 1].dialogEvent == DIALOGEVENT_TYPE.DET_LIKEADD)
-        {
-            VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[m_dialogIndex - 1].owner]++;
-            m_heartScr.Set_Owner(m_dialogs[m_dialogIndex - 1].owner);
-        }
-    }
-
-    IEnumerator Use_Arrow(GameObject arrow)
-    {
-        while (false == m_isTyping)
-        {
-            arrow.SetActive(!arrow.activeSelf);
-            yield return new WaitForSeconds(m_arrowSpeed);
-        }
-    }
-
     private void Create_ChoiceButton()
     {
         m_darkPanelObj.SetActive(true);
@@ -341,7 +290,7 @@ public class Dialog_VN : MonoBehaviour
         {
             int ButtonIndex = i + 1; // 버튼 고유 인덱스
 
-            GameObject Clone = Instantiate(m_choiceButtonPre);
+            GameObject Clone = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/UI/Button_Choice_VN"));
             if (Clone)
             {
                 Clone.transform.SetParent(gameObject.transform);
@@ -380,11 +329,11 @@ public class Dialog_VN : MonoBehaviour
     {
         switch (m_dialogs[m_dialogIndex - 1].choiceEventType[index - 1])
         {
-            case CHOICEEVENT_TYPE.CET_CLOSE: // 다이얼로그 종료
+            case DialogData_VN.CHOICEEVENT_TYPE.CET_CLOSE: // 다이얼로그 종료
                 Close_Dialog();
                 break;
 
-            case CHOICEEVENT_TYPE.CET_DIALOG: // 다음 다이얼로그 불러오고 해당 다이얼로그로 이어서 출력
+            case DialogData_VN.CHOICEEVENT_TYPE.CET_DIALOG: // 다음 다이얼로그 불러오고 해당 다이얼로그로 이어서 출력
                 Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex - 1].choiceDialog[index - 1])); ;
                 break;
         }
@@ -402,6 +351,13 @@ public class Dialog_VN : MonoBehaviour
         }
     }
 
+    public void Close_Background()
+    {
+        m_backgroundObj.SetActive(false);
+    }
+    #endregion
+
+    #region Common
     public void Start_Dialog(DialogData_VN[] dialogs = null)
     {
         m_dialogs = dialogs;
@@ -442,9 +398,46 @@ public class Dialog_VN : MonoBehaviour
         m_dialogBoxObj.SetActive(false);
     }
 
-    public void Close_Background()
+    IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
     {
-        m_backgroundObj.SetActive(false);
+        m_isTyping = true;
+        m_cancelTyping = false;
+
+        currentText.text = "";
+        foreach (char letter in m_dialogs[m_dialogIndex].dialogText.ToCharArray())
+        {
+            if (m_cancelTyping)
+            {
+                currentText.text = m_dialogs[m_dialogIndex - 1].dialogText;
+                break;
+            }
+
+            currentText.text += letter;
+            yield return new WaitForSeconds(m_typeSpeed);
+        }
+
+        m_isTyping = false;
+        StartCoroutine(Use_Arrow(arrow));
+
+        // 타이핑 끝난 상태일 시 선택지 생성
+        if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
+            Create_ChoiceButton();
+
+        // 다이얼로그 이벤트가 호감도 증가일 시 타이핑 종료 시 호감도 증가
+        if (m_dialogs[m_dialogIndex - 1].dialogEvent == DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD)
+        {
+            VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[m_dialogIndex - 1].owner]++;
+            m_heartScr.Set_Owner(m_dialogs[m_dialogIndex - 1].owner);
+        }
     }
-#endregion
+
+    IEnumerator Use_Arrow(GameObject arrow)
+    {
+        while (false == m_isTyping)
+        {
+            arrow.SetActive(!arrow.activeSelf);
+            yield return new WaitForSeconds(m_arrowSpeed);
+        }
+    }
+    #endregion
 }
