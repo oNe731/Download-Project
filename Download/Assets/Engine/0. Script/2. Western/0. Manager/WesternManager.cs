@@ -16,17 +16,28 @@ public class WesternManager : MonoBehaviour
 
     private static WesternManager m_instance = null;
 
+    [SerializeField] private LEVELSTATE m_startState = LEVELSTATE.LS_IntroLv1;
+
     [Header("[ LS_START ]")]
     [SerializeField] GameObject m_StartPanel;
 
     [Header("[ LS_INTRO ]")]
-    [SerializeField] Dialog_WT m_dialog;
+    [SerializeField] GameObject m_introPanel;
+    [SerializeField] Dialog_IntroWT m_dialogIntro;
 
+    [Header("[ LS_MAIN ]")]
+    [SerializeField] GameObject m_MainPanel;
+    [SerializeField] Dialog_PlayWT m_dialogPlay;
+    [SerializeField] GameObject m_playButton;
 
     private LevelController m_levelController = null;
 
     public static WesternManager Instance => m_instance;
-    public Dialog_WT Dialog => m_dialog;
+    public GameObject IntroPanel => m_introPanel;
+    public Dialog_IntroWT DialogIntro => m_dialogIntro;
+    public GameObject MainPanel => m_MainPanel;
+    public Dialog_PlayWT DialogPlay => m_dialogPlay;
+    public GameObject PlayButton => m_playButton;
     public LevelController LevelController => m_levelController;
 
     #region Resource
@@ -67,21 +78,44 @@ public class WesternManager : MonoBehaviour
         m_levelController.Update_Level();
     }
 
+    private void LateUpdate()
+    {
+        m_levelController.LateUpdate_Level();
+    }
+
     private void Load_Resource()
     {
         // 배경 이미지 할당
-        m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/Background/Background_01"));
-        m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/Background/Background_02"));
+        m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_01"));
+        m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_02"));
     }
 
     public void Button_Start()
     {
         Destroy(m_StartPanel);
-        m_levelController.Change_Level((int)LEVELSTATE.LS_IntroLv1); // LS_IntroLv1
+        m_levelController.Change_Level((int)m_startState);
     }
 
     public void Button_Exit()
     {
         SceneManager.LoadScene("Window");
+    }
+
+    public void Button_Play()
+    {
+        switch(m_levelController.Curlevel)
+        {
+            case (int)LEVELSTATE.LS_MainLv1:
+                m_levelController.Get_CurrentLevel<Western_MainLv1>().Button_Play();
+                break;
+
+            case (int)LEVELSTATE.LS_MainLv2:
+                m_levelController.Get_CurrentLevel<Western_MainLv2>().Button_Play();
+                break;
+
+            case (int)LEVELSTATE.LS_MainLv3:
+                m_levelController.Get_CurrentLevel<Western_MainLv3>().Button_Play();
+                break;
+        }
     }
 }

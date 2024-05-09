@@ -10,7 +10,7 @@ public class Western_IntroLv1 : Level
 
     public override void Enter_Level()
     {
-        WesternManager.Instance.Dialog.GetComponent<Dialog_WT>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_WT>("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog1_Intro1.json"));
+        WesternManager.Instance.DialogIntro.GetComponent<Dialog_IntroWT>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_IntroWT>("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog1_Intro1.json"));
     }
 
     public override void Play_Level()
@@ -23,5 +23,6 @@ public class Western_IntroLv1 : Level
 
     public override void Exit_Level()
     {
+        WesternManager.Instance.IntroPanel.SetActive(false);
     }
 }
