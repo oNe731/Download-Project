@@ -21,6 +21,10 @@ public class Level : MonoBehaviour
     {
     }
 
+    public virtual void LateUpdate_Level()
+    {
+    }
+
     public virtual void Exit_Level()
     {
     }

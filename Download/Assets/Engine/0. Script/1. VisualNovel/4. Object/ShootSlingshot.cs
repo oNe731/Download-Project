@@ -176,5 +176,6 @@ public class ShootSlingshot : MonoBehaviour
             timer += Time.deltaTime;
         }
         transform.localPosition = m_StartPosition;
+        yield break;
     }
 }

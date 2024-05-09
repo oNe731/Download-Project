@@ -52,10 +52,14 @@ public class ShootDoll : MonoBehaviour
     private float m_clearTime = 0f;
     private bool m_over = false;
 
+    Color m_startColor;
+
     private void Start()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_collider = GetComponent<CapsuleCollider>();
+
+        m_startColor = m_spriteRenderer.color;
     }
 
     private void Update()
@@ -119,6 +123,7 @@ public class ShootDoll : MonoBehaviour
             }
             else
             {
+                StopCoroutine(Blink());
                 StartCoroutine(Blink());
             }
 
@@ -131,7 +136,7 @@ public class ShootDoll : MonoBehaviour
 
     private IEnumerator Blink()
     {
-        Color startColor = m_spriteRenderer.color;
+        Color startColor = m_startColor;
 
         int Count = 0;
         while (Count < m_blinkCount)
@@ -155,7 +160,9 @@ public class ShootDoll : MonoBehaviour
 
             Count++;
         }
+
         m_spriteRenderer.color = startColor;
+        yield break;
     }
 
     private void Create_Particle()

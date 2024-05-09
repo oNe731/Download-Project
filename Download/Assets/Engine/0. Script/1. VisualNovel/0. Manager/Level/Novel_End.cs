@@ -11,7 +11,7 @@ public class Novel_End : Level
     public override void Enter_Level()
     {
         VisualNovelManager.Instance.Dialog.SetActive(true);
-        switch (m_levelController.Get_PreviousLevel<Novel_Shoot>().DollType)
+        switch (m_levelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).DollType)
         {
             case DOLLTYPE.DT_BIRD:
                 VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog2_DollBird.json"));

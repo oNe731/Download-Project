@@ -72,6 +72,14 @@ public class UIManager : MonoBehaviour
         StartCoroutine(FadeCoroutine(0f, 1f, duration, color, () => Start_FadeIn(duration, color, onComplete), waitTime, panalOff));
     }
 
+    public void Start_FadeWaitAction(float startAlpha, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
+    {
+        if (isFade)
+            return;
+
+        StartCoroutine(FadeWaitAction(startAlpha, color, onComplete, waitTime, panalOff));
+    }
+
     private IEnumerator FadeCoroutine(float startAlpha, float targetAlpha, float duration, Color color, Action onComplete, float waitTime, bool panalOff)
     {
         isFade = true;
@@ -104,5 +112,25 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             onComplete?.Invoke(); // 콜백 함수 호출
         }
+
+        yield break;
+    }
+
+    private IEnumerator FadeWaitAction(float startAlpha, Color color, Action onComplete, float waitTime, bool panalOff)
+    {
+        isFade = true;
+        m_fadeCanvas.SetActive(true);
+        m_fadeImg.color = new Color(color.r, color.g, color.b, startAlpha);
+
+        yield return new WaitForSeconds(waitTime);
+
+        isFade = false;
+        if (panalOff)
+            m_fadeCanvas.SetActive(false);
+
+        if (onComplete != null)
+            onComplete?.Invoke(); // 콜백 함수 호출
+
+        yield break;
     }
 }

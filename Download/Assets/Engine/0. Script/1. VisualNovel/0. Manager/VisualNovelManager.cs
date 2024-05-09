@@ -12,6 +12,8 @@ public class VisualNovelManager : MonoBehaviour
 
     private static VisualNovelManager m_instance = null;
 
+    [SerializeField] private LEVELSTATE m_startState = LEVELSTATE.LS_NOVELBEGIN;
+
     [Header("[ LS_START ]")]
     [SerializeField] GameObject m_StartPanel;
 
@@ -178,7 +180,7 @@ public class VisualNovelManager : MonoBehaviour
     public void Button_Start()
     {
         Destroy(m_StartPanel);
-        m_levelController.Change_Level((int)LEVELSTATE.LS_NOVELBEGIN);
+        m_levelController.Change_Level((int)m_startState);
     }
 
     public void Button_Exit()

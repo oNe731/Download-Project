@@ -429,6 +429,8 @@ public class Dialog_VN : Dialog<DialogData_VN>
             VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[m_dialogIndex - 1].owner]++;
             m_heartScr.Set_Owner(m_dialogs[m_dialogIndex - 1].owner);
         }
+
+        yield break;
     }
 
     IEnumerator Use_Arrow(GameObject arrow)
@@ -438,6 +440,7 @@ public class Dialog_VN : Dialog<DialogData_VN>
             arrow.SetActive(!arrow.activeSelf);
             yield return new WaitForSeconds(m_arrowSpeed);
         }
+        yield break;
     }
     #endregion
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Novel_Shoot : Level
 {
-    private DOLLTYPE m_dollType = DOLLTYPE.DT_END;
+    private DOLLTYPE m_dollType = DOLLTYPE.DT_FAIL;
 
     private bool m_shootGameStart = false;
     private bool m_shootGameStop = false;

@@ -30,6 +30,13 @@ public class LevelController : MonoBehaviour
         m_levels[(int)m_curlevel].Update_Level();
     }
 
+    public void LateUpdate_Level()
+    {
+        if (m_curlevel == -1)
+            return;
+
+        m_levels[(int)m_curlevel].LateUpdate_Level();
+    }
     public void Change_Level(int levelIndex)
     {
         if (levelIndex == -1)
@@ -56,11 +63,17 @@ public class LevelController : MonoBehaviour
 
     public T Get_CurrentLevel<T>() where T : Level
     {
+        if (m_curlevel == -1)
+            return null;
+
         return m_levels[(int)m_curlevel] as T;
     }
 
     public T Get_PreviousLevel<T>() where T : Level
     {
+        if (m_prelevel == -1)
+            return null;
+
         return m_levels[(int)m_prelevel] as T;
     }
 }
