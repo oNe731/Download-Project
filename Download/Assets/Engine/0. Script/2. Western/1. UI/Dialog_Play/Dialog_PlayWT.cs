@@ -22,8 +22,8 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     private Vector3 m_startPosition;
     private Vector3 m_targetPosition;
 
-    private float m_shakeTime   = 0.5f;
-    private float m_shakeAmount = 3.0f; // 세기
+    private float m_shakeTime   = 0.3f;
+    private float m_shakeAmount = 5.0f; // 세기
 
     public bool Active => m_active;
 
@@ -219,12 +219,12 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
         while (timer < m_shakeTime)
         {
             Vector2 randomPoint = Random.insideUnitCircle * m_shakeAmount;
-            m_dialogTxtrectTransform.anchoredPosition = startPosition + randomPoint;//Vector2.Lerp(startPosition, randomPoint, timer / m_shakeTime);
+            m_backgroundrectTransform.anchoredPosition = startPosition + randomPoint; //Vector2.Lerp(startPosition, randomPoint, timer / m_shakeTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
-        m_dialogTxtrectTransform.anchoredPosition = startPosition;
+        m_backgroundrectTransform.anchoredPosition = startPosition;
         yield break;
     }
     #endregion
