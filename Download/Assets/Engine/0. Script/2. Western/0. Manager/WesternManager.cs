@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 public class WesternManager : MonoBehaviour
 {
     public enum LEVELSTATE
-    {  // °ÔÀÓ ·Î°í -> ÀÎÆ®·ÎÄÆ¾À(Å¬¸¯/½ºÆäÀÌ½º/¿£ÅÍ·Î ³Ñ±è) -> ¼ö¹èÁöÈ®ÀÎÈ­¸é -> °ÔÀÓ ½ÃÀÛ
+    {  // ê²Œì„ ë¡œê³  -> ì¸íŠ¸ë¡œì»·ì”¬(í´ë¦­/ìŠ¤í˜ì´ìŠ¤/ì—”í„°ë¡œ ë„˜ê¹€) -> ìˆ˜ë°°ì§€í™•ì¸í™”ë©´ -> ê²Œì„ ì‹œì‘
         LS_IntroLv1, LS_MainLv1, LS_PlayLv1,
         LS_IntroLv2, LS_MainLv2, LS_PlayLv2,
         LS_IntroLv3, LS_MainLv3, LS_PlayLv3,
@@ -30,6 +30,7 @@ public class WesternManager : MonoBehaviour
     [SerializeField] Dialog_PlayWT m_dialogPlay;
     [SerializeField] GameObject m_playButton;
 
+    private bool m_isShoot = false;
     private LevelController m_levelController = null;
 
     public static WesternManager Instance => m_instance;
@@ -38,6 +39,11 @@ public class WesternManager : MonoBehaviour
     public GameObject MainPanel => m_MainPanel;
     public Dialog_PlayWT DialogPlay => m_dialogPlay;
     public GameObject PlayButton => m_playButton;
+    public bool IsShoot
+    {
+        get => m_isShoot;
+        set => m_isShoot = value;
+    }
     public LevelController LevelController => m_levelController;
 
     #region Resource
@@ -85,7 +91,7 @@ public class WesternManager : MonoBehaviour
 
     private void Load_Resource()
     {
-        // ¹è°æ ÀÌ¹ÌÁö ÇÒ´ç
+        // ë°°ê²½ ì´ë¯¸ì§€ í• ë‹¹
         m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_01"));
         m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_02"));
     }

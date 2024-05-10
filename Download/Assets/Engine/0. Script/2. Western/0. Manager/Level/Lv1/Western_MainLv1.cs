@@ -28,6 +28,7 @@ public class Western_MainLv1 : Level
 
     public override void Enter_Level()
     {
+        WesternManager.Instance.MainPanel.SetActive(true);
         WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = false;
         UIManager.Instance.Start_FadeIn(1f, Color.black, () => Start_Dialog());
     }
@@ -96,7 +97,7 @@ public class Western_MainLv1 : Level
             {
                 m_time = 0f;
 
-                GameObject bulletMark = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/UI/UI_BulletMark"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+                GameObject bulletMark = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_BulletMark"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
                 switch (m_shootCount)
                 {
                     case 0: // ÃÑÀÚ±¹ »ý¼º

@@ -26,6 +26,16 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     private float m_shakeAmount = 5.0f; // ¼¼±â
 
     public bool Active => m_active;
+    public bool LastIndex
+    {
+        get
+        {
+            if (m_dialogIndex == m_dialogs.Length && m_isTyping == false)
+                return true;
+            else
+                return false;
+        }
+    }
 
     private void Awake()
     {
@@ -214,7 +224,7 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     IEnumerator Shake_Dialog()
     {
         float timer = 0;
-        Vector2 startPosition = new Vector3(21.81082f, 4.509644f);
+        Vector2 startPosition = m_startPosition;// new Vector3(21.81082f, 4.509644f);
 
         while (timer < m_shakeTime)
         {
