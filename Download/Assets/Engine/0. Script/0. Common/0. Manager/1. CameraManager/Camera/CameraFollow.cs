@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollow : CameraBase
 {
-    private Transform m_mainCamera;
     private Transform m_cameraTarget;
 
     private Vector3 m_offset   = new Vector3(0.0f, 1.3f, 0.0f);

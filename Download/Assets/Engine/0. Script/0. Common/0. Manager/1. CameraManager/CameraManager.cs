@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CAMERATYPE { CT_BASIC_2D, CT_BASIC_3D, CT_CUTSCENE, CT_FOLLOW, CT_END };
+public enum CAMERATYPE { CT_BASIC_2D, CT_BASIC_3D, CT_CUTSCENE, CT_FOLLOW, CT_WALK, CT_END };
 
 public class CameraManager : MonoBehaviour
 {
@@ -38,6 +38,8 @@ public class CameraManager : MonoBehaviour
             m_cameras[(int)CAMERATYPE.CT_CUTSCENE].Initialize_Camera();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW] = new CameraFollow();
             m_cameras[(int)CAMERATYPE.CT_FOLLOW].Initialize_Camera();
+            m_cameras[(int)CAMERATYPE.CT_WALK] = new CameraWalk();
+            m_cameras[(int)CAMERATYPE.CT_WALK].Initialize_Camera();
         }
         else
         {
