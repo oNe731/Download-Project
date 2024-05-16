@@ -3,44 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Yandere_Stop : State<HallwayYandere>
+namespace VisualNovel
 {
-    private float m_time = 0f;
-    private float m_maxTime = 5f;
-
-    private GameObject m_minimapIcon;
-    private GameObject m_stopLight;
-    private NavMeshAgent m_agent;
-
-    public Yandere_Stop(StateMachine<HallwayYandere> stateMachine, GameObject minimapIcon, GameObject stopLight) : base(stateMachine)
+    public class Yandere_Stop : State<HallwayYandere>
     {
-        m_minimapIcon = minimapIcon;
-        m_stopLight   = stopLight;
+        private float m_time = 0f;
+        private float m_maxTime = 5f;
 
-        m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
-    }
+        private GameObject m_minimapIcon;
+        private GameObject m_stopLight;
+        private NavMeshAgent m_agent;
 
-    public override void Enter_State()
-    {
-        m_time = 0.0f;
-        m_agent.destination = m_agent.transform.position;
+        public Yandere_Stop(StateMachine<HallwayYandere> stateMachine, GameObject minimapIcon, GameObject stopLight) : base(stateMachine)
+        {
+            m_minimapIcon = minimapIcon;
+            m_stopLight = stopLight;
 
-        m_minimapIcon.SetActive(true);
-        m_stopLight.SetActive(true);
+            m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
+        }
 
-        // 파티클 생성
-    }
+        public override void Enter_State()
+        {
+            m_time = 0.0f;
+            m_agent.destination = m_agent.transform.position;
 
-    public override void Update_State()
-    {
-        m_time += Time.deltaTime;
-        if (m_time > m_maxTime)
-            m_stateMachine.Change_State(m_stateMachine.PreState);
-    }
+            m_minimapIcon.SetActive(true);
+            m_stopLight.SetActive(true);
 
-    public override void Exit_State()
-    {
-        m_minimapIcon.SetActive(false);
-        m_stopLight.SetActive(false);
+            // 파티클 생성
+        }
+
+        public override void Update_State()
+        {
+            m_time += Time.deltaTime;
+            if (m_time > m_maxTime)
+                m_stateMachine.Change_State(m_stateMachine.PreState);
+        }
+
+        public override void Exit_State()
+        {
+            m_minimapIcon.SetActive(false);
+            m_stopLight.SetActive(false);
+        }
     }
 }
+
+

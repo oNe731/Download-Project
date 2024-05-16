@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VisualNovel;
+
 public enum TRIGERTYPE { TG_YANDERASTART, TG_END };
 
 public class Trigerbox : MonoBehaviour

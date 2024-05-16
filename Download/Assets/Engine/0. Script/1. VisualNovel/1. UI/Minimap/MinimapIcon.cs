@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinimapIcon : MonoBehaviour
+namespace VisualNovel
 {
-    private Transform m_playerTr;
-
-    private void Start()
+    public class MinimapIcon : MonoBehaviour
     {
-        m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
-    }
+        private Transform m_playerTr;
 
-    private void LateUpdate()
-    {
-        transform.rotation = Quaternion.Euler(90.0f, m_playerTr.eulerAngles.y, 0.0f);
+        private void Start()
+        {
+            m_playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        }
+
+        private void LateUpdate()
+        {
+            transform.rotation = Quaternion.Euler(90.0f, m_playerTr.eulerAngles.y, 0.0f);
+        }
     }
 }
+

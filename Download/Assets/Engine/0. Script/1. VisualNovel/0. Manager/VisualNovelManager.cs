@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
+using VisualNovel;
 public class VisualNovelManager : MonoBehaviour
 {
     public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END }; // 미연시 -> 사격 -> 미연시 -> 추격 => 서부 레벨
