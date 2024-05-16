@@ -109,19 +109,6 @@ public class WesternManager : MonoBehaviour
 
     public void Button_Play()
     {
-        switch(m_levelController.Curlevel)
-        {
-            case (int)LEVELSTATE.LS_MainLv1:
-                m_levelController.Get_CurrentLevel<Western_MainLv1>().Button_Play();
-                break;
-
-            case (int)LEVELSTATE.LS_MainLv2:
-                m_levelController.Get_CurrentLevel<Western_MainLv2>().Button_Play();
-                break;
-
-            case (int)LEVELSTATE.LS_MainLv3:
-                m_levelController.Get_CurrentLevel<Western_MainLv3>().Button_Play();
-                break;
-        }
+        m_levelController.Get_CurrentLevel<Western_Main>().Button_Play();
     }
 }
