@@ -11,6 +11,7 @@ public class Person : MonoBehaviour
 
     protected PERSONTYPE m_personType = PERSONTYPE.PT_END;
     protected MeshRenderer m_meshRenderer;
+    protected Animator m_animator;
 
     private Vector3 m_StartPosition;
     private float m_shakeTime = 0.5f;
@@ -26,6 +27,7 @@ public class Person : MonoBehaviour
     {
         m_StartPosition = transform.localPosition;
         m_meshRenderer = GetComponent<MeshRenderer>();
+        m_animator = GetComponent<Animator>();
     }
 
     public void Start_Shake()
