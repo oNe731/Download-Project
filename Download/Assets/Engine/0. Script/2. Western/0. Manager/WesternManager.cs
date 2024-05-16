@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+using Western;
 public class WesternManager : MonoBehaviour
 {
     public enum LEVELSTATE

@@ -2,28 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Western_IntroLv3 : Western_Intro
+namespace Western
 {
-    public Western_IntroLv3(LevelController levelController) : base(levelController)
+    public class Western_IntroLv3 : Western_Intro
     {
-    }
+        public Western_IntroLv3(LevelController levelController) : base(levelController)
+        {
+        }
 
-    public override void Enter_Level()
-    {
-        base.Enter_Level();
-        Start_Dialog("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog1_Intro3.json");
-    }
+        public override void Enter_Level()
+        {
+            base.Enter_Level();
+            Start_Dialog("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog1_Intro3.json");
+        }
 
-    public override void Play_Level()
-    {
-    }
+        public override void Play_Level()
+        {
+        }
 
-    public override void Update_Level()
-    {
-    }
+        public override void Update_Level()
+        {
+        }
 
-    public override void Exit_Level()
-    {
-        base.Exit_Level();
+        public override void Exit_Level()
+        {
+            base.Exit_Level();
+        }
     }
 }
+

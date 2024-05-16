@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetUI : MonoBehaviour
+namespace Western
 {
-    private GameObject m_target = null;
-    public GameObject Target
+    public class TargetUI : MonoBehaviour
     {
-        get => m_target;
-        set => m_target = value;
+        private GameObject m_target = null;
+        public GameObject Target
+        {
+            get => m_target;
+            set => m_target = value;
+        }
     }
 }
+
