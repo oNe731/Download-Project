@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     {
         get
         {
-            if (m_dialogIndex == m_dialogs.Length && m_isTyping == false)
+            if (m_dialogIndex == m_dialogs.Count && m_isTyping == false)
                 return true;
             else
                 return false;
@@ -65,7 +66,7 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
         else if (!m_isTyping)
         {
             // 다이얼로그 진행
-            if (m_dialogIndex < m_dialogs.Length)
+            if (m_dialogIndex < m_dialogs.Count)
             {
                 switch (m_dialogs[m_dialogIndex].dialogEvent)
                 {
@@ -87,7 +88,7 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
 
                     case DialogData_PlayWT.DIALOGEVENT_TYPE.DET_WAIT:
                         Update_None();
-                        if(m_dialogIndex == m_dialogs.Length)
+                        if(m_dialogIndex == m_dialogs.Count)
                             StartCoroutine(Update_WaitClose());
                         else
                             StartCoroutine(Update_WaitUpdate());
@@ -115,7 +116,9 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     {
         Update_Basic(m_dialogIndex);
 
-        StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt));
+        if (m_dialogTextCoroutine != null)
+            StopCoroutine(m_dialogTextCoroutine);
+        m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt));
         m_dialogIndex++;
     }
 
@@ -240,9 +243,11 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
     #endregion
 
     #region Common
-    public void Start_Dialog(DialogData_PlayWT[] dialogs = null)
+    public void Start_Dialog(List<DialogData_PlayWT> dialogs = null)
     {
         m_active = true;
+
+        m_dialogs.Clear();
         m_dialogs = dialogs;
 
         m_isTyping = false;
@@ -262,8 +267,10 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
 
     IEnumerator Type_Text(int dialogIndex, TMP_Text currentText)
     {
+        Coroutine shackingcoroutine = null;
+
         if(m_dialogs[dialogIndex].dialogTalk == DialogData_PlayWT.DIALOGTALK_TYPE.DTT_SHACK)
-            StartCoroutine(Shake_Dialog());
+            shackingcoroutine = StartCoroutine(Shake_Dialog());
 
         m_isTyping = true;
         m_cancelTyping = false;
@@ -283,8 +290,8 @@ public class Dialog_PlayWT : Dialog<DialogData_PlayWT>
 
         m_isTyping = false;
 
-        if (m_dialogs[dialogIndex].dialogTalk == DialogData_PlayWT.DIALOGTALK_TYPE.DTT_SHACK)
-            StopCoroutine(Shake_Dialog());
+        if (shackingcoroutine != null)
+            StopCoroutine(shackingcoroutine);
 
         yield break;
     }

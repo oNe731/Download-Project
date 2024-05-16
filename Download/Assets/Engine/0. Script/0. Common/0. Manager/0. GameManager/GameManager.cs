@@ -27,15 +27,15 @@ public class GameManager : MonoBehaviour
     {
     }
 
-    public void Save_JsonData<T>(string filePath, T[] saveData)
+    public void Save_JsonData<T>(string filePath, List<T> saveData)
     {
         var Result = JsonConvert.SerializeObject(saveData);
         File.WriteAllText(filePath, Result);
     }
 
-    public T[] Load_JsonData<T>(string filePath)
+    public List<T> Load_JsonData<T>(string filePath)
     {
         string Result = File.ReadAllText(filePath);        // JSON 파일 읽기
-        return JsonConvert.DeserializeObject<T[]>(Result); // JSON 문자열을 제너릭 타입 배열로 역직렬화
+        return JsonConvert.DeserializeObject<List<T>>(Result); // JSON 문자열을 제너릭 타입 배열로 역직렬화
     }
 }

@@ -53,6 +53,7 @@ public class ShootDoll : MonoBehaviour
     private bool m_over = false;
 
     Color m_startColor;
+    Coroutine m_blickCoroutine = null;
 
     private void Start()
     {
@@ -123,8 +124,9 @@ public class ShootDoll : MonoBehaviour
             }
             else
             {
-                StopCoroutine(Blink());
-                StartCoroutine(Blink());
+                if (m_blickCoroutine != null)
+                    StopCoroutine(m_blickCoroutine);
+                m_blickCoroutine = StartCoroutine(Blink());
             }
 
             other.gameObject.GetComponent<ShootBall>().Arrived();

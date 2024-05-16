@@ -12,6 +12,7 @@ public class Dialog_IntroWT : Dialog<DialogData_IntroWT>
     [SerializeField] private GameObject m_arrowObj;
     [SerializeField] private GameObject m_backgroundObj;
 
+    private Coroutine m_arrowCoroutine = null;
     private Image m_backgroundImg;
 
     private void Awake()
@@ -37,11 +38,8 @@ public class Dialog_IntroWT : Dialog<DialogData_IntroWT>
         else if (!m_isTyping)
         {
             // 다이얼로그 진행
-            if (m_dialogIndex < m_dialogs.Length)
+            if (m_dialogIndex < m_dialogs.Count)
             {
-                // 초기화
-                StopCoroutine(Use_Arrow(m_arrowObj));
-
                 switch (m_dialogs[m_dialogIndex].dialogEvent)
                 {
                     case DialogData_IntroWT.DIALOGEVENT_TYPE.DET_NONE:
@@ -88,7 +86,9 @@ public class Dialog_IntroWT : Dialog<DialogData_IntroWT>
     {
         Update_Basic(m_dialogIndex);
 
-        StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt, m_arrowObj));
+        if (m_dialogTextCoroutine != null)
+            StopCoroutine(m_dialogTextCoroutine);
+        m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt, m_arrowObj));
         m_dialogIndex++;
     }
 
@@ -151,7 +151,7 @@ public class Dialog_IntroWT : Dialog<DialogData_IntroWT>
     #endregion
 
     #region Common
-    public void Start_Dialog(DialogData_IntroWT[] dialogs = null)
+    public void Start_Dialog(List<DialogData_IntroWT> dialogs = null)
     {
         m_dialogs = dialogs;
 
@@ -187,7 +187,11 @@ public class Dialog_IntroWT : Dialog<DialogData_IntroWT>
         }
 
         m_isTyping = false;
-        StartCoroutine(Use_Arrow(arrow));
+
+        if (m_arrowCoroutine != null)
+            StopCoroutine(m_arrowCoroutine);
+        m_arrowCoroutine = StartCoroutine(Use_Arrow(arrow));
+
         yield break;
     }
 

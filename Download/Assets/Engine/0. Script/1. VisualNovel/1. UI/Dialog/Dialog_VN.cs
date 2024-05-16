@@ -25,6 +25,7 @@ public class Dialog_VN : Dialog<DialogData_VN>
     private Image m_dialogBoxImg;
     private Image m_ellipseImg;
     private Image m_arrowImg;
+    private Coroutine m_arrowCoroutine = null;
 
     private int m_choiceIndex = 0;
     private List<GameObject> m_choice_Button = new List<GameObject>();
@@ -66,7 +67,7 @@ public class Dialog_VN : Dialog<DialogData_VN>
         else if (!m_isTyping)
         {
             // 다이얼로그 진행
-            if (m_dialogIndex < m_dialogs.Length)
+            if (m_dialogIndex < m_dialogs.Count)
             {
                 switch(m_dialogs[m_dialogIndex].dialogEvent)
                 {
@@ -153,7 +154,9 @@ public class Dialog_VN : Dialog<DialogData_VN>
     {
         Update_Basic(m_dialogIndex);
 
-        StartCoroutine(Type_Text(m_dialogTxt, m_arrowObj));
+        if(m_dialogTextCoroutine != null)
+            StopCoroutine(m_dialogTextCoroutine);
+        m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogTxt, m_arrowObj));
         m_dialogIndex++;
     }
 
@@ -358,7 +361,7 @@ public class Dialog_VN : Dialog<DialogData_VN>
     #endregion
 
     #region Common
-    public void Start_Dialog(DialogData_VN[] dialogs = null)
+    public void Start_Dialog(List<DialogData_VN> dialogs = null)
     {
         m_dialogs = dialogs;
 
@@ -417,7 +420,10 @@ public class Dialog_VN : Dialog<DialogData_VN>
         }
 
         m_isTyping = false;
-        StartCoroutine(Use_Arrow(arrow));
+
+        if (m_arrowCoroutine != null)
+            StopCoroutine(m_arrowCoroutine);
+        m_arrowCoroutine = StartCoroutine(Use_Arrow(arrow));
 
         // 타이핑 끝난 상태일 시 선택지 생성
         if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
