@@ -22,6 +22,7 @@ namespace Western
 
         public override void Update_Level()
         {
+            base.Update_Level();
         }
 
         public override void LateUpdate_Level()

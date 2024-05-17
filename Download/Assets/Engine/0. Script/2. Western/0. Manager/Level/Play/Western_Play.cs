@@ -38,6 +38,7 @@ namespace Western
 
         public override void Enter_Level()
         {
+            // m_life 현재 값으로 UI 상태 업데이트
         }
 
         public override void Play_Level()
@@ -108,6 +109,13 @@ namespace Western
                     UIManager.Instance.Start_FadeOut(1f, Color.black, () => Change_Level(), 0f, false);
                 }
             }
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                UIManager.Instance.Start_FadeOut(1f, Color.black, () => Change_Level(), 0f, false);
+            }
+#endif
         }
 
         public override void Exit_Level()

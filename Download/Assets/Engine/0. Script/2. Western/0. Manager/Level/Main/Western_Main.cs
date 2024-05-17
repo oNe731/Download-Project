@@ -34,7 +34,10 @@ namespace Western
         public override void Enter_Level()
         {
             WesternManager.Instance.MainPanel.SetActive(true);
+
+            m_rectTransform.anchoredPosition = m_startPosition;
             WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = false;
+
             UIManager.Instance.Start_FadeIn(1f, Color.black, () => Start_Dialog());
         }
 

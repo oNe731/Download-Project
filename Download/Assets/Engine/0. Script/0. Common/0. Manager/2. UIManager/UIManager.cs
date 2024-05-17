@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_fadeCanvas;
     private Image m_fadeImg; // 페이드에 사용할 이미지
 
-    private bool isFade = false;
+    private bool m_isFade = false;
 
     private void Awake()
     {
@@ -36,13 +36,11 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-
     }
 
     public void Start_FadeIn(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
     {
-        if (isFade)
+        if (m_isFade)
             return;
 
         StartCoroutine(FadeCoroutine(1f, 0f, duration, color, onComplete, waitTime, panalOff));
@@ -50,7 +48,7 @@ public class UIManager : MonoBehaviour
 
     public void Start_FadeOut(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
     {
-        if (isFade)
+        if (m_isFade)
             return;
 
         StartCoroutine(FadeCoroutine(0f, 1f, duration, color, onComplete, waitTime, panalOff));
@@ -58,7 +56,7 @@ public class UIManager : MonoBehaviour
 
     public void Start_FadeInOut(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
     {
-        if (isFade)
+        if (m_isFade)
             return;
 
         StartCoroutine(FadeCoroutine(1f, 0f, duration, color, () => Start_FadeOut(duration, color, onComplete), waitTime, panalOff));
@@ -66,7 +64,7 @@ public class UIManager : MonoBehaviour
 
     public void Start_FadeOutIn(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
     {
-        if (isFade)
+        if (m_isFade)
             return;
 
         StartCoroutine(FadeCoroutine(0f, 1f, duration, color, () => Start_FadeIn(duration, color, onComplete), waitTime, panalOff));
@@ -74,7 +72,7 @@ public class UIManager : MonoBehaviour
 
     public void Start_FadeWaitAction(float startAlpha, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
     {
-        if (isFade)
+        if (m_isFade)
             return;
 
         StartCoroutine(FadeWaitAction(startAlpha, color, onComplete, waitTime, panalOff));
@@ -82,30 +80,28 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator FadeCoroutine(float startAlpha, float targetAlpha, float duration, Color color, Action onComplete, float waitTime, bool panalOff)
     {
-        isFade = true;
+        m_isFade = true;
         m_fadeCanvas.SetActive(true);
-        float currentTime = 0f;
 
-        Color startColor = color;
+        float currentTime = 0f;
+        Color startColor  = color;
         Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
+
             float fadeProgress = currentTime / duration;
-            m_fadeImg.color = new Color(startColor.r, startColor.g, startColor.b, 
-                Mathf.Lerp(startAlpha, targetAlpha, fadeProgress));
+            m_fadeImg.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startAlpha, targetAlpha, fadeProgress));
 
             yield return null;
         }
 
         m_fadeImg.color = targetColor;
-        isFade = false;
+        m_isFade = false;
 
         if (panalOff)
-        {
             m_fadeCanvas.SetActive(false);
-        }
 
         if (onComplete != null)
         {
@@ -118,13 +114,15 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator FadeWaitAction(float startAlpha, Color color, Action onComplete, float waitTime, bool panalOff)
     {
-        isFade = true;
+        m_isFade = true;
         m_fadeCanvas.SetActive(true);
+
         m_fadeImg.color = new Color(color.r, color.g, color.b, startAlpha);
 
         yield return new WaitForSeconds(waitTime);
 
-        isFade = false;
+        m_isFade = false;
+
         if (panalOff)
             m_fadeCanvas.SetActive(false);
 

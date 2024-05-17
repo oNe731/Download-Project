@@ -43,6 +43,8 @@ namespace Western
 
         public override void Enter_Level()
         {
+            base.Enter_Level();
+
             // 스테이지 생성
             m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/1Stage"));
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
