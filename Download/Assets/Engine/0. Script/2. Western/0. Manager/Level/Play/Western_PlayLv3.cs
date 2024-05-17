@@ -6,8 +6,9 @@ namespace Western
 {
     public class Western_PlayLv3 : Western_Play
     {
-        public Western_PlayLv3(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public override void Enter_Level()

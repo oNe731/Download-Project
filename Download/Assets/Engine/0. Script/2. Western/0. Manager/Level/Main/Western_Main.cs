@@ -21,8 +21,9 @@ namespace Western
         protected float m_darkDuration = 1f;
         protected int m_shootCount = 0;
 
-        public Western_Main(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
             m_rectTransform = WesternManager.Instance.PlayButton.GetComponent<RectTransform>();
             m_startPosition = new Vector3(0f, 0f, 0f);
             m_targetPosition = new Vector3(720f, -200f, 0f);

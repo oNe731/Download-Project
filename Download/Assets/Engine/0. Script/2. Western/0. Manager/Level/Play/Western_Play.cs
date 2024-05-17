@@ -29,8 +29,9 @@ namespace Western
             set => m_finishGroup = value;
         }
 
-        public Western_Play(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public abstract void Play_Finish();

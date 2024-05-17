@@ -6,8 +6,9 @@ namespace VisualNovel
 {
     public class Novel_End : Level
     {
-        public Novel_End(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public override void Enter_Level()

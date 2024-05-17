@@ -14,8 +14,10 @@ namespace Western
         private bool m_isTutorial = true;
         private int m_tutorialIndex = -1;
 
-        public Western_PlayLv1(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
+
             m_criminalText.Add("躁親!!!");
             m_criminalText.Add("戲學!");
             m_criminalText.Add("觼��...獗望 熱 氈歷朝等");

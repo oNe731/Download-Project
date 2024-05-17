@@ -84,15 +84,20 @@ public class VisualNovelManager : MonoBehaviour
         Create_NpcHeart();
         Load_Resource();
 
-        m_levelController = new LevelController();
+        m_levelController = gameObject.AddComponent<LevelController>();
 
         List<Level> levels = new List<Level>
-        {
-            new Novel_Begin(m_levelController),
-            new Novel_Shoot(m_levelController),
-            new Novel_End(m_levelController),
-            new Novel_Chase(m_levelController)
+        { 
+            gameObject.AddComponent<Novel_Begin>(),
+            gameObject.AddComponent<Novel_Shoot>(),
+            gameObject.AddComponent<Novel_End>(),
+            gameObject.AddComponent<Novel_Chase>()
         };
+
+        gameObject.GetComponent<Novel_Begin>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Novel_Shoot>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Novel_End>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Novel_Chase>().Initialize_Level(m_levelController);
 
         m_levelController.Initialize_Level(levels);
     }

@@ -30,8 +30,9 @@ namespace VisualNovel
             set => m_Light = value;
         }
 
-        public Novel_Chase(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public override void Enter_Level()

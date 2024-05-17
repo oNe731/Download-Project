@@ -6,8 +6,9 @@ namespace Western
 {
     public class Western_Clear : Level
     {
-        public Western_Clear(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public override void Enter_Level()

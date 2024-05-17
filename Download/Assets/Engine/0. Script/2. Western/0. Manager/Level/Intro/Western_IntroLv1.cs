@@ -6,8 +6,9 @@ namespace Western
 {
     public class Western_IntroLv1 : Western_Intro
     {
-        public Western_IntroLv1(LevelController levelController) : base(levelController)
+        public override void Initialize_Level(LevelController levelController)
         {
+            base.Initialize_Level(levelController);
         }
 
         public override void Enter_Level()

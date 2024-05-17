@@ -60,25 +60,40 @@ public class WesternManager : MonoBehaviour
 
         Load_Resource();
 
-        m_levelController = new LevelController();
+        m_levelController = gameObject.AddComponent<LevelController>();
 
         List<Level> levels = new List<Level>
-        {
-            new Western_IntroLv1(m_levelController),
-            new Western_MainLv1(m_levelController),
-            new Western_PlayLv1(m_levelController),
-            new Western_ClearLv1(m_levelController),
+        { 
+            gameObject.AddComponent<Western_IntroLv1>(),
+            gameObject.AddComponent<Western_MainLv1>(),
+            gameObject.AddComponent<Western_PlayLv1>(),
+            gameObject.AddComponent<Western_ClearLv1>(),
 
-            new Western_IntroLv2(m_levelController),
-            new Western_MainLv2(m_levelController),
-            new Western_PlayLv2(m_levelController),
-            new Western_ClearLv2(m_levelController),
+            gameObject.AddComponent<Western_IntroLv2>(),
+            gameObject.AddComponent<Western_MainLv2>(),
+            gameObject.AddComponent<Western_PlayLv2>(),
+            gameObject.AddComponent<Western_ClearLv2>(),
 
-            new Western_IntroLv3(m_levelController),
-            new Western_MainLv3(m_levelController),
-            new Western_PlayLv3(m_levelController),
-            new Western_ClearLv3(m_levelController)
+            gameObject.AddComponent<Western_IntroLv3>(),
+            gameObject.AddComponent<Western_MainLv3>(),
+            gameObject.AddComponent<Western_PlayLv3>(),
+            gameObject.AddComponent<Western_ClearLv3>(),
         };
+
+        gameObject.GetComponent<Western_IntroLv1>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_MainLv1>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_PlayLv1>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_ClearLv1>().Initialize_Level(m_levelController);
+
+        gameObject.GetComponent<Western_IntroLv2>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_MainLv2>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_PlayLv2>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_ClearLv2>().Initialize_Level(m_levelController);
+
+        gameObject.GetComponent<Western_IntroLv3>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_MainLv3>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_PlayLv3>().Initialize_Level(m_levelController);
+        gameObject.GetComponent<Western_ClearLv3>().Initialize_Level(m_levelController);
 
         m_levelController.Initialize_Level(levels);
     }

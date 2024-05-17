@@ -4,7 +4,7 @@ public class Level : MonoBehaviour
 {
     protected LevelController m_levelController;
 
-    public Level(LevelController levelController)
+    public virtual void Initialize_Level(LevelController levelController)
     {
         m_levelController = levelController;
     }

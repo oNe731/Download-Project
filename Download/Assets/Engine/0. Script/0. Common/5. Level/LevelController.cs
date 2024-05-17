@@ -47,8 +47,11 @@ public class LevelController : MonoBehaviour
         m_levels[(int)m_curlevel].Enter_Level();
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmos_Level()
     {
+        if (m_curlevel == -1)
+            return;
+
         m_levels[(int)m_curlevel].OnDrawGizmos();
     }
 
