@@ -13,7 +13,7 @@ namespace Western
         public override void Enter_Level()
         {
             base.Enter_Level();
-            Start_Dialog("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog1_Intro2.json");
+            Start_Dialog("Assets/Resources/4. Data/2. Western/Dialog/Intro/Dialog2_Intro1.json");
         }
 
         public override void Play_Level()

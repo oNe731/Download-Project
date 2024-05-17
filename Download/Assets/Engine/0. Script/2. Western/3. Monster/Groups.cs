@@ -17,8 +17,12 @@ namespace Western
         public void WakeUp_Next(bool isCount = true, float timerSpeed = 1f)
         {
             m_currentIndex++;
-            if (m_currentIndex >= m_groups.Length)
+            if (m_currentIndex >= m_groups.Length - 1)
+            {
+                WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().finishGroup = true;
+                WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Play_Finish();
                 return;
+            }
 
             m_groups[m_currentIndex].WakeUp_Group(isCount, timerSpeed);
         }

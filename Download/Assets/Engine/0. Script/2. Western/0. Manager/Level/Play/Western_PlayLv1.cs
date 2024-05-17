@@ -67,6 +67,10 @@ namespace Western
             m_camera.Set_Height(0.62f);
 
             Proceed_Next();
+
+            // BGM 변경
+            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
+            Camera.main.GetComponent<AudioSource>().Play();
         }
 
         public override void Update_Level()
@@ -216,6 +220,19 @@ namespace Western
             }
 
             return false;
+        }
+
+        public override void Play_Finish()
+        {
+            /*
+             * - 마지막에 적을 처치하고 전진하면 맵의 끝 마무리된 장소에서 멈춰서 환호를 받는다. 말도 갑자기 애니메이션 바껴 춤추는걸로 등
+             * - 1라운드는 바텐더와 주변 사람들이 노래에 맞춰 춤춘다.
+             * - 빵빠레 파티클 터짐
+            */
+
+            // BGM 변경
+            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/La Docerola - Quincas Moreira"));
+            Camera.main.GetComponent<AudioSource>().Play();
         }
     }
 }

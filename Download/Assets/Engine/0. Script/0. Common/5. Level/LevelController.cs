@@ -12,10 +12,6 @@ public class LevelController : MonoBehaviour
     public int Prelevel { get { return m_prelevel; } }
     public List<Level> Levels { get { return m_levels; } }
 
-    public LevelController()
-    {
-    }
-
     public void Initialize_Level(List<Level> levels, int startlevels = -1)
     {
         m_levels = levels;

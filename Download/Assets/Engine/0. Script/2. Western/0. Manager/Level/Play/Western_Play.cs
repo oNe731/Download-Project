@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Western
 {
-    public class Western_Play : Level
+    public abstract class Western_Play : Level
     {
         protected GameObject m_stage = null;
         protected Groups m_groups = null;
@@ -20,9 +20,20 @@ namespace Western
         protected List<string> m_criminalText = new List<string>();
         protected List<string> m_citizenText = new List<string>();
 
+        private bool m_finishGroup = false;
+        private bool m_fadeOut     = false;
+
+        public bool finishGroup
+        {
+            get => m_finishGroup;
+            set => m_finishGroup = value;
+        }
+
         public Western_Play(LevelController levelController) : base(levelController)
         {
         }
+
+        public abstract void Play_Finish();
 
         public override void Enter_Level()
         {
@@ -34,53 +45,66 @@ namespace Western
 
         public override void Update_Level()
         {
-            // 해당 구역에 도착했을 때 판넬 세우기
-            if (m_startGroup == true && m_camera.IsMove == false)
+            if(m_finishGroup != true)
             {
-                m_startGroup = false;
-                m_groups.WakeUp_Next(true, 0.7f);
-            }
-            else if (WesternManager.Instance.IsShoot == true)
-            {
-                if (Input.GetMouseButtonDown(0))
+                // 해당 구역에 도착했을 때 판넬 세우기
+                if (m_startGroup == true && m_camera.IsMove == false)
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit))
+                    m_startGroup = false;
+                    m_groups.WakeUp_Next(true, 2f);
+                }
+                else if (WesternManager.Instance.IsShoot == true)
+                {
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        if (hit.collider.gameObject.CompareTag("Person"))
-                        {
-                            Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
-                            if (m_targetUI == null)
-                                m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
-                            else
-                                m_targetUI.transform.position = position;
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                            m_targetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
+                        RaycastHit hit;
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            if (hit.collider.gameObject.CompareTag("Person"))
+                            {
+                                Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
+                                if (m_targetUI == null)
+                                    m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
+                                else
+                                    m_targetUI.transform.position = position;
+
+                                m_targetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
+                            }
                         }
                     }
+                    else if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        if (m_targetUI == null)
+                            return;
+
+                        WesternManager.Instance.IsShoot = false;
+                        if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
+                        {
+                            // 범인일 때
+                            Create_SpeechBubble(m_groups.Get_Criminal().transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
+                        }
+                        else
+                        {
+                            // 시민일 때
+                            Create_SpeechBubble(m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
+                            Attacked_Player(false);
+                        }
+
+                        // 총알자국 오브젝트 생성.
+                        Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);
+                        Destroy(m_targetUI);
+                    }
                 }
-                else if (Input.GetKeyDown(KeyCode.Space))
+            }
+            else
+            {
+                if(m_fadeOut == false && Camera.main.GetComponent<AudioSource>().isPlaying == false)
                 {
-                    if (m_targetUI == null)
-                        return;
-
-                    WesternManager.Instance.IsShoot = false;
-                    if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
-                    {
-                        // 범인일 때
-                        Create_SpeechBubble(m_groups.Get_Criminal().transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
-                    }
-                    else
-                    {
-                        // 시민일 때
-                        Create_SpeechBubble(m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
-                    }
-
-                    // 총알자국 오브젝트 생성.
-                    Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);
-                    Destroy(m_targetUI);
+                    // 페이드 아웃
+                    m_fadeOut = true;
+                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => Change_Level(), 0f, false);
                 }
             }
         }
@@ -98,7 +122,7 @@ namespace Western
             m_groups.Get_Criminal().GetComponent<Criminal>().Change_Attack();
         }
 
-        public void Attacked_Player()
+        public void Attacked_Player(bool laydown = true)
         {
             m_life--;
             Debug.Log("Life : " + m_life);
@@ -108,6 +132,9 @@ namespace Western
 
             if (m_life > 0)
             {
+                if (laydown == false)
+                    return;
+
                 m_groups.LayDown_Group(true);
             }
             else
@@ -132,6 +159,17 @@ namespace Western
             uiObject.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(position + new Vector3(0f, 0.5f, 0f));
             uiObject.transform.GetChild(0).GetComponent<TMP_Text>().text = textlist[index];
             textlist.RemoveAt(index);
+        }
+
+        public void LayDown_Group(bool nextMove = false)
+        {
+            m_groups.LayDown_Group(nextMove);
+        }
+
+        private void Change_Level()
+        {
+            int nextIndex = WesternManager.Instance.LevelController.Curlevel + 1;
+            WesternManager.Instance.LevelController.Change_Level(nextIndex);
         }
     }
 }

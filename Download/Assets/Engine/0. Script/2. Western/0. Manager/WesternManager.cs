@@ -8,9 +8,10 @@ public class WesternManager : MonoBehaviour
 {
     public enum LEVELSTATE
     {  // 게임 로고 -> 인트로컷씬(클릭/스페이스/엔터로 넘김) -> 수배지확인화면 -> 게임 시작
-        LS_IntroLv1, LS_MainLv1, LS_PlayLv1,
-        LS_IntroLv2, LS_MainLv2, LS_PlayLv2,
-        LS_IntroLv3, LS_MainLv3, LS_PlayLv3,
+        LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, 
+        LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2,
+        LS_IntroLv3, LS_MainLv3, LS_PlayLv3, LS_ClearLv3,
+        // LS_FINISH
         LS_END
     };
 
@@ -61,16 +62,23 @@ public class WesternManager : MonoBehaviour
 
         m_levelController = new LevelController();
 
-        List<Level> levels = new List<Level>();
-        levels.Add(new Western_IntroLv1(m_levelController));
-        levels.Add(new Western_MainLv1(m_levelController));
-        levels.Add(new Western_PlayLv1(m_levelController));
-        levels.Add(new Western_IntroLv2(m_levelController));
-        levels.Add(new Western_MainLv2(m_levelController));
-        levels.Add(new Western_PlayLv2(m_levelController));
-        levels.Add(new Western_IntroLv3(m_levelController));
-        levels.Add(new Western_MainLv3(m_levelController));
-        levels.Add(new Western_PlayLv3(m_levelController));
+        List<Level> levels = new List<Level>
+        {
+            new Western_IntroLv1(m_levelController),
+            new Western_MainLv1(m_levelController),
+            new Western_PlayLv1(m_levelController),
+            new Western_ClearLv1(m_levelController),
+
+            new Western_IntroLv2(m_levelController),
+            new Western_MainLv2(m_levelController),
+            new Western_PlayLv2(m_levelController),
+            new Western_ClearLv2(m_levelController),
+
+            new Western_IntroLv3(m_levelController),
+            new Western_MainLv3(m_levelController),
+            new Western_PlayLv3(m_levelController),
+            new Western_ClearLv3(m_levelController)
+        };
 
         m_levelController.Initialize_Level(levels);
     }

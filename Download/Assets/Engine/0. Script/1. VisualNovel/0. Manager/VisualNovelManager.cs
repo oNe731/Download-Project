@@ -86,11 +86,13 @@ public class VisualNovelManager : MonoBehaviour
 
         m_levelController = new LevelController();
 
-        List<Level> levels = new List<Level>();
-        levels.Add(new Novel_Begin(m_levelController));
-        levels.Add(new Novel_Shoot(m_levelController));
-        levels.Add(new Novel_End(m_levelController));
-        levels.Add(new Novel_Chase(m_levelController));
+        List<Level> levels = new List<Level>
+        {
+            new Novel_Begin(m_levelController),
+            new Novel_Shoot(m_levelController),
+            new Novel_End(m_levelController),
+            new Novel_Chase(m_levelController)
+        };
 
         m_levelController.Initialize_Level(levels);
     }
