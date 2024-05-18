@@ -30,6 +30,11 @@ namespace Western
 
         public override void Play_Level()
         {
+            // 처음에 도장이 스케일 5로 등장
+            // 빠른 속도로 작아진다.
+            // 도장 명도도 처음엔 어둡다가 원래대로 작아지면서 돌아온다.
+
+            // 다 작아지면 화면이 잠간 흔들린다.
         }
 
         public override void Update_Level()

@@ -91,7 +91,7 @@ namespace Western
                         {
                             // 시민일 때
                             Create_SpeechBubble(m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
-                            Attacked_Player(false);
+                            Fail_Group();
                         }
 
                         // 총알자국 오브젝트 생성.

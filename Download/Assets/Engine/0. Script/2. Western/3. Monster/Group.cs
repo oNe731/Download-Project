@@ -7,8 +7,10 @@ namespace Western
     public class Group : MonoBehaviour
     {
         [SerializeField] private GameObject[] m_person;
+        private Groups m_groups = null;
         private GameObject m_timer = null;
 
+        private int m_groupIndex;
         private int m_criminalIndex;
 
         private Transform m_grouptransform;
@@ -23,24 +25,29 @@ namespace Western
             m_grouptransform = GetComponent<Transform>();
             m_wakeUpQuaternion = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             m_layDownQuaternion = Quaternion.Euler(new Vector3(90f, 0f, 0f));
-
-            Initialize(WesternManager.Instance.LevelController.Curlevel);
         }
 
-        private void Initialize(int roundIndex)
+        public void Initialize(int groupIndex, Groups groups, int roundIndex)
         {
+            m_groupIndex = groupIndex;
+            m_groups = groups;
+
+            int criminal = 0;
+            int citizen = 0;
             m_criminalIndex = Random.Range(0, 3);
             for (int i = 0; i < m_person.Length; ++i)
             {
                 if (i == m_criminalIndex)
                 {
                     m_person[i].AddComponent<Criminal>();
-                    m_person[i].GetComponent<Criminal>().Initialize(roundIndex);
+                    m_person[i].GetComponent<Criminal>().Initialize(m_groupIndex, criminal, m_groups, roundIndex);
+                    criminal++;
                 }
                 else
                 {
                     m_person[i].AddComponent<Citizen>();
-                    m_person[i].GetComponent<Citizen>().Initialize(roundIndex);
+                    m_person[i].GetComponent<Citizen>().Initialize(m_groupIndex, citizen, m_groups, roundIndex);
+                    citizen++;
                 }
             }
         }
@@ -87,7 +94,11 @@ namespace Western
             }
 
             for (int i = 0; i < m_person.Length; ++i)
-                m_person[i].SetActive(false);
+            {
+                if(m_person[i] != null)
+                    m_person[i].SetActive(false);
+            }
+                
 
             // 자식 오브젝트 삭제
             Transform[] children = new Transform[transform.childCount];
@@ -118,6 +129,22 @@ namespace Western
         public GameObject Get_Criminal()
         {
             return m_person[m_criminalIndex];
+        }
+
+        public GameObject Get_Citizen(int index)
+        {
+            for(int i = 0; i < m_person.Length; ++i)
+            {
+                if(i != m_criminalIndex) // 범인이 아니고 시민일 때
+                {
+                    if(m_person[i].GetComponent<Person>().PersonIndex == index) // 찾는 시민일 때
+                    {
+                        return m_person[i];
+                    }
+                }
+            }
+
+            return null;
         }
 
         public void Destroy_Timer()
