@@ -15,6 +15,7 @@ namespace Western
         public override void Enter_Level()
         {
             base.Enter_Level();
+            WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = true;
         }
 
         public override void Play_Level()
@@ -28,7 +29,7 @@ namespace Western
 
         public override void LateUpdate_Level()
         {
-            base.LateUpdate_Level();
+            //base.LateUpdate_Level();
         }
 
         public override void Exit_Level()

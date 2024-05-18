@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Western
 {
@@ -8,9 +9,18 @@ namespace Western
     {
         private GameObject m_bloodObj = null;
         private GameObject m_clearObj = null;
+        private Image m_clearImage = null;
 
         private float m_leveltime = 0f;
-        private bool m_fadeOut = false;
+        private bool  m_shake   = false;
+        private bool  m_fadeOut = false;
+
+        private Vector3 m_startScale  = new Vector3(5f, 5f, 5f);
+        private Vector3 m_targetScale = new Vector3(0.7f, 0.7f, 0.7f);
+        private float m_duration = 0.5f;
+
+        private Color m_startColor  = new Color(0.2f, 0.2f, 0.2f, 1f);
+        private Color m_targetColor = new Color(1f, 1f, 1f, 1f);
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -30,11 +40,6 @@ namespace Western
 
         public override void Play_Level()
         {
-            // 처음에 도장이 스케일 5로 등장
-            // 빠른 속도로 작아진다.
-            // 도장 명도도 처음엔 어둡다가 원래대로 작아지면서 돌아온다.
-
-            // 다 작아지면 화면이 잠간 흔들린다.
         }
 
         public override void Update_Level()
@@ -43,22 +48,45 @@ namespace Western
             m_leveltime += Time.deltaTime;
             if (m_clearObj == null)
             {
-                if (m_leveltime >= 2f)
+                if (m_leveltime >= 1f)
                 {
                     m_leveltime = 0f;
 
                     m_clearObj = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Clear"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
                     m_clearObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
+                    m_clearObj.transform.localScale = m_startScale;
+                    m_clearImage = m_clearObj.GetComponent<Image>();
+                    m_clearImage.color = m_startColor;
                 }
             }
             else
             {
-                if (m_fadeOut == false && m_leveltime >= 2f)
+                
+                if(m_clearObj.transform.localScale != m_targetScale)
                 {
-                    m_fadeOut = true;
-                    m_leveltime = 0f;
+                    m_clearObj.transform.localScale = Vector3.Lerp(m_startScale, m_targetScale, m_leveltime / m_duration);
+                    m_clearImage.color = Color.Lerp(m_startColor, m_targetColor, m_leveltime / m_duration);
 
-                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => Change_Level(), 0f, false);
+                    if(m_clearObj.transform.localScale.x <= m_targetScale.x)
+                        m_leveltime = 0f;
+                }
+                else
+                {
+                    if(m_shake == false)
+                    {
+                        m_shake = true;
+                        GameObject.Find("Canvas").transform.GetChild(1).GetComponent<Panel>().Start_Shake(1000f, 0.2f);
+                    }
+                    else
+                    {
+                        if (m_fadeOut == false && m_leveltime >= 2f)
+                        {
+                            m_fadeOut = true;
+                            m_leveltime = 0f;
+
+                            UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
+                        }
+                    }
                 }
             }
         }
@@ -73,12 +101,9 @@ namespace Western
 
             if (m_bloodObj != null)
                 Destroy(m_bloodObj);
-        }
 
-        private void Change_Level()
-        {
-            int nextIndex = WesternManager.Instance.LevelController.Curlevel + 1;
-            WesternManager.Instance.LevelController.Change_Level(nextIndex);
+            if (m_clearObj != null)
+                Destroy(m_clearObj);
         }
     }
 }

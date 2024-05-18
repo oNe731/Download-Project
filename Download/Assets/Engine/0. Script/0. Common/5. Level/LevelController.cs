@@ -47,6 +47,16 @@ public class LevelController : MonoBehaviour
         m_levels[(int)m_curlevel].Enter_Level();
     }
 
+    public void Change_NextLevel()
+    {
+        int nextlevel = m_curlevel + 1;
+
+        if (nextlevel >= m_levels.Count)
+            return;
+
+        Change_Level(nextlevel);
+    }
+
     public void OnDrawGizmos_Level()
     {
         if (m_curlevel == -1)

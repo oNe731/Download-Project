@@ -16,13 +16,15 @@ public class CameraFollow : CameraBase
 
     public override void Enter_Camera()
     {
-        m_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
+        base.Enter_Camera();
         m_cameraTarget = GameObject.FindWithTag("Player").GetComponent<Transform>();
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
     }
 
     public override void Update_Camera()
     {
+        base.Update_Camera();
+
         // 회전
         Vector3 TargetPos = new Vector3(m_cameraTarget.position.x + m_offset.x, m_cameraTarget.position.y + m_offset.y, m_cameraTarget.position.z);
         float MouseX = Input.GetAxis("Mouse X") * m_mouseSpeed * Time.deltaTime;

@@ -16,11 +16,12 @@ public class CameraCutscene : CameraBase
 
     public override void Enter_Camera()
     {
-        m_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
+        base.Enter_Camera();
     }
 
     public override void Update_Camera()
     {
+        base.Update_Camera();
         if (m_isCutscene)
         {
             m_mainCamera.position = Vector3.MoveTowards(m_mainCamera.position, m_targetPosition, m_moveSpeed * Time.deltaTime);

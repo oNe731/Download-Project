@@ -118,7 +118,7 @@ namespace Western
             {
                 if (m_time >= m_darkDuration)
                 {
-                    UIManager.Instance.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_Level((int)WesternManager.LEVELSTATE.LS_PlayLv1), 1f, false);
+                    UIManager.Instance.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
                     m_shootCount++;
                 }
             }

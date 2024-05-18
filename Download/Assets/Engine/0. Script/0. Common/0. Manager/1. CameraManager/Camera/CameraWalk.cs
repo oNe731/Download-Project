@@ -23,12 +23,14 @@ public class CameraWalk : CameraBase
 
     public override void Enter_Camera()
     {
-        m_mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Transform>();
+        base.Enter_Camera();
     }
 
     public override void Update_Camera()
     {
-        if(m_isMove)
+        base.Update_Camera();
+
+        if (m_isMove)
         {
             if (m_mainCamera.position.x == m_targetPosition.x && m_mainCamera.position.z == m_targetPosition.z)
             {
