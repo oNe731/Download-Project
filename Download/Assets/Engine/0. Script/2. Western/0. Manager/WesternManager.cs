@@ -32,6 +32,9 @@ public class WesternManager : MonoBehaviour
     [SerializeField] Dialog_PlayWT m_dialogPlay;
     [SerializeField] GameObject m_playButton;
 
+    [Header("[ LS_PLAY ]")]
+    [SerializeField] HeartUI m_heartUI;
+
     private bool m_isShoot = false;
     private LevelController m_levelController = null;
 
@@ -41,6 +44,7 @@ public class WesternManager : MonoBehaviour
     public GameObject MainPanel => m_MainPanel;
     public Dialog_PlayWT DialogPlay => m_dialogPlay;
     public GameObject PlayButton => m_playButton;
+    public HeartUI HeartUI => m_heartUI;
     public bool IsShoot
     {
         get => m_isShoot;

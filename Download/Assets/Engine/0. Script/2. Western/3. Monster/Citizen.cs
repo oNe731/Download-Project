@@ -72,7 +72,7 @@ namespace Western
                                 break;
                         }
                         eye = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
-                        eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.001f); // 베이스 판넬보다 앞으로 배치
+                        eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.002f); // 베이스 판넬보다 앞으로 배치
                         eye.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                         eye.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
                         eye.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/" + name);
@@ -221,7 +221,7 @@ namespace Western
                                 break;
                         }
                         scarf = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
-                        scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.001f); // 베이스 판넬보다 앞으로 배치
+                        scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.002f); // 베이스 판넬보다 앞으로 배치
                         scarf.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                         scarf.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
                         scarf.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/" + name);
@@ -249,6 +249,12 @@ namespace Western
                 // 같은 그룹 내 중복 검사
                 if (m_groups.Check_ElementCitizen(m_groupIndex, m_personIndex, elementStruct) == false)
                     break;
+                else
+                {
+                    Destroy(eye);
+                    Destroy(blindfold);
+                    Destroy(scarf);
+                }
             }
 
             m_element = elementStruct;

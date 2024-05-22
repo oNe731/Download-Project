@@ -13,7 +13,7 @@ namespace Western
         protected CameraWalk m_camera = null;
         protected GameObject m_readyGoUI = null;
 
-        protected int m_life = 4;
+        protected int m_life = 5;
         protected bool m_startGroup = false;
         protected float m_uiTime = 0f;
 
@@ -38,7 +38,7 @@ namespace Western
 
         public override void Enter_Level()
         {
-            // m_life 현재 값으로 UI 상태 업데이트
+            WesternManager.Instance.HeartUI.Reset_Heart();
         }
 
         public override void Play_Level()
@@ -134,22 +134,7 @@ namespace Western
         public void Attacked_Player(bool laydown = true)
         {
             m_life--;
-            Debug.Log("Life : " + m_life);
-
-            // hp UI 변경
-            // 
-
-            if (m_life > 0)
-            {
-                if (laydown == false)
-                    return;
-
-                m_groups.LayDown_Group(true);
-            }
-            else
-            {
-                Debug.Log("게임 종료");
-            }
+            WesternManager.Instance.HeartUI.Start_Update(m_life, laydown);
         }
 
         public void Proceed_Next()
