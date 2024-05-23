@@ -10,7 +10,7 @@ namespace Western
         private Person.PERSONTYPE m_personType = Person.PERSONTYPE.PT_END;
 
         private float m_time = 0f;
-        private float m_deleteTime = 1f;
+        private float m_deleteTime = 1.5f;
 
         private RectTransform m_txtTrasform;
         private float m_shakeTime   = 0.3f;
