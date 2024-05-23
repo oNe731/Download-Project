@@ -91,7 +91,7 @@ namespace Western
 
         public override void Exit_Level()
         {
-            Destroy(m_stage);
+            base.Exit_Level();
         }
 
 
@@ -189,29 +189,8 @@ namespace Western
             }
             else if (m_stateType == STATETYPE.TYPE_GAMESTART) // 레디 고 UI 출력 후 게임 시작
             {
-                m_uiTime += Time.deltaTime;
-                if (m_uiTime >= 1f)
-                {
-                    m_uiTime = 0f;
-                    switch (m_tutorialIndex)
-                    {
-                        case 0:
-                            m_readyGoUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_ReadyGo"), GameObject.Find("Canvas").transform);
-                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Ready");
-                            break;
-
-                        case 1:
-                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Go");
-                            break;
-
-                        case 2:
-                            Destroy(m_readyGoUI);
-                            Play_Level();
-                            break;
-                    }
-
-                    m_tutorialIndex++;
-                }
+                StartCoroutine(Update_ReadyGo());
+                m_stateType = STATETYPE.TYPE_END;
             }
         }
 

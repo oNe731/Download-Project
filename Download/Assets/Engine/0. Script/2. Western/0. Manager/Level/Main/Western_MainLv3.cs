@@ -40,8 +40,8 @@ namespace Western
 
         protected override void Start_Dialog()
         {
-            m_dialogStart = true;
-            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round3/Dialog1_Main.json"));
+            //m_dialogStart = true;
+            //WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round3/Dialog1_Main.json"));
         }
     }
 }

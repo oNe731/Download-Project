@@ -10,12 +10,30 @@ namespace Western
         private int m_currentIndex = -1;
 
         public Group[] Group => m_groups;
-        public int CurrentIndex => m_currentIndex;
+        public int CurrentIndex
+        {
+            get => m_currentIndex;
+        }
 
         private void Start()
         {
             for (int i = 0; i < m_groups.Length; ++i)
                 m_groups[i].Initialize(i, this, WesternManager.Instance.LevelController.Curlevel);
+
+            switch(WesternManager.Instance.LevelController.Curlevel)
+            {
+                case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
+                    m_currentIndex = -1;
+                    break;
+
+                case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
+                    m_currentIndex = 0;
+                    break;
+
+                case (int)WesternManager.LEVELSTATE.LS_PlayLv3:
+                    m_currentIndex = 0;
+                    break;
+            }
         }
 
         public void WakeUp_Next(bool isCount = true, float timerSpeed = 1f)

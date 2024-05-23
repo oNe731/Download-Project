@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Western
 {
@@ -15,7 +16,8 @@ namespace Western
 
         protected int   m_life = 5;
         protected bool  m_startGroup = false;
-        protected float m_uiTime = 0f;
+        protected float m_uiTime  = 0f;
+        protected int   m_uiIndex = 0;
 
         protected List<string> m_criminalText = new List<string>();
         protected List<string> m_citizenText = new List<string>();
@@ -114,6 +116,7 @@ namespace Western
 
         public override void Exit_Level()
         {
+            Destroy(m_stage);
         }
 
         public void Fail_Group()
@@ -165,6 +168,41 @@ namespace Western
         {
             int nextIndex = WesternManager.Instance.LevelController.Curlevel + 1;
             WesternManager.Instance.LevelController.Change_Level(nextIndex);
+        }
+
+        protected IEnumerator Update_ReadyGo()
+        {
+            m_uiIndex = 0;
+            while (m_uiIndex < 3)
+            {
+                m_uiTime += Time.deltaTime;
+                if (m_uiTime >= 1f)
+                {
+                    m_uiTime = 0f;
+                    switch (m_uiIndex)
+                    {
+                        case 0:
+                            m_readyGoUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_ReadyGo"), GameObject.Find("Canvas").transform);
+                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Ready");
+                            break;
+
+                        case 1:
+                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Go");
+                            break;
+
+                        case 2:
+                            Destroy(m_readyGoUI);
+                            Play_Level();
+                            break;
+                    }
+
+                    m_uiIndex++;
+                }
+
+                yield return null;
+            }
+
+            yield break;
         }
     }
 }
