@@ -7,8 +7,9 @@ namespace Western
     public class Groups : MonoBehaviour
     {
         [SerializeField] private Group[] m_groups;
-
         private int m_currentIndex = -1;
+
+        public Group[] Group => m_groups;
 
         private void Start()
         {

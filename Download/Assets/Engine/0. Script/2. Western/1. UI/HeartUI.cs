@@ -28,11 +28,6 @@ namespace Western
 
         public void Update()
         {
-            if(Input.GetKeyDown(KeyCode.R))
-            {
-                Reset_Heart();
-            }
-
             if (m_update == false)
                 return;
 
