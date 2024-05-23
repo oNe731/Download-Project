@@ -134,9 +134,13 @@ namespace Western
         public void Proceed_Next()
         {
             m_startGroup = true;
+
+            // 카메라 업데이트
             m_camera.Start_Move(m_groups.Next_Position());
 
             // UI 업데이트
+            WesternManager.Instance.StatusBarUI.Start_UpdateValue(m_groups.CurrentIndex, m_groups.CurrentIndex + 1, 
+                Camera.main.transform.position, m_groups.Next_Position());
         }
 
         private void Create_SpeechBubble(Person.PERSONTYPE type, Vector3 position, ref List<string> textlist, int index)

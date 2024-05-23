@@ -10,6 +10,7 @@ namespace Western
         private int m_currentIndex = -1;
 
         public Group[] Group => m_groups;
+        public int CurrentIndex => m_currentIndex;
 
         private void Start()
         {
