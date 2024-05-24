@@ -20,12 +20,16 @@ namespace Western
 
         private Rigidbody m_rigidbody;
         private TimeUI m_time = null;
-        private float m_timerMax = 3f;
+        private float m_timerMax = 2f; // ÆøÅº Å¸ÀÌ¸Ó´Â ÆÇ³Ú Å¸ÀÌ¸Óº¸´Ù ÂªÀ½
         private float m_timer    = 0f;
 
         private GameObject m_uiKey = null;
         private GameObject m_uiTime = null;
-        private GameObject m_targetUI = null;
+
+        private GameObject m_differentBomb = null;
+        public Vector3 TargetPosition { set => m_targetPosition = value; }
+        public float TimerMax { set => m_timerMax = value; }
+        public GameObject DifferentBomb { set => m_differentBomb = value; }
 
         private void Start()
         {
@@ -37,10 +41,10 @@ namespace Western
 
         private void Update()
         {
-#if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.R))
-                Initialize_Bomb();
-#endif
+//#if UNITY_EDITOR
+//            if (Input.GetKeyDown(KeyCode.R))
+//                Initialize_Bomb();
+//#endif
 
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             if (m_uiTime != null)
@@ -59,19 +63,27 @@ namespace Western
                         {
                             if (hit.collider.gameObject == gameObject)
                             {
-                                Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
-                                if (m_targetUI == null)
-                                    m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
-                                else
-                                    m_targetUI.transform.position = position;
+                                Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+                                if (level == null)
+                                    return;
 
-                                m_targetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
+                                Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
+                                if (level.TargetUI == null)
+                                    level.TargetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
+                                else
+                                    level.TargetUI.transform.position = position;
+
+                                level.TargetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
                             }
                         }
                     }
                     else if (Input.GetKeyDown(m_keyType))
                     {
-                        if (m_targetUI == null)
+                        Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+                        if (level == null)
+                            return;
+
+                        if (level.TargetUI == null)
                             return;
 
                         WesternManager.Instance.IsShoot = true;
@@ -81,10 +93,15 @@ namespace Western
                 }
                 else
                 {
+                    // Æã
                     Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
                     if (level == null)
                         return;
                     level.Fail_Group();
+
+                    // ´Ù¸¥ ÆøÆÇÀº »èÁ¦
+                    if(m_differentBomb != null)
+                        Destroy(m_differentBomb);
 
                     Is_Destroy();
                 }
@@ -168,8 +185,12 @@ namespace Western
             if (m_uiTime != null)
                 Destroy(m_uiTime);
 
-            if (m_targetUI != null)
-                Destroy(m_targetUI);
+            Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+            if (level != null)
+            {
+                if (level.TargetUI != null)
+                    Destroy(level.TargetUI);
+            }
 
             Destroy(gameObject);
         }

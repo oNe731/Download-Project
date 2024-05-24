@@ -36,7 +36,7 @@ namespace Western
             }
         }
 
-        public void WakeUp_Next(bool isCount = true, float timerSpeed = 1f)
+        public void WakeUp_Next(ref List<int> eventIndex, bool isCount = true, float timerSpeed = 1f)
         {
             m_currentIndex++;
             if (m_currentIndex >= m_groups.Length - 1)
@@ -46,7 +46,13 @@ namespace Western
                 return;
             }
 
-            m_groups[m_currentIndex].WakeUp_Group(isCount, timerSpeed);
+            bool useEvent = false;
+            if (eventIndex != null && eventIndex.Count > 0 && eventIndex[0] == m_currentIndex)
+            {
+                useEvent = true;
+                eventIndex.RemoveAt(0);
+            }
+            m_groups[m_currentIndex].WakeUp_Group(useEvent, isCount, timerSpeed);
         }
 
         public void LayDown_Group(bool nextMove = false)

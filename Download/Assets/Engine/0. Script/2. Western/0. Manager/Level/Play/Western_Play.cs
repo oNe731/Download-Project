@@ -8,10 +8,10 @@ namespace Western
 {
     public abstract class Western_Play : Level
     {
-        protected GameObject m_stage = null;
-        protected Groups     m_groups = null;
-        protected GameObject m_targetUI = null;
-        protected CameraWalk m_camera = null;
+        protected GameObject m_stage     = null;
+        protected Groups     m_groups    = null;
+        protected GameObject m_targetUI  = null;
+        protected CameraWalk m_camera    = null;
         protected GameObject m_readyGoUI = null;
 
         protected int   m_life = 5;
@@ -20,16 +20,24 @@ namespace Western
         protected int   m_uiIndex = 0;
 
         protected List<string> m_criminalText = new List<string>();
-        protected List<string> m_citizenText = new List<string>();
+        protected List<string> m_citizenText  = new List<string>();
 
         private bool m_finishGroup = false;
         private bool m_fadeOut     = false;
+
+        protected int m_eventCount;
+        protected List<int> m_eventIndex;
 
         public Groups Groups => m_groups;
         public bool finishGroup
         {
             get => m_finishGroup;
             set => m_finishGroup = value;
+        }
+        public GameObject TargetUI
+        {
+            get => m_targetUI;
+            set => m_targetUI = value;
         }
 
         public override void Initialize_Level(LevelController levelController)
@@ -56,7 +64,7 @@ namespace Western
                 if (m_startGroup == true && m_camera.IsMove == false)
                 {
                     m_startGroup = false;
-                    m_groups.WakeUp_Next(true, 2f);
+                    m_groups.WakeUp_Next(ref m_eventIndex, true, 0.5f);
                 }
                 else if (WesternManager.Instance.IsShoot == true)
                 {
@@ -123,6 +131,8 @@ namespace Western
         {
             if (m_targetUI != null)
                 Destroy(m_targetUI);
+
+            m_groups.Destroy_Timer();
 
             WesternManager.Instance.IsShoot = false;
             m_groups.Get_Criminal().GetComponent<Criminal>().Change_Attack();

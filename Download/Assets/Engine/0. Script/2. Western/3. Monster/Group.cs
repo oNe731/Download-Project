@@ -56,9 +56,9 @@ namespace Western
         {
         }
 
-        public void WakeUp_Group(bool isCount, float timerSpeed)
+        public void WakeUp_Group(bool useEvent, bool isCount, float timerSpeed)
         {
-            StartCoroutine(WakeUp(isCount, timerSpeed));
+            StartCoroutine(WakeUp(useEvent, isCount, timerSpeed));
         }
 
         public void LayDown_Group(bool nextMove)
@@ -66,7 +66,7 @@ namespace Western
             StartCoroutine(LayDown(nextMove));
         }
 
-        private IEnumerator WakeUp(bool isCount, float timerSpeed)
+        private IEnumerator WakeUp(bool useEvent, bool isCount, float timerSpeed)
         {
             for (int i = 0; i < m_person.Length; ++i)
                 m_person[i].SetActive(true);
@@ -76,6 +76,9 @@ namespace Western
                 m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_wakeUpQuaternion, m_wakeUpRotationSpeed * Time.deltaTime);
                 yield return null;
             }
+
+            if (useEvent == true)
+                Use_Event();
 
             if (isCount) // 카운트 시작
                 Start_Count(timerSpeed);
@@ -151,6 +154,72 @@ namespace Western
         {
             if (m_timer != null)
                 Destroy(m_timer);
+        }
+
+        private void Use_Event()
+        {
+            switch (WesternManager.Instance.LevelController.Curlevel)
+            {
+                case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
+                    Debug.Log("이벤트발생");
+                    StartCoroutine(Create_Bomb());
+                    break;
+            }
+        }
+
+        private IEnumerator Create_Bomb()
+        {
+            int createCount = 2;// Random.Range(1,3); // 1, 2개 생성
+            int count = 0;
+            int dir = Random.Range(0, 2); // 0, 1
+
+            GameObject bombPrefab = Resources.Load<GameObject>("5. Prefab/2. Western/Common/Bomb");
+            Vector3 leftSpawnPosition  = transform.position + new Vector3(-3f, 0.8f, -0.1f);
+            Vector3 rightSpawnPosition = transform.position + new Vector3(3f, 0.8f, -0.1f);
+
+            GameObject secondBomb = null;
+            if(createCount == 2)
+            {
+                secondBomb = Instantiate(bombPrefab, Vector3.zero, Quaternion.identity);
+                secondBomb.SetActive(false);
+            }
+
+            while (count < createCount)
+            {
+                if (count == 0) // 첫 번째 생성
+                {
+                    GameObject firstBomb = Instantiate(bombPrefab, Vector3.zero, Quaternion.identity);
+                    if (dir == 0) // 왼쪽에 생성
+                        firstBomb.transform.localPosition = leftSpawnPosition;
+                    else if (dir == 1) // 오른쪽에 생성
+                        firstBomb.transform.localPosition = rightSpawnPosition;
+
+                    Bomb script = firstBomb.GetComponent<Bomb>();
+                    script.TargetPosition = transform.position;
+                    script.TimerMax = 2f;
+
+                    script.DifferentBomb = secondBomb;
+                }
+                else if (count == 1) // 두 번째 생성
+                {
+                    yield return new WaitForSeconds(2f);
+
+                    secondBomb.SetActive(true);
+                    if (dir == 0) // 오른쪽에 생성
+                        secondBomb.transform.localPosition = rightSpawnPosition;
+                    else if (dir == 1) // 왼쪽에 생성
+                        secondBomb.transform.localPosition = leftSpawnPosition;
+
+                    Bomb script = secondBomb.GetComponent<Bomb>();
+                    script.TargetPosition = transform.position;
+                    script.TimerMax = 3f;
+                }
+
+                count++;
+                yield return null;
+            }
+
+            yield break;
         }
     }
 }

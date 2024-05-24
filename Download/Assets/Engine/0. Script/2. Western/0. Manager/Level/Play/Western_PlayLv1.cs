@@ -108,7 +108,7 @@ namespace Western
                 if (WesternManager.Instance.DialogPlay.LastIndex == true)
                 {
                     m_stateType = STATETYPE.TYPE_TUTORIALPLAY;
-                    m_groups.WakeUp_Next(false);
+                    m_groups.WakeUp_Next(ref m_eventIndex, false);
                 }
             }
             else if (m_stateType == STATETYPE.TYPE_TUTORIALPLAY)
