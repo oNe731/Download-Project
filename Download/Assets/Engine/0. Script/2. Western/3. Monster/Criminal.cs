@@ -117,7 +117,7 @@ namespace Western
 
         public void Combine_Round2()
         {
-
+            Combine_Round1();
         }
 
         public void Combine_Round3()

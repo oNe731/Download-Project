@@ -86,8 +86,11 @@ namespace Western
             firstChild.gameObject.SetActive(false);
 
             // 이펙트 생성
-            GameObject effectObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartEffect"), GameObject.Find("Canvas").transform);
-            effectObject.transform.position = m_panels[lifeCount].transform.position;
+            //GameObject effectObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartEffect"), GameObject.Find("Canvas").transform);
+            //effectObject.transform.position = m_panels[lifeCount].transform.position;
+
+            GameObject particleObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartParticle"), GameObject.Find("Canvas").transform);
+            particleObject.transform.position = m_panels[lifeCount].transform.position;
 
             // 터지는 애니메이션 재생
             m_panelsAnimator[lifeCount].SetBool("isShoot", true);

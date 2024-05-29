@@ -8,8 +8,8 @@ namespace Western
     {
         private KeyCode m_keyType = KeyCode.None;
 
-        private float m_initialSpeed       = 4f;   // 공의 초기 속도
-        private float m_initialbounceForce = 3f;   // 튕길 때의 초기 힘
+        private float m_initialSpeed       = 4.5f;   // 공의 초기 속도
+        private float m_initialbounceForce = 3.5f;   // 튕길 때의 초기 힘
         private float m_bounceDampening    = 0.5f; // 튕길 때 속도 감속 비율
         private int   m_maxBounceCount     = 2;    // 최대 튕길 횟수
 
@@ -153,10 +153,17 @@ namespace Western
             m_bounceCount = 0;
             m_bounceForce = m_initialbounceForce;
 
+            //Vector3 direction = (m_targetPosition - transform.position).normalized;
+            //m_rigidbody.isKinematic = false;
+            //m_rigidbody.velocity = Vector3.zero;
+            //m_rigidbody.velocity = new Vector3(direction.x * m_initialSpeed, Mathf.Abs(direction.y * m_initialSpeed), direction.z * m_initialSpeed);
+
             Vector3 direction = (m_targetPosition - transform.position).normalized;
+            direction.y = 0;
+            direction = direction.normalized;
             m_rigidbody.isKinematic = false;
             m_rigidbody.velocity = Vector3.zero;
-            m_rigidbody.velocity = new Vector3(direction.x * m_initialSpeed, Mathf.Abs(direction.y * m_initialSpeed), direction.z * m_initialSpeed);
+            m_rigidbody.velocity = new Vector3(direction.x * m_initialSpeed, 0, direction.z * m_initialSpeed);
 
 
             int index = Random.Range(0, 4);

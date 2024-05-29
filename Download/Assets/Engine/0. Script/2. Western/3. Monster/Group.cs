@@ -22,8 +22,8 @@ namespace Western
 
         private void Start()
         {
-            m_grouptransform = GetComponent<Transform>();
-            m_wakeUpQuaternion = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            m_grouptransform    = GetComponent<Transform>();
+            m_wakeUpQuaternion  = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             m_layDownQuaternion = Quaternion.Euler(new Vector3(90f, 0f, 0f));
         }
 
@@ -71,19 +71,26 @@ namespace Western
             for (int i = 0; i < m_person.Length; ++i)
                 m_person[i].SetActive(true);
 
+            bool  isEvent = false;
+            float time    = 0f;
             while (m_grouptransform.rotation != m_wakeUpQuaternion)
             {
+                time += Time.deltaTime;
+                if(isEvent == false && time > 0.8f)
+                {
+                    isEvent = true;
+                    if (useEvent == true)
+                        Use_Event();
+
+                    if (isCount) // 카운트 시작
+                        Start_Count(timerSpeed);
+                    else
+                        WesternManager.Instance.IsShoot = true;
+                }
+
                 m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_wakeUpQuaternion, m_wakeUpRotationSpeed * Time.deltaTime);
                 yield return null;
             }
-
-            if (useEvent == true)
-                Use_Event();
-
-            if (isCount) // 카운트 시작
-                Start_Count(timerSpeed);
-            else
-                WesternManager.Instance.IsShoot = true;
 
             yield break;
         }
@@ -169,7 +176,7 @@ namespace Western
 
         private IEnumerator Create_Bomb()
         {
-            int createCount = 2;// Random.Range(1,3); // 1, 2개 생성
+            int createCount = Random.Range(1,3); // 1, 2개 생성
             int count = 0;
             int dir = Random.Range(0, 2); // 0, 1
 

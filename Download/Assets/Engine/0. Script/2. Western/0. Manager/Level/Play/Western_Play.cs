@@ -64,7 +64,7 @@ namespace Western
                 if (m_startGroup == true && m_camera.IsMove == false)
                 {
                     m_startGroup = false;
-                    m_groups.WakeUp_Next(ref m_eventIndex, true, 0.5f);
+                    m_groups.WakeUp_Next(ref m_eventIndex, true, 0.4f);
                 }
                 else if (WesternManager.Instance.IsShoot == true)
                 {
@@ -97,6 +97,12 @@ namespace Western
                             Create_SpeechBubble(Person.PERSONTYPE.PT_CRIMINAL, m_groups.Get_Criminal().transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
                         else
                             Create_SpeechBubble(Person.PERSONTYPE.PT_CITIZEN, m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
+
+                        // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
+                        UIManager.Instance.Start_FadeIn(0.3f, Color.white);
+
+                        // 이펙트 생성
+                        Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Person_Effect"), m_targetUI.transform.position, Quaternion.identity);
 
                         // 총알자국 오브젝트 생성.
                         Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);

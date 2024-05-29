@@ -108,7 +108,7 @@ namespace Western
                 if (WesternManager.Instance.DialogPlay.LastIndex == true)
                 {
                     m_stateType = STATETYPE.TYPE_TUTORIALPLAY;
-                    m_groups.WakeUp_Next(ref m_eventIndex, false);
+                    m_groups.WakeUp_Next(ref m_eventIndex, false, 0.4f);
                 }
             }
             else if (m_stateType == STATETYPE.TYPE_TUTORIALPLAY)
@@ -168,6 +168,12 @@ namespace Western
 
                                 m_tutorialTarget.Add(m_targetUI.GetComponent<TargetUI>().Target);
                             }
+
+                            // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
+                            UIManager.Instance.Start_FadeIn(0.3f, Color.white);
+
+                            // 이펙트 생성
+                            Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Person_Effect"), m_targetUI.transform.position, Quaternion.identity);
 
                             // 총알자국 오브젝트 생성.
                             Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);

@@ -13,41 +13,30 @@ namespace VisualNovel
         private Vector3 m_targetPosition = new Vector3(0f, 0f, 0f);
 
         private float m_heightArc = 5.0f;
-        private float m_speed = 2.0f;
-        private bool m_arrived = false;
+        private float m_speed     = 2.0f;
+        private bool  m_arrived   = false;
+        private float m_maxY = 0f;
 
         private SphereCollider m_collider;
 
-        public ShootSlingshot Owner
-        {
-            set { m_Owner = value; }
-        }
-        public GameObject TargetUI
-        {
-            set { m_targetUI = value; }
-        }
-        public Vector3 TargetPosition
-        {
-            set { m_targetPosition = value; }
-        }
-        public float Speed
-        {
-            set { m_speed = value; }
-        }
+        public ShootSlingshot Owner { set { m_Owner = value; }}
+        public GameObject TargetUI { set { m_targetUI = value; }}
+        public Vector3 TargetPosition { set { m_targetPosition = value; }}
+        public float Speed { set { m_speed = value; }}
 
         private void Start()
         {
             m_startPosition = transform.position;
+            m_maxY = transform.position.y;
+
             m_collider = GetComponent<SphereCollider>();
+            m_collider.enabled = false;
 
             // 각도에 따른 속도 조절
             float angle = Vector3.Angle((m_startPosition - m_targetPosition).normalized, Vector3.up);
-            // Debug.Log("1 : " + angle.ToString());
             if (angle < 90)
                 angle = 90 + (90 - angle);
-            // Debug.Log("2 : " + angle.ToString());
             float result = (90 - Mathf.Abs(angle - 90));
-            // Debug.Log("3 : " + result.ToString());
             m_speed *= result;
         }
 
@@ -63,15 +52,12 @@ namespace VisualNovel
             transform.rotation = LookAt2D(nextPosition - transform.position);
             transform.position = nextPosition;
 
-            if (!m_arrived)
+            if (nextPosition.y > m_maxY) { m_maxY = nextPosition.y; } // 가는 길에 충돌 처리 되는 버그 수정
+            else if (!m_collider.enabled && nextPosition.y < m_maxY) { m_collider.enabled = true; }
+            else if (m_collider.enabled == true && !m_arrived)
             {
                 float targetDist = Vector3.Distance(nextPosition, m_targetPosition);
-                if (targetDist <= 0.5f)
-                {
-                    m_collider.enabled = true;
-                    if (nextPosition == m_targetPosition)
-                        Arrived();
-                }
+                if (targetDist <= 0.5f) { if (nextPosition == m_targetPosition) Arrived(); }
             }
         }
 
