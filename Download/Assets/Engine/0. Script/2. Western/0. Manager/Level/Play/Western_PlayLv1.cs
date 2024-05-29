@@ -39,6 +39,21 @@ namespace Western
             m_citizenText.Add("흥, 별거없군");
             m_citizenText.Add("고양이 앞에서 한 눈을 팔다니");
             m_citizenText.Add("고양이 목숨이 몇개인지 알아?");
+
+            // Temp ----------------------------------------------------------
+            m_eventIndex = new List<int>();
+            m_eventCount = Random.Range(3, 6); // 최소 3 - 5번
+            List<int> availableNumbers = new List<int>();
+            for (int i = 2; i <= 10; i++) // 1번 그룹 제외 2부터 10까지 값 존재
+                availableNumbers.Add(i);
+            for (int i = 0; i < m_eventCount; ++i)
+            {
+                int randomIndex = Random.Range(0, availableNumbers.Count);
+                m_eventIndex.Add(availableNumbers[randomIndex]);
+                availableNumbers.RemoveAt(randomIndex);
+            }
+            m_eventIndex.Sort();
+            // Temp ----------------------------------------------------------
         }
 
         public override void Enter_Level()

@@ -167,8 +167,13 @@ namespace Western
         {
             switch (WesternManager.Instance.LevelController.Curlevel)
             {
+                // Temp -----------------------------------------
+                case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
+                    StartCoroutine(Create_Bomb());
+                    break;
+                // Temp -----------------------------------------
+
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
-                    Debug.Log("이벤트발생");
                     StartCoroutine(Create_Bomb());
                     break;
             }

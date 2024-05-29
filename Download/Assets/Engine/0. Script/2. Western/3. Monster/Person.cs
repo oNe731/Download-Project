@@ -28,6 +28,7 @@ namespace Western
         protected MeshRenderer m_meshRenderer;
         protected Animator     m_animator;
 
+        protected int m_roundIndex;
         protected int m_groupIndex;
         protected int m_personIndex;
 
@@ -45,7 +46,8 @@ namespace Western
 
         public virtual void Initialize(int groupIndex, int personIndex, Groups groups, int roundIndex)
         {
-            m_groupIndex = groupIndex;
+            m_roundIndex  = roundIndex;
+            m_groupIndex  = groupIndex;
             m_personIndex = personIndex;
             m_groups = groups;
 

@@ -32,7 +32,7 @@ namespace Western
 
         private void Update()
         {
-            if (m_attack || m_animator == null)
+            if (m_animator == null || m_attack == false)
                 return;
 
             if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("AN_Person_Attack") == true)
@@ -40,7 +40,8 @@ namespace Western
                 float animTime = m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 if (animTime >= 1.0f) // 애니메이션 종료
                 {
-                    m_attack = true;
+                    // 손이 다 올라오면 HP가 깎인다.
+                    m_attack = false;
                     WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Attacked_Player();
                 }
             }
@@ -49,8 +50,19 @@ namespace Western
         public void Change_Attack()
         {
             // 총 쏘는 애니메이션 재생
-            m_attack = false;
+            m_attack = true;
             m_animator.SetBool("isAttack", true);
+
+            if (m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv1 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
+            {
+                // 1라운드 바닥에서 손이 올라온다.
+                GameObject element = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform); // -0.4 -> 0
+                element.GetComponent<Transform>().localPosition = new Vector3(0f, -0.4f, -0.01f); // 앞으로 배치
+                element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+                element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
+                element.GetComponent<MeshRenderer>().materials[0].SetTexture("_BaseMap", Resources.Load<Texture2D>("1. Graphic/3D/2. Western/Character/Round1/Person/Person/Texture/Attack/1_PANNEL_Gun1"));
+                StartCoroutine(element.AddComponent<CriminalGun>().Start_Up());
+            }
         }
 
         public void Combine_Round1()
