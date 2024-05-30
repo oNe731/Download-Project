@@ -57,7 +57,7 @@ namespace Western
             {
                 // 1라운드 바닥에서 손이 올라온다.
                 GameObject element = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform); // -0.4 -> 0
-                element.GetComponent<Transform>().localPosition = new Vector3(0f, -0.4f, -0.01f); // 앞으로 배치
+                element.GetComponent<Transform>().localPosition = new Vector3(0f, -0.4f, -0.01f); // 3
                 element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                 element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
                 element.GetComponent<MeshRenderer>().materials[0].SetTexture("_BaseMap", Resources.Load<Texture2D>("1. Graphic/3D/2. Western/Character/Round1/Person/Person/Texture/Attack/1_PANNEL_Gun1"));
@@ -75,7 +75,7 @@ namespace Western
             // 안대 생성
             elementStruct.blindfold = Person.BLINDFOLD.BLINDFOLD_USE;
             GameObject element = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
-            element.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.001f); // 베이스 판넬보다 앞으로 배치
+            element.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
             element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             element.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
@@ -83,7 +83,7 @@ namespace Western
             // 초록색 눈 생성
             elementStruct.eye = Person.EYE.EYE_GREEN;
             GameObject eye = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
-            eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.002f); // 안대 판넬보다 앞으로 배치
+            eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.01f); // 3
             eye.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             eye.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             eye.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/Eye_Green/AC_Eye_Green");
@@ -119,7 +119,7 @@ namespace Western
             }
 
             GameObject scarf = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
-            scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.001f); // 베이스 판넬보다 앞으로 배치
+            scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
             scarf.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             scarf.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             scarf.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + name);

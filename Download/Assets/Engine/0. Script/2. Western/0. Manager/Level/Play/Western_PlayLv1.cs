@@ -130,25 +130,7 @@ namespace Western
             {
                 if (WesternManager.Instance.IsShoot == true)
                 {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                        RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit))
-                        {
-                            if (hit.collider.gameObject.CompareTag("Person"))
-                            {
-                                Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
-                                if (m_targetUI == null)
-                                    m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
-                                else
-                                    m_targetUI.transform.position = position;
-
-                                m_targetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
-                            }
-                        }
-                    }
+                    if (Input.GetMouseButtonDown(0)) { Click_Panel(); }
                     else if (Input.GetKeyDown(KeyCode.Space))
                     {
                         if (m_targetUI == null)
@@ -184,14 +166,7 @@ namespace Western
                                 m_tutorialTarget.Add(m_targetUI.GetComponent<TargetUI>().Target);
                             }
 
-                            // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
-                            UIManager.Instance.Start_FadeIn(0.3f, Color.white);
-
-                            // 이펙트 생성
-                            Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Person_Effect"), m_targetUI.transform.position, Quaternion.identity);
-
-                            // 총알자국 오브젝트 생성.
-                            Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);
+                            Space_Panel();
                         }
 
                         Destroy(m_targetUI);

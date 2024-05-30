@@ -50,7 +50,6 @@ public class LevelController : MonoBehaviour
     public void Change_NextLevel()
     {
         int nextlevel = m_curlevel + 1;
-
         if (nextlevel >= m_levels.Count)
             return;
 
