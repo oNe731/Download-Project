@@ -7,11 +7,13 @@ namespace VisualNovel
     public class HallwayPlayer : MonoBehaviour
     {
         [SerializeField] private Transform m_mainCamera;
-        [SerializeField] private float m_moveSpeed = 5.0f;
+        [SerializeField] private float m_moveSpeed = 400.0f;
         [SerializeField] private float m_lerpSpeed = 5.0f;
 
         private bool m_isLock = true;
         private Rigidbody m_rigidbody;
+
+        public float MoveSpeed { set => m_moveSpeed = value; }
 
         private void Awake()
         {

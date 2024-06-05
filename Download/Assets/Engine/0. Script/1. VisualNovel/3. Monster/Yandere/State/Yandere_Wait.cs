@@ -37,8 +37,11 @@ namespace VisualNovel
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
             VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Player.Set_Lock(false);
 
-            m_stateMachine.Change_State((int)HallwayYandere.YandereState.ST_CHASE);
+            // 컷 씬 재생 완료 후 주인공 시점으로 돌아왔을 때 "후후후..." 대사 출력
+            VisualNovelManager.Instance.PlayerObj.GetComponent<HallwayPlayer>().MoveSpeed = 400f;
+            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().ItemText.GetComponent<ItemText>().Start_ItemText("후후후...");
 
+            m_stateMachine.Change_State((int)HallwayYandere.YandereState.ST_CHASE);
             UIManager.Instance.Start_FadeIn(1f, Color.black);
         }
     }

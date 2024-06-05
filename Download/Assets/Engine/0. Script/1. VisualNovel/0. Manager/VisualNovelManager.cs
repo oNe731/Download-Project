@@ -32,7 +32,6 @@ public class VisualNovelManager : MonoBehaviour
     [SerializeField] private GameObject m_chaseGame;
     [SerializeField] private TMP_Text   m_cdCountTxt;
     [SerializeField] private GameObject m_playerObj;
-    [SerializeField] private Transform[] m_RandomPos;
 
     private int[] m_npcHeart;
     private LevelController m_levelController = null;
@@ -52,7 +51,6 @@ public class VisualNovelManager : MonoBehaviour
     public GameObject ChaseGame => m_chaseGame;
     public TMP_Text CdTxt => m_cdCountTxt;
     public GameObject PlayerObj => m_playerObj;
-    public Transform[] RandomPos => m_RandomPos;
 
     #region Resource
     private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();

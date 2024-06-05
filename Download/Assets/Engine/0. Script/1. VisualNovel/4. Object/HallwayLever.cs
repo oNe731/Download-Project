@@ -9,24 +9,35 @@ namespace VisualNovel
         [SerializeField] private GameObject m_level;
         [SerializeField] private float m_rotationSpeed = 5.0f;
 
-        private bool m_rotation = false;
-        private bool m_use = false;
+        private int m_positionIndex = -1;
+
+        private bool m_rotation       = false;
+        private bool m_rotationFinish = false;
         private float m_waitTime = 2f;
         private float m_time;
 
+        public int PositionIndex
+        {
+            get => m_positionIndex;
+            set => m_positionIndex = value;
+        }
+
+
         private void Update()
         {
-            if (m_rotation && !m_use)
+            if (m_rotation)
             {
-                if (m_level.transform.rotation.eulerAngles.x < 330)
+                if (m_rotationFinish == false && m_level.transform.rotation.eulerAngles.x < 330)
                     m_level.transform.Rotate(0f, -1f * m_rotationSpeed, 0f, Space.Self);
                 else
                 {
+                    m_rotationFinish = true;
+
                     m_time += Time.deltaTime;
                     if (m_time > m_waitTime)
                     {
-                        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Use_Lever(gameObject);
-                        m_use = true;
+                        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Use_Lever(m_positionIndex);
+                        Destroy(gameObject);
                     }
                 }
             }
@@ -34,7 +45,7 @@ namespace VisualNovel
 
         private void OnTriggerEnter(Collider other)
         {
-            if (m_rotation || m_use)
+            if (m_rotation == true || m_rotationFinish == true)
                 return;
 
             if (other.gameObject.CompareTag("Player"))

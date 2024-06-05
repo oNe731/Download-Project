@@ -52,6 +52,10 @@ namespace VisualNovel
             VisualNovelManager.Instance.CountTxt.text = m_time.ToString();
 
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+            CameraBasic_2D camera = (CameraBasic_2D)CameraManager.Instance.Get_CurCamera();
+            camera.Change_Position(new Vector3(0f, 0f, -9f));
+            camera.Change_Rotation(new Vector3(0f, 0f, 0f));
+
             UIManager.Instance.Start_FadeIn(1f, Color.black);
         }
 

@@ -68,7 +68,8 @@ public class CameraManager : MonoBehaviour
         m_currentCameraType = type;
 
         // ÁøÀÔ
-        m_cameras[(int)m_currentCameraType].Enter_Camera();
+        if (m_currentCameraType != CAMERATYPE.CT_END)
+            m_cameras[(int)m_currentCameraType].Enter_Camera();
     }
 
     public CameraBase Get_CurCamera()

@@ -4,11 +4,18 @@ namespace VisualNovel
 {
     public class HallwayCD : MonoBehaviour
     {
+        private int m_positionIndex = -1;
+        public int PositionIndex
+        {
+            get => m_positionIndex;
+            set => m_positionIndex = value;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD();
+                VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD(m_positionIndex);
                 Destroy(gameObject);
             }
         }
