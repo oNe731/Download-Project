@@ -40,13 +40,13 @@ namespace Western
                 if (i == m_criminalIndex)
                 {
                     m_person[i].AddComponent<Criminal>();
-                    m_person[i].GetComponent<Criminal>().Initialize(m_groupIndex, criminal, m_groups, roundIndex);
+                    m_person[i].GetComponent<Criminal>().Initialize(m_groupIndex, criminal, m_groups, this, roundIndex);
                     criminal++;
                 }
                 else
                 {
                     m_person[i].AddComponent<Citizen>();
-                    m_person[i].GetComponent<Citizen>().Initialize(m_groupIndex, citizen, m_groups, roundIndex);
+                    m_person[i].GetComponent<Citizen>().Initialize(m_groupIndex, citizen, m_groups, this, roundIndex);
                     citizen++;
                 }
             }
@@ -210,7 +210,11 @@ namespace Western
                     script.TargetPosition = transform.position;
                     script.TimerMax = 2f;
 
-                    script.DifferentBomb = secondBomb;
+                    if(secondBomb != null) // 두번째 폭탄이 존재할 때 순서 지정 등
+                    {
+                        script.Order = Bomb.ORDER.OD_FIRST;
+                        script.DifferentBomb = secondBomb;
+                    }
                 }
                 else if (count == 1) // 두 번째 생성
                 {
@@ -225,6 +229,8 @@ namespace Western
                     Bomb script = secondBomb.GetComponent<Bomb>();
                     script.TargetPosition = transform.position;
                     script.TimerMax = 3f;
+
+                    script.Order = Bomb.ORDER.OD_SECOND;
                 }
 
                 count++;

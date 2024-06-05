@@ -152,7 +152,7 @@ namespace Western
             {
                 if (hit.collider.gameObject.CompareTag("Person"))
                 {
-                    Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.015f); // 맨 앞
+                    Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.collider.gameObject.GetComponent<Person>().Get_GroupZ() - 0.005f); // 맨 앞
                     if (m_targetUI == null)
                         m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
                     else

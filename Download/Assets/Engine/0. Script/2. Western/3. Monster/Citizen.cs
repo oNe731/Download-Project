@@ -12,9 +12,9 @@ namespace Western
         {
         }
 
-        public override void Initialize(int groupIndex, int personIndex, Groups groups, int roundIndex)
+        public override void Initialize(int groupIndex, int personIndex, Groups groups, Group group, int roundIndex)
         {
-            base.Initialize(groupIndex, personIndex, groups, roundIndex);
+            base.Initialize(groupIndex, personIndex, groups, group, roundIndex);
             m_personType = PERSONTYPE.PT_CITIZEN;
 
             // 랜덤 조합 요소 배치

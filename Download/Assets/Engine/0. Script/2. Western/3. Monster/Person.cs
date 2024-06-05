@@ -25,6 +25,7 @@ namespace Western
         protected PERSONTYPE   m_personType = PERSONTYPE.PT_END;
         protected ElementType  m_element;
         protected Groups       m_groups = null;
+        protected Group        m_group  = null;
         protected MeshRenderer m_meshRenderer;
         protected Animator     m_animator;
 
@@ -44,12 +45,13 @@ namespace Western
         {
         }
 
-        public virtual void Initialize(int groupIndex, int personIndex, Groups groups, int roundIndex)
+        public virtual void Initialize(int groupIndex, int personIndex, Groups groups, Group group, int roundIndex)
         {
             m_roundIndex  = roundIndex;
             m_groupIndex  = groupIndex;
             m_personIndex = personIndex;
             m_groups = groups;
+            m_group = group;
 
             m_meshRenderer  = GetComponent<MeshRenderer>();
             m_animator      = GetComponent<Animator>();
@@ -86,6 +88,11 @@ namespace Western
             }
             transform.localPosition = m_StartPosition;
             yield break;
+        }
+
+        public float Get_GroupZ()
+        {
+            return m_group.transform.position.z;
         }
     }
 }

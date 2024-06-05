@@ -6,6 +6,9 @@ namespace Western
 {
     public class Bomb : MonoBehaviour
     {
+        public enum ORDER { OD_FIRST, OD_SECOND, OD_END };
+
+        private ORDER m_order = ORDER.OD_END;
         private KeyCode m_keyType = KeyCode.None;
 
         private float m_initialSpeed       = 4.5f;   // °øÀÇ ÃÊ±â ¼Óµµ
@@ -20,16 +23,19 @@ namespace Western
 
         private Rigidbody m_rigidbody;
         private TimeUI m_time = null;
-        private float m_timerMax = 2f; // ÆøÅº Å¸ÀÌ¸Ó´Â ÆÇ³Ú Å¸ÀÌ¸Óº¸´Ù ÂªÀ½
-        private float m_timer    = 0f;
+        private float  m_timerMax = 2f; // ÆøÅº Å¸ÀÌ¸Ó´Â ÆÇ³Ú Å¸ÀÌ¸Óº¸´Ù ÂªÀ½
+        private float  m_timer    = 0f;
 
         private GameObject m_uiKey = null;
         private GameObject m_uiTime = null;
 
+        // Ã¹ ¹øÂ° ÆøÅºÀÌ µÎ¹ø Â° ÆøÅº º¸À¯
         private GameObject m_differentBomb = null;
         public Vector3 TargetPosition { set => m_targetPosition = value; }
         public float TimerMax { set => m_timerMax = value; }
         public GameObject DifferentBomb { set => m_differentBomb = value; }
+        public ORDER Order { set => m_order = value; }
+        public KeyCode KeyType => m_keyType;
 
         private void Start()
         {
@@ -41,11 +47,6 @@ namespace Western
 
         private void Update()
         {
-//#if UNITY_EDITOR
-//            if (Input.GetKeyDown(KeyCode.R))
-//                Initialize_Bomb();
-//#endif
-
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             if (m_uiTime != null)
             {
@@ -80,20 +81,17 @@ namespace Western
                     else if (Input.GetKeyDown(m_keyType))
                     {
                         Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
-                        if (level == null)
+                        if (level == null || level.TargetUI == null)
                             return;
 
-                        if (level.TargetUI == null)
-                            return;
+                        if(m_order != ORDER.OD_FIRST)
+                            WesternManager.Instance.IsShoot = true;
 
-                        WesternManager.Instance.IsShoot = true;
                         Is_Destroy();
-                        return;
                     }
                 }
-                else
+                else // Æã
                 {
-                    // Æã
                     Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
                     if (level == null)
                         return;
@@ -165,9 +163,23 @@ namespace Western
             m_rigidbody.velocity = Vector3.zero;
             m_rigidbody.velocity = new Vector3(direction.x * m_initialSpeed, 0, direction.z * m_initialSpeed);
 
+            Set_KeyCode(Random.Range(0, 4));
+            if (m_differentBomb != null) // µÎ ¹øÂ° ÆøÅºÀÌ¶û ´ÜÃàÅ° ´Ù¸£°Ô »ç¿ë
+            {
+                Bomb scirpt = m_differentBomb.GetComponent<Bomb>();
+                while (true)
+                {
+                    if (scirpt.KeyType != m_keyType)
+                        break;
 
-            int index = Random.Range(0, 4);
-            switch(index)
+                    Set_KeyCode(Random.Range(0, 4));
+                }
+            }
+        }
+
+        private void Set_KeyCode(int index)
+        {
+            switch (index)
             {
                 case 0:
                     m_keyType = KeyCode.Q;
