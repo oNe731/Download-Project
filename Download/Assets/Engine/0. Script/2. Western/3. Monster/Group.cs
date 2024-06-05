@@ -171,7 +171,7 @@ namespace Western
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
                     StartCoroutine(Create_Bomb());
                     break;
-                // Temp -----------------------------------------
+                // ----------------------------------------------
 
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
                     StartCoroutine(Create_Bomb());

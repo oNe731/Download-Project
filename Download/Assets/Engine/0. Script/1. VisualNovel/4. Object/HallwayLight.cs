@@ -6,7 +6,7 @@ namespace VisualNovel
 {
     public class HallwayLight : MonoBehaviour
     {
-        private new Light m_light;
+        private Light m_light;
         private float m_changeTime;
         private float m_time;
 

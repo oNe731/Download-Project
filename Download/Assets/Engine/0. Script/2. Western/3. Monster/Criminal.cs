@@ -53,6 +53,13 @@ namespace Western
             m_attack = true;
             m_animator.SetBool("isAttack", true);
 
+            // 자식들 애니메이션 변경
+            foreach (Transform child in transform)
+            {
+                Animator childAnimator = child.GetComponent<Animator>();
+                if (childAnimator != null) { childAnimator.SetBool("isAttack", true); }
+            }
+
             if (m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv1 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
             {
                 // 1라운드 바닥에서 손이 올라온다.

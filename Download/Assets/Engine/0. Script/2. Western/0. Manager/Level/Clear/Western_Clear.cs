@@ -15,8 +15,8 @@ namespace Western
         private bool  m_shake   = false;
         private bool  m_fadeOut = false;
 
-        private Vector3 m_startScale  = new Vector3(5f, 5f, 5f);
-        private Vector3 m_targetScale = new Vector3(0.7f, 0.7f, 0.7f);
+        private Vector3 m_startScale  = new Vector3(30f, 30f, 30f);
+        private Vector3 m_targetScale = new Vector3(7f, 7f, 7f);
         private float m_duration = 0.5f;
 
         private Color m_startColor  = new Color(0.2f, 0.2f, 0.2f, 1f);

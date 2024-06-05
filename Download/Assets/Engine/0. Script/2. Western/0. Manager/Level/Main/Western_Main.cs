@@ -102,13 +102,15 @@ namespace Western
                     switch (m_shootCount)
                     {
                         case 0: // 醚磊惫 积己
-                            bulletMark.GetComponent<RectTransform>().anchoredPosition = new Vector3(-438f, 125f, 0f);
-                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/3D/2. Western/UI/BulletMark");
+                            bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(-438f, 125f, 0f);
+                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/Wanted_BulletMark_1");
                             break;
 
                         case 1: // 醚磊惫 积己
-                            bulletMark.GetComponent<RectTransform>().anchoredPosition = new Vector3(174.9f, -29.4f, 0f);
-                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/3D/2. Western/UI/BulletMark");
+                            bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(174.9f, -29.4f, 0f);
+                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1f, 1f, 1f);
+                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/Wanted_BulletMark_2");
                             break;
                     }
                     m_shootCount++;

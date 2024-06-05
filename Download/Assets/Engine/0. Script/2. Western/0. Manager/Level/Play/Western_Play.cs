@@ -165,6 +165,9 @@ namespace Western
 
         protected void Space_Panel()
         {
+            // 타겟 쉐이크
+            m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().Start_Shake();
+
             // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
             UIManager.Instance.Start_FadeIn(0.3f, Color.white);
 

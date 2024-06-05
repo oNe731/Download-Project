@@ -64,7 +64,10 @@ namespace Western
             for (int i = 0; i < m_panels.Length; ++i)
             {
                 Transform firstChild = m_panels[i].transform.GetChild(0);
-                firstChild.gameObject.SetActive(true);
+                //firstChild.gameObject.SetActive(true);
+                Animator animator = firstChild.gameObject.GetComponent<Animator>();
+                animator.SetBool("isShoot", false);
+                animator.Play("AM_Heart_Idle", -1, 0f);
 
                 m_panelsAnimator[i].SetBool("isShave", false);
                 m_panelsAnimator[i].SetBool("isShoot", false);
@@ -83,11 +86,12 @@ namespace Western
 
             // 하트 비활성화
             Transform firstChild = m_panels[lifeCount].transform.GetChild(0);
-            firstChild.gameObject.SetActive(false);
+            //firstChild.gameObject.SetActive(false);
+            firstChild.gameObject.GetComponent<Animator>().SetBool("isShoot", true);
 
             // 이펙트 생성
-            //GameObject effectObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartEffect"), GameObject.Find("Canvas").transform);
-            //effectObject.transform.position = m_panels[lifeCount].transform.position;
+            GameObject effectObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartEffect"), GameObject.Find("Canvas").transform);
+            effectObject.transform.position = new Vector3(m_panels[lifeCount].transform.position.x - 10f, m_panels[lifeCount].transform.position.y + 20f, m_panels[lifeCount].transform.position.z);
 
             GameObject particleObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_HeartParticle"), GameObject.Find("Canvas").transform);
             particleObject.transform.position = m_panels[lifeCount].transform.position;

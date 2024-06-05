@@ -198,6 +198,9 @@ public class VisualNovelManager : MonoBehaviour
 
     public void Active_Popup()
     {
+        if (m_likeabilityPanel == null)
+            return;
+
         // 호감도창 비/ 활성화
         m_likeabilityPanel.SetActive(!m_likeabilityPanel.activeSelf);
         if (true == m_likeabilityPanel.activeSelf)

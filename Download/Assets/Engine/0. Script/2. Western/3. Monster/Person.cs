@@ -33,8 +33,8 @@ namespace Western
         protected int m_personIndex;
 
         private Vector3 m_StartPosition;
-        private float m_shakeTime = 0.5f;
-        private float m_shakeAmount = 2f; // 세기
+        private float m_shakeTime   = 0.3f;
+        private float m_shakeAmount = 1f; // 세기
 
         public PERSONTYPE PersonType => m_personType;
         public Person.ElementType Element => m_element;

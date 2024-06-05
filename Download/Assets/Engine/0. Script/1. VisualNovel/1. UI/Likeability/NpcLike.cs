@@ -14,6 +14,18 @@ namespace VisualNovel
         private bool m_update = false;
         private Image[] m_images = null;
 
+        public bool HeartClear
+        {
+            get
+            {
+                int count = 0;
+                for(int i = 0; i < m_heart.Length; ++i) { if (m_heart[i] == null) count++; }
+                if (count == m_heart.Length) return true;
+
+                return false;
+            }
+        }
+
         public void Set_Owner(VisualNovelManager.NPCTYPE index)
         {
             if (index == VisualNovelManager.NPCTYPE.OT_END)
@@ -93,6 +105,27 @@ namespace VisualNovel
         {
             for (int i = 0; i < m_heart.Length; i++)
                 m_heart[i].SetActive(active);
+        }
+
+        public void Shake_Heart(ref List<int> effectCreate)
+        {
+            int Count = 2;
+            for (int i = 0; i < m_heart.Length; ++i) 
+            {
+                if (m_heart[i] == null) return;
+
+                Like like = m_heart[i].GetComponent<Like>();
+                if (Count > 0 && effectCreate[0] == i) 
+                {
+                    like.EffectCreate = true;
+                    effectCreate.RemoveAt(0);
+                    Count--;
+                }
+                else { like.EffectCreate = false; }
+
+                like.NpcIndex = m_npcIndex;
+                like.Shake_Heart();
+            }
         }
     }
 }
