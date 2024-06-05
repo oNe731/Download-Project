@@ -48,7 +48,7 @@ namespace Western
             m_profileImg = m_profileObj.GetComponent<Image>();
 
             m_startPosition = new Vector3(48f, -40f, 0f);
-            m_targetPosition = new Vector3(-1000f, m_startPosition.y, m_startPosition.z);
+            m_targetPosition = new Vector3(48f, 300f, 0f);
         }
 
         void Start()
@@ -143,7 +143,7 @@ namespace Western
             if (!string.IsNullOrEmpty(m_dialogs[m_dialogIndex].eventInfo))
             {
                 UIManager.Instance.Start_FadeOut(1f, Color.black,
-                    () => Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_PlayWT>(m_dialogs[m_dialogIndex].eventInfo)), 0f, false);
+                    () => Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>(m_dialogs[m_dialogIndex].eventInfo)), 0f, false);
             }
             else
             {
@@ -207,22 +207,25 @@ namespace Western
 
         private void Close_MoveDialog()
         {
-            StartCoroutine(Colse_Move());
+            StartCoroutine(Dialog_Move(m_startPosition, m_targetPosition, m_duration, false));
         }
 
-        IEnumerator Colse_Move()
+        IEnumerator Dialog_Move(Vector3 startPosition, Vector3 targetPosition, float duration, bool active)
         {
             float time = 0f;
-
             while (time < m_duration)
             {
-                m_backgroundrectTransform.anchoredPosition = Vector3.Lerp(m_startPosition, m_targetPosition, time / m_duration);
+                m_backgroundrectTransform.anchoredPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
                 time += Time.deltaTime;
                 yield return null;
             }
 
-            m_backgroundrectTransform.anchoredPosition = m_targetPosition;
-            m_active = false;
+            m_backgroundrectTransform.anchoredPosition = targetPosition;
+
+            m_active = active;
+            if(m_active == true)
+                Update_Dialog();
+
             yield break;
         }
 
@@ -245,20 +248,25 @@ namespace Western
         #endregion
 
         #region Common
-        public void Start_Dialog(List<DialogData_PlayWT> dialogs = null)
+        public void Start_Dialog(bool openMove, List<DialogData_PlayWT> dialogs = null)
         {
             m_active = true;
 
             m_dialogs.Clear();
+            m_dialogTxt.text = "";
             m_dialogs = dialogs;
 
             m_isTyping = false;
             m_cancelTyping = false;
             m_dialogIndex = 0;
 
-            m_backgroundrectTransform.anchoredPosition = m_startPosition;
+            m_backgroundrectTransform.anchoredPosition = m_targetPosition;//m_startPosition;
             m_backgroundObj.SetActive(true);
-            Update_Dialog();
+
+            if(openMove == true)
+                StartCoroutine(Dialog_Move(m_targetPosition, m_startPosition, m_duration, true));
+            else
+                Update_Dialog();
         }
 
         private void Close_Dialog()
