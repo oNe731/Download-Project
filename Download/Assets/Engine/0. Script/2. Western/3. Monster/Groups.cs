@@ -70,6 +70,12 @@ namespace Western
             return new Vector3(nextPosition.x, nextPosition.y, nextPosition.z - 1.83f);
         }
 
+        public Vector3 Start_Position()
+        {
+            Vector3 currentPosition = m_groups[0].gameObject.transform.position;
+            return new Vector3(currentPosition.x, currentPosition.y, currentPosition.z - 1.83f);
+        }
+
         public GameObject Get_Criminal()
         {
             return m_groups[m_currentIndex].Get_Criminal();

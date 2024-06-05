@@ -68,7 +68,7 @@ namespace Western
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
             CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
-            camera.Change_Position(new Vector3(0f, 0.62f, -55.65f));
+            camera.Change_Position(new Vector3(0f, 0.62f, m_groups.Start_Position().z));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
             // 다이얼로그 시작
