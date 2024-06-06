@@ -13,6 +13,7 @@ namespace Western
         private List<GameObject> m_tutorialTarget = new List<GameObject>();
         private bool m_isTutorial = true;
         private int m_tutorialIndex = -1;
+        private Bar m_bar = null;
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -63,6 +64,7 @@ namespace Western
             // 스테이지 생성
             m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/1Stage"));
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
+            m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
 
             // 카메라 설정
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
@@ -201,17 +203,13 @@ namespace Western
             return false;
         }
 
-        public override void Play_Finish()
+        public override void Play_Finish() // 마지막 골인 지점에 도착하는 즉시 호출
         {
-            /*
-             * - 마지막에 적을 처치하고 전진하면 맵의 끝 마무리된 장소에서 멈춰서 환호를 받는다. 말도 갑자기 애니메이션 바껴 춤추는걸로 등
-             * - 1라운드는 바텐더와 주변 사람들이 노래에 맞춰 춤춘다.
-             * - 빵빠레 파티클 터짐
-            */
+            if (m_bar == null)
+                return;
 
-            // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/La Docerola - Quincas Moreira"));
-            Camera.main.GetComponent<AudioSource>().Play();
+            // 바 이벤트 발생
+            m_bar.Start_Event();
         }
     }
 }

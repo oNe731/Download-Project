@@ -23,7 +23,6 @@ namespace Western
         protected List<string> m_citizenText  = new List<string>();
 
         private bool m_finishGroup = false;
-        private bool m_fadeOut     = false;
 
         protected int m_eventCount;
         protected List<int> m_eventIndex;
@@ -83,21 +82,6 @@ namespace Western
                     }
                 }
             }
-            else
-            {
-                if(m_fadeOut == false && Camera.main.GetComponent<AudioSource>().isPlaying == false)
-                {
-                    // ÆäÀÌµå ¾Æ¿ô
-                    m_fadeOut = true;
-                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
-                }
-            }
-
-#if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.N)) {
-                UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
-            }
-#endif
         }
 
         public abstract void Play_Finish();

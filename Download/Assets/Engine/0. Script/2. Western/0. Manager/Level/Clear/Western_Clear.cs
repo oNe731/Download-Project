@@ -97,7 +97,8 @@ namespace Western
 
         public override void Exit_Level()
         {
-            WesternManager.Instance.MainPanel.SetActive(false);
+            if(WesternManager.Instance != null)
+                WesternManager.Instance.MainPanel.SetActive(false);
 
             if (m_bloodObj != null)
                 Destroy(m_bloodObj);
