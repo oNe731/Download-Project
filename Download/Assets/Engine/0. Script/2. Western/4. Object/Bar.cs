@@ -32,7 +32,7 @@ public class Bar : MonoBehaviour
         {
             // 3초 뒤 바닥에서 판넬들이 위로 올라온다.
             m_time += Time.deltaTime;
-            if(m_time > 3f)
+            if(m_time > 2f)
             {
                 m_time = 0f;
                 StartCoroutine(m_peoples.Start_Up());
