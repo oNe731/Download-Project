@@ -24,4 +24,9 @@ public class WindowManager : MonoBehaviour
     {
         UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Western"), 0f, false);
     }
+
+    public void Button_Horror()
+    {
+        UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Horror"), 0f, false);
+    }
 }

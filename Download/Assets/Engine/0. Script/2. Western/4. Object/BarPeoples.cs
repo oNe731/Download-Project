@@ -18,7 +18,7 @@ public class BarPeoples : MonoBehaviour
         Vector3 endPosition = transform.localPosition;
         endPosition.y = 0f;
 
-        float duration = 1f;
+        float duration = 2.5f;
         float elapsed = 0f;
         while (elapsed < duration)
         {

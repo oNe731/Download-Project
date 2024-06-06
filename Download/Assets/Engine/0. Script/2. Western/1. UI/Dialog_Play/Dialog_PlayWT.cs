@@ -47,7 +47,7 @@ namespace Western
             m_backgroundrectTransform = m_backgroundObj.GetComponent<RectTransform>();
             m_profileImg = m_profileObj.GetComponent<Image>();
 
-            m_startPosition = new Vector3(48f, -40f, 0f);
+            m_startPosition = new Vector3(48f, 0f, 0f);
             m_targetPosition = new Vector3(48f, 300f, 0f);
         }
 
