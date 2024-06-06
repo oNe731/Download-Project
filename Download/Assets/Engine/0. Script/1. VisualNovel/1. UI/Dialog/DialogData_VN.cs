@@ -10,8 +10,8 @@ namespace VisualNovel
         {
             DET_NONE, // 0
             DET_FADEIN, DET_FADEOUT, DET_FADEINOUT, DET_FADEOUTIN, // 1 2 3 4
-            DET_STARTSHOOT, DET_STARTCHASE, // 5 6
-            DET_SHAKING, DET_PLAYCHASE, DET_LIKEADD, // 7 8 9
+            DET_STARTSHOOT, DET_STARTCHASE, DET_PLAYCHASE, // 5 6 7
+            DET_LIKEADD, DET_SHAKING, // 8 9
 
             DET_END
         };

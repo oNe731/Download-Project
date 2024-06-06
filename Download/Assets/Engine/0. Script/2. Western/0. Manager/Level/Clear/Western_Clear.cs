@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Western
@@ -84,7 +85,8 @@ namespace Western
                             m_fadeOut = true;
                             m_leveltime = 0f;
 
-                            UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
+                            //UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
+                            UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 0f, false);
                         }
                     }
                 }

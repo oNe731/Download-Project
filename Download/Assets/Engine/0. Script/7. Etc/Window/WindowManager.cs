@@ -7,7 +7,7 @@ public class WindowManager : MonoBehaviour
 {
     private void Start()
     {
-        
+        UIManager.Instance.Start_FadeIn(1f, Color.black);
     }
 
     private void Update()
@@ -17,11 +17,11 @@ public class WindowManager : MonoBehaviour
 
     public void Button_VisualNovel()
     {
-        SceneManager.LoadScene("VisualNovel");
+        UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("VisualNovel"), 0f, false);
     }
 
     public void Button_Western()
     {
-        SceneManager.LoadScene("Western");
+        UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Western"), 0f, false);
     }
 }

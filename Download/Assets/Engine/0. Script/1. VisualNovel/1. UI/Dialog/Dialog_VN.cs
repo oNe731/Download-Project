@@ -158,7 +158,7 @@ namespace VisualNovel
 
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
-            m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogTxt, m_arrowObj));
+            m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt, m_arrowObj));
             m_dialogIndex++;
         }
 
@@ -220,6 +220,9 @@ namespace VisualNovel
 
             // 카메라 쉐이킹
         }
+
+
+
         #endregion
 
         #region Each
@@ -286,12 +289,12 @@ namespace VisualNovel
             }
         }
 
-        private void Create_ChoiceButton()
+        private void Create_ChoiceButton(int index)
         {
             m_darkPanelObj.SetActive(true);
 
             // 선택지 버튼 생성
-            for (int i = 0; i < m_dialogs[m_dialogIndex - 1].choiceText.Count; ++i)
+            for (int i = 0; i < m_dialogs[index].choiceText.Count; ++i)
             {
                 int ButtonIndex = i + 1; // 버튼 고유 인덱스
 
@@ -309,7 +312,7 @@ namespace VisualNovel
                     TMP_Text TextCom = Clone.GetComponentInChildren<TMP_Text>();
                     if (TextCom)
                     {
-                        TextCom.text = m_dialogs[m_dialogIndex - 1].choiceText[i];
+                        TextCom.text = m_dialogs[index].choiceText[i];
 
                         Button button = Clone.GetComponent<Button>();
                         if (button) // 이벤트 핸들러 추가
@@ -403,17 +406,17 @@ namespace VisualNovel
             m_dialogBoxObj.SetActive(false);
         }
 
-        IEnumerator Type_Text(TMP_Text currentText, GameObject arrow)
+        IEnumerator Type_Text(int index, TMP_Text currentText, GameObject arrow)
         {
             m_isTyping = true;
             m_cancelTyping = false;
 
             currentText.text = "";
-            foreach (char letter in m_dialogs[m_dialogIndex].dialogText.ToCharArray())
+            foreach (char letter in m_dialogs[index].dialogText.ToCharArray())
             {
                 if (m_cancelTyping)
                 {
-                    currentText.text = m_dialogs[m_dialogIndex - 1].dialogText;
+                    currentText.text = m_dialogs[index].dialogText;
                     break;
                 }
 
@@ -428,14 +431,14 @@ namespace VisualNovel
             m_arrowCoroutine = StartCoroutine(Use_Arrow(arrow));
 
             // 타이핑 끝난 상태일 시 선택지 생성
-            if (0 < m_dialogs[m_dialogIndex - 1].choiceText.Count)
-                Create_ChoiceButton();
+            if (0 < m_dialogs[index].choiceText.Count)
+                Create_ChoiceButton(index);
 
             // 다이얼로그 이벤트가 호감도 증가일 시 타이핑 종료 시 호감도 증가
-            if (m_dialogs[m_dialogIndex - 1].dialogEvent == DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD)
+            if (m_dialogs[index].dialogEvent == DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD)
             {
-                VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[m_dialogIndex - 1].owner]++;
-                m_heartScr.Set_Owner(m_dialogs[m_dialogIndex - 1].owner);
+                VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[index].owner]++;
+                m_heartScr.Set_Owner(m_dialogs[index].owner);
             }
 
             yield break;

@@ -102,6 +102,7 @@ public class VisualNovelManager : MonoBehaviour
 
     private void Start()
     {
+        UIManager.Instance.Start_FadeIn(1f, Color.black);
     }
 
     private void Update()

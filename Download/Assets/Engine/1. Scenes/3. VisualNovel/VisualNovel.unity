@@ -19269,7 +19269,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 10
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -32238,7 +32238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1616901901
 Transform:
   m_ObjectHideFlags: 0
@@ -45728,6 +45728,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7844359054185325168
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001367757461910230, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7942760613026477641, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
+      propertyPath: m_Name
+      value: YandereHand
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 54c651c6cbb0452479bef3e796022f6d, type: 3}
 --- !u!4 &8029535465130711690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 909032300835466758, guid: 8bed69267012d2d4e94cfb3811f457a5, type: 3}
@@ -46072,3 +46129,4 @@ SceneRoots:
   - {fileID: 1157692424}
   - {fileID: 2137913915}
   - {fileID: 1616901901}
+  - {fileID: 7844359054185325168}
