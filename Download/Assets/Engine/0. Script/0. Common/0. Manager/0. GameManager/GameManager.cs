@@ -38,4 +38,9 @@ public class GameManager : MonoBehaviour
         string Result = File.ReadAllText(filePath);        // JSON 파일 읽기
         return JsonConvert.DeserializeObject<List<T>>(Result); // JSON 문자열을 제너릭 타입 배열로 역직렬화
     }
+
+    public GameObject Create_GameObject(string path, Transform transform)
+    {
+        return Instantiate(Resources.Load<GameObject>(path), transform);
+    }
 }

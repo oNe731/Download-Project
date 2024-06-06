@@ -19,6 +19,7 @@ namespace VisualNovel
         public override void Enter_State()
         {
             m_animator.SetBool("IsRun", true); // 애니메이션 변경
+            m_agent.speed = 10f;
             UIManager.Instance.Start_FadeOut(1f, Color.black, () => Continue_Play(), 0f, false);
         }
 
@@ -30,6 +31,7 @@ namespace VisualNovel
 
         public override void Exit_State()
         {
+            m_agent.speed = 5f;
         }
 
         private void Continue_Play() // 컷씬 재생 후 게임 재진행
