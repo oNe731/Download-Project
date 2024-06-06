@@ -129,7 +129,7 @@ namespace VisualNovel
             //List<Vector3> beforePosition = new List<Vector3>();
             //beforePosition.Add(new Vector3(0f, 0f, 0f));
 
-            for (int i = 0; i < m_CdMaxCount; i++)
+            for (int i = 0; i < m_CdMaxCount - 1; i++) // 1개는 맵상 직접 배치
             {
                 //Vector3 newPosition = Get_RandomPositionOnNavMesh(beforePosition);
                 //beforePosition.Add(newPosition);
@@ -178,7 +178,8 @@ namespace VisualNovel
 
         public void Get_CD(int positionIndex)
         {
-            m_positionUse[positionIndex] = false;
+            if(positionIndex != -1)
+                m_positionUse[positionIndex] = false;
 
             m_CdCurrentCount++;
             VisualNovelManager.Instance.CdTxt.text = m_CdCurrentCount.ToString(); // UI 업데이트

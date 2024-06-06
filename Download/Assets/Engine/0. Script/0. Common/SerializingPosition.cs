@@ -16,11 +16,11 @@ public class SerializingPosition : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            SavePositions();
-        }
-        else if (Input.GetKeyDown(KeyCode.F2))
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    SavePositions();
+        //}
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             LoadPositions();
         }
