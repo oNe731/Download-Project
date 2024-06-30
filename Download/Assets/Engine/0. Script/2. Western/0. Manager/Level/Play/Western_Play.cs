@@ -136,6 +136,8 @@ namespace Western
             {
                 if (hit.collider.gameObject.CompareTag("Person"))
                 {
+                    WesternManager.Instance.Gun.Click_Gun();
+
                     Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.collider.gameObject.GetComponent<Person>().Get_GroupZ() - 0.005f); // ∏« æ’
                     if (m_targetUI == null)
                         m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
@@ -149,6 +151,8 @@ namespace Western
 
         protected void Space_Panel()
         {
+            WesternManager.Instance.Gun.Shoot_Gun();
+
             // ≈∏∞Ÿ Ω¶¿Ã≈©
             m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().Start_Shake();
 

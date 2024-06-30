@@ -28,6 +28,7 @@ namespace Western
         protected Group        m_group  = null;
         protected MeshRenderer m_meshRenderer;
         protected Animator     m_animator;
+        protected AudioSource  m_audioSource;
 
         protected int m_roundIndex;
         protected int m_groupIndex;
@@ -55,6 +56,7 @@ namespace Western
 
             m_meshRenderer  = GetComponent<MeshRenderer>();
             m_animator      = GetComponent<Animator>();
+            m_audioSource   = GetComponent<AudioSource>();
             m_StartPosition = transform.localPosition;
 
             // 해당하는 애니메이션 컨트롤러 추가

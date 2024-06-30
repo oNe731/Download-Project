@@ -51,6 +51,7 @@ public class VisualNovelManager : MonoBehaviour
     public GameObject ChaseGame => m_chaseGame;
     public TMP_Text CdTxt => m_cdCountTxt;
     public GameObject PlayerObj => m_playerObj;
+    public GameObject LikeabilityPanel => m_likeabilityPanel;
 
     #region Resource
     private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();

@@ -75,6 +75,9 @@ namespace Western
 
             // 다이얼로그 시작
             UIManager.Instance.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM");
+            Camera.main.GetComponent<AudioSource>().Play();
         }
 
         public override void Play_Level() // 튜토리얼 진행 후 Ready Go UI 출력 후 해당 함수 호출
@@ -90,7 +93,7 @@ namespace Western
             Proceed_Next();
 
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 

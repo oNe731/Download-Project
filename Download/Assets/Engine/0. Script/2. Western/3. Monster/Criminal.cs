@@ -49,6 +49,10 @@ namespace Western
 
         public void Change_Attack()
         {
+            //m_audioSource.Stop();
+            //m_audioSource.clip = Resources.Load<AudioClip>("2. Sound/2. Western/Effect/UI/범인 잡았을 때");
+            //m_audioSource.Play();
+
             // 총 쏘는 애니메이션 재생
             m_attack = true;
             m_animator.SetBool("isAttack", true);

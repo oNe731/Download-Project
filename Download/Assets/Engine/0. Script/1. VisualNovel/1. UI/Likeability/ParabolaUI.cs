@@ -117,6 +117,9 @@ public class ParabolaUI : MonoBehaviour
         float timer = 0;
         while (timer <= m_shakeTime)
         {
+            if (m_rectTransform == null)
+                break;
+
             timer += Time.deltaTime;
 
             Vector3 randomPoint = m_startPosition + UnityEngine.Random.insideUnitSphere * m_shakeAmount;
@@ -124,7 +127,8 @@ public class ParabolaUI : MonoBehaviour
             yield return null;
         }
 
-        m_rectTransform.anchoredPosition = m_startPosition;
+        if (m_rectTransform != null)
+            m_rectTransform.anchoredPosition = m_startPosition;
 
         if (isAction != null)
             isAction?.Invoke();

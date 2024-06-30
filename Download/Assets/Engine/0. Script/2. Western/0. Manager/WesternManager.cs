@@ -35,6 +35,7 @@ public class WesternManager : MonoBehaviour
     [Header("[ LS_PLAY ]")]
     [SerializeField] HeartUI m_heartUI;
     [SerializeField] StatusBarUI m_statusBarUI;
+    [SerializeField] Gun m_gun;
 
     private bool m_isShoot = false;
     private LevelController m_levelController = null;
@@ -47,6 +48,7 @@ public class WesternManager : MonoBehaviour
     public GameObject PlayButton => m_playButton;
     public HeartUI HeartUI => m_heartUI;
     public StatusBarUI StatusBarUI => m_statusBarUI;
+    public Gun Gun => m_gun;
     public bool IsShoot
     {
         get => m_isShoot;
@@ -106,6 +108,9 @@ public class WesternManager : MonoBehaviour
 
     private void Start()
     {
+        Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/메인화면 BGM");
+        Camera.main.GetComponent<AudioSource>().Play();
+
         UIManager.Instance.Start_FadeIn(1f, Color.black);
     }
 

@@ -74,7 +74,7 @@ namespace Western
             Proceed_Next();
 
             // BGM º¯°æ
-            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 

@@ -15,6 +15,9 @@ namespace Western
         public override void Enter_Level()
         {
             base.Enter_Level();
+
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/ผ๖น่ม๖ BGM");
+            Camera.main.GetComponent<AudioSource>().Play();
         }
 
         public override void Play_Level()

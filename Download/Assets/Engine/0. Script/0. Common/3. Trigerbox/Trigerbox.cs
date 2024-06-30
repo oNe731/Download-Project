@@ -12,8 +12,5 @@ public class Trigerbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch(m_type)
-        {
-        }
     }
 }

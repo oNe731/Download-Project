@@ -61,6 +61,10 @@ namespace VisualNovel
 
         public override void Play_Level()
         {
+            // 새총 BGM
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS");
+            Camera.main.GetComponent<AudioSource>().Play();
+
             m_shootGameStart = true;
             CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
             VisualNovelManager.Instance.Container.Start_Belt();
@@ -79,6 +83,7 @@ namespace VisualNovel
 
         public override void Exit_Level()
         {
+            Camera.main.GetComponent<AudioSource>().Stop();
             CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_ORIGIN);
             Destroy(VisualNovelManager.Instance.ShootGame); // 재시작하지 않을 시 삭제
         }

@@ -7,13 +7,15 @@ namespace Western
 {
     public class StatusBarUI : MonoBehaviour
     {
-        private Slider m_barSlider = null;
-        private Animator m_horseAnimator;
+        private Slider      m_barSlider;
+        private AudioSource m_audioSource;
+        private Animator    m_horseAnimator;
         private Coroutine m_coroutine = null;
 
         private void Start()
         {
             m_barSlider     = GetComponent<Slider>();
+            m_audioSource   = GetComponent<AudioSource>();
             m_horseAnimator = GetComponentInChildren<Animator>();
         }
 
@@ -27,6 +29,8 @@ namespace Western
         private IEnumerator UpdateValue(int currentIndex, int nextIndex, Vector3 currentPosition, Vector3 nextPosition)
         {
             m_horseAnimator.SetBool("isRun", true);
+            m_audioSource.pitch = 0.7f;
+            m_audioSource.Play();
             while (true)
             {
                 Vector3 cameraPosition = Camera.main.transform.position;
@@ -42,6 +46,7 @@ namespace Western
 
             m_barSlider.value = nextIndex;
             m_horseAnimator.SetBool("isRun", false);
+            m_audioSource.Stop();
             yield break;
         }
     }
