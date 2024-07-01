@@ -10,7 +10,7 @@ public class PositionData
 
 public class SerializingPosition : MonoBehaviour
 {
-    [SerializeField] private string     m_path = "Assets/Resources/4. Data/1. VisualNovel/Position/ItemPositionData";
+    [SerializeField] private string     m_path = "4. Data/1. VisualNovel/Position/ItemPositionData";
     [SerializeField] private GameObject m_prefab;
 
     private void Update()
@@ -20,14 +20,14 @@ public class SerializingPosition : MonoBehaviour
         //{
         //    SavePositions();
         //}
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            LoadPositions();
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    LoadPositions();
+        //}
 #endif
     }
 
-    private void SavePositions()
+    private void SavePositions() // ItemPositionData.json
     {
         PositionData data = new PositionData();
         data.positions = new List<Vector3>();
@@ -40,17 +40,14 @@ public class SerializingPosition : MonoBehaviour
         Debug.Log("Positions saved to " + m_path);
     }
 
-    private void LoadPositions()
+    private void LoadPositions() // 4. Data/1. VisualNovel/Position/ItemPositionData
     {
-        if (File.Exists(m_path))
-        {
-            string json = File.ReadAllText(m_path);
-            PositionData data = JsonUtility.FromJson<PositionData>(json);
+        string json = Resources.Load<TextAsset>(m_path).text;
+        PositionData data = JsonUtility.FromJson<PositionData>(json);
 
-            foreach (Transform child in transform) { Destroy(child.gameObject); }
-            foreach (Vector3 position in data.positions) { Instantiate(m_prefab, position, Quaternion.identity, transform); }
+        foreach (Transform child in transform) { Destroy(child.gameObject); }
+        foreach (Vector3 position in data.positions) { Instantiate(m_prefab, position, Quaternion.identity, transform); }
 
-            Debug.Log("Positions loaded to " + m_path);
-        }
+        Debug.Log("Positions loaded to " + m_path);
     }
 }

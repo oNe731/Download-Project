@@ -35,8 +35,14 @@ public class GameManager : MonoBehaviour
 
     public List<T> Load_JsonData<T>(string filePath)
     {
-        string Result = File.ReadAllText(filePath);        // JSON 파일 읽기
-        return JsonConvert.DeserializeObject<List<T>>(Result); // JSON 문자열을 제너릭 타입 배열로 역직렬화
+        TextAsset jsonAsset = Resources.Load<TextAsset>(filePath);
+
+        if (jsonAsset != null)
+            return JsonConvert.DeserializeObject<List<T>>(jsonAsset.text);
+        else
+            Debug.LogError($"Failed to load JSON data : {filePath}");
+
+        return null;
     }
 
     public GameObject Create_GameObject(string path, Transform transform)

@@ -26,11 +26,10 @@ public class UIManager : MonoBehaviour
     {
         if (null == m_instance)
         {
+            m_fadeImg = m_fadeCanvas.GetComponentInChildren<Image>();
+
             m_instance = this;
             DontDestroyOnLoad(this.gameObject);
-
-            m_fadeImg = m_fadeCanvas.GetComponentInChildren<Image>();
-            DontDestroyOnLoad(m_fadeCanvas);
         }
         else
         {

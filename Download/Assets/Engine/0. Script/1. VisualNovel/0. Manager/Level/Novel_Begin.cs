@@ -14,7 +14,7 @@ namespace VisualNovel
         public override void Enter_Level()
         {
             VisualNovelManager.Instance.Dialog.SetActive(true);
-            VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog1_School.json"));
+            VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog1_School")); // 앞 경로 및 뒤 확장자 삭제
 
             CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
         }

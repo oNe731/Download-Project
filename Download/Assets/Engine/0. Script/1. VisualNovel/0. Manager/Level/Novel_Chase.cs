@@ -41,7 +41,7 @@ namespace VisualNovel
             base.Initialize_Level(levelController);
 
             // 랜덤 포지션 불러오기
-            m_positionData = JsonUtility.FromJson<PositionData>(File.ReadAllText("Assets/Resources/4. Data/1. VisualNovel/Position/ItemPositionData"));
+            m_positionData = JsonUtility.FromJson<PositionData>(Resources.Load<TextAsset>("4. Data/1. VisualNovel/Position/ItemPositionData").text);
             for(int i = 0; i < m_positionData.positions.Count; ++i) { m_positionUse.Add(false); }
         }
 
@@ -58,7 +58,7 @@ namespace VisualNovel
 
             // 지하실 다이얼로그 시작 (페이드 인)
             Dialog_VN dialog = VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>();
-            dialog.Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("Assets/Resources/4. Data/1. VisualNovel/Dialog/Dialog5_Cellar.json"));
+            dialog.Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
             dialog.Close_Background();
 
             VisualNovelManager.Instance.ChaseGame.SetActive(true);
@@ -120,7 +120,7 @@ namespace VisualNovel
             // 페이드 인
             UIManager.Instance.Start_FadeIn(1f, Color.black);
             // 돌면서 특정거리까지 줌인
-            camera.Start_Cutscene(new Vector3(0f, 1.2f, 5.5f), new Vector3(0f, 180f, -16f), 2f, 0.5f);
+            //camera.Start_Cutscene(new Vector3(0f, 1.2f, 5.5f), new Vector3(0f, 180f, -16f), 2f, 0.5f);
             // 캐릭터가 말을 할때 얀데레 얼굴 클로즈업
             // 
         }
