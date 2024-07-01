@@ -118,7 +118,7 @@ namespace Western
         private void Start_Dialog()
         {
             m_stateType = STATETYPE.TYPE_DIALOGSTART;
-            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play.json"));
+            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play"));
         }
 
         private void Update_Tutorial()
@@ -151,7 +151,7 @@ namespace Western
                             if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
                             {
                                 WesternManager.Instance.IsShoot = false;
-                                WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal.json"));
+                                WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
                                 m_stateType = STATETYPE.TYPE_DIALOGFINISH;
                             }
                             else
@@ -160,11 +160,11 @@ namespace Western
                                 switch (m_tutorialIndex)
                                 {
                                     case 0:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1.json"));
+                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1"));
                                         break;
 
                                     case 1:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("Assets/Resources/4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2.json"));
+                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2"));
                                         break;
                                 }
 
