@@ -13,18 +13,10 @@ public class GameManager : MonoBehaviour
         if (null == m_instance)
         {
             m_instance = this;
-            DontDestroyOnLoad(this.gameObject); //씬 전환이 되더라도 파괴되지 않음
+            DontDestroyOnLoad(this.gameObject);
         }
         else
-            Destroy(this.gameObject); //이미 전역변수인 instance에 인스턴스가 존재한다면 자신을 삭제
-    }
-
-    private void Start()
-    {
-    }
-
-    private void Update()
-    {
+            Destroy(this.gameObject);
     }
 
     public void Save_JsonData<T>(string filePath, List<T> saveData)
@@ -40,12 +32,12 @@ public class GameManager : MonoBehaviour
         if (jsonAsset != null)
             return JsonConvert.DeserializeObject<List<T>>(jsonAsset.text);
         else
-            Debug.LogError($"Failed to load JSON data : {filePath}");
+            Debug.LogError($"Failed to load Jsondata : {filePath}");
 
         return null;
     }
 
-    public GameObject Create_GameObject(string path, Transform transform)
+    public GameObject Create_GameObject(string path, Transform transform = null)
     {
         return Instantiate(Resources.Load<GameObject>(path), transform);
     }
