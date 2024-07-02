@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager m_instance = null;
@@ -18,6 +19,13 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
+
+
+    public GameObject Create_GameObject(string path, Transform transform = null)
+    {
+        return Instantiate(Resources.Load<GameObject>(path), transform);
+    }
+
 
     public void Save_JsonData<T>(string filePath, List<T> saveData)
     {
@@ -35,10 +43,5 @@ public class GameManager : MonoBehaviour
             Debug.LogError($"Failed to load Jsondata : {filePath}");
 
         return null;
-    }
-
-    public GameObject Create_GameObject(string path, Transform transform = null)
-    {
-        return Instantiate(Resources.Load<GameObject>(path), transform);
     }
 }
