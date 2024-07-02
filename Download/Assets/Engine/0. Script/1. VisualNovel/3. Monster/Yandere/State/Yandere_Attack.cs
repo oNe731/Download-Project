@@ -24,8 +24,8 @@ namespace VisualNovel
             VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Fail_ChaseGame();
 
             // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작 (재도전 UI 출력)
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            m_camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            m_camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
             m_camera.Start_FOV(10f, 20f);
 
             // 손 생성
@@ -49,7 +49,7 @@ namespace VisualNovel
                 if(m_fadeOut == false && m_time > 1f)
                 {
                     m_fadeOut = true;
-                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 1f, false);
+                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 1f, false);
                 }
             }
         }

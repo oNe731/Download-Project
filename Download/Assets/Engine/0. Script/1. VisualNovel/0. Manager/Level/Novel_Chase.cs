@@ -9,6 +9,7 @@ namespace VisualNovel
     public class Novel_Chase : Level
     {
         private GameObject m_yandereObj;
+        private GameObject m_playerBodyObj;
         private List<HallwayLight> m_Light = new List<HallwayLight>(); // 464
         private List<bool>   m_positionUse = new List<bool>();
         private PositionData m_positionData;
@@ -35,6 +36,9 @@ namespace VisualNovel
         }
         public GameObject ItemText => m_itemText;
 
+        public GameObject Yandere { get => m_yandereObj; }
+        public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
+
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -50,11 +54,27 @@ namespace VisualNovel
             m_player = VisualNovelManager.Instance.PlayerObj.GetComponent<HallwayPlayer>();
             m_playerTr = VisualNovelManager.Instance.PlayerObj.GetComponent<Transform>();
 
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
-            camera.Change_Position(new Vector3(0f, 1.4f, -2.8f));
-            camera.Change_Rotation(new Vector3(8.5f, 0f, 0f));
+            // 얀데레 생성
+            m_yandereObj = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Character/Yandere"));
+            m_yandere = m_yandereObj.GetComponent<HallwayYandere>();
+            m_yandereTr = m_yandereObj.GetComponent<Transform>();
+            m_yandereTr.position = new Vector3(0f, 0f, -0.7f);
+            m_yandereTr.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
+            camera.Change_Position(new Vector3(0f, 1.33f, -1.73f));
+            camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
+
+            // 플레이어 바디 생성
+            m_playerBodyObj = Instantiate(Resources.Load<GameObject>("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair"));
+            m_playerBodyObj.transform.position   = new Vector3(0f, 0f, -1.673f);
+            m_playerBodyObj.transform.localScale = new Vector3(1.1273f, 1.1273f, 1.1273f);
+
+            // 지하실 BGM
+            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/지하실 BGM");
+            Camera.main.GetComponent<AudioSource>().Play();
 
             // 지하실 다이얼로그 시작 (페이드 인)
             Dialog_VN dialog = VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>();
@@ -66,14 +86,17 @@ namespace VisualNovel
 
         public override void Play_Level()
         {
+            Destroy(m_playerBodyObj);
+            m_yandereObj.SetActive(false);
+
             VisualNovelManager.Instance.Dialog.SetActive(false);
 
             Create_CD();
             Create_Lever(m_LeverMaxCount);
             m_player.Set_Lock(false);
 
-            UIManager.Instance.Start_FadeIn(1f, Color.black);
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_FOLLOW);
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
         }
 
         public override void Update_Level()
@@ -100,27 +123,30 @@ namespace VisualNovel
             m_yandereObj.transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        public void Create_Monster()
+        public void Appear_Monster()
         {
             // 캐릭터 락
             m_player.Set_Lock(true);
 
             // 카메라 교체 및 설정
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 1.2f, 20f));
             camera.Change_Rotation(new Vector3(0f, -180f, 25f));
 
-            // 얀데레 생성
-            m_yandereObj = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Character/Yandere"));
-            m_yandere = m_yandereObj.GetComponent<HallwayYandere>();
-            m_yandereTr = m_yandereObj.GetComponent<Transform>();
-            m_yandereTr.position = new Vector3(0f, 0f, 2.8f);
+            // 얀데레 등장 애니메이션으로 전환
+            m_yandereObj.SetActive(true);
+            m_yandereObj.transform.GetChild(2).GetComponent<Light>().color = Color.red;
+
+            m_yandereObj.transform.position = new Vector3(0f, 0f, 2.8f);
+            m_yandereObj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            m_yandere.StateMachine.Change_State((int)HallwayYandere.YandereState.ST_APPEAR);
 
             // 페이드 인
-            UIManager.Instance.Start_FadeIn(1f, Color.black);
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
             // 돌면서 특정거리까지 줌인
-            //camera.Start_Cutscene(new Vector3(0f, 1.2f, 5.5f), new Vector3(0f, 180f, -16f), 2f, 0.5f);
+            camera.Start_Position(new Vector3(0f, 1.2f, 5.5f), 2f);
+            camera.Start_Rotation(new Vector3(0f, 180f, -16f), 0.5f);
             // 캐릭터가 말을 할때 얀데레 얼굴 클로즈업
             // 
         }
@@ -210,7 +236,7 @@ namespace VisualNovel
                     case 1:
                         // 먹는 즉시 바로 속도 감소 및 컷씬 재생
                         VisualNovelManager.Instance.PlayerObj.GetComponent<HallwayPlayer>().MoveSpeed = 200f;
-                        UIManager.Instance.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Create_Monster(), 1f, false);
+                        GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
                         break;
 
                     case 2:

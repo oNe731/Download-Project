@@ -42,19 +42,19 @@ namespace Western
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
 
             // 카메라 설정
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0.62f, -55.65f));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
-            UIManager.Instance.Start_FadeIn(1f, Color.black, () => StartCoroutine(Update_ReadyGo()));
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => StartCoroutine(Update_ReadyGo()));
         }
 
         public override void Play_Level()
         {
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_WALK);
-            m_camera = (CameraWalk)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_WALK);
+            m_camera = (CameraWalk)GameManager.Instance.Camera.Get_CurCamera();
             m_camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
             m_camera.Set_Height(0.62f);
 

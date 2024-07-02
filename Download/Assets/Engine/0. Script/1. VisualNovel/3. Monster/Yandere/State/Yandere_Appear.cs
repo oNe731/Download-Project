@@ -15,6 +15,7 @@ namespace VisualNovel
 
         public override void Enter_State()
         {
+            m_animator.SetTrigger("IsAppear");
         }
 
         public override void Update_State()

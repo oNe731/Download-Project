@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
     private float m_deltaTime = 0.0f;
 
-    private void Awake()
+    private void Start()
     {
         Application.targetFrameRate = 60;//144;
     }
 
     private void Update()
     {
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         m_deltaTime += (Time.unscaledDeltaTime - m_deltaTime) * 0.1f;
-//#endif
+#endif
     }
 
     private void OnGUI()
     {
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         int Width = Screen.width;
         int Height = Screen.height;
         Rect RectSize = new Rect(10, 10, Width, Height);
@@ -36,6 +34,6 @@ public class FPS : MonoBehaviour
         string Text = string.Format("{0:0.} FPS", Fps);
 
         GUI.Label(RectSize, Text, Style);
-//#endif
+#endif
     }
 }

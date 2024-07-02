@@ -36,7 +36,7 @@ namespace Western
             m_bloodObj = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Blood"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
             m_bloodObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
 
-            UIManager.Instance.Start_FadeIn(1f, Color.black);
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
         }
 
         public override void Play_Level()
@@ -86,7 +86,7 @@ namespace Western
                             m_leveltime = 0f;
 
                             //UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
-                            UIManager.Instance.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 0f, false);
+                            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 0f, false);
                         }
                     }
                 }

@@ -111,7 +111,7 @@ public class WesternManager : MonoBehaviour
         Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/메인화면 BGM");
         Camera.main.GetComponent<AudioSource>().Play();
 
-        UIManager.Instance.Start_FadeIn(1f, Color.black);
+        GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
     }
 
     private void Update()

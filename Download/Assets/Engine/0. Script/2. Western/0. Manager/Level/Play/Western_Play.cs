@@ -157,7 +157,7 @@ namespace Western
             m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().Start_Shake();
 
             // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
-            UIManager.Instance.Start_FadeIn(0.3f, Color.white);
+            GameManager.Instance.UI.Start_FadeIn(0.3f, Color.white);
 
             // 이펙트 생성
             Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Person_Effect"), m_targetUI.transform.position, Quaternion.identity);

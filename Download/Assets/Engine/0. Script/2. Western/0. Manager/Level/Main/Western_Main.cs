@@ -38,7 +38,7 @@ namespace Western
             m_rectTransform.anchoredPosition = m_startPosition;
             WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = false;
 
-            UIManager.Instance.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
         }
 
         public override void Play_Level()
@@ -120,7 +120,7 @@ namespace Western
             {
                 if (m_time >= m_darkDuration)
                 {
-                    UIManager.Instance.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
+                    GameManager.Instance.UI.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
                     m_shootCount++;
                 }
             }

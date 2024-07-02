@@ -4,37 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CURSORTYPE { CT_ORIGIN, CT_BASIC, CT_NOVELSHOOT, CT_END };
+
 public class UIManager : MonoBehaviour
 {
-    private static UIManager m_instance = null;
-    public static UIManager Instance
+    private GameObject m_fadeCanvas;
+    private Image      m_fadeImg;
+    private Coroutine  m_fadeCoroutine = null;
+    private bool       m_isFade = false;
+
+    private Dictionary<string, Texture2D> m_cursorImage = new Dictionary<string, Texture2D>();
+
+    private void Start()
     {
-        get
-        {
-            if (null == m_instance)
-                return null;
-            return m_instance;
-        }
-    }
+        m_fadeCanvas = Instantiate(Resources.Load<GameObject>("5. Prefab/UICanvas"), transform);
+        m_fadeImg    = m_fadeCanvas.GetComponentInChildren<Image>();
 
-    [SerializeField] private GameObject m_fadeCanvas;
-    private Image m_fadeImg; // 페이드에 사용할 이미지
-
-    private bool m_isFade = false;
-
-    private void Awake()
-    {
-        if (null == m_instance)
-        {
-            m_fadeImg = m_fadeCanvas.GetComponentInChildren<Image>();
-
-            m_instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        m_cursorImage.Add("ShootGameCursor", Resources.Load<Texture2D>("1. Graphic/2D/1. VisualNovel/UI/Shoot/UI_VisualNovel_Shoot_Aim_Green"));
     }
 
     public void Start_FadeIn(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -42,7 +28,9 @@ public class UIManager : MonoBehaviour
         if (m_isFade)
             return;
 
-        StartCoroutine(FadeCoroutine(1f, 0f, duration, color, onComplete, waitTime, panalOff));
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+        m_fadeCoroutine = StartCoroutine(FadeCoroutine(1f, 0f, duration, color, onComplete, waitTime, panalOff));
     }
 
     public void Start_FadeOut(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -50,7 +38,9 @@ public class UIManager : MonoBehaviour
         if (m_isFade)
             return;
 
-        StartCoroutine(FadeCoroutine(0f, 1f, duration, color, onComplete, waitTime, panalOff));
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+        m_fadeCoroutine = StartCoroutine(FadeCoroutine(0f, 1f, duration, color, onComplete, waitTime, panalOff));
     }
 
     public void Start_FadeInOut(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -58,7 +48,9 @@ public class UIManager : MonoBehaviour
         if (m_isFade)
             return;
 
-        StartCoroutine(FadeCoroutine(1f, 0f, duration, color, () => Start_FadeOut(duration, color, onComplete), waitTime, panalOff));
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+        m_fadeCoroutine = StartCoroutine(FadeCoroutine(1f, 0f, duration, color, () => Start_FadeOut(duration, color, onComplete), waitTime, panalOff));
     }
 
     public void Start_FadeOutIn(float duration, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -66,7 +58,9 @@ public class UIManager : MonoBehaviour
         if (m_isFade)
             return;
 
-        StartCoroutine(FadeCoroutine(0f, 1f, duration, color, () => Start_FadeIn(duration, color, onComplete), waitTime, panalOff));
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+        m_fadeCoroutine = StartCoroutine(FadeCoroutine(0f, 1f, duration, color, () => Start_FadeIn(duration, color, onComplete), waitTime, panalOff));
     }
 
     public void Start_FadeWaitAction(float startAlpha, Color color, Action onComplete = null, float waitTime = 0f, bool panalOff = true)
@@ -74,7 +68,9 @@ public class UIManager : MonoBehaviour
         if (m_isFade)
             return;
 
-        StartCoroutine(FadeWaitAction(startAlpha, color, onComplete, waitTime, panalOff));
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+        m_fadeCoroutine = StartCoroutine(FadeWaitAction(startAlpha, color, onComplete, waitTime, panalOff));
     }
 
     private IEnumerator FadeCoroutine(float startAlpha, float targetAlpha, float duration, Color color, Action onComplete, float waitTime, bool panalOff)
@@ -129,5 +125,33 @@ public class UIManager : MonoBehaviour
             onComplete?.Invoke(); // 콜백 함수 호출
 
         yield break;
+    }
+
+
+    public void Change_Cursor(CURSORTYPE type)
+    {
+        Texture2D texture = null;
+        Vector2 hotspot = Vector2.zero;
+        CursorMode mode = CursorMode.ForceSoftware;
+
+        switch (type)
+        {
+            case CURSORTYPE.CT_ORIGIN:
+                texture = null;
+                hotspot = Vector2.zero;
+                mode = CursorMode.Auto;
+                break;
+
+            case CURSORTYPE.CT_BASIC:
+                break;
+
+            case CURSORTYPE.CT_NOVELSHOOT:
+                texture = m_cursorImage["ShootGameCursor"];
+                hotspot = new Vector2(texture.width / 2, texture.height / 2);
+                mode = CursorMode.ForceSoftware;
+                break;
+        }
+
+        Cursor.SetCursor(texture, hotspot, mode);
     }
 }

@@ -129,7 +129,7 @@ namespace Western
             Update_Basic(m_dialogIndex + 1);
 
             m_dialogTxt.text = "";
-            UIManager.Instance.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
         }
 
         private void Next_FadeIn()
@@ -142,20 +142,20 @@ namespace Western
         {
             if (!string.IsNullOrEmpty(m_dialogs[m_dialogIndex].eventInfo))
             {
-                UIManager.Instance.Start_FadeOut(1f, Color.black,
+                GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
                     () => Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>(m_dialogs[m_dialogIndex].eventInfo)), 0f, false);
             }
             else
             {
                 // 비어있을 시 페이드 아웃만 진행
-                UIManager.Instance.Start_FadeOut(1f, Color.black);
+                GameManager.Instance.UI.Start_FadeOut(1f, Color.black);
             }
 
         }
 
         private void Update_FadeOutIn()
         {
-            UIManager.Instance.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
         }
 
         IEnumerator Update_WaitClose()

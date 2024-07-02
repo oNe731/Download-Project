@@ -33,7 +33,7 @@ namespace VisualNovel
                     break;
             }
 
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
         }
 
         public override void Play_Level()

@@ -67,14 +67,14 @@ namespace Western
             m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
 
             // 카메라 설정
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0.62f, m_groups.Start_Position().z));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
             // 다이얼로그 시작
-            UIManager.Instance.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
 
             Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
@@ -85,8 +85,8 @@ namespace Western
             m_tutorialTarget.Clear();
             m_isTutorial = false;
 
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_WALK);
-            m_camera = (CameraWalk)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_WALK);
+            m_camera = (CameraWalk)GameManager.Instance.Camera.Get_CurCamera();
             m_camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
             m_camera.Set_Height(0.62f);
 

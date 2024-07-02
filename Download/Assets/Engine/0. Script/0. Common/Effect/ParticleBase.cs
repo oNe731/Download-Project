@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Particle_Base : MonoBehaviour
+public class ParticleBase : MonoBehaviour
 {
     private ParticleSystem m_system; 
 

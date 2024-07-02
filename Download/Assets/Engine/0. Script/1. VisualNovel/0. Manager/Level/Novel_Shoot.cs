@@ -51,12 +51,12 @@ namespace VisualNovel
             m_time = m_maxTime;
             VisualNovelManager.Instance.CountTxt.text = m_time.ToString();
 
-            CameraManager.Instance.Change_Camera(CAMERATYPE.CT_BASIC_2D);
-            CameraBasic_2D camera = (CameraBasic_2D)CameraManager.Instance.Get_CurCamera();
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+            CameraBasic_2D camera = (CameraBasic_2D)GameManager.Instance.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0f, -9f));
             camera.Change_Rotation(new Vector3(0f, 0f, 0f));
 
-            UIManager.Instance.Start_FadeIn(1f, Color.black);
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
         }
 
         public override void Play_Level()
@@ -66,7 +66,7 @@ namespace VisualNovel
             Camera.main.GetComponent<AudioSource>().Play();
 
             m_shootGameStart = true;
-            CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
+            GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
             VisualNovelManager.Instance.Container.Start_Belt();
         }
 
@@ -84,7 +84,7 @@ namespace VisualNovel
         public override void Exit_Level()
         {
             Camera.main.GetComponent<AudioSource>().Stop();
-            CursorManager.Instance.Change_Cursor(CURSORTYPE.CT_ORIGIN);
+            GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_ORIGIN);
             Destroy(VisualNovelManager.Instance.ShootGame); // 재시작하지 않을 시 삭제
         }
 
@@ -127,7 +127,7 @@ namespace VisualNovel
                 else if (!m_shootGameNext && m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
                 {
                     m_shootGameNext = true;
-                    UIManager.Instance.Start_FadeOut(1f, Color.black, () => m_levelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => m_levelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
                 }
             }
         }

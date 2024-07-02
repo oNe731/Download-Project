@@ -37,6 +37,7 @@ public class HorrorManager : MonoBehaviour
     private void Start()
     {
         Change_CCTV(m_currentCctv);
+        GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
     }
 
     private  void Update()
