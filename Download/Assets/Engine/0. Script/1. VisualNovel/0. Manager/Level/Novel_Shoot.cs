@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace VisualNovel
@@ -15,6 +16,10 @@ namespace VisualNovel
         private float m_time = 0f;
         private float m_maxTime = 60f;
         private float m_overTime = 0f;
+
+        private GameObject m_stage;
+        private TMP_Text m_countTxt;
+        private ShootContainerBelt m_container;
 
         public DOLLTYPE DollType
         {
@@ -45,11 +50,12 @@ namespace VisualNovel
         public override void Enter_Level()
         {
             VisualNovelManager.Instance.Dialog.SetActive(false);
-            VisualNovelManager.Instance.ChaseGame.SetActive(false);
-            VisualNovelManager.Instance.ShootGame.SetActive(true);
+            m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Map/Shoot"));
+            m_countTxt = m_stage.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>();
+            m_container = m_stage.transform.GetChild(1).GetChild(0).gameObject.GetComponent<ShootContainerBelt>();
 
             m_time = m_maxTime;
-            VisualNovelManager.Instance.CountTxt.text = m_time.ToString();
+            m_countTxt.text = m_time.ToString();
 
             GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
             CameraBasic_2D camera = (CameraBasic_2D)GameManager.Instance.Camera.Get_CurCamera();
@@ -67,7 +73,7 @@ namespace VisualNovel
 
             m_shootGameStart = true;
             GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
-            VisualNovelManager.Instance.Container.Start_Belt();
+            m_container.Start_Belt();
         }
 
         public override void Update_Level()
@@ -85,7 +91,7 @@ namespace VisualNovel
         {
             Camera.main.GetComponent<AudioSource>().Stop();
             GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_ORIGIN);
-            Destroy(VisualNovelManager.Instance.ShootGame); // 재시작하지 않을 시 삭제
+            Destroy(m_stage);
         }
 
         public override void OnDrawGizmos()
@@ -98,10 +104,10 @@ namespace VisualNovel
             if (m_time <= 0.5f)
             {
                 int Count = 0;
-                VisualNovelManager.Instance.CountTxt.text = Count.ToString();
+                m_countTxt.text = Count.ToString();
 
                 m_shootGameOver = true;
-                VisualNovelManager.Instance.Container.UseBelt = false; // 1) 인형 일시 정지
+                m_container.UseBelt = false; // 1) 인형 일시 정지
 
                 m_dollType = DOLLTYPE.DT_FAIL;
 
@@ -109,7 +115,7 @@ namespace VisualNovel
             else
             {
                 int Count = (int)m_time;
-                VisualNovelManager.Instance.CountTxt.text = Count.ToString();
+                m_countTxt.text = Count.ToString();
             }
         }
 
@@ -122,8 +128,8 @@ namespace VisualNovel
             m_overTime += Time.deltaTime;
             if (m_overTime > 1.5f)
             {
-                if (!VisualNovelManager.Instance.Container.OverEffect)
-                    VisualNovelManager.Instance.Container.Over_Game(); // 2) 1.5초 뒤 인형 전부 폭발
+                if (!m_container.OverEffect)
+                    m_container.Over_Game(); // 2) 1.5초 뒤 인형 전부 폭발
                 else if (!m_shootGameNext && m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
                 {
                     m_shootGameNext = true;

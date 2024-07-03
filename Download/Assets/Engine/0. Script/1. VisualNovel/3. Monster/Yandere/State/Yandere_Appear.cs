@@ -15,6 +15,9 @@ namespace VisualNovel
 
         public override void Enter_State()
         {
+            GameObject clothA = m_stateMachine.Owner.transform.GetChild(0).GetChild(3).gameObject;
+            clothA.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_BaseMap", Resources.Load<Texture2D>("1. Graphic/3D/1. VisualNovel/Character/Texture/Yandere/Pink_UV_ClothA_BaseMap"));
+
             m_animator.SetTrigger("IsAppear");
         }
 

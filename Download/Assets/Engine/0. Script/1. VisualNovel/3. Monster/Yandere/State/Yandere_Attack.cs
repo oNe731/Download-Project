@@ -30,7 +30,7 @@ namespace VisualNovel
 
             // ¼Õ »ý¼º
             GameObject handObject = GameManager.Instance.Create_GameObject("5. Prefab/1. VisualNovel/Character/YandereHand", Camera.main.transform);
-            handObject.transform.localPosition = new Vector3(0f, 0f, 9f);
+            handObject.transform.localPosition = new Vector3(0f, -0.01f, 9.05f);
             m_handAnimator = handObject.transform.GetChild(0).GetComponent<Animator>();
         }
 

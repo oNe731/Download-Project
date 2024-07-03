@@ -23,19 +23,8 @@ public class VisualNovelManager : MonoBehaviour
     [SerializeField] private GameObject m_likeabilityPanel;
     [SerializeField] private NpcLike[]  m_likeabilityHeartPanel;
 
-    [Header("[ LS_SHOOT ]")]
-    [SerializeField] private GameObject m_shootGame;
-    [SerializeField] private TMP_Text   m_countTxt;
-    [SerializeField] private ShootContainerBelt m_containerBelt;
-
-    [Header("[ LS_CHASE ]")]
-    [SerializeField] private GameObject m_chaseGame;
-    [SerializeField] private TMP_Text   m_cdCountTxt;
-    [SerializeField] private GameObject m_playerObj;
-
     private int[] m_npcHeart;
     private LevelController m_levelController = null;
-
 
     public static VisualNovelManager Instance => m_instance;
     public int[] NpcHeart
@@ -45,12 +34,6 @@ public class VisualNovelManager : MonoBehaviour
     }
     public LevelController LevelController => m_levelController; // ÀÐ±â
     public GameObject Dialog => m_dialog;
-    public GameObject ShootGame => m_shootGame;
-    public TMP_Text CountTxt => m_countTxt;
-    public ShootContainerBelt Container => m_containerBelt;
-    public GameObject ChaseGame => m_chaseGame;
-    public TMP_Text CdTxt => m_cdCountTxt;
-    public GameObject PlayerObj => m_playerObj;
     public GameObject LikeabilityPanel => m_likeabilityPanel;
 
     #region Resource

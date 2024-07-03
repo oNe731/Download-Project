@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
+using TMPro;
 
 namespace VisualNovel
 {
@@ -27,6 +28,9 @@ namespace VisualNovel
         //private float m_CdMinDistance = 20.0f;
         //private float m_CdMaxDistance = 200.0f;
 
+        private GameObject m_stage;
+        private TMP_Text m_cdTxt;
+
         public HallwayPlayer Player { get => m_player; }
         public Transform PlayerTr { get => m_playerTr; }
         public List<HallwayLight> Light
@@ -38,7 +42,7 @@ namespace VisualNovel
 
         public GameObject Yandere { get => m_yandereObj; }
         public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
-
+        public GameObject Stage { get => m_stage; }
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -51,8 +55,10 @@ namespace VisualNovel
 
         public override void Enter_Level()
         {
-            m_player = VisualNovelManager.Instance.PlayerObj.GetComponent<HallwayPlayer>();
-            m_playerTr = VisualNovelManager.Instance.PlayerObj.GetComponent<Transform>();
+            m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Map/Chase"));
+            m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
+            m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
+            m_playerTr = m_stage.transform.GetChild(2).GetChild(2).GetComponent<Transform>();
 
             // 얀데레 생성
             m_yandereObj = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Character/Yandere"));
@@ -80,8 +86,6 @@ namespace VisualNovel
             Dialog_VN dialog = VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>();
             dialog.Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
             dialog.Close_Background();
-
-            VisualNovelManager.Instance.ChaseGame.SetActive(true);
         }
 
         public override void Play_Level()
@@ -209,7 +213,7 @@ namespace VisualNovel
                 m_positionUse[positionIndex] = false;
 
             m_CdCurrentCount++;
-            VisualNovelManager.Instance.CdTxt.text = m_CdCurrentCount.ToString(); // UI 업데이트
+            m_cdTxt.text = m_CdCurrentCount.ToString(); // UI 업데이트
 
             if (m_CdCurrentCount >= m_CdMaxCount)
             {
@@ -227,7 +231,7 @@ namespace VisualNovel
                 // 대사 출력
                 if(m_itemText == null)
                 {
-                    m_itemText = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/UI/UI_ItemText"), GameObject.Find("Chase").transform.GetChild(1));
+                    m_itemText = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/UI/UI_ItemText"), m_stage.transform.GetChild(1));
                     m_itemText.SetActive(false);
                 }
 
@@ -235,7 +239,7 @@ namespace VisualNovel
                 {
                     case 1:
                         // 먹는 즉시 바로 속도 감소 및 컷씬 재생
-                        VisualNovelManager.Instance.PlayerObj.GetComponent<HallwayPlayer>().MoveSpeed = 200f;
+                        m_player.MoveSpeed = 200f;
                         GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
                         break;
 

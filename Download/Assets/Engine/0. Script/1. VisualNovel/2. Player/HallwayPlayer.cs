@@ -6,7 +6,6 @@ namespace VisualNovel
 {
     public class HallwayPlayer : MonoBehaviour
     {
-        [SerializeField] private Transform m_mainCamera;
         [SerializeField] private float m_moveSpeed = 400.0f;
         [SerializeField] private float m_lerpSpeed = 5.0f;
 
@@ -29,7 +28,7 @@ namespace VisualNovel
         private void Input_Player()
         {
             // 회전
-            transform.rotation = m_mainCamera.rotation;
+            transform.rotation = Camera.main.transform.rotation;
 
             // 이동
             Vector3 Velocity = Vector3.zero;

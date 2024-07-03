@@ -95,30 +95,27 @@ namespace Western
         protected IEnumerator Update_ReadyGo()
         {
             m_uiIndex = 0;
-            while (m_uiIndex < 3)
+            m_readyGoUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_ReadyGo"), GameObject.Find("Canvas").transform);
+            Animator animator = m_readyGoUI.GetComponent<Animator>();
+
+            while (m_uiIndex < 2)
             {
-                m_uiTime += Time.deltaTime;
-                if (m_uiTime >= 1f)
+                if (m_uiIndex == 0 && animator.GetCurrentAnimatorStateInfo(0).IsName("AM_Ready") == true)
                 {
-                    m_uiTime = 0f;
-                    switch (m_uiIndex)
+                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)  // 애니메이션 종료일 시
                     {
-                        case 0:
-                            m_readyGoUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_ReadyGo"), GameObject.Find("Canvas").transform);
-                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Ready");
-                            break;
-
-                        case 1:
-                            m_readyGoUI.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Start/Go");
-                            break;
-
-                        case 2:
-                            Destroy(m_readyGoUI);
-                            Play_Level();
-                            break;
+                        m_readyGoUI.GetComponent<Animator>().SetBool("IsReadyGo", true);
+                        m_uiIndex++;
                     }
-
-                    m_uiIndex++;
+                }
+                else if (m_uiIndex == 1 && animator.GetCurrentAnimatorStateInfo(0).IsName("AM_Go") == true)
+                {
+                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)  // 애니메이션 종료일 시
+                    {
+                        Destroy(m_readyGoUI);
+                        Play_Level();
+                        m_uiIndex++;
+                    }
                 }
 
                 yield return null;
