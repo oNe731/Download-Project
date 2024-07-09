@@ -18,11 +18,6 @@ public class WesternManager : MonoBehaviour
 
     private static WesternManager m_instance = null;
 
-    [SerializeField] private LEVELSTATE m_startState = LEVELSTATE.LS_IntroLv1;
-
-    [Header("[ LS_START ]")]
-    [SerializeField] GameObject m_StartPanel;
-
     [Header("[ LS_INTRO ]")]
     [SerializeField] GameObject m_introPanel;
     [SerializeField] Dialog_IntroWT m_dialogIntro;
@@ -129,17 +124,6 @@ public class WesternManager : MonoBehaviour
         // 배경 이미지 할당
         m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_01"));
         m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_02"));
-    }
-
-    public void Button_Start()
-    {
-        Destroy(m_StartPanel);
-        m_levelController.Change_Level((int)m_startState);
-    }
-
-    public void Button_Exit()
-    {
-        SceneManager.LoadScene("Window");
     }
 
     public void Button_Play()

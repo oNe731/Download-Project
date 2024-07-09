@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
+#if UNITY_EDITOR
     private float m_deltaTime = 0.0f;
+#endif
 
     private void Start()
     {
