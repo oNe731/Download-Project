@@ -32,6 +32,9 @@ namespace VisualNovel
         private int m_choiceIndex = 0;
         private List<GameObject> m_choice_Button = new List<GameObject>();
 
+        private bool m_cutScene = false;
+        public bool CutScene { set => m_cutScene = value; }
+
         private void Awake()
         {
             m_backgroundImg = m_backgroundObj.GetComponent<Image>();
@@ -46,22 +49,20 @@ namespace VisualNovel
             m_arrowImg = m_arrowObj.GetComponent<Image>();
         }
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 Update_Dialog();
 
+            // 버튼 존재 시 해당 입력 업데이트
             if (0 < m_choice_Button.Count && false == m_isTyping)
                 Update_Button();
         }
 
         private void Update_Dialog(bool IsPonter = true)
         {
-            if (IsPonter && EventSystem.current.IsPointerOverGameObject()) // 커서가 UI 위치상에 존재할 시 반환
+            // 커서가 UI 위치상에 존재할 시 반환
+            if (IsPonter && EventSystem.current.IsPointerOverGameObject())
                 return;
 
             if (m_isTyping)
@@ -101,12 +102,16 @@ namespace VisualNovel
                             Play_ChaseGame();
                             break;
 
+                        case DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD:
+                            Update_None();
+                            break;
+
                         case DialogData_VN.DIALOGEVENT_TYPE.DET_SHAKING:
                             Update_Shaking();
                             break;
 
-                        case DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD:
-                            Update_None();
+                        case DialogData_VN.DIALOGEVENT_TYPE.DET_CUTSCENE:
+                            Update_CutScene();
                             break;
                     }
                 }
@@ -123,6 +128,9 @@ namespace VisualNovel
         #region Update
         private void Update_Basic(int index)
         {
+            //m_backgroundObj.SetActive(true);
+            m_dialogBoxObj.SetActive(true);
+
             if (!string.IsNullOrEmpty(m_dialogs[index].nameFont))
                 m_nameTxt.font = VisualNovelManager.Instance.FontAst[m_dialogs[index].nameFont];
             if (!string.IsNullOrEmpty(m_dialogs[index].dialogFont))
@@ -152,13 +160,13 @@ namespace VisualNovel
                 m_arrowImg.sprite = VisualNovelManager.Instance.ArrawSpr[m_dialogs[index].arrawSpr];
         }
 
-        private void Update_None()
+        private void Update_None(bool nextUpdate = false)
         {
             Update_Basic(m_dialogIndex);
 
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
-            m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt, m_arrowObj));
+            m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex, m_dialogTxt, m_arrowObj, nextUpdate));
             m_dialogIndex++;
         }
 
@@ -167,7 +175,7 @@ namespace VisualNovel
             Update_Basic(m_dialogIndex + 1);
 
             m_dialogTxt.text = "";
-            UIManager.Instance.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
+            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
         }
 
         private void Next_FadeIn()
@@ -180,37 +188,37 @@ namespace VisualNovel
         {
             if (!string.IsNullOrEmpty(m_dialogs[m_dialogIndex].choiceDialog[0]))
             {
-                UIManager.Instance.Start_FadeOut(1f, Color.black,
+                GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
                     () => Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex].choiceDialog[0])), 0f, false);
             }
             else
             {
                 // 비어있을 시 페이드 아웃만 진행
-                UIManager.Instance.Start_FadeOut(1f, Color.black);
+                GameManager.Instance.UI.Start_FadeOut(1f, Color.black);
             }
 
         }
 
         private void Update_FadeOutIn()
         {
-            UIManager.Instance.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
         }
 
         private void Start_ShootGame()
         {
-            UIManager.Instance.Start_FadeOut(1f, Color.black,
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
         }
 
         private void Start_ChaseGame()
         {
-            UIManager.Instance.Start_FadeOut(1f, Color.black,
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
         }
 
         private void Play_ChaseGame()
         {
-            UIManager.Instance.Start_FadeOut(1f, Color.black,
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level(), 0.5f, false);
         }
 
@@ -221,8 +229,159 @@ namespace VisualNovel
             // 카메라 쉐이킹
         }
 
+        private void Update_CutScene()
+        {
+            if (m_cutScene == true)
+                return;
 
+            int eventCount = m_dialogs[m_dialogIndex].dialogCutScene.cutSceneEvents.Count;
+            if (eventCount <= 0)
+                return;
 
+            m_cutScene = true;
+            for (int i = 0; i < eventCount; ++i)
+            {
+                DialogCutScene.CUTSCENEEVENT_TYPE cutSceneEvent = m_dialogs[m_dialogIndex].dialogCutScene.cutSceneEvents[i];
+                switch (cutSceneEvent)
+                {
+                    case DialogCutScene.CUTSCENEEVENT_TYPE.CET_BLINK:
+                        Update_Blink((BasicValue)m_dialogs[m_dialogIndex].dialogCutScene.eventValues[i]);
+                        break;
+
+                    case DialogCutScene.CUTSCENEEVENT_TYPE.CET_CAMERA:
+                        Update_Camera((CameraValue)m_dialogs[m_dialogIndex].dialogCutScene.eventValues[i]);
+                        break;
+
+                    case DialogCutScene.CUTSCENEEVENT_TYPE.CET_ANIMATION:
+                        Update_Animation((AnimationValue)m_dialogs[m_dialogIndex].dialogCutScene.eventValues[i]);
+                        break;
+
+                    case DialogCutScene.CUTSCENEEVENT_TYPE.CET_LIKEPANEL:
+                        StartCoroutine(Update_LikePanel());
+                        break;
+
+                    case DialogCutScene.CUTSCENEEVENT_TYPE.CET_ACTIVE:
+                        Update_Active((ActiveValue)m_dialogs[m_dialogIndex].dialogCutScene.eventValues[i]);
+                        break;
+                }
+            }
+        }
+        #endregion
+
+        #region CutScene
+        private void Update_Blink(BasicValue basicValue) // 인 아웃 // 인 아웃 // 인
+        {
+            m_dialogBoxObj.SetActive(false);
+            GameManager.Instance.UI.Start_FadeIn(3.5f, Color.black, () => GameManager.Instance.UI.Start_FadeOut(2f, Color.black, () => GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Finish_CutScene(basicValue.nextIndex)), 0f, false)), 0f, false));
+        }
+
+        private void Update_Camera(CameraValue cameraValue)
+        {
+            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+
+            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
+            if (cameraValue.usePosition == true)
+                camera.Start_Position(cameraValue.targetPosition, cameraValue.positionSpeed);
+            if (cameraValue.useRotation == true)
+                camera.Start_Rotation(cameraValue.targetRotation, cameraValue.rotationSpeed);
+
+            StartCoroutine(Finish_Camera(camera, cameraValue.usePosition, cameraValue.useRotation, cameraValue.nextIndex));
+        }
+
+        private void Update_Animation(AnimationValue animationValue)
+        {
+            switch (animationValue.objectType)
+            {
+                case AnimationValue.OBJECT_TYPE.OJ_YANDERE:
+                    VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().YandereAnimator.SetTrigger(animationValue.animatroTriger);
+                    break;
+            }
+
+            m_cutScene = false;
+            Update_None(animationValue.nextIndex);
+        }
+
+        private IEnumerator Update_LikePanel()
+        {
+            float time = 0f;
+            while (true)
+            {
+                time += Time.deltaTime;
+                if (time >= 0.5f)
+                {
+                    VisualNovelManager.Instance.LikeabilityPanel.SetActive(true);
+                    break;
+                }
+
+                yield return null;
+            }
+
+            time = 0f;
+            while (true)
+            {
+                time += Time.deltaTime;
+                if (time >= 1.0f)
+                {
+                    VisualNovelManager.Instance.LikeabilityPanel.GetComponent<Likeability>().Shake_Heart();
+                    break;
+                }
+
+                yield return null;
+            }
+
+            m_dialogIndex++;
+            yield break;
+        }
+
+        private void Update_Active(ActiveValue activeValue)
+        {
+            switch(activeValue.objectType)
+            {
+                case ActiveValue.OBJECT_TYPE.OJ_SAW:
+                    VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Yandere.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(activeValue.active);
+                    break;
+            }
+
+            Finish_CutScene(activeValue.nextIndex);
+        }
+
+        private void Finish_CutScene(bool nextIndex)
+        {
+            m_cutScene = false;
+
+            m_dialogIndex++;
+            if (nextIndex == false)
+                return;
+
+            Update_Dialog();
+        }
+
+        private IEnumerator Finish_Camera(CameraCutscene camera, bool position, bool rotation, bool nextIndex)
+        {
+            while (true)
+            {
+                if (position == true && rotation == true)
+                {
+                    if (camera.IsPosition == false && camera.IsRotation == false)
+                        break;
+                }
+                else if(position == true)
+                {
+                    if (camera.IsPosition == false)
+                        break;
+                }
+                else if (rotation == true)
+                {
+                    if (camera.IsRotation == false)
+                        break;
+                }
+
+                yield return null;
+            }
+
+            Finish_CutScene(nextIndex);
+            yield break;
+        }
         #endregion
 
         #region Each
@@ -237,55 +396,56 @@ namespace VisualNovel
                     break;
 
                 case 1:
-                    m_standingObj[0].SetActive(true);
-                    m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                    m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[0]))
+                    {
+                        m_standingObj[0].SetActive(true);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                    }
+
                     m_standingObj[1].SetActive(false);
                     m_standingObj[2].SetActive(false);
                     break;
 
                 case 2:
-                    m_standingObj[0].SetActive(true);
-                    m_standingObj[0].transform.localPosition = new Vector3(-300.0f, -460.0f, 0.0f);
-                    m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
-                    m_standingObj[1].SetActive(true);
-                    m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
-                    m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[0]))
+                    {
+                        m_standingObj[0].SetActive(true);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                    }
+
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[1]))
+                    {
+                        m_standingObj[1].SetActive(true);
+                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
+                        m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
+                    }
                     m_standingObj[2].SetActive(false);
                     break;
 
                 case 3:
-                    m_standingObj[0].SetActive(true);
-                    m_standingObj[0].transform.localPosition = new Vector3(-500.0f, -460.0f, 0.0f);
-                    m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
-                    m_standingObj[1].SetActive(true);
-                    m_standingObj[1].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                    m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
-                    m_standingObj[2].SetActive(true);
-                    m_standingObj[2].transform.localPosition = new Vector3(500.0f, -460.0f, 0.0f);
-                    m_standingImg[2].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[2]];
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[0]))
+                    {
+                        m_standingObj[0].SetActive(true);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                    }
+
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[1]))
+                    {
+                        m_standingObj[1].SetActive(true);
+                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
+                        m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
+                    }
+
+                    if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[2]))
+                    { 
+                        m_standingObj[2].SetActive(true);
+                        m_standingObj[2].transform.localPosition = new Vector3(500.0f, -460.0f, 0.0f);
+                        m_standingImg[2].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[2]];
+                    }
                     break;
-            }
-        }
-
-        private void Update_Button()
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-                Click_Button(m_choiceIndex);
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                m_choiceIndex--;
-                if (m_choiceIndex < 0)
-                    m_choiceIndex = m_choice_Button.Count - 1;
-                Set_Button();
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                m_choiceIndex++;
-                if (m_choiceIndex > m_choice_Button.Count - 1)
-                    m_choiceIndex = 0;
-                Set_Button();
             }
         }
 
@@ -325,6 +485,30 @@ namespace VisualNovel
 
             m_choiceIndex = 0;
             m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = VisualNovelManager.Instance.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"];
+        }
+
+        private void Update_Button()
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                Click_Button(m_choiceIndex);
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                m_choiceIndex--;
+                if (m_choiceIndex < 0)
+                    m_choiceIndex = m_choice_Button.Count - 1;
+                Set_Button();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                m_choiceIndex++;
+                if (m_choiceIndex > m_choice_Button.Count - 1)
+                    m_choiceIndex = 0;
+                Set_Button();
+            }
         }
 
         public void Enter_Button(int index)
@@ -370,43 +554,32 @@ namespace VisualNovel
         {
             m_dialogs = dialogs;
 
-            m_isTyping = false;
+            m_isTyping     = false;
             m_cancelTyping = false;
             m_dialogIndex = 0;
             m_choiceIndex = 0;
 
+            m_darkPanelObj.SetActive(false);
             m_standingObj[0].SetActive(false);
             m_standingObj[1].SetActive(false);
             m_standingObj[2].SetActive(false);
-
-            m_darkPanelObj.SetActive(false);
 
             for (int i = 0; i < m_choice_Button.Count; ++i)
                 Destroy(m_choice_Button[i]);
             m_choice_Button.Clear();
 
-            gameObject.SetActive(true);
             m_backgroundObj.SetActive(true);
+            gameObject.SetActive(true);
 
             Update_Dialog(false);
         }
 
         private void Close_Dialog()
         {
-            m_standingObj[0].SetActive(false);
-            m_standingObj[1].SetActive(false);
-            m_standingObj[2].SetActive(false);
-
-            m_darkPanelObj.SetActive(false);
-
-            for (int i = 0; i < m_choice_Button.Count; ++i)
-                Destroy(m_choice_Button[i]);
-            m_choice_Button.Clear();
-
-            m_dialogBoxObj.SetActive(false);
+            gameObject.SetActive(false);
         }
 
-        IEnumerator Type_Text(int index, TMP_Text currentText, GameObject arrow)
+        IEnumerator Type_Text(int index, TMP_Text currentText, GameObject arrow, bool nextUpdate)
         {
             m_isTyping = true;
             m_cancelTyping = false;
@@ -426,20 +599,25 @@ namespace VisualNovel
 
             m_isTyping = false;
 
+            // 화살표 효과
             if (m_arrowCoroutine != null)
                 StopCoroutine(m_arrowCoroutine);
             m_arrowCoroutine = StartCoroutine(Use_Arrow(arrow));
 
-            // 타이핑 끝난 상태일 시 선택지 생성
+            // 선택지 생성
             if (0 < m_dialogs[index].choiceText.Count)
                 Create_ChoiceButton(index);
 
-            // 다이얼로그 이벤트가 호감도 증가일 시 타이핑 종료 시 호감도 증가
+            // 호감도 증가
             if (m_dialogs[index].dialogEvent == DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD)
             {
                 VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[index].owner]++;
                 m_heartScr.Set_Owner(m_dialogs[index].owner);
             }
+
+            // 업데이트
+            if(nextUpdate == true)
+                Update_Dialog();
 
             yield break;
         }
@@ -451,6 +629,7 @@ namespace VisualNovel
                 arrow.SetActive(!arrow.activeSelf);
                 yield return new WaitForSeconds(m_arrowSpeed);
             }
+
             yield break;
         }
         #endregion

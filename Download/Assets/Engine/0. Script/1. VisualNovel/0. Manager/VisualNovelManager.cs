@@ -181,7 +181,7 @@ public class VisualNovelManager : MonoBehaviour
 
     public void Active_Popup()
     {
-        if (m_likeabilityPanel == null)
+        if (m_likeabilityPanel == null || m_levelController.Curlevel == (int)LEVELSTATE.LS_CHASEGAME)
             return;
 
         // 호감도창 비/ 활성화

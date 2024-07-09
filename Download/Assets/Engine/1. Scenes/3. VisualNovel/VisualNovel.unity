@@ -331,7 +331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2880, y: -2365}
+  m_AnchoredPosition: {x: 2880, y: -3750}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &70140197
@@ -2402,7 +2402,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 4dbdae2a38e11e94781591db0fcc7cec, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 4ff4f28d153b8be4eba801e7b76fe0bd, type: 2}
 --- !u!82 &963194231
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2668,7 +2668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2880, y: 2365}
+  m_AnchoredPosition: {x: 2880, y: 980}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1031194633
@@ -2757,7 +2757,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2880, y: 2365}
+  m_AnchoredPosition: {x: -2880, y: 980}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1053202377
@@ -2921,7 +2921,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960, y: 2365}
+  m_AnchoredPosition: {x: -960, y: 980}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133323745
@@ -3428,7 +3428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2880, y: -2365}
+  m_AnchoredPosition: {x: -2880, y: -3750}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1260896027
@@ -3785,8 +3785,8 @@ MonoBehaviour:
     boxSpr: "\uBC15\uC2A4\uC774\uBBF8\uC9C0\uD0A4\uAC12"
     ellipseSpr: "\uC6D0\uC774\uBBF8\uC9C0\uD0A4\uAC12"
     arrawSpr: "\uD45C\uC2DC\uD0A4\uAC12"
-    nameFont: 
-    dialogFont: 
+    nameFont: "\uC774\uB984"
+    dialogFont: "\uB300\uC0AC"
     choiceEventType: 
     choiceText:
     - "\uC120\uD0DD\uC9C01"
@@ -3794,6 +3794,8 @@ MonoBehaviour:
     choiceDialog:
     - "\uC120\uD0DD\uC9C01 \uB2E4\uC774\uC5BC\uB85C\uADF8 \uC8FC\uC18C"
     - "\uC120\uD0DD\uC9C02 \uB2E4\uC774\uC5BC\uB85C\uADF8 \uC8FC\uC18C"
+    dialogCutScene:
+      cutSceneEvents: 02000000
   m_darkPanelObj: {fileID: 1262641132}
   m_backgroundObj: {fileID: 219702787}
   m_standingObj:
@@ -3842,7 +3844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960, y: 2365}
+  m_AnchoredPosition: {x: 960, y: 980}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1461938497
@@ -4450,7 +4452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960, y: -2365}
+  m_AnchoredPosition: {x: -960, y: -3750}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1892296400
@@ -4673,7 +4675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960, y: -2365}
+  m_AnchoredPosition: {x: 960, y: -3750}
   m_SizeDelta: {x: 808, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1907581329
