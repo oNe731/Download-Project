@@ -96,6 +96,19 @@ namespace Western
         {
             return m_group.transform.position.z;
         }
+
+        public void Stop_Animation()
+        {
+            if (m_animator.speed == 0f)
+                return;
+
+            m_animator.speed = 0f;
+            foreach (Transform child in transform)
+            {
+                Animator childAnimator = child.GetComponent<Animator>();
+                if (childAnimator != null) { childAnimator.speed = 0f; }
+            }
+        }
     }
 }
 

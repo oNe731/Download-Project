@@ -53,11 +53,11 @@ namespace VisualNovel
             transform.position = nextPosition;
 
             if (nextPosition.y > m_maxY) { m_maxY = nextPosition.y; } // 가는 길에 충돌 처리 되는 버그 수정
-            else if (!m_collider.enabled && nextPosition.y < m_maxY) { m_collider.enabled = true; }
+            else if (!m_collider.enabled && nextPosition.y < m_maxY && Vector3.Distance(nextPosition, m_targetPosition) <= 0.5f) { m_collider.enabled = true; }
             else if (m_collider.enabled == true && !m_arrived)
             {
-                float targetDist = Vector3.Distance(nextPosition, m_targetPosition);
-                if (targetDist <= 0.5f) { if (nextPosition == m_targetPosition) Arrived(); }
+                if (nextPosition == m_targetPosition)
+                    Arrived();
             }
         }
 

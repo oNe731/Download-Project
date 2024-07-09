@@ -150,8 +150,9 @@ namespace Western
         {
             WesternManager.Instance.Gun.Shoot_Gun();
 
-            // 타겟 쉐이크
-            m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().Start_Shake();
+            Person person = m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>();
+            person.Start_Shake();
+            person.Stop_Animation();
 
             // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
             GameManager.Instance.UI.Start_FadeIn(0.3f, Color.white);
