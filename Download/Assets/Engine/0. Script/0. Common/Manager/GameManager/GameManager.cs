@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-public GameObject Create_GameObject(string path, Transform transform = null)
+    public GameObject Create_GameObject(string path, Transform transform = null)
     {
         return Instantiate(Resources.Load<GameObject>(path), transform);
     }
@@ -59,5 +60,11 @@ public GameObject Create_GameObject(string path, Transform transform = null)
             Debug.LogError($"Failed to load Jsondata : {filePath}");
 
         return null;
+    }
+
+
+    public void Change_Scene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StartManager : MonoBehaviour
 {
     public void Button_Start()
     {
-        SceneManager.LoadScene("Window"); // Intro
+        GameManager.Instance.Change_Scene("Window"); // Intro
     }
 
     public void Button_Exit()

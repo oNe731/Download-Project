@@ -41,7 +41,7 @@ namespace Western
             m_citizenText.Add("고양이 앞에서 한 눈을 팔다니");
             m_citizenText.Add("고양이 목숨이 몇개인지 알아?");
 
-            // Temp ----------------------------------------------------------
+            // 폭탄 이벤트 추가
             m_eventIndex = new List<int>();
             m_eventCount = Random.Range(3, 6); // 최소 3 - 5번
             List<int> availableNumbers = new List<int>();
@@ -54,7 +54,6 @@ namespace Western
                 availableNumbers.RemoveAt(randomIndex);
             }
             m_eventIndex.Sort();
-            // Temp ----------------------------------------------------------
         }
 
         public override void Enter_Level()

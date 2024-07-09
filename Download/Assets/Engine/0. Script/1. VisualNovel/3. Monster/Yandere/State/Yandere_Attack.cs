@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace VisualNovel
 {
@@ -49,7 +46,7 @@ namespace VisualNovel
                 if(m_fadeOut == false && m_time > 1f)
                 {
                     m_fadeOut = true;
-                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => SceneManager.LoadScene("Window"), 1f, false);
+                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => GameManager.Instance.Change_Scene("Window"), 1f, false);
                 }
             }
         }
