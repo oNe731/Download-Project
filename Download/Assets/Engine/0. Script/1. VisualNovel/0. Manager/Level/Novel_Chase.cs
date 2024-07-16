@@ -238,27 +238,21 @@ namespace VisualNovel
                 switch(m_CdCurrentCount)
                 {
                     case 1:
-                        // 먹는 즉시 바로 속도 감소 및 컷씬 재생
+                        // 속도 감소 및 컷씬 재생
                         m_player.MoveSpeed = 200f;
                         GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
                         break;
 
                     case 2:
-                        if (m_ItemTextCoroutine != null)
-                            StopCoroutine(m_ItemTextCoroutine);
-                        m_ItemTextCoroutine = StartCoroutine(Wait_Text("나에게서 멀어지려하지마..."));
+                        Change_Text("나에게서 멀어지려하지마...");
                         break;
 
                     case 3:
-                        if (m_ItemTextCoroutine != null)
-                            StopCoroutine(m_ItemTextCoroutine);
-                        StartCoroutine(Wait_Text("이제 그만 돌아와요!"));
+                        Change_Text("이제 그만 돌아와요!");
                         break;
 
                     case 4:
-                        if (m_ItemTextCoroutine != null)
-                            StopCoroutine(m_ItemTextCoroutine);
-                        StartCoroutine(Wait_Text("제 말을 들어줘요..."));
+                        Change_Text("제 말을 들어줘요...");
                         break;
                 }
             }
@@ -275,6 +269,13 @@ namespace VisualNovel
 
             // 추가 생성
             Create_Lever(1, positionIndex);
+        }
+
+        public void Change_Text(string str)
+        {
+            if (m_ItemTextCoroutine != null)
+                StopCoroutine(m_ItemTextCoroutine);
+            StartCoroutine(Wait_Text(str));
         }
 
         private IEnumerator Wait_Text(string str)

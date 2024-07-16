@@ -23,6 +23,7 @@ namespace VisualNovel
             m_agent.speed = 10f;
 
             //GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => Continue_Play(), 0f, false);
+            // VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Change_Text("선배... 도망가게 두지 않을거에요.");
         }
 
         public override void Update_State()
