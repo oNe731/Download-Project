@@ -101,6 +101,8 @@ namespace VisualNovel
 
             GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
             GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
+            CameraFollow camera = (CameraFollow)GameManager.Instance.Camera.Get_CurCamera();
+            camera.Set_FollowInfo(GameObject.FindWithTag("Player").transform, true, true, new Vector3(0.0f, 1.3f, 0.0f), 80.0f, 100.0f, new Vector2(-20f, 20f), true, true);
         }
 
         public override void Update_Level()

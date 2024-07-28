@@ -67,4 +67,17 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+
+    public RaycastHit Start_Raycast(Vector3 origin, Vector3 direction, float distance, int layerIndex)
+    {
+        RaycastHit hit;
+        Physics.Raycast(origin, direction, out hit, distance, layerIndex);
+
+#if UNITY_EDITOR
+        Debug.DrawRay(origin, direction * distance, Color.red);
+#endif
+
+        return hit;
+    }
 }

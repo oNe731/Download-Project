@@ -52,8 +52,8 @@ namespace VisualNovel
 
             GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             Novel_Chase novel_Chase = VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>();
-            novel_Chase.Stage.transform.GetChild(0).gameObject.SetActive(true);
-            novel_Chase.Stage.transform.GetChild(1).gameObject.SetActive(true);
+            novel_Chase.Stage.transform.GetChild(0).gameObject.SetActive(true); // 미니맵 카메라
+            novel_Chase.Stage.transform.GetChild(1).gameObject.SetActive(true); // 미니맵 UI
             novel_Chase.ItemText.GetComponent<ItemText>().Start_ItemText("후후후...");
             novel_Chase.Player.Set_Lock(false);
             novel_Chase.Player.MoveSpeed = 400f;
