@@ -8,11 +8,12 @@ namespace Horror
     {
         private BoxCollider m_attackCollider = null;
 
-        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement)
+        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
         {
-            base.Initialize_Weapon(weaponManagement);
+            base.Initialize_Weapon(weaponManagement, uIWeapon);
 
-            m_weaponIndex = (int)HorrorPlayer.WeaponId.WP_MELEE;
+            m_damage = 1f;
+            m_weaponID = WeaponId.WP_MELEE;
             transform.localPosition = new Vector3(0f, 0.023f, 0f);
 
             m_attackCollider = gameObject.transform.GetChild(1).GetComponent<BoxCollider>();
@@ -46,6 +47,11 @@ namespace Horror
             foreach (var hitCollider in hitColliders)
             {
                 Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.gameObject.name}");
+
+                Monster monster = hitCollider.gameObject.GetComponent<Monster>();
+                if (monster == null)
+                    return;
+                monster.Damage_Monster(m_damage);
             }
         }
     }

@@ -1,19 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Horror
 {
     public class HorrorPlayer : MonoBehaviour
     {
         public enum State { ST_IDLE, ST_WALK, ST_RUN, ST_ATTACK, ST_END }
-        public enum WeaponId { WP_MELEE, WP_FLASHLIGHT, WP_GUN, WP_END }
+
+        [SerializeField] private Slider m_hpSlider;
+        [SerializeField] private Slider m_staminaSlider;
+
+        private float m_hp = 0f;
+        private float m_hpMax = 10f;
+        private float m_stamina = 0f;
+        private float m_staminaMax = 10f;
 
         private StateMachine<HorrorPlayer> m_stateMachine;
         private WeaponManagement<HorrorPlayer> m_weaponManagement;
 
+        public float Hp => m_hp;
+        public float HpMax => m_hpMax;
+        public float Stamina => m_stamina;
+        public float StaminaMax => m_staminaMax;
+
         public StateMachine<HorrorPlayer> StateMachine => m_stateMachine;
         public WeaponManagement<HorrorPlayer> WeaponManagement => m_weaponManagement;
+
+        public void Damage_Player(float damage)
+        {
+            m_hp -= damage;
+            if(m_hp <= 0)
+            {
+                m_hp = 0f;
+                Debug.Log("플레이어 사망");
+            }
+
+            m_hpSlider.value = m_hp;
+        }
+
+        public bool Set_Stamina(float useValue)
+        {
+            bool recover = true;
+
+            m_stamina += useValue;
+            if (m_stamina <= 0)
+            {
+                m_stamina = 0f;
+                recover = false;
+            }
+            else if (m_stamina >= m_staminaMax)
+            {
+                m_stamina = m_staminaMax;
+                recover = false;
+            }
+ 
+            m_staminaSlider.value = m_stamina;
+            return recover;
+        }
 
         private void Awake()
         {
@@ -21,6 +66,14 @@ namespace Horror
 
         private void Start()
         {
+            m_hp = m_hpMax;
+            m_hpSlider.maxValue = m_hpMax;
+            Damage_Player(0);
+
+            m_stamina = m_staminaMax;
+            m_staminaSlider.maxValue = m_staminaMax;
+            Set_Stamina(0);
+
             // State
             m_stateMachine = new StateMachine<HorrorPlayer>(gameObject);
 
@@ -34,13 +87,13 @@ namespace Horror
 
             // Weapon
             m_weaponManagement = new WeaponManagement<HorrorPlayer>(gameObject);
-            m_weaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Melee", transform).GetComponent<Weapon<HorrorPlayer>>());
-            m_weaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Gun", transform).GetComponent<Weapon<HorrorPlayer>>());
-            m_weaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Flashlight", transform).GetComponent<Weapon<HorrorPlayer>>());
         }
 
         public void Update()
         {
+            if (HorrorManager.Instance.IsGame == false)
+                return;
+
             m_stateMachine.Update_State();
             m_weaponManagement.Update_Weapon();
         }

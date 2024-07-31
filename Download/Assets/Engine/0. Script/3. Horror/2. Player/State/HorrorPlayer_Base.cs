@@ -11,9 +11,10 @@ namespace Horror
         protected float m_moveSpeed = 400.0f;
         protected float m_lerpSpeed = 5.0f;
         protected float m_rotationSpeed = 100.0f;
-        protected Vector2 m_rotationLimit = new Vector2(-45f, 45f);
+        protected Vector2 m_rotationLimit = new Vector2(-80f, 80f);
 
-        protected bool  m_isLock = false;
+        protected bool m_isLock = false;
+        protected bool m_recoverStamina = false;
         protected float m_xRotate = 0.0f;
 
         protected Transform m_transform;
@@ -113,13 +114,37 @@ namespace Horror
         protected void Input_Interaction()
         {
             // 상호작용
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Interaction"));
 
                 if (hit.collider != null)
-                    Debug.Log($"상호작용 {hit.collider.gameObject.transform.parent.gameObject.name}");
+                {
+                    Interaction interaction = hit.collider.gameObject.transform.GetComponent<Interaction>();
+                    if (interaction == null)
+                        interaction = hit.collider.gameObject.transform.parent.GetComponent<Interaction>();
+
+                    if (interaction == null)
+                        return;
+                    interaction.Click_Interaction();
+                }
             }
+        }
+
+        protected void Check_Stemina()
+        {
+            if (m_player.Stamina < m_player.StaminaMax)
+                m_recoverStamina = true;
+            else
+                m_recoverStamina = false;
+        }
+
+        protected void Recover_Stemina()
+        {
+            if (m_recoverStamina == false)
+                return;
+
+            m_recoverStamina = m_player.Set_Stamina(0.5f * Time.deltaTime);
         }
 
         public void Set_Lock(bool isLock)

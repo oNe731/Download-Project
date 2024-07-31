@@ -12,10 +12,15 @@ public class GameManager : MonoBehaviour
     private UIManager     m_uIManager     = null;
     private SoundManager  m_soundManager  = null;
 
+    private string m_playerName = "ÀÌ¸§";
+
     public static GameManager Instance => m_instance;
     public CameraManager Camera => m_cameraManager;
     public UIManager UI => m_uIManager;
     public SoundManager m_Sound => m_soundManager;
+
+    public string PlayerName => m_playerName;
+
 
     private void Awake()
     {
@@ -43,6 +48,10 @@ public class GameManager : MonoBehaviour
         return Instantiate(Resources.Load<GameObject>(path), transform);
     }
 
+    public void Destroy_GameObject(ref GameObject gameObject)
+    {
+        Destroy(gameObject);
+    }
 
     public void Save_JsonData<T>(string filePath, List<T> saveData)
     {

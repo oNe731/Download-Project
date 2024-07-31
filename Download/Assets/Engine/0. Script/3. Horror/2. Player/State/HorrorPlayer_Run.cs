@@ -6,16 +6,13 @@ namespace Horror
 {
     public class HorrorPlayer_Run : HorrorPlayer_Base
     {
-        private float m_gaugeMax = 10f;
-        private float m_gaugeCur = 0f;
-
         public HorrorPlayer_Run(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter_State()
         {
-            Debug.Log("뛰기 상태로 전환");
+            //Debug.Log("뛰기 상태로 전환");
             m_moveSpeed = 700f;
         }
 
@@ -33,7 +30,8 @@ namespace Horror
                 Input_Interaction();
                 if (Input_Move())
                 {
-                    if (Input.GetKey(KeyCode.Space) == false)
+                    m_player.Set_Stamina(-1f * Time.deltaTime); // 스테미나 사용
+                    if (m_player.Stamina <= 0 || Input.GetKey(KeyCode.Space) == false)
                     {
                         m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_WALK);
                     }

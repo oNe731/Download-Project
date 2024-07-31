@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    protected int m_levelIndex = -1;
+
     protected LevelController m_levelController;
+
+    public int LevelIndex => m_levelIndex;
 
     public virtual void Initialize_Level(LevelController levelController)
     {

@@ -12,7 +12,9 @@ namespace Horror
 
         public override void Enter_State()
         {
-            Debug.Log("걷기 상태로 전환");
+            //Debug.Log("걷기 상태로 전환");
+
+            Check_Stemina();
             m_moveSpeed = 400f;
         }
 
@@ -24,7 +26,7 @@ namespace Horror
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_ATTACK);
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Space) && m_player.Stamina > 0)
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_RUN);
             }
@@ -34,6 +36,7 @@ namespace Horror
             }
             else
             {
+                Recover_Stemina();
                 Input_Weapon();
                 Input_Interaction();
             }

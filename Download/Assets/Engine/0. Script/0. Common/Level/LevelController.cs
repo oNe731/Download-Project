@@ -35,7 +35,7 @@ public class LevelController : MonoBehaviour
     }
     public void Change_Level(int levelIndex)
     {
-        if (levelIndex == -1)
+        if (levelIndex == -1 || m_curlevel == levelIndex)
             return;
 
         if (m_curlevel != -1)

@@ -12,7 +12,9 @@ namespace Horror
 
         public override void Enter_State()
         {
-            Debug.Log("아이들 상태로 전환");
+            //Debug.Log("아이들 상태로 전환");
+
+            Check_Stemina();
         }
 
         public override void Update_State()
@@ -23,16 +25,17 @@ namespace Horror
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_ATTACK);
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Space) && m_player.Stamina > 0)
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_RUN);
             }
-            else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+            else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_WALK);
             }
             else
             {
+                Recover_Stemina();
                 Input_Rotation();
                 Input_Weapon();
                 Input_Interaction();

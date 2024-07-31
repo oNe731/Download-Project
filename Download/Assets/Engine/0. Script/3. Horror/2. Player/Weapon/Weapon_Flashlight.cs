@@ -6,11 +6,11 @@ namespace Horror
 {
     public class Weapon_Flashlight : Weapon<HorrorPlayer>
     {
-        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement)
+        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
         {
-            base.Initialize_Weapon(weaponManagement);
+            base.Initialize_Weapon(weaponManagement, uIWeapon);
 
-            m_weaponIndex = (int)HorrorPlayer.WeaponId.WP_FLASHLIGHT;
+            m_weaponID = WeaponId.WP_FLASHLIGHT;
             transform.localPosition = new Vector3(0.34f, 1.03f, 8.07f);
         }
 
