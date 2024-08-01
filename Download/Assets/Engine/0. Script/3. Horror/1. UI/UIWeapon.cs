@@ -16,11 +16,11 @@ public class UIWeapon : MonoBehaviour
     [SerializeField] private Image    m_textIcon;
     [SerializeField] private TMP_Text m_textTxt;
 
-    private WeaponId m_weaponId;
+    private NoteItem.ITEMTYPE m_weaponId;
     private Vector2[] m_position;
     private Dictionary<string, Sprite> m_WeaponSpr = new Dictionary<string, Sprite>();
 
-    public void Initialize_UI(WeaponId weaponId, WeaponInfo weaponInfo)
+    public void Initialize_UI(NoteItem.ITEMTYPE weaponId, NoteItem.itemInfo weaponInfo)
     {
         m_WeaponSpr.Add("Gun_OFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Gun_OFF"));
         m_WeaponSpr.Add("Gun_ON", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Gun_ON"));
@@ -44,7 +44,7 @@ public class UIWeapon : MonoBehaviour
     {
         switch (m_weaponId)
         {
-            case WeaponId.WP_MELEE:
+            case NoteItem.ITEMTYPE.TYPE_PIPE:
                 // 무기 아이콘 변경(이미지)
                 m_imageIcon.sprite = active ? m_WeaponSpr["Pipe_ON"] : m_WeaponSpr["Pipe_OFF"]; 
                 // 무한대 표시(이미지)
@@ -52,7 +52,7 @@ public class UIWeapon : MonoBehaviour
                 m_textIcon.gameObject.SetActive(active);
                 break;
 
-            case WeaponId.WP_FLASHLIGHT:
+            case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
                 // 무기 아이콘 변경(이미지)
                 m_imageIcon.sprite = active ? m_WeaponSpr["Lantern_ON"] : m_WeaponSpr["Lantern_OFF"];
                 // 무한대 표시(이미지)
@@ -60,7 +60,7 @@ public class UIWeapon : MonoBehaviour
                 m_textIcon.gameObject.SetActive(active);
                 break;
 
-            case WeaponId.WP_GUN:
+            case NoteItem.ITEMTYPE.TYPE_GUN:
                 // 무기 아이콘 변경(이미지)
                 m_imageIcon.sprite = active ? m_WeaponSpr["Gun_ON"] : m_WeaponSpr["Gun_OFF"];
                 // 총알 현재/ 최대 개수(폰트)
@@ -98,13 +98,20 @@ public class UIWeapon : MonoBehaviour
             Update_Image(true);
     }
 
-    public void Update_Info(WeaponInfo weaponInfo)
+    public void Update_Info(NoteItem.itemInfo weaponInfo)
     {
         switch (m_weaponId)
         {
-            case WeaponId.WP_GUN:
+            case NoteItem.ITEMTYPE.TYPE_GUN:
+                int currentCount;
+                NoteItem noteItem = HorrorManager.Instance.Player.Note.Get_Item(NoteItem.ITEMTYPE.TYPE_BULLET);
+                if (noteItem == null)
+                    currentCount = 0;
+                else
+                    currentCount = noteItem.m_count;
+
                 Weapon_Gun.GunInfo gunInfo = (Weapon_Gun.GunInfo)weaponInfo;
-                m_textTxt.text = gunInfo.m_bulletCount.ToString() + "/ " + gunInfo.m_bulletMax.ToString();
+                m_textTxt.text = currentCount + "/ " + gunInfo.m_bulletMax.ToString();
                 break;
         }
     }

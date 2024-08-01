@@ -72,4 +72,12 @@ public class HorrorManager : MonoBehaviour
         gameObject.GetComponent<UIWorldHint>().Initialize_UI(hinttype, target, m_uiOffset);
         return gameObject;
     }
+
+    public void Set_Pause(bool pause)
+    {
+        m_isGame = !pause;
+        
+        GameManager.Instance.Camera.Set_CursorLock(!pause);
+        Player.StateMachine.Lock = pause;
+    }
 }

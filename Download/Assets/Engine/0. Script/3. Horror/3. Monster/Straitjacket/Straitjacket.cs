@@ -38,11 +38,17 @@ public class Straitjacket : Monster
 
     private void Update()
     {
+        if (m_stateMachine == null)
+            return;
+
         m_stateMachine.Update_State();
     }
 
     private void OnDrawGizmos()
     {
+        if (m_stateMachine == null)
+            return;
+
         m_stateMachine.OnDrawGizmos();
     }
 }

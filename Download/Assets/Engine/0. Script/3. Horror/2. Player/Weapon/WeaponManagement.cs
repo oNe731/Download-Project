@@ -33,7 +33,7 @@ public class WeaponManagement<T> where T : class
         weapons.Initialize_Weapon(this, ui);
         m_weapons.Add(weapons);
 
-        ui.Initialize_UI(weapons.WeaponID, weapons.WeaponInfo);
+        ui.Initialize_UI(weapons.ItemInfo.m_itemType, weapons.ItemInfo.m_itemInfo);
         m_uis.Add(ui);
 
 
@@ -42,6 +42,10 @@ public class WeaponManagement<T> where T : class
             Change_Weapon(0);
         else
             Update_UIWeapons();
+
+        // 노트가 있다면 무기 정보 추가
+        if(HorrorManager.Instance.Player.Note != null)
+            HorrorManager.Instance.Player.Note.Add_Weapon(weapons.ItemInfo);
     }
 
     public void Update_Weapon()
@@ -88,17 +92,26 @@ public class WeaponManagement<T> where T : class
         m_weapons[(int)m_curWeapon].Attack_Weapon();
     }
 
-    public int Get_WeaponIndex(WeaponId weaponId)
+    public int Get_WeaponIndex(NoteItem.ITEMTYPE weaponId)
     {
         for(int i = 0; i < m_weapons.Count; ++i)
         {
-            if(m_weapons[i].WeaponID == weaponId)
+            if(m_weapons[i].ItemInfo.m_itemType == weaponId)
             {
                 return i;
             }
         }
 
         return -1;
+    }
+
+    public void Update_WeaponUI(NoteItem.ITEMTYPE weaponId)
+    {
+        for (int i = 0; i < m_weapons.Count; ++i)
+        {
+            if (m_weapons[i].ItemInfo.m_itemType == weaponId)
+                m_weapons[i].Update_WeaponUI();
+        }
     }
 
     public void OnDrawGizmos()

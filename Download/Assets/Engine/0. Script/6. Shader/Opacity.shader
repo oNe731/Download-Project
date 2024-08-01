@@ -1,4 +1,4 @@
-Shader "Unlit/Opacity"
+Shader "Custom/Opacity"
 {
 	Properties
 	{

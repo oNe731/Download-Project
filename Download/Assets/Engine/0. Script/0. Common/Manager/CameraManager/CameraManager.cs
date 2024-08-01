@@ -52,4 +52,12 @@ public class CameraManager : MonoBehaviour
     {
         return m_cameras[(int)m_currentCameraType];
     }
+
+    public void Set_CursorLock(bool CursorLock)
+    {
+        if (CursorLock == true)
+            Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 고정
+        else
+            Cursor.lockState = CursorLockMode.None;
+    }
 }

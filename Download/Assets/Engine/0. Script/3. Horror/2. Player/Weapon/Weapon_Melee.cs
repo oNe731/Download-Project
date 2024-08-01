@@ -12,9 +12,13 @@ namespace Horror
         {
             base.Initialize_Weapon(weaponManagement, uIWeapon);
 
-            m_damage = 1f;
-            m_weaponID = WeaponId.WP_MELEE;
+            m_itemInfo.m_name = "ÆÄÀÌÇÁ";
+            m_itemInfo.m_count = 1;
+            m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
+            m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_PIPE;
             transform.localPosition = new Vector3(0f, 0.023f, 0f);
+
+            m_damage = 1f;
 
             m_attackCollider = gameObject.transform.GetChild(1).GetComponent<BoxCollider>();
         }

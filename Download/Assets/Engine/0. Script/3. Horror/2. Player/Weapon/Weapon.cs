@@ -1,10 +1,5 @@
 using UnityEngine;
 
-public enum WeaponId { WP_MELEE, WP_FLASHLIGHT, WP_GUN, WP_END }
-public interface WeaponInfo
-{
-}
-
 public abstract class Weapon<T> : MonoBehaviour where T : class
 {
     protected float m_damage = 0f;
@@ -12,11 +7,10 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
     protected UIWeapon m_uIWeapon;
 
     protected WeaponManagement<T> m_stateManagement;
-    protected WeaponId m_weaponID = WeaponId.WP_END;
-    protected WeaponInfo m_weaponInfo;
 
-    public WeaponId WeaponID { get => m_weaponID; }
-    public WeaponInfo WeaponInfo { get => m_weaponInfo; }
+    protected NoteItem m_itemInfo = new NoteItem();
+
+    public NoteItem ItemInfo { get => m_itemInfo; }
 
     public abstract void Attack_Weapon();
 
@@ -40,6 +34,14 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
     public virtual void Exit_Weapon()   
     {
         gameObject.SetActive(false);
+    }
+
+    public void Update_WeaponUI()
+    {
+        if (m_uIWeapon == null)
+            return;
+
+        m_uIWeapon.Update_Info(m_itemInfo.m_itemInfo);
     }
 
     public virtual void OnDrawGizmos()

@@ -9,9 +9,13 @@ public class StateMachine<T> where T : class
     private int m_preState = -1;
     private List<State<T>> m_states;
 
+    private bool m_lock = false;
+
     public GameObject Owner { get { return m_owner; } }
     public int CurState { get { return m_curState; } }
     public int PreState { get { return m_preState; } }
+
+    public bool Lock { get => m_lock; set => m_lock = value; }
 
     public StateMachine(GameObject owner)
     {
@@ -26,7 +30,7 @@ public class StateMachine<T> where T : class
 
     public void Update_State()
     {
-        if (m_curState == -1)
+        if (m_curState == -1 || m_lock == true)
             return;
 
         m_states[(int)m_curState].Update_State();
