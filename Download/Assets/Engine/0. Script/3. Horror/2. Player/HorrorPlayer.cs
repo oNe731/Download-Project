@@ -11,30 +11,45 @@ namespace Horror
 
         [SerializeField] private Slider m_hpSlider;
         [SerializeField] private Slider m_staminaSlider;
+        [SerializeField] private UIBlood m_blood;
 
         private float m_hp = 0f;
         private float m_hpMax = 10f;
         private float m_stamina = 0f;
         private float m_staminaMax = 10f;
+        private float m_xRotate = 0.0f;
 
         private StateMachine<HorrorPlayer> m_stateMachine;
         private WeaponManagement<HorrorPlayer> m_weaponManagement;
+        private Note m_note;
 
         public float Hp => m_hp;
         public float HpMax => m_hpMax;
         public float Stamina => m_stamina;
         public float StaminaMax => m_staminaMax;
+        public float XRotate { get => m_xRotate; set => m_xRotate = value; }
 
         public StateMachine<HorrorPlayer> StateMachine => m_stateMachine;
         public WeaponManagement<HorrorPlayer> WeaponManagement => m_weaponManagement;
+        public Note Note => m_note;
 
         public void Damage_Player(float damage)
         {
             m_hp -= damage;
-            if(m_hp <= 0)
+
+            // Temp
+            if (m_hp < 1)
+                m_hp = 1;
+
+            if (m_hp <= 0)
             {
                 m_hp = 0f;
                 Debug.Log("플레이어 사망");
+            }
+            else
+            {
+                if (damage > 0)
+                    m_blood.Active_Blood();
             }
 
             m_hpSlider.value = m_hp;
@@ -96,6 +111,15 @@ namespace Horror
 
             m_stateMachine.Update_State();
             m_weaponManagement.Update_Weapon();
+        }
+
+        public void Acquire_Note()
+        {
+            if (m_note != null)
+                return;
+
+            GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Note", GameObject.Find("Canvas").transform.GetChild(1));
+            m_note = ui.GetComponent<Note>();
         }
     }
 }

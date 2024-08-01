@@ -15,7 +15,6 @@ namespace Horror
 
         protected bool m_isLock = false;
         protected bool m_recoverStamina = false;
-        protected float m_xRotate = 0.0f;
 
         protected Transform m_transform;
         protected Rigidbody m_rigidbody;
@@ -73,13 +72,16 @@ namespace Horror
 
         protected float Input_Rotation()
         {
+            if (m_player == null)
+                return 0f;
+
             float xRotateSize = -Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
             float yRotateSize = Input.GetAxis("Mouse X") * m_rotationSpeed * Time.deltaTime;
 
             float yRotate = m_transform.eulerAngles.y + yRotateSize;
-            m_xRotate = Mathf.Clamp(m_xRotate + xRotateSize, m_rotationLimit.x, m_rotationLimit.y); // 각도 제한(-45, 80)
+            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_rotationLimit.x, m_rotationLimit.y); // 각도 제한(-45, 80)
 
-            m_transform.eulerAngles = new Vector3(m_xRotate, yRotate, 0);
+            m_transform.eulerAngles = new Vector3(m_player.XRotate, yRotate, 0);
 
             return yRotate;
         }
