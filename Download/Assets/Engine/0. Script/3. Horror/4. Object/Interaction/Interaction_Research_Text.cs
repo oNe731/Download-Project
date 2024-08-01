@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interaction_Research_Text : MonoBehaviour
+public class Interaction_Research_Text : Interaction
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private string m_text;
+
+    private void Start()
     {
-        
+        m_interactionUI = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform, m_uiOffset);
+        m_interactionUI.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        Update_InteractionUI();
+    }
+
+    public override void Click_Interaction()
+    {
+        if (m_interactionUI.activeSelf == false || m_interact == true)
+            return;
+
+        GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+        if (ui == null)
+            return;
+        UIPopup.Expendables info = new UIPopup.Expendables();
+        info.text = m_text;
+        ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
+
+        Destroy(m_interactionUI);
+        Destroy(gameObject);
     }
 }

@@ -104,11 +104,18 @@ public class UIWeapon : MonoBehaviour
         {
             case NoteItem.ITEMTYPE.TYPE_GUN:
                 int currentCount;
-                NoteItem noteItem = HorrorManager.Instance.Player.Note.Get_Item(NoteItem.ITEMTYPE.TYPE_BULLET);
-                if (noteItem == null)
+
+                Note note = HorrorManager.Instance.Player.Note;
+                if (note == null)
                     currentCount = 0;
                 else
-                    currentCount = noteItem.m_count;
+                {
+                    NoteItem noteItem = note.Get_Item(NoteItem.ITEMTYPE.TYPE_BULLET);
+                    if (noteItem == null)
+                        currentCount = 0;
+                    else
+                        currentCount = noteItem.m_count;
+                }
 
                 Weapon_Gun.GunInfo gunInfo = (Weapon_Gun.GunInfo)weaponInfo;
                 m_textTxt.text = currentCount + "/ " + gunInfo.m_bulletMax.ToString();

@@ -42,7 +42,7 @@ private void Start()
 
                 // UI »ý¼º
                 UIPopup.Expendables info = new UIPopup.Expendables();
-                info.dalog = m_noteItem.m_name + "À» È¹µæÇß´Ù.";
+                info.text = m_noteItem.m_name + "À» È¹µæÇß´Ù.";
 
                 ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
             }
@@ -53,7 +53,7 @@ private void Start()
 
                 // UI »ý¼º
                 UIPopup.Expendables info = new UIPopup.Expendables();
-                info.dalog = m_noteItem.m_name + "À» È¹µæÇß´Ù.";
+                info.text = m_noteItem.m_name + "À» È¹µæÇß´Ù.";
 
                 ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
             }

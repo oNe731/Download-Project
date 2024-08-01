@@ -2,6 +2,7 @@ using Horror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIPopup : MonoBehaviour
@@ -18,7 +19,7 @@ public class UIPopup : MonoBehaviour
 
     public struct Expendables : PopupInfo
     {
-        public string dalog { get; set; }
+        public string text { get; set; }
     }
 
     private TYPE      m_type = TYPE.T_END;
@@ -42,7 +43,9 @@ public class UIPopup : MonoBehaviour
             case TYPE.T_EXPENDABLES: // 문구 출력
                 transform.GetChild(1).gameObject.SetActive(true);
                 Expendables info = (Expendables)m_popupInfo;
-                transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = info.dalog;
+                transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = info.text;
+
+                GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
                 break;
         }
 

@@ -41,36 +41,6 @@ public class NoteSlot : MonoBehaviour
         m_uIItem.Initialize_Icon(m_item);
     }
 
-
-    public void Add_Item(string itemName, int Count = 1)
-    {
-        //Reset_Slot();
-
-        //m_uIItem = Instantiate(Resources.Load<GameObject>("Prefabs/MainGame/Inventory/Item/" + itemName), gameObject.transform);
-        //if (m_uIItem == null)
-        //    return;
-
-        //m_uIItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 0f);
-        //m_uIItem.transform.localScale = new Vector3(2f, 2f, 1f);
-        //m_item = m_uIItem.GetComponent<ItemData>();
-
-        //m_item.count = Count;
-        //if (m_item.count > 1)
-        //{
-        //    transform.GetChild(0).gameObject.SetActive(true);
-        //    transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = m_item.count.ToString();
-        //}
-
-        //m_empty = false;
-    }
-
-    public void Add_Item(int count)
-    {
-        //m_item.count += count;
-        //transform.GetChild(0).gameObject.SetActive(true);
-        //transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = m_item.count.ToString();
-    }
-
     public void Use_Item()
     {
         //m_item.count -= 1;
