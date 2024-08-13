@@ -8,9 +8,12 @@ public class UIGetItem : MonoBehaviour
 {
     [SerializeField] private TMP_Text m_text;
 
-    public void Initialize_UI(NoteItem.ITEMTYPE weaponId)
+    private NoteItem m_itemType;
+
+    public void Initialize_UI(NoteItem noteItem)
     {
-        switch(weaponId)
+        m_itemType = noteItem;
+        switch (m_itemType.m_itemType)
         {
             case NoteItem.ITEMTYPE.TYPE_PIPE:
                 m_text.text = "파이프 획득";
@@ -29,7 +32,12 @@ public class UIGetItem : MonoBehaviour
                 m_text.text = "동료의 수첩 획득";
                 HorrorManager.Instance.Player.Acquire_Note();
                 break;
-        }    
+
+            default:
+                m_text.text = m_itemType.m_name + " 획득";
+                HorrorManager.Instance.Player.Note.Add_Proviso(m_itemType);
+                break;
+        }
     }
 
     public void Update()
@@ -37,6 +45,32 @@ public class UIGetItem : MonoBehaviour
         if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
             HorrorManager.Instance.Set_Pause(false);
+
+            GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+            if (ui == null)
+                return;
+
+            UIPopup.Expendables info = new UIPopup.Expendables();
+
+            switch (m_itemType.m_itemType)
+            {
+                case NoteItem.ITEMTYPE.TYPE_PIPE:
+                    info.text = "아이템 ‘파이프’를 얻었다.\n[TAB]으로 사용 가능";
+                    break;
+                case NoteItem.ITEMTYPE.TYPE_GUN:
+                    info.text = "[Ctrl]로 장비교체 가능";
+                    break;
+                case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
+                    info.text = "[Ctrl]로 장비교체 가능";
+                    break;
+
+                case NoteItem.ITEMTYPE.TYPE_NOTE:
+                    info.text = "아이템 ‘동료의 수첩’을 얻었다.\n[ESC]로 사용 가능";
+                    break;
+            }
+
+            ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info, m_itemType);
+
             Destroy(gameObject);
         }
     }

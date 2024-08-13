@@ -14,7 +14,7 @@ public class UINote : MonoBehaviour
 
     private Note m_note = null;
 
-    private PAGE m_currentPage = PAGE.PAGE_ITEM;
+    //private PAGE m_currentPage = PAGE.PAGE_ITEM;
     private Image m_page;
     private RectTransform m_rectTransform;
 
@@ -35,7 +35,7 @@ public class UINote : MonoBehaviour
 
     public void Button_Item()
     {
-        m_currentPage = PAGE.PAGE_ITEM;
+        //m_currentPage = PAGE.PAGE_ITEM;
         m_button[(int)PAGE.PAGE_ITEM].sprite = m_buttonImg[(int)BUTTON.BUTTON_ITEM_ON];
         m_button[(int)PAGE.PAGE_CLUE].sprite = m_buttonImg[(int)BUTTON.BUTTON_CLUE_OFF];
         m_page.sprite = m_pageImg[(int)PAGE.PAGE_ITEM];
@@ -46,7 +46,7 @@ public class UINote : MonoBehaviour
 
     public void Button_Clue()
     {
-        m_currentPage = PAGE.PAGE_CLUE;
+        //m_currentPage = PAGE.PAGE_CLUE;
         m_button[(int)PAGE.PAGE_ITEM].sprite = m_buttonImg[(int)BUTTON.BUTTON_ITEM_OFF];
         m_button[(int)PAGE.PAGE_CLUE].sprite = m_buttonImg[(int)BUTTON.BUTTON_CLUE_ON];
         m_page.sprite = m_pageImg[(int)PAGE.PAGE_CLUE];

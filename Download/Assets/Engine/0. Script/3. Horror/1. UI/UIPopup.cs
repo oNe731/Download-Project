@@ -23,14 +23,17 @@ public class UIPopup : MonoBehaviour
     }
 
     private TYPE      m_type = TYPE.T_END;
+    private NoteItem  m_itemType;
     private PopupInfo m_popupInfo;
 
     private float m_time = 0f;
 
-    public void Initialize_UI(TYPE type, PopupInfo popupInfo)
+    public void Initialize_UI(TYPE type, PopupInfo popupInfo, NoteItem itemType = null)
     {
         m_type      = type;
+        m_itemType  = itemType;
         m_popupInfo = popupInfo;
+        m_time = 0f;
 
         switch (m_type)
         {
@@ -38,6 +41,7 @@ public class UIPopup : MonoBehaviour
                 GameObject gameObject = transform.GetChild(0).gameObject;
                 transform.GetChild(0).gameObject.SetActive(true);
                 transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                HorrorManager.Instance.Set_Pause(true);
                 break;
 
             case TYPE.T_EXPENDABLES: // 문구 출력
@@ -48,8 +52,6 @@ public class UIPopup : MonoBehaviour
                 GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
                 break;
         }
-
-        HorrorManager.Instance.Set_Pause(true);
     }
 
     public void Update()
@@ -59,7 +61,7 @@ public class UIPopup : MonoBehaviour
             m_time += Time.deltaTime;
             if(m_time > 1f)
             {
-                HorrorManager.Instance.Set_Pause(false);
+                //HorrorManager.Instance.Set_Pause(false);
                 Destroy(gameObject);
             }
         }
@@ -75,7 +77,7 @@ public class UIPopup : MonoBehaviour
                     return;
 
                 ItemInfo item = (ItemInfo)m_popupInfo;
-                ui.GetComponent<UIGetItem>().Initialize_UI(item.type);
+                ui.GetComponent<UIGetItem>().Initialize_UI(m_itemType);
                 break;
         }
 

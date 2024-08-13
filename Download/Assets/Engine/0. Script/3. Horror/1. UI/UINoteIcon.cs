@@ -73,6 +73,22 @@ public class UINoteIcon : MonoBehaviour
                     case NoteItem.ITEMTYPE.TYPE_CLUE1:
                         m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
                         break;
+
+                    case NoteItem.ITEMTYPE.TYPE_CLUE2:
+                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
+                        break;
+
+                    case NoteItem.ITEMTYPE.TYPE_CLUE3:
+                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
+                        break;
+
+                    case NoteItem.ITEMTYPE.TYPE_CLUE4:
+                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
+                        break;
+
+                    case NoteItem.ITEMTYPE.TYPE_CLUE5:
+                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
+                        break;
                 }
                 break;
         }

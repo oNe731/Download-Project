@@ -34,6 +34,7 @@ public class UIWorldHint : MonoBehaviour
         m_offset = m_uiOffset;
 
         Update_Transform();
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -44,7 +45,7 @@ public class UIWorldHint : MonoBehaviour
         Update_Transform();
     }
 
-    private void Update_Transform()
+    public void Update_Transform()
     {
         // À§Ä¡
         transform.position = m_target.position + m_offset;
