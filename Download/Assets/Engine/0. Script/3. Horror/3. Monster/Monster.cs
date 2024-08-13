@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Monster : MonoBehaviour
+public abstract class Monster : Character
 {
     public enum TYPE { TYPE_STRAITJACKER, TYPE_BUG, TYPE_END };
 
@@ -12,10 +12,13 @@ public abstract class Monster : MonoBehaviour
     protected StateMachine<Monster> m_stateMachine;
     protected Spawner m_spawner;
 
+    protected Animator m_animator;
+
     public float Hp => m_hp;
     public float Attack => m_attack;
     public StateMachine<Monster> StateMachine => m_stateMachine;
     public Spawner Spawner => m_spawner;
+    public Animator Animator => m_animator;
 
     public abstract void Damage_Monster(float damage);
 
@@ -26,6 +29,7 @@ public abstract class Monster : MonoBehaviour
             return;
 
         transform.position = m_spawner.Get_RandomPosition();
+        m_animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     private void Start()

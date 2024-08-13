@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Horror
 {
-    public class HorrorPlayer : MonoBehaviour
+    public class HorrorPlayer : Character
     {
         public enum State { ST_IDLE, ST_WALK, ST_RUN, ST_ATTACK, ST_END }
 
@@ -73,10 +73,6 @@ namespace Horror
  
             m_staminaSlider.value = m_stamina;
             return recover;
-        }
-
-        private void Awake()
-        {
         }
 
         private void Start()

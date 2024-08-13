@@ -23,6 +23,8 @@ public class Bug : Monster
     {
         m_hp = 4f;
 
+        m_animator = transform.GetChild(0).GetComponent<Animator>();
+
         m_stateMachine = new StateMachine<Monster>(gameObject);
 
         List<State<Monster>> states = new List<State<Monster>>();
@@ -37,5 +39,13 @@ public class Bug : Monster
     private void Update()
     {
         m_stateMachine.Update_State();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (m_stateMachine == null)
+            return;
+
+        m_stateMachine.OnDrawGizmos();
     }
 }
