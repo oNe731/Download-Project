@@ -14,6 +14,7 @@ public class Bug_Idle : Bug_Base
 
     public override void Update_State()
     {
+        Change_FLY();
     }
 
     public override void Exit_State()

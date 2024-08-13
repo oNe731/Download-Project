@@ -25,6 +25,7 @@ public class Straitjacket_Run : Straitjacket_Base
             Vector3 newPos = m_owner.transform.position + direction * m_speed * Time.deltaTime;
 
             m_owner.transform.position = newPos;
+            m_owner.transform.LookAt(HorrorManager.Instance.Player.transform);
 
             //// 이동할 수 있는 위치인지 확인
             //if (m_owner.Spawner.Check_Position(newPos))
