@@ -15,7 +15,7 @@ public class Horror_1stage : Horror_Base
         m_levelIndex = (int)HorrorManager.LEVEL.LV_1STAGE;
     }
 
-    public override bool Check_Clear()
+    public override bool Check_Clear(ref string text)
     {
         return true;
     }
@@ -28,19 +28,19 @@ public class Horror_1stage : Horror_Base
         // 레벨 초기화
         GameObject collider_Area = m_stage.transform.GetChild(1).GetChild(1).GetChild(0).gameObject; // etc -> Collider -> Collider_Area
 
-        m_levelController = gameObject.AddComponent<LevelController>();
+        m_levels = gameObject.AddComponent<LevelController>();
         List<Level> levels = new List<Level>();
         foreach (Transform child in collider_Area.transform)
             levels.Add(null);
         foreach (Transform child in collider_Area.transform)
         {
             Horror_Base stage = child.gameObject.GetComponent<Horror_Base>();
-            stage.Initialize_Level(m_levelController);
+            stage.Initialize_Level(m_levels);
 
             levels[stage.LevelIndex] = stage;
         }
 
-        m_levelController.Initialize_Level(levels);
+        m_levels.Initialize_Level(levels);
     }
 
     public override void Play_Level()
@@ -49,6 +49,7 @@ public class Horror_1stage : Horror_Base
 
     public override void Update_Level()
     {
+        m_levels.Update_Level();
     }
 
     public override void LateUpdate_Level()

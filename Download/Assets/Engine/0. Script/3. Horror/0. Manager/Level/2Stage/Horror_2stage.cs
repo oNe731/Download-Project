@@ -11,7 +11,7 @@ public class Horror_2stage : Horror_Base
         m_levelIndex = (int)HorrorManager.LEVEL.LV_2STAGE;
     }
 
-    public override bool Check_Clear()
+    public override bool Check_Clear(ref string text)
     {
         return true;
     }

@@ -1,22 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horror_1stage_NextRoom : Horror_Base
+public class Area : Horror_Base
 {
     public override void Initialize_Level(LevelController levelController)
     {
         base.Initialize_Level(levelController);
-
-        m_levelIndex = (int)Horror_1stage.LEVEL1.LV_NEXTROOM;
     }
 
-
-    public override bool Check_Clear()
+    public override bool Check_Clear(ref string text)
     {
         return true;
     }
-
 
     public override void Enter_Level()
     {
@@ -40,5 +36,13 @@ public class Horror_1stage_NextRoom : Horror_Base
 
     public override void OnDrawGizmos()
     {
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") == false)
+            return;
+
+        m_levelController.Change_Level(m_levelIndex);
     }
 }

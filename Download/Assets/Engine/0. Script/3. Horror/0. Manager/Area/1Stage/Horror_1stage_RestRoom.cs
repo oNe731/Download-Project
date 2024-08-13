@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horror_1stage_RestRoom : Horror_Base
+public class Horror_1stage_RestRoom : Area
 {
     public override void Initialize_Level(LevelController levelController)
     {
@@ -12,7 +12,7 @@ public class Horror_1stage_RestRoom : Horror_Base
     }
 
 
-    public override bool Check_Clear()
+    public override bool Check_Clear(ref string text)
     {
         return true;
     }

@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horror_1stage_NextHallway : Horror_Base
+public class Horror_1stage_BigRoomIn : Area
 {
     public override void Initialize_Level(LevelController levelController)
     {
         base.Initialize_Level(levelController);
 
-        m_levelIndex = (int)Horror_1stage.LEVEL1.LV_NEXTHALLWAY;
+        m_levelIndex = (int)Horror_1stage.LEVEL1.LV_BIGROOMIN;
     }
 
 
-    public override bool Check_Clear()
+    public override bool Check_Clear(ref string text)
     {
         return true;
     }

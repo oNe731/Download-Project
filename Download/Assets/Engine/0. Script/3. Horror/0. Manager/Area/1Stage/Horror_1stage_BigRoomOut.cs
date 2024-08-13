@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Horror_Base : Level
+public class Horror_1stage_BigRoomOut : Area
 {
-    protected LevelController m_levels = null;
-    public LevelController Levels => m_levels;
-
     public override void Initialize_Level(LevelController levelController)
     {
         base.Initialize_Level(levelController);
+
+        m_levelIndex = (int)Horror_1stage.LEVEL1.LV_BIGROOMOUT;
     }
 
-    public abstract bool Check_Clear(ref string text);
+
+    public override bool Check_Clear(ref string text)
+    {
+        return true;
+    }
+
 
     public override void Enter_Level()
     {
