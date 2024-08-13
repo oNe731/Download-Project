@@ -14,6 +14,8 @@ namespace Horror
         GameObject m_uiAim  = null;
         Weapon_Gun_Effect m_effect = null;
 
+        private GameObject ui = null;
+
         public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
         {
             base.Initialize_Weapon(weaponManagement, uIWeapon);
@@ -56,19 +58,41 @@ namespace Horror
 
         public override void Attack_Weapon()
         {
-            NoteItem noteItem = HorrorManager.Instance.Player.Note.Get_Item(NoteItem.ITEMTYPE.TYPE_BULLET);
-            if (noteItem == null || noteItem.m_count <= 0)
+            bool empty = false;
+
+            Note m_note = HorrorManager.Instance.Player.Note;
+            NoteItem noteItem = null;
+            if (m_note == null)
+                empty = true;
+            else
+            {
+                noteItem = m_note.Get_Item(NoteItem.ITEMTYPE.TYPE_BULLET);
+                if (noteItem == null || noteItem.m_count <= 0)
+                    empty = true;
+            }
+
+            if(empty == true)
+            {
+                if (ui == null)
+                    ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+                
+                if (ui == null)
+                    return;
+                UIPopup.Expendables info = new UIPopup.Expendables();
+                info.text = "탄창이 비어있다";
+                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
                 return;
+            }
 
             // 이펙트 활성화
             m_effect.Reset_Effect();
 
-            RaycastHit hit = GameManager.Instance.Start_Raycast(transform.GetChild(0).transform.position, transform.GetChild(0).transform.forward, 10f, LayerMask.GetMask("Monster"));
-            if(hit.collider != null)
+            RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Monster"));
+            if (hit.collider != null)
             {
-                Debug.Log($"원거리공격 {hit.collider.gameObject.transform.parent.gameObject.name}");
-                
-                Monster monster = hit.collider.gameObject.GetComponent<Monster>();
+                Debug.Log($"원거리공격 {hit.collider.gameObject.transform.parent.parent.parent.gameObject.name}");
+
+                Monster monster = hit.collider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
                 if (monster == null)
                     return;
                 monster.Damage_Monster(m_damage);

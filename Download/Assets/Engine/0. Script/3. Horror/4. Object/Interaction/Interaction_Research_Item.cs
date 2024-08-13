@@ -7,11 +7,11 @@ namespace Horror
     public class Interaction_Research_Item : Interaction
     {
         [SerializeField] private NoteItem m_noteItem;
-
-private void Start()
+        
+        private void Start()
         {
-            m_interactionUI = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform, m_uiOffset);
-            m_interactionUI.SetActive(false);
+            GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform, m_uiOffset);
+            m_interactionUI = gameObject.GetComponent<UIWorldHint>();
         }
 
         private void Update()
@@ -21,7 +21,7 @@ private void Start()
 
         public override void Click_Interaction()
         {
-            if (m_interactionUI.activeSelf == false || m_interact == true)
+            if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
                 return;
 
             GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
@@ -33,7 +33,7 @@ private void Start()
                 UIPopup.ItemInfo item = new UIPopup.ItemInfo();
                 item.type = m_noteItem.m_itemType;
 
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item);
+                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item, m_noteItem);
             }
             else if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG)
             {
@@ -44,22 +44,18 @@ private void Start()
                 UIPopup.Expendables info = new UIPopup.Expendables();
                 info.text = m_noteItem.m_name + "¿ª »πµÊ«ﬂ¥Ÿ.";
 
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
+                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info, m_noteItem);
             }
             else // ¥‹º≠
             {
-                // ºˆ√∏ æ∆¿Ã≈€ø° √ﬂ∞°
-                HorrorManager.Instance.Player.Note.Add_Proviso(m_noteItem);
-
                 // UI ª˝º∫
-                UIPopup.Expendables info = new UIPopup.Expendables();
-                info.text = m_noteItem.m_name + "¿ª »πµÊ«ﬂ¥Ÿ.";
+                UIPopup.ItemInfo item = new UIPopup.ItemInfo();
+                item.type = m_noteItem.m_itemType;
 
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
+                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item, m_noteItem);
             }
 
-            Destroy(m_interactionUI);
-            Destroy(gameObject);
+            Desttoy_Interaction();
         }
     }
 }

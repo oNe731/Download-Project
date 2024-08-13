@@ -6,10 +6,10 @@ public abstract class Interaction : MonoBehaviour
 {
     [SerializeField] protected Vector3 m_uiOffset;
 
-    protected GameObject m_interactionUI = null;
+    protected UIWorldHint m_interactionUI = null;
 
     protected bool m_interact = false;
-    protected float m_InteractionDist = 3f;
+    protected float m_InteractionDist = 2.2f;
 
     public abstract void Click_Interaction();
 
@@ -20,17 +20,18 @@ public abstract class Interaction : MonoBehaviour
 
         if (Check_PlayerDist() == true)
         {
-            if (m_interactionUI.activeSelf == true)
+            if (m_interactionUI.gameObject.activeSelf == true)
                 return;
 
-            m_interactionUI.SetActive(true);
+            m_interactionUI.Update_Transform();
+            m_interactionUI.gameObject.SetActive(true);
         }
         else
         {
-            if (m_interactionUI.activeSelf == false)
+            if (m_interactionUI.gameObject.activeSelf == false)
                 return;
 
-            m_interactionUI.SetActive(false);
+            m_interactionUI.gameObject.SetActive(false);
         }
     }
 
@@ -49,5 +50,11 @@ public abstract class Interaction : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, m_InteractionDist);
 #endif
+    }
+
+    protected void Desttoy_Interaction()
+    {
+        m_interactionUI.gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

@@ -12,8 +12,8 @@ public class Interaction_Door : Interaction
 
     private void Start()
     {
-        m_interactionUI = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform, m_uiOffset);
-        m_interactionUI.SetActive(false);
+        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform, m_uiOffset);
+        m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
 
     private void Update()
@@ -23,7 +23,7 @@ public class Interaction_Door : Interaction
 
     public override void Click_Interaction()
     {
-        if (m_interactionUI.activeSelf == false)
+        if (m_interactionUI.gameObject.activeSelf == false)
             return;
 
         switch (m_eventType)
@@ -45,16 +45,18 @@ public class Interaction_Door : Interaction
 
         // 해당 구역의 특정 조건 성립 시 문열림
         // 아닐 시 문구 출력
+        string text = "";
+
         LevelController levelController = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Levels;
         if(levelController == null) // 본 스테이지 클리어 여부 판별
-            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear();
+            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(ref text);
         else                        // 세부 스테이지 클리어 여부 판별
-            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear();
+            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(ref text);
 
         if (m_interact == true)
             Open_Door();
         else
-            Print_Text();
+            Print_Text(text);
     }
 
     private void Check_Event()
@@ -67,7 +69,7 @@ public class Interaction_Door : Interaction
 
     private void Open_Door()
     {
-        m_interactionUI.SetActive(false);
+        Destroy(m_interactionUI.gameObject);
         StartCoroutine(Open_Move());
     }
 
@@ -88,9 +90,15 @@ public class Interaction_Door : Interaction
         transform.rotation = endRotation;
     }
 
-    private void Print_Text()
+    private void Print_Text(string text)
     {
         // < 이 스크립트는 1.5초동안 유지된다. (페이드인X, 페이드 아웃 O)
         // 해당 스크립트가 아직 사라지지 않았다면 다시 좌클릭을 해도 추가로 스크립트가 뜨지 않는다.
+        GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+        if (ui == null)
+            return;
+        UIPopup.Expendables info = new UIPopup.Expendables();
+        info.text = text;
+        ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
     }
 }

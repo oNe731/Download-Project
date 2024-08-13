@@ -15,7 +15,7 @@ public class NoteItem
 
         TYPE_BULLET, TYPE_DRUG,
 
-        TYPE_CLUE1,
+        TYPE_CLUE1, TYPE_CLUE2, TYPE_CLUE3, TYPE_CLUE4, TYPE_CLUE5,
 
         TYPE_END
     };

@@ -50,9 +50,9 @@ namespace Horror
             Collider[] hitColliders = Physics.OverlapBox(center, halfExtents, Quaternion.identity, 1 << LayerMask.NameToLayer("Monster"));
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.gameObject.name}");
+                Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.parent.parent.gameObject.name}");
 
-                Monster monster = hitCollider.gameObject.GetComponent<Monster>();
+                Monster monster = hitCollider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
                 if (monster == null)
                     return;
                 monster.Damage_Monster(m_damage);
