@@ -14,7 +14,8 @@ namespace Horror
             m_itemInfo.m_count = 1;
             m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
             m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_FLASHLIGHT;
-            transform.localPosition = new Vector3(0.34f, 1.03f, 8.07f);
+            transform.localPosition = new Vector3(0f, 0f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, -2.92f, -2.73f);
         }
 
         public override void Enter_Weapon()

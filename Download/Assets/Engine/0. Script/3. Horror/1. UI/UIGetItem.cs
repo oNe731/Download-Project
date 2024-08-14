@@ -13,19 +13,21 @@ public class UIGetItem : MonoBehaviour
     public void Initialize_UI(NoteItem noteItem)
     {
         m_itemType = noteItem;
+
+        Transform cameraTransform = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0);
         switch (m_itemType.m_itemType)
         {
             case NoteItem.ITEMTYPE.TYPE_PIPE:
                 m_text.text = "ÆÄÀÌÇÁ È¹µæ";
-                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Melee", HorrorManager.Instance.Player.transform).GetComponent<Weapon<HorrorPlayer>>());
+                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Melee", cameraTransform).GetComponent<Weapon<HorrorPlayer>>());
                 break;
             case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
                 m_text.text = "¼ÕÀüµî È¹µæ";
-                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Flashlight", HorrorManager.Instance.Player.transform).GetComponent<Weapon<HorrorPlayer>>());
+                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Flashlight", cameraTransform).GetComponent<Weapon<HorrorPlayer>>());
                 break;
             case NoteItem.ITEMTYPE.TYPE_GUN:
                 m_text.text = "ÃÑ È¹µæ";
-                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Gun", HorrorManager.Instance.Player.transform).GetComponent<Weapon<HorrorPlayer>>());
+                HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Character/Weapon/Gun", cameraTransform).GetComponent<Weapon<HorrorPlayer>>());
                 break;
 
             case NoteItem.ITEMTYPE.TYPE_NOTE:

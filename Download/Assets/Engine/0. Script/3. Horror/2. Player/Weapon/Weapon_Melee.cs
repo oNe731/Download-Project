@@ -16,7 +16,8 @@ namespace Horror
             m_itemInfo.m_count = 1;
             m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
             m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_PIPE;
-            transform.localPosition = new Vector3(0f, 0.023f, 0f);
+            transform.localPosition = new Vector3(0f, 0f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
             m_damage = 1f;
 

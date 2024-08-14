@@ -30,7 +30,8 @@ namespace Horror
             gunInfo.m_bulletMax = 50;
             m_itemInfo.m_itemInfo = gunInfo;
 
-            transform.localPosition = new Vector3(0.066f, 0.57f, 1.17f);
+            transform.localPosition = new Vector3(0f, 0f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, -3.101f, 0f);
 
             m_uiAim = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform);
             m_uiAim.SetActive(false);
