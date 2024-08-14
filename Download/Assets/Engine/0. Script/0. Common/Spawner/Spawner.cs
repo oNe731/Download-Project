@@ -71,9 +71,7 @@ public class Spawner : MonoBehaviour
         foreach (var collider in m_areas)
         {
             if (collider.bounds.Contains(position))
-            {
                 return true;
-            }
         }
 
         return false;

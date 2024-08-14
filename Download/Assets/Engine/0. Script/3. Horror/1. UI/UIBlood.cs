@@ -13,9 +13,6 @@ public class UIBlood : MonoBehaviour
 
     public void Active_Blood()
     {
-        if (gameObject.activeSelf == true)
-            return;
-
         if (m_coroutine != null)
             StopCoroutine(m_coroutine);
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : CameraBase
 {
-    private Transform m_cameraTarget;
+    private Transform m_cameraPositionTarget;
+    private Transform m_cameraRotationTarget;
     private bool m_isPosition = false;
     private bool m_isRotation = false;
 
@@ -35,11 +36,11 @@ public class CameraFollow : CameraBase
         // 이동
         if(m_isPosition == false)
         {
-            m_mainCamera.transform.position = m_cameraTarget.position;
+            m_mainCamera.transform.position = m_cameraPositionTarget.position;
         }
         else
         {
-            Vector3 TargetPos = new Vector3(m_cameraTarget.position.x + m_offset.x, m_cameraTarget.position.y + m_offset.y, m_cameraTarget.position.z);
+            Vector3 TargetPos = new Vector3(m_cameraPositionTarget.position.x + m_offset.x, m_cameraPositionTarget.position.y + m_offset.y, m_cameraPositionTarget.position.z);
             Vector3 NewPosition = TargetPos - m_mainCamera.forward * m_offset.z;
             m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, NewPosition, Time.deltaTime * m_lerpSpeed);
         }
@@ -47,7 +48,7 @@ public class CameraFollow : CameraBase
         // 회전
         if (m_isPosition == false)
         {
-            m_mainCamera.transform.rotation = m_cameraTarget.rotation;
+            m_mainCamera.transform.rotation = m_cameraRotationTarget.rotation;
         }
         else
         {
@@ -70,9 +71,10 @@ public class CameraFollow : CameraBase
         GameManager.Instance.Camera.Set_CursorLock(false);
     }
 
-    public void Set_FollowInfo(Transform target, bool isPosition, bool isRotation, Vector3 offset, float moveSpeed, float lerpSpeed, Vector2 rotationLimit, bool isXRotate, bool isYRotate)
+    public void Set_FollowInfo(Transform positiontarget, Transform rotationtarget, bool isPosition, bool isRotation, Vector3 offset, float moveSpeed, float lerpSpeed, Vector2 rotationLimit, bool isXRotate, bool isYRotate)
     {
-        m_cameraTarget = target;
+        m_cameraPositionTarget = positiontarget;
+        m_cameraRotationTarget = rotationtarget;
         m_isPosition = isPosition;
         m_isRotation = isRotation;
 

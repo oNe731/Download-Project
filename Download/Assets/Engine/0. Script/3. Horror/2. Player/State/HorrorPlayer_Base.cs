@@ -17,11 +17,13 @@ namespace Horror
         protected bool m_recoverStamina = false;
 
         protected Transform m_transform;
+        protected Transform m_rotationTransform;
         protected Rigidbody m_rigidbody;
 
         public HorrorPlayer_Base(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
             m_transform = m_stateMachine.Owner.GetComponent<Transform>();
+            m_rotationTransform = m_transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform;
             m_rigidbody = m_stateMachine.Owner.GetComponent<Rigidbody>();
 
             m_player = m_stateMachine.Owner.GetComponent<HorrorPlayer>();
@@ -75,13 +77,15 @@ namespace Horror
             if (m_player == null)
                 return 0f;
 
-            float xRotateSize = -Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
+            // Y축 좌우 회전
             float yRotateSize = Input.GetAxis("Mouse X") * m_rotationSpeed * Time.deltaTime;
-
             float yRotate = m_transform.eulerAngles.y + yRotateSize;
-            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_rotationLimit.x, m_rotationLimit.y); // 각도 제한(-45, 80)
+            m_transform.eulerAngles = new Vector3(m_transform.eulerAngles.x, yRotate, 0);
 
-            m_transform.eulerAngles = new Vector3(m_player.XRotate, yRotate, 0);
+            // X축 상하 회전
+            float xRotateSize = -Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
+            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_rotationLimit.x, m_rotationLimit.y); // 각도 제한(-45, 80)
+            m_rotationTransform.eulerAngles = new Vector3(m_player.XRotate, m_rotationTransform.eulerAngles.y, 0);
 
             return yRotate;
         }

@@ -53,10 +53,12 @@ public class HorrorManager : MonoBehaviour
         m_isGame = true;
 
         // 카메라 설정
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null)
+            return;
         GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
-
         CameraFollow camera = (CameraFollow)GameManager.Instance.Camera.Get_CurCamera();
-        camera.Set_FollowInfo(GameObject.FindWithTag("Player").transform.GetChild(0).GetChild(0).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
+        camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
     }
 
     private  void Update()
