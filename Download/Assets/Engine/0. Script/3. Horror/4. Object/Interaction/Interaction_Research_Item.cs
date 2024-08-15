@@ -10,13 +10,13 @@ namespace Horror
         
         private void Start()
         {
-            GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform, m_uiOffset);
+            GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform.GetChild(0), m_uiOffset);
             m_interactionUI = gameObject.GetComponent<UIWorldHint>();
         }
 
         private void Update()
         {
-            Update_InteractionUI();
+            //Update_InteractionUI();
         }
 
         public override void Click_Interaction()
@@ -37,8 +37,15 @@ namespace Horror
             }
             else if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG)
             {
+                Note playerNote = HorrorManager.Instance.Player.Note;
+                if (playerNote == null)
+                {
+                    Destroy(ui);
+                    return;
+                }
+
                 // 수첩 아이템에 추가
-                HorrorManager.Instance.Player.Note.Add_Item(m_noteItem);
+                playerNote.Add_Item(m_noteItem);
 
                 // UI 생성
                 UIPopup.Expendables info = new UIPopup.Expendables();
@@ -55,7 +62,7 @@ namespace Horror
                 ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item, m_noteItem);
             }
 
-            Desttoy_Interaction();
+            Destroy_Interaction();
         }
     }
 }

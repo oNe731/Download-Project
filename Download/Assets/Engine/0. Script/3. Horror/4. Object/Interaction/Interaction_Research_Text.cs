@@ -9,13 +9,13 @@ public class Interaction_Research_Text : Interaction
 
     private void Start()
     {
-        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(m_hintType, transform, m_uiOffset);
+        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(m_hintType, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
 
     private void Update()
     {
-        Update_InteractionUI();
+        //Update_InteractionUI();
     }
 
     public override void Click_Interaction()
@@ -30,6 +30,6 @@ public class Interaction_Research_Text : Interaction
         info.text = m_text;
         ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
 
-        Desttoy_Interaction();
+        Destroy_Interaction();
     }
 }

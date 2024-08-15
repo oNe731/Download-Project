@@ -9,7 +9,9 @@ public abstract class Interaction : MonoBehaviour
     protected UIWorldHint m_interactionUI = null;
 
     protected bool m_interact = false;
-    protected float m_InteractionDist = 2.2f;
+    protected float m_InteractionDist = 2f;
+
+    public UIWorldHint InteractionUI => m_interactionUI;
 
     public abstract void Click_Interaction();
 
@@ -37,7 +39,7 @@ public abstract class Interaction : MonoBehaviour
 
     protected bool Check_PlayerDist()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, HorrorManager.Instance.Player.transform.position);
+        float distanceToPlayer = Vector3.Distance(transform.GetChild(0).transform.position, HorrorManager.Instance.Player.transform.position);
         if (distanceToPlayer <= m_InteractionDist)
             return true;
 
@@ -48,13 +50,14 @@ public abstract class Interaction : MonoBehaviour
     {
 #if UNITY_EDITOR
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, m_InteractionDist);
+        Gizmos.DrawWireSphere(transform.GetChild(0).transform.position, m_InteractionDist);
 #endif
     }
 
-    protected void Desttoy_Interaction()
+    protected void Destroy_Interaction()
     {
-        m_interactionUI.gameObject.SetActive(false);
+        //m_interactionUI.gameObject.SetActive(false);
+        Destroy(m_interactionUI.gameObject);
         Destroy(gameObject);
     }
 }

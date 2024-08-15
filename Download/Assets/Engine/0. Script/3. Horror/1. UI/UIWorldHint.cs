@@ -9,7 +9,6 @@ public class UIWorldHint : MonoBehaviour
 {
     public enum HINTTYPE { HT_RESEARCH, HT_OPENDOOR, HT_END };
 
-    [SerializeField] private Image    m_icon;
     [SerializeField] private TMP_Text m_text;
 
     [SerializeField] private Transform m_target = null;
@@ -20,12 +19,10 @@ public class UIWorldHint : MonoBehaviour
         switch (hinttype)
         {
             case HINTTYPE.HT_RESEARCH:
-                // m_icon.sprite;
                 m_text.text = "조사하기";
                 break;
 
             case HINTTYPE.HT_OPENDOOR:
-                // m_icon.sprite;
                 m_text.text = "문열기";
                 break;
         }

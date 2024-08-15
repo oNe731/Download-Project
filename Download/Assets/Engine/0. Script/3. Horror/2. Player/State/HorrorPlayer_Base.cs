@@ -7,6 +7,7 @@ namespace Horror
     public class HorrorPlayer_Base : State<HorrorPlayer>
     {
         protected HorrorPlayer m_player = null;
+        protected UIWorldHint m_interactionUI = null;
 
         protected float m_moveSpeed = 400.0f;
         protected float m_lerpSpeed = 5.0f;
@@ -117,24 +118,50 @@ namespace Horror
             return false;
         }
 
-        protected void Input_Interaction()
+        protected void Input_Interaction() 
         {
+            // 실시간으로 바라보고 있는 UI만 활성화
+            RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
+            if (hit.collider == null) // 제일 가까운 콜라이더 반환
+            {
+                Reset_Interaction();
+                return;
+            }
+
+           Interaction interaction = hit.collider.gameObject.transform.GetComponent<Interaction>();
+            if (interaction == null)
+                interaction = hit.collider.gameObject.transform.parent.GetComponent<Interaction>();
+            if (interaction == null)
+            {
+                Reset_Interaction();
+                return;
+            }
+
+            if(m_interactionUI != null)
+            {
+                if(m_interactionUI != interaction.InteractionUI)
+                    m_interactionUI.gameObject.SetActive(false);
+            }
+
+            m_interactionUI = interaction.InteractionUI;
+            if(m_interactionUI != null)
+            {
+                m_interactionUI.Update_Transform();
+                m_interactionUI.gameObject.SetActive(true);
+            }
+
             // 상호작용
             if (Input.GetKeyDown(KeyCode.F))
-            {
-                RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Interaction"));
+                interaction.Click_Interaction();
+        }
 
-                if (hit.collider != null)
-                {
-                    Interaction interaction = hit.collider.gameObject.transform.GetComponent<Interaction>();
-                    if (interaction == null)
-                        interaction = hit.collider.gameObject.transform.parent.GetComponent<Interaction>();
+        private void Reset_Interaction()
+        {
+            if (m_interactionUI == null)
+                return;
 
-                    if (interaction == null)
-                        return;
-                    interaction.Click_Interaction();
-                }
-            }
+            m_interactionUI.gameObject.SetActive(false);
+            m_interactionUI = null;
         }
 
         protected void Check_Stemina()

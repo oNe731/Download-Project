@@ -37,7 +37,10 @@ public class UIGetItem : MonoBehaviour
 
             default:
                 m_text.text = m_itemType.m_name + " È¹µæ";
-                HorrorManager.Instance.Player.Note.Add_Proviso(m_itemType);
+                Note playerNote = HorrorManager.Instance.Player.Note;
+                if (playerNote == null)
+                    return;
+                playerNote.Add_Proviso(m_itemType);
                 break;
         }
     }

@@ -6,8 +6,6 @@ public class Horror_1stage : Horror_Base
 {
     public enum LEVEL1 { LV_STARTROOM, LV_STARTHALLWAY, LV_NEXTROOM, LV_RESTROOM, LV_NEXTHALLWAY, LV_FINISHROOM, LV_BIGROOMOUT, LV_BIGROOMIN, LV_END };
 
-    private GameObject m_stage = null;
-
     public override void Initialize_Level(LevelController levelController)
     {
         base.Initialize_Level(levelController);

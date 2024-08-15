@@ -21,7 +21,7 @@ public class WeaponManagement<T> where T : class
         m_owner = owner;
 
         m_uiParent = new GameObject("WeaponUIParent");
-        m_uiParent.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        m_uiParent.transform.SetParent(GameObject.Find("Canvas").transform.Find("Panel_Basic"), false);
     }
 
     public void Add_Weapon(Weapon<T> weapons)

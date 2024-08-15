@@ -67,7 +67,7 @@ public class HorrorManager : MonoBehaviour
 
     public GameObject Create_WorldHintUI(UIWorldHint.HINTTYPE hinttype, Transform target, Vector3 m_uiOffset)
     {
-        GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_WorldHint");
+        GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_WorldHint", LevelController.Get_CurrentLevel<Horror_Base>().Stage.transform);
         if (gameObject == null)
             return null;
 

@@ -33,7 +33,7 @@ namespace Horror
             transform.localPosition = new Vector3(0f, 0f, 0f);
             transform.localRotation = Quaternion.Euler(0f, -3.101f, 0f);
 
-            m_uiAim = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform);
+            m_uiAim = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform.Find("Panel_Basic"));
             m_uiAim.SetActive(false);
 
             m_effect = transform.GetChild(2).gameObject.GetComponent<Weapon_Gun_Effect>();

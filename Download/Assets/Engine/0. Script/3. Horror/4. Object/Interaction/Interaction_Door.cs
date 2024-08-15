@@ -12,18 +12,18 @@ public class Interaction_Door : Interaction
 
     private void Start()
     {
-        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform, m_uiOffset);
+        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
 
     private void Update()
     {
-        Update_InteractionUI();
+        //Update_InteractionUI();
     }
 
     public override void Click_Interaction()
     {
-        if (m_interactionUI.gameObject.activeSelf == false)
+        if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
             return;
 
         switch (m_eventType)
@@ -40,9 +40,6 @@ public class Interaction_Door : Interaction
 
     private void Check_Clear()
     {
-        if (m_interact == true)
-            return;
-
         // 해당 구역의 특정 조건 성립 시 문열림
         // 아닐 시 문구 출력
         string text = "";
