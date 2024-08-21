@@ -13,6 +13,8 @@ namespace Horror
             base.Initialize_Weapon(weaponManagement, uIWeapon);
 
             m_itemInfo.m_name = "파이프";
+            m_itemInfo.m_details = "기다란 파이프이다.";
+            m_itemInfo.m_imageName = "Icon_Stick";
             m_itemInfo.m_count = 1;
             m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
             m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_PIPE;

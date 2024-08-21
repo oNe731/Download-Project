@@ -13,6 +13,7 @@ namespace Horror
         [SerializeField] private Image[] m_button;
         [SerializeField] private Sprite[] m_buttonImg;
         [SerializeField] private Sprite[] m_pageImg;
+        [SerializeField] private NoteItemInfo m_panelInfo;
 
         private Note m_note = null;
 
@@ -25,6 +26,15 @@ namespace Horror
         private float m_duration = 0.8f;
         private Coroutine m_coroutine = null;
 
+        private Dictionary<string, Sprite> m_weaponIcon = new Dictionary<string, Sprite>();
+        private Dictionary<string, Sprite> m_itemIcon = new Dictionary<string, Sprite>();
+        private Dictionary<string, Sprite> m_clueIcon = new Dictionary<string, Sprite>();
+
+        public NoteItemInfo InfoPanel => m_panelInfo;
+        public Dictionary<string, Sprite> WeaponIcon => m_weaponIcon;
+        public Dictionary<string, Sprite> ItemIcon => m_itemIcon;
+        public Dictionary<string, Sprite> ClueIcon => m_clueIcon;
+
         private void Start()
         {
             m_note = GetComponent<Note>();
@@ -33,6 +43,15 @@ namespace Horror
             m_rectTransform.anchoredPosition = m_closePosition;
 
             transform.GetChild(0).gameObject.SetActive(false);
+
+            m_weaponIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
+            m_weaponIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
+            m_weaponIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
+
+            m_itemIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
+            m_itemIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
+
+            m_clueIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
         }
 
         public void Button_Item()
@@ -44,6 +63,8 @@ namespace Horror
 
             m_note.ItemPageItems.gameObject.SetActive(true);
             m_note.CluePageItems.gameObject.SetActive(false);
+
+            m_panelInfo.gameObject.SetActive(false);
         }
 
         public void Button_Clue()
@@ -55,10 +76,14 @@ namespace Horror
 
             m_note.ItemPageItems.gameObject.SetActive(false);
             m_note.CluePageItems.gameObject.SetActive(true);
+
+            m_panelInfo.gameObject.SetActive(false);
         }
 
         public void Opne_Note(bool open)
         {
+            m_panelInfo.gameObject.SetActive(false);
+
             if (m_coroutine != null)
                 StopCoroutine(m_coroutine);
 

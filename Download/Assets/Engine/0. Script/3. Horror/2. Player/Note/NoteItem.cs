@@ -28,5 +28,7 @@ public class NoteItem
     public ITEMTYPE m_itemType;
     public itemInfo m_itemInfo;
     public string m_name;
+    public string m_details;
+    public string m_imageName;
     public int m_count;
 }

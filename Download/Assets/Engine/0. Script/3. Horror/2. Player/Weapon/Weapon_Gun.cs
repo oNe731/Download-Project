@@ -21,6 +21,8 @@ namespace Horror
             base.Initialize_Weapon(weaponManagement, uIWeapon);
 
             m_itemInfo.m_name = "±«√—";
+            m_itemInfo.m_details = "¿€¿∫ ±«√—¿Ã¥Ÿ.";
+            m_itemInfo.m_imageName = "Icon_Gun";
             m_itemInfo.m_count = 1;
             m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
             m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_GUN;

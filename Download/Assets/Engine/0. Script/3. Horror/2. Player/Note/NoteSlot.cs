@@ -45,7 +45,7 @@ namespace Horror
                 return;
             }
 
-            m_uIItem.Initialize_Icon(m_item);
+            m_uIItem.Initialize_Icon(m_item, m_note.UiNote);
         }
 
         public void Use_Item()
@@ -60,8 +60,12 @@ namespace Horror
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            // 정보창 활성화
+            if (m_item == null)
+                return;
 
+            // 정보창 활성화
+            m_note.UiNote.InfoPanel.gameObject.SetActive(true);
+            m_note.UiNote.InfoPanel.Update_UIInfo(m_item, m_note.UiNote);
         }
 
         public void OnBeginDrag(PointerEventData eventData)

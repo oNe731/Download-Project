@@ -20,6 +20,7 @@ namespace Horror
         private Camera m_baseCamera = null;
         private GameObject m_itemPageItems;
         private GameObject m_cluePageItems;
+        public UINote UiNote => m_uiNote;
         public Camera BaseCamera => m_baseCamera;
         public GameObject ItemPageItems => m_itemPageItems;
         public GameObject CluePageItems => m_cluePageItems;

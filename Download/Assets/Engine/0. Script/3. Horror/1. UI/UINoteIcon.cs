@@ -13,7 +13,7 @@ public class UINoteIcon : MonoBehaviour
     [SerializeField] private TMP_Text m_nameText;
     [SerializeField] private TMP_Text m_countText;
 
-    public void Initialize_Icon(NoteItem noteItem)
+    public void Initialize_Icon(NoteItem noteItem, UINote uiNote)
     {
         if (gameObject.activeSelf == false)
             gameObject.SetActive(true);
@@ -23,18 +23,7 @@ public class UINoteIcon : MonoBehaviour
         {
             case NoteItem.NOTETYPE.TYPE_WEAPON:
                 m_countText.gameObject.SetActive(false);
-                switch (noteItem.m_itemType)
-                {
-                    case NoteItem.ITEMTYPE.TYPE_PIPE:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick");
-                        break;
-                    case NoteItem.ITEMTYPE.TYPE_GUN:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun");
-                        break;
-                    case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight");
-                        break;
-                }
+                m_Iconimage.sprite = uiNote.WeaponIcon[noteItem.m_imageName];
                 break;
 
             case NoteItem.NOTETYPE.TYPE_ITEM:
@@ -45,16 +34,12 @@ public class UINoteIcon : MonoBehaviour
                     m_countText.gameObject.SetActive(true);
                     m_countText.text = noteItem.m_count.ToString();
                 }
-    
+
+                m_Iconimage.sprite = uiNote.ItemIcon[noteItem.m_imageName];
                 switch (noteItem.m_itemType)
                 {
                     case NoteItem.ITEMTYPE.TYPE_BULLET:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet");
                         HorrorManager.Instance.Player.WeaponManagement.Update_WeaponUI(NoteItem.ITEMTYPE.TYPE_GUN); // 무기 ui 업데이트
-                        break;
-
-                    case NoteItem.ITEMTYPE.TYPE_DRUG:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine");
                         break;
                 }
                 break;
@@ -68,28 +53,7 @@ public class UINoteIcon : MonoBehaviour
                     m_countText.text = noteItem.m_count.ToString();
                 }
 
-                switch (noteItem.m_itemType)
-                {
-                    case NoteItem.ITEMTYPE.TYPE_CLUE1:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
-                        break;
-
-                    case NoteItem.ITEMTYPE.TYPE_CLUE2:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
-                        break;
-
-                    case NoteItem.ITEMTYPE.TYPE_CLUE3:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
-                        break;
-
-                    case NoteItem.ITEMTYPE.TYPE_CLUE4:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
-                        break;
-
-                    case NoteItem.ITEMTYPE.TYPE_CLUE5:
-                        m_Iconimage.sprite = Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue");
-                        break;
-                }
+                m_Iconimage.sprite = uiNote.ClueIcon[noteItem.m_imageName];
                 break;
         }
 
