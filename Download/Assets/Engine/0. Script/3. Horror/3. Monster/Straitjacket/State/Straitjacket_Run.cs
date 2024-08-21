@@ -13,7 +13,7 @@ public class Straitjacket_Run : Straitjacket_Base
     {
         base.Enter_State();
 
-        Debug.Log("플레이어 추격");
+        m_animator.SetBool("IsRun", true);
     }
 
     public override void Update_State()
@@ -43,5 +43,7 @@ public class Straitjacket_Run : Straitjacket_Base
     public override void Exit_State()
     {
         base.Exit_State();
+
+        m_animator.SetBool("IsRun", false);
     }
 }

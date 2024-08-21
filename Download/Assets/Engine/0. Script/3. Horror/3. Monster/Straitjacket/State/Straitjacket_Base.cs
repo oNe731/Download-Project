@@ -5,7 +5,8 @@ using UnityEngine;
 public class Straitjacket_Base : State<Monster>
 {
     protected Straitjacket m_owner = null;
-    protected Rigidbody m_rigidbody;
+    protected Animator  m_animator = null;
+    protected Rigidbody m_rigidbody = null;
 
     protected Vector3 m_moveDirection;
     protected float   m_speed = 5f;
@@ -16,8 +17,9 @@ public class Straitjacket_Base : State<Monster>
     public Straitjacket_Base(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
         m_owner = m_stateMachine.Owner.GetComponent<Straitjacket>();
-        m_rigidbody = m_owner.gameObject.GetComponent<Rigidbody>();
+        m_animator = m_owner.Animator;
 
+        m_rigidbody = m_owner.gameObject.GetComponent<Rigidbody>();
         m_rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         m_rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
@@ -73,23 +75,37 @@ public class Straitjacket_Base : State<Monster>
         return false;
     }
 
-    protected void Reset_RandomDirection()
-    {
-        m_moveDirection   = Random.insideUnitSphere;
-        m_moveDirection.y = 0;
-        m_moveDirection   = m_moveDirection.normalized;
-
-        Vector3 newPos = m_owner.gameObject.transform.position + m_moveDirection * m_speed * Time.deltaTime;
-        if (m_owner.Spawner.Check_Position(newPos) == false)
-            Reset_RandomDirection();
-    }
-
     protected void Move_Monster()
     {
         Vector3 newPos = m_owner.gameObject.transform.position + m_moveDirection * m_speed * Time.deltaTime;
-        if (m_owner.Spawner.Check_Position(newPos) == true)
+        if (m_owner.Spawner.Check_Position(newPos) == true && Check_Collider(m_moveDirection) == false)
+        {
+            m_owner.transform.forward  = m_moveDirection.normalized;
             m_owner.transform.position = newPos;
+        }
         else
             Reset_RandomDirection();
+    }
+
+    protected void Reset_RandomDirection()
+    {
+        Vector3 newDir = Random.insideUnitSphere;
+        newDir = newDir.normalized;
+        newDir.y = 0;
+
+        Vector3 newPos = m_owner.gameObject.transform.position + newDir * m_speed * Time.deltaTime;
+        if (m_owner.Spawner.Check_Position(newPos) == true && Check_Collider(newDir) == false)
+            m_moveDirection = newDir;
+        else
+            m_moveDirection = -m_moveDirection;
+    }
+
+    private bool Check_Collider(Vector3 dir)
+    {
+        RaycastHit hit = GameManager.Instance.Start_Raycast(m_owner.transform.position, dir, 1f, LayerMask.GetMask("Wall", "Static", "Interaction"));
+        if (hit.collider != null)
+            return true;
+
+        return false;
     }
 }

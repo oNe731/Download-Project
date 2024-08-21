@@ -18,6 +18,8 @@ public class Straitjacket_Attack : Straitjacket_Base
         //Debug.Log("플레이어 공격");
         HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
         m_time = 0;
+
+        m_animator.SetBool("IsAttack", true);
     }
 
     public override void Update_State()
@@ -34,5 +36,7 @@ public class Straitjacket_Attack : Straitjacket_Base
     public override void Exit_State()
     {
         base.Exit_State();
+
+        m_animator.SetBool("IsAttack", false);
     }
 }

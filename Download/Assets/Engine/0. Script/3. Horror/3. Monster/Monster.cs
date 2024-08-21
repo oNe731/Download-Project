@@ -8,6 +8,7 @@ public abstract class Monster : Character
 
     protected float m_hp;
     protected float m_attack;
+    protected int m_DieStateIndex;
 
     protected StateMachine<Monster> m_stateMachine;
     protected Spawner m_spawner;
@@ -20,7 +21,24 @@ public abstract class Monster : Character
     public Spawner Spawner => m_spawner;
     public Animator Animator => m_animator;
 
-    public abstract void Damage_Monster(float damage);
+    public virtual void Damage_Monster(float damage)
+    {
+        if (m_stateMachine.CurState == m_DieStateIndex)
+            return;
+
+        m_hp -= damage;
+        if (m_hp <= 0)
+        {
+            m_hp = 0;
+            m_stateMachine.Change_State(m_DieStateIndex);
+        }
+
+        // 피 이펙트 생성
+        GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
+        gameObject.transform.position   = transform.position;
+        gameObject.transform.localScale = transform.localScale;
+
+    }
 
     public void Initialize_Monster(Spawner spawner)
     {
@@ -29,7 +47,6 @@ public abstract class Monster : Character
             return;
 
         transform.position = m_spawner.Get_RandomPosition();
-        m_animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     private void Start()

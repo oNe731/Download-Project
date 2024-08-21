@@ -13,7 +13,7 @@ public class Straitjacket_Die : Straitjacket_Base
         base.Enter_State();
 
         // ªÁ∏¡ ¿Ã∫•∆Æ √≥∏Æ
-        Debug.Log("Straitjacket ªÁ∏¡");
+        m_animator.SetBool("IsDie", true);
 
         GameObject gameObject = m_owner.gameObject;
         GameManager.Instance.Destroy_GameObject(ref gameObject);

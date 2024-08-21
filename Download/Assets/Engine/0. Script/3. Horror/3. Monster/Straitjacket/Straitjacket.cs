@@ -8,21 +8,16 @@ public class Straitjacket : Monster
 
     public override void Damage_Monster(float damage)
     {
-        if (m_stateMachine.CurState == (int)State.ST_DIE)
-            return;
-
-        m_hp -= damage;
-        if (m_hp <= 0)
-        {
-            m_hp = 0;
-            m_stateMachine.Change_State((int)State.ST_DIE);
-        }
+        base.Damage_Monster(damage);
     }
 
     private void Start()
     {
         m_hp = 5f;
         m_attack = 1f;
+        m_DieStateIndex = (int)State.ST_DIE;
+
+        m_animator = transform.GetChild(0).GetComponent<Animator>();
 
         m_stateMachine = new StateMachine<Monster>(gameObject);
 

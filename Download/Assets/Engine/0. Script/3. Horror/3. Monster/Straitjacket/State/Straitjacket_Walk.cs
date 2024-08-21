@@ -18,8 +18,10 @@ public class Straitjacket_Walk : Straitjacket_Base
 
         Reset_RandomDirection();
 
-        m_change = Random.Range(2.5f, 5.0f);
         m_time = 0f;
+        m_change = Random.Range(2.5f, 5.0f);
+
+        m_animator.SetBool("IsWalk", true);
     }
 
     public override void Update_State()
@@ -30,13 +32,9 @@ public class Straitjacket_Walk : Straitjacket_Base
             {
                 m_time += Time.deltaTime;
                 if (m_time >= m_change)
-                {
                     m_owner.StateMachine.Change_State((int)Straitjacket.State.ST_IDLE);
-                }
                 else
-                {
                     Move_Monster();
-                }
             }
         }
     }
@@ -44,5 +42,7 @@ public class Straitjacket_Walk : Straitjacket_Base
     public override void Exit_State()
     {
         base.Exit_State();
+
+        m_animator.SetBool("IsWalk", false);
     }
 }
