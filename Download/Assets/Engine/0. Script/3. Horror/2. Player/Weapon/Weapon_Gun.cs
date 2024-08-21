@@ -87,6 +87,9 @@ namespace Horror
 
             // 이펙트 활성화
             m_effect.Reset_Effect();
+            // 파티클 생성
+            GameObject particle = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Effect/GunshotDust/Effect_Gunshot");
+            particle.transform.position = transform.GetChild(0).transform.position;
 
             RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Monster"));
             if (hit.collider != null)

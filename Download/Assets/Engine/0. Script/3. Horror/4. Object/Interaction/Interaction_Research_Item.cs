@@ -7,6 +7,7 @@ namespace Horror
     public class Interaction_Research_Item : Interaction
     {
         [SerializeField] private NoteItem m_noteItem;
+        public NoteItem NoteItem { set => m_noteItem = value; }
         
         private void Start()
         {
