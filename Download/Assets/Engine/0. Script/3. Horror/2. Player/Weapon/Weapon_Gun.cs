@@ -109,7 +109,7 @@ namespace Horror
             if (noteItem.m_count < 0)
                 noteItem.m_count = 0;
             HorrorManager.Instance.Player.Note.Set_Item(NoteItem.ITEMTYPE.TYPE_BULLET, noteItem);
-            m_uIWeapon.Update_Info(m_itemInfo.m_itemInfo);
+            m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
         }
     }
 }

@@ -16,65 +16,30 @@ public class UIWeapon : MonoBehaviour
     [SerializeField] private Image    m_textIcon;
     [SerializeField] private TMP_Text m_textTxt;
 
-    private NoteItem.ITEMTYPE m_weaponId;
-    private Vector2[] m_position;
+    [SerializeField] private Image[] m_lightImg;
+
     private Dictionary<string, Sprite> m_WeaponSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_lightSpr = new Dictionary<string, Sprite>();
 
-    public void Initialize_UI(NoteItem.ITEMTYPE weaponId, NoteItem.itemInfo weaponInfo)
+    public void Initialize_UI()
     {
-        m_WeaponSpr.Add("Gun_OFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Gun_OFF"));
-        m_WeaponSpr.Add("Gun_ON", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Gun_ON"));
-        m_WeaponSpr.Add("Lantern_OFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Lantern_OFF"));
-        m_WeaponSpr.Add("Lantern_ON", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Lantern_ON"));
-        m_WeaponSpr.Add("Pipe_OFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Pipe_OFF"));
-        m_WeaponSpr.Add("Pipe_ON", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_WeaponSlot_Pipe_ON"));
+        m_WeaponSpr.Add("Gun",   Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Gun"));
+        m_WeaponSpr.Add("Flash", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Flash"));
+        m_WeaponSpr.Add("Pipe",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Pipe"));
 
-        m_weaponId = weaponId;
+        m_lightSpr.Add("SlotON",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_SlotON"));
+        m_lightSpr.Add("SlotOFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_SlotOFF"));
 
-        m_position = new Vector2[(int)POSITION.PT_END];
-        m_position[(int)POSITION.PT_FRONT]  = new Vector2(499f, -409f);
-        m_position[(int)POSITION.PT_MIDDLE] = new Vector2(512f, -417f);
-        m_position[(int)POSITION.PT_BACK]   = new Vector2(525f, -425f);
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(512.9f, -325f);
 
-        Update_Image(true);
-        Update_Info(weaponInfo);
+        gameObject.SetActive(false);
     }
 
-    private void Update_Image(bool active)
+    public void Update_UI(int count, POSITION position, NoteItem.ITEMTYPE weaponId, NoteItem.itemInfo weaponInfo)
     {
-        switch (m_weaponId)
-        {
-            case NoteItem.ITEMTYPE.TYPE_PIPE:
-                // 무기 아이콘 변경(이미지)
-                m_imageIcon.sprite = active ? m_WeaponSpr["Pipe_ON"] : m_WeaponSpr["Pipe_OFF"]; 
-                // 무한대 표시(이미지)
-                m_textTxt.gameObject.SetActive(false);
-                m_textIcon.gameObject.SetActive(active);
-                break;
-
-            case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
-                // 무기 아이콘 변경(이미지)
-                m_imageIcon.sprite = active ? m_WeaponSpr["Lantern_ON"] : m_WeaponSpr["Lantern_OFF"];
-                // 무한대 표시(이미지)
-                m_textTxt.gameObject.SetActive(false);
-                m_textIcon.gameObject.SetActive(active);
-                break;
-
-            case NoteItem.ITEMTYPE.TYPE_GUN:
-                // 무기 아이콘 변경(이미지)
-                m_imageIcon.sprite = active ? m_WeaponSpr["Gun_ON"] : m_WeaponSpr["Gun_OFF"];
-                // 총알 현재/ 최대 개수(폰트)
-                m_textIcon.gameObject.SetActive(false);
-                m_textTxt.gameObject.SetActive(active);
-                break;
-        }
-    }
-
-    public void Update_UI(POSITION position, bool active)
-    {
-        // 순서 정렬
+        /*// 순서 정렬
         int index = 0;
-        switch(position)
+        switch (position)
         {
             case POSITION.PT_FRONT:
                 index = (int)POSITION.PT_BACK;
@@ -89,18 +54,66 @@ public class UIWeapon : MonoBehaviour
         transform.SetSiblingIndex(index);
 
         // 위치 업데이트
-        GetComponent<RectTransform>().anchoredPosition = m_position[(int)position];
+         GetComponent<RectTransform>().anchoredPosition = m_position[(int)position];
 
         // 비활성화일시 상태 변경
-        if(active == false)
+        if (active == false)
             Update_Image(false);
         else
-            Update_Image(true);
+            Update_Image(true);*/
+
+        // 개수에 따른 슬롯 비/활성화
+        for(int i = 0; i < count; ++i)
+            m_lightImg[i].gameObject.SetActive(true);
+        for (int i = count; i < m_lightImg.Length; ++i)
+            m_lightImg[i].gameObject.SetActive(false);
+
+        // 순서 정렬
+        for (int i = 0; i < m_lightImg.Length; ++i)
+        {
+            if(i == (int)position)
+                m_lightImg[(int)position].sprite = m_lightSpr["SlotON"];
+            else
+                m_lightImg[i].sprite = m_lightSpr["SlotOFF"];
+        }
+
+        Update_Image(weaponId);
+        Update_Info(weaponId, weaponInfo);
     }
 
-    public void Update_Info(NoteItem.itemInfo weaponInfo)
+    private void Update_Image(NoteItem.ITEMTYPE weaponId)
     {
-        switch (m_weaponId)
+        switch (weaponId)
+        {
+            case NoteItem.ITEMTYPE.TYPE_PIPE:
+                // 무기 아이콘 변경(이미지)
+                m_imageIcon.sprite = m_WeaponSpr["Pipe"]; //active ? m_WeaponSpr["Pipe_ON"] : m_WeaponSpr["Pipe_OFF"];
+                // 무한대 표시(이미지)
+                m_textTxt.gameObject.SetActive(false);
+                m_textIcon.gameObject.SetActive(true);
+                break;
+
+            case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
+                // 무기 아이콘 변경(이미지)
+                m_imageIcon.sprite = m_WeaponSpr["Flash"];
+                // 무한대 표시(이미지)
+                m_textTxt.gameObject.SetActive(false);
+                m_textIcon.gameObject.SetActive(true);
+                break;
+
+            case NoteItem.ITEMTYPE.TYPE_GUN:
+                // 무기 아이콘 변경(이미지)
+                m_imageIcon.sprite = m_WeaponSpr["Gun"];
+                // 총알 현재/ 최대 개수(폰트)
+                m_textIcon.gameObject.SetActive(false);
+                m_textTxt.gameObject.SetActive(true);
+                break;
+        }
+    }
+
+    public void Update_Info(NoteItem.ITEMTYPE weaponId, NoteItem.itemInfo weaponInfo)
+    {
+        switch (weaponId)
         {
             case NoteItem.ITEMTYPE.TYPE_GUN:
                 int currentCount;

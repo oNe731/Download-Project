@@ -98,6 +98,7 @@ namespace Horror
 
             // Weapon
             m_weaponManagement = new WeaponManagement<HorrorPlayer>(gameObject);
+            m_weaponManagement.Initialize_WeaponManagement();
         }
 
         public void Update()

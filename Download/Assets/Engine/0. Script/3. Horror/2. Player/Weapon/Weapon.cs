@@ -41,7 +41,7 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
         if (m_uIWeapon == null)
             return;
 
-        m_uIWeapon.Update_Info(m_itemInfo.m_itemInfo);
+        m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
     }
 
     public virtual void OnDrawGizmos()

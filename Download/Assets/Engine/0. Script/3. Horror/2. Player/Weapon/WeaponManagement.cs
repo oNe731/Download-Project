@@ -8,8 +8,7 @@ public class WeaponManagement<T> where T : class
     private int m_curWeapon = -1;
     private int m_preWeapon = -1;
     private List<Weapon<T>> m_weapons = new List<Weapon<T>>();
-    private GameObject m_uiParent;
-    private List<UIWeapon> m_uis = new List<UIWeapon>();
+    private UIWeapon m_uIWeapon = null;
 
     public GameObject Owner { get { return m_owner; } }
     public int CurWeapon { get { return m_curWeapon; } }
@@ -19,27 +18,30 @@ public class WeaponManagement<T> where T : class
     public WeaponManagement(GameObject owner)
     {
         m_owner = owner;
+    }
 
-        m_uiParent = new GameObject("WeaponUIParent");
-        m_uiParent.transform.SetParent(GameObject.Find("Canvas").transform.Find("Panel_Basic"), false);
+    public void Initialize_WeaponManagement()
+    {
+        //m_uiParent = new GameObject("WeaponUIParent");
+        //m_uiParent.transform.SetParent(GameObject.Find("Canvas").transform.Find("Panel_Basic"), false);
+
+        m_uIWeapon = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Weapon", GameObject.Find("Canvas").transform.Find("Panel_Basic")).GetComponent<UIWeapon>();
+        if (m_uIWeapon == null)
+            return;
+        m_uIWeapon.Initialize_UI();
     }
 
     public void Add_Weapon(Weapon<T> weapons)
     {
-        UIWeapon ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Weapon", m_uiParent.transform).GetComponent<UIWeapon>();
-        if (ui == null)
-            return; 
-
-        weapons.Initialize_Weapon(this, ui);
+        weapons.Initialize_Weapon(this, m_uIWeapon);
         m_weapons.Add(weapons);
-
-        ui.Initialize_UI(weapons.ItemInfo.m_itemType, weapons.ItemInfo.m_itemInfo);
-        m_uis.Add(ui);
-
 
         // 현재 장착하고 있는 무기가 없다면 자동 장착
         if (m_curWeapon == -1)
+        {
+            m_uIWeapon.gameObject.SetActive(true);
             Change_Weapon(0);
+        }
         else
             Update_UIWeapons();
 
@@ -121,7 +123,11 @@ public class WeaponManagement<T> where T : class
 
     private void Update_UIWeapons()
     {
-        if(m_weapons.Count == 1)
+        if (m_curWeapon == -1)
+            return;
+
+        m_uIWeapon.Update_UI(m_weapons.Count, (UIWeapon.POSITION)m_curWeapon, m_weapons[m_curWeapon].ItemInfo.m_itemType, m_weapons[m_curWeapon].ItemInfo.m_itemInfo);
+        /*if (m_weapons.Count == 1)
         {
             // 개수가 1개라면 제일 뒤
             m_uis[m_curWeapon].Update_UI(UIWeapon.POSITION.PT_BACK, true);
@@ -149,6 +155,6 @@ public class WeaponManagement<T> where T : class
             if (NextIndex >= m_weapons.Count) // 마지막 인덱스면 처음으로
                 NextIndex = 0;
             m_uis[NextIndex].Update_UI(UIWeapon.POSITION.PT_BACK, false);
-        }
+        }*/
     }
 }

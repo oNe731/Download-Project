@@ -60,7 +60,7 @@ namespace Horror
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (m_item == null)
+            if (m_item == null || m_slotType != NoteItem.NOTETYPE.TYPE_CLUE)
                 return;
 
             // 기존 슬롯 선택 상태 초기화
@@ -73,16 +73,15 @@ namespace Horror
             m_note.UiNote.InfoPanel.Update_UIInfo(m_item, m_note.UiNote);
 
             // 선택 상태 표시
-            GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.3f);
+            GetComponent<Image>().color = new Color(0.3207547f, 0.2815761f, 0.2587219f, 0.4666667f);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (m_item == null)
+            if (m_item == null || m_slotType != NoteItem.NOTETYPE.TYPE_ITEM)
                 return;
 
-            if (m_slotType == NoteItem.NOTETYPE.TYPE_ITEM)
-                m_drag = true;
+            m_drag = true;
         }
 
         public void OnDrag(PointerEventData eventData)
