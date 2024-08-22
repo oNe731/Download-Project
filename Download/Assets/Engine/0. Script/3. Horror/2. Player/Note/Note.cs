@@ -17,6 +17,8 @@ namespace Horror
         private int m_itemMax = 18;
         private int m_clueMax = 24;
 
+        private NoteSlot m_noteSlot = null;
+
         private Camera m_baseCamera = null;
         private GameObject m_itemPageItems;
         private GameObject m_cluePageItems;
@@ -24,10 +26,12 @@ namespace Horror
         public Camera BaseCamera => m_baseCamera;
         public GameObject ItemPageItems => m_itemPageItems;
         public GameObject CluePageItems => m_cluePageItems;
+        public NoteSlot NoteSlot { get => m_noteSlot; set => m_noteSlot = value; }
 
-        private void Start()
+        public void Initialize_Note()
         {
             m_uiNote = GetComponent<UINote>();
+            m_uiNote.Initialize_UINote();
             GameObject cameraObject = GameObject.FindWithTag("MainCamera");
             if(cameraObject != null)
                 m_baseCamera = cameraObject.transform.GetChild(1).GetComponent<Camera>();

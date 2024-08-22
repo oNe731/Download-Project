@@ -26,16 +26,12 @@ namespace Horror
         private float m_duration = 0.8f;
         private Coroutine m_coroutine = null;
 
-        private Dictionary<string, Sprite> m_weaponIcon = new Dictionary<string, Sprite>();
-        private Dictionary<string, Sprite> m_itemIcon = new Dictionary<string, Sprite>();
-        private Dictionary<string, Sprite> m_clueIcon = new Dictionary<string, Sprite>();
+        private Dictionary<string, Sprite> m_elementIcon = new Dictionary<string, Sprite>();
 
         public NoteItemInfo InfoPanel => m_panelInfo;
-        public Dictionary<string, Sprite> WeaponIcon => m_weaponIcon;
-        public Dictionary<string, Sprite> ItemIcon => m_itemIcon;
-        public Dictionary<string, Sprite> ClueIcon => m_clueIcon;
+        public Dictionary<string, Sprite> ElementIcon => m_elementIcon;
 
-        private void Start()
+        public void Initialize_UINote()
         {
             m_note = GetComponent<Note>();
             m_page = transform.GetChild(0).GetComponent<Image>();
@@ -44,14 +40,12 @@ namespace Horror
 
             transform.GetChild(0).gameObject.SetActive(false);
 
-            m_weaponIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
-            m_weaponIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
-            m_weaponIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
-
-            m_itemIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
-            m_itemIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
-
-            m_clueIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
+            m_elementIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
+            m_elementIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
+            m_elementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
+            m_elementIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
+            m_elementIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
+            m_elementIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
         }
 
         public void Button_Item()
@@ -64,7 +58,7 @@ namespace Horror
             m_note.ItemPageItems.gameObject.SetActive(true);
             m_note.CluePageItems.gameObject.SetActive(false);
 
-            m_panelInfo.gameObject.SetActive(false);
+            ActiveFalse_PanelInfo();
         }
 
         public void Button_Clue()
@@ -77,12 +71,12 @@ namespace Horror
             m_note.ItemPageItems.gameObject.SetActive(false);
             m_note.CluePageItems.gameObject.SetActive(true);
 
-            m_panelInfo.gameObject.SetActive(false);
+            ActiveFalse_PanelInfo();
         }
 
         public void Opne_Note(bool open)
         {
-            m_panelInfo.gameObject.SetActive(false);
+            ActiveFalse_PanelInfo();
 
             if (m_coroutine != null)
                 StopCoroutine(m_coroutine);
@@ -124,6 +118,13 @@ namespace Horror
 
             m_rectTransform.anchoredPosition = targetPosition;
             yield break;
+        }
+
+        private void ActiveFalse_PanelInfo()
+        {
+            m_panelInfo.gameObject.SetActive(false);
+            if (m_note.NoteSlot != null)
+                m_note.NoteSlot.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
         }
     }
 }

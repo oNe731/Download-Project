@@ -63,20 +63,31 @@ namespace Horror
             if (m_item == null)
                 return;
 
+            // 기존 슬롯 선택 상태 초기화
+            if (m_note.NoteSlot != null)
+                m_note.NoteSlot.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+
             // 정보창 활성화
+            m_note.NoteSlot = this;
             m_note.UiNote.InfoPanel.gameObject.SetActive(true);
             m_note.UiNote.InfoPanel.Update_UIInfo(m_item, m_note.UiNote);
+
+            // 선택 상태 표시
+            GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.3f);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (m_item == null)
+                return;
+
             if (m_slotType == NoteItem.NOTETYPE.TYPE_ITEM)
                 m_drag = true;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (m_drag == false)
+            if (m_item == null || m_drag == false)
                 return;
 
             Vector2 localPoint;
@@ -112,14 +123,14 @@ namespace Horror
 
         public void OnDrop(PointerEventData eventData) // OnEndDrag 보다 먼저 호출/ 놓여지는 슬롯 호출
         {
-            if (m_slotType != NoteItem.NOTETYPE.TYPE_ITEM || m_item != null)
+            if (m_item != null || m_slotType != NoteItem.NOTETYPE.TYPE_ITEM)
                 return;
 
             GameObject draggedObject = eventData.pointerDrag; // 드래그 했던 오브젝트
             if (draggedObject == null)
                 return;
             NoteSlot item = draggedObject.GetComponent<NoteSlot>();
-            if (item == null)
+            if (item == null || item.SlotType != NoteItem.NOTETYPE.TYPE_ITEM)
                 return;
 
             Add_Item(item.Item, true);

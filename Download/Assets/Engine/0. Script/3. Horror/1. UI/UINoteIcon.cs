@@ -19,11 +19,11 @@ public class UINoteIcon : MonoBehaviour
             gameObject.SetActive(true);
 
         m_nameText.text = noteItem.m_name;
+        m_Iconimage.sprite = uiNote.ElementIcon[noteItem.m_imageName];
         switch (noteItem.m_noteType)
         {
             case NoteItem.NOTETYPE.TYPE_WEAPON:
                 m_countText.gameObject.SetActive(false);
-                m_Iconimage.sprite = uiNote.WeaponIcon[noteItem.m_imageName];
                 break;
 
             case NoteItem.NOTETYPE.TYPE_ITEM:
@@ -35,7 +35,6 @@ public class UINoteIcon : MonoBehaviour
                     m_countText.text = noteItem.m_count.ToString();
                 }
 
-                m_Iconimage.sprite = uiNote.ItemIcon[noteItem.m_imageName];
                 switch (noteItem.m_itemType)
                 {
                     case NoteItem.ITEMTYPE.TYPE_BULLET:
@@ -52,8 +51,6 @@ public class UINoteIcon : MonoBehaviour
                     m_countText.gameObject.SetActive(true);
                     m_countText.text = noteItem.m_count.ToString();
                 }
-
-                m_Iconimage.sprite = uiNote.ClueIcon[noteItem.m_imageName];
                 break;
         }
 

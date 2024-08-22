@@ -35,7 +35,7 @@ public class NoteItemInfo : MonoBehaviour
         m_item   = item;
         m_uiNote = uiNote;
 
-        m_Image.sprite    = uiNote.ItemIcon[item.m_imageName];
+        m_Image.sprite    = uiNote.ElementIcon[item.m_imageName];
         m_namtTxt.text    = m_item.m_name;
         m_detailsTxt.text = m_item.m_details;
     }
