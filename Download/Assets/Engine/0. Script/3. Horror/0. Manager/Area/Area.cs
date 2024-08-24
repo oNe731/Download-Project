@@ -9,7 +9,7 @@ public class Area : Horror_Base
         base.Initialize_Level(levelController);
     }
 
-    public override bool Check_Clear(ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
     {
         return true;
     }

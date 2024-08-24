@@ -12,7 +12,7 @@ public class Horror_1stage_StartRoom : Area
     }
 
 
-    public override bool Check_Clear(ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
     {
         // ÆÄÀÌÇÁ¸¦ È¹µæÇß´Â°¡?
         if (HorrorManager.Instance.Player.WeaponManagement.Get_WeaponIndex(NoteItem.ITEMTYPE.TYPE_PIPE) != -1)

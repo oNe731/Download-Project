@@ -138,17 +138,17 @@ namespace Horror
             }
         }
 
-        public void Add_Proviso(NoteItem noteItem) // 단서
+        public void Add_Clue(NoteItem noteItem) // 단서
         {
             // 중복 아이템 검사
-            for (int i = 0; i < m_itemMax; i++)
+            for (int i = 0; i < m_clueMax; i++)
             {
-                if (m_itemItems[i].Item == null)
+                if (m_clueItems[i].Item == null)
                     continue;
 
-                if (m_itemItems[i].Item.m_itemType == noteItem.m_itemType)
+                if (m_clueItems[i].Item.m_itemType == noteItem.m_itemType)
                 {
-                    m_itemItems[i].Add_Item(noteItem, false);
+                    m_clueItems[i].Add_Item(noteItem, false);
                     return;
                 }
             }
@@ -208,6 +208,20 @@ namespace Horror
                     emptyIndex++;
                 }
             }
+        }
+
+        public bool Check_Clue(NoteItem.ITEMTYPE clueType)
+        {
+            for (int i = 0; i < m_clueMax; i++)
+            {
+                if (m_clueItems[i].Item == null)
+                    continue;
+
+                if (m_clueItems[i].Item.m_itemType == clueType)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

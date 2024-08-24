@@ -125,6 +125,6 @@ public class UIPopup : MonoBehaviour
         Note playerNote = HorrorManager.Instance.Player.Note;
         if (playerNote == null)
             return;
-        playerNote.Add_Proviso(m_itemInfo);
+        playerNote.Add_Clue(m_itemInfo);
     }
 }

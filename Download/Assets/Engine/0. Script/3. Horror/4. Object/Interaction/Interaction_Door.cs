@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Interaction_Door : Interaction
 {
+    public enum OPENTYPE { OT_BASICONE, OT_BASICTWO, OT_ANIMATION, OT_END };
     public enum EVENTTYPE { ET_CLEAR, ET_EVENT, ET_END };
 
+    [SerializeField] private OPENTYPE  m_openType;
     [SerializeField] private EVENTTYPE m_eventType;
     [SerializeField] private Vector3 m_openOffset; // y 150
     [SerializeField] private float m_duration = 2f;
@@ -23,7 +25,7 @@ public class Interaction_Door : Interaction
 
     public override void Click_Interaction()
     {
-        if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
+        if (m_interactionUI == null || m_interactionUI.gameObject.activeSelf == false || m_interact == true)
             return;
 
         switch (m_eventType)
@@ -46,9 +48,9 @@ public class Interaction_Door : Interaction
 
         LevelController levelController = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Levels;
         if(levelController == null) // 본 스테이지 클리어 여부 판별
-            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(ref text);
+            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref text);
         else                        // 세부 스테이지 클리어 여부 판별
-            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(ref text);
+            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref text);
 
         if (m_interact == true)
             Open_Door();
@@ -68,13 +70,24 @@ public class Interaction_Door : Interaction
         Debug.Log("문 열고 이벤트 발생 판별");
     }
 
-    private void Open_Door()
+    public void Open_Door()
     {
         Destroy(m_interactionUI.gameObject);
-        StartCoroutine(Open_Move());
+
+        switch(m_openType)
+        {
+            case OPENTYPE.OT_BASICONE:
+                StartCoroutine(Open_OneMove());
+                break;
+            case OPENTYPE.OT_BASICTWO:
+                break;
+            case OPENTYPE.OT_ANIMATION:
+                Open_Animation();
+                break;
+        }
     }
 
-    IEnumerator Open_Move()
+    private IEnumerator Open_OneMove()
     {
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation   = startRotation * Quaternion.Euler(m_openOffset.x, m_openOffset.y, m_openOffset.z);
@@ -89,5 +102,14 @@ public class Interaction_Door : Interaction
         }
 
         transform.rotation = endRotation;
+    }
+
+    private void Open_Animation()
+    {
+        // Temp
+        Destroy(gameObject);
+
+        // 열리는 문 애니메이션 재생
+        //
     }
 }
