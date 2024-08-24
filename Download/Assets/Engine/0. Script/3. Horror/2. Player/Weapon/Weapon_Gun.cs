@@ -14,30 +14,23 @@ namespace Horror
         GameObject m_uiAim  = null;
         Weapon_Gun_Effect m_effect = null;
 
-        private GameObject ui = null;
-
         public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
         {
             base.Initialize_Weapon(weaponManagement, uIWeapon);
 
-            m_itemInfo.m_name = "권총";
-            m_itemInfo.m_details = "작은 권총이다.";
-            m_itemInfo.m_imageName = "Icon_Gun";
-            m_itemInfo.m_count = 1;
-            m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
-            m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_GUN;
-
             m_damage = 2f;
+            transform.localPosition = new Vector3(0f, 0f, 0f);
+            transform.localRotation = Quaternion.Euler(0f, -3.101f, 0f);
+
             GunInfo gunInfo = new GunInfo();
             gunInfo.m_bulletMax = 50;
             m_itemInfo.m_itemInfo = gunInfo;
 
-            transform.localPosition = new Vector3(0f, 0f, 0f);
-            transform.localRotation = Quaternion.Euler(0f, -3.101f, 0f);
-
+            // 조준점 생성
             m_uiAim = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform.Find("Panel_Basic"));
             m_uiAim.SetActive(false);
 
+            // 사격 이펙트 생성
             m_effect = transform.GetChild(2).gameObject.GetComponent<Weapon_Gun_Effect>();
             m_effect.Initialize_Effect();
         }
@@ -62,9 +55,9 @@ namespace Horror
         public override void Attack_Weapon()
         {
             bool empty = false;
-
             Note m_note = HorrorManager.Instance.Player.Note;
             NoteItem noteItem = null;
+
             if (m_note == null)
                 empty = true;
             else
@@ -76,14 +69,7 @@ namespace Horror
 
             if(empty == true)
             {
-                if (ui == null)
-                    ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
-                
-                if (ui == null)
-                    return;
-                UIPopup.Expendables info = new UIPopup.Expendables();
-                info.text = "탄창이 비어있다";
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
+                HorrorManager.Instance.Active_InstructionUI("탄창이 비어있다");
                 return;
             }
 

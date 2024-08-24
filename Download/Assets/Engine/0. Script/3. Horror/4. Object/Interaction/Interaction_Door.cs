@@ -53,7 +53,11 @@ public class Interaction_Door : Interaction
         if (m_interact == true)
             Open_Door();
         else
-            Print_Text(text);
+        {
+            // < 이 스크립트는 1.5초동안 유지된다. (페이드인X, 페이드 아웃 O)
+            // 해당 스크립트가 아직 사라지지 않았다면 다시 좌클릭을 해도 추가로 스크립트가 뜨지 않는다.
+            HorrorManager.Instance.Active_InstructionUI(text);
+        }
     }
 
     private void Check_Event()
@@ -85,17 +89,5 @@ public class Interaction_Door : Interaction
         }
 
         transform.rotation = endRotation;
-    }
-
-    private void Print_Text(string text)
-    {
-        // < 이 스크립트는 1.5초동안 유지된다. (페이드인X, 페이드 아웃 O)
-        // 해당 스크립트가 아직 사라지지 않았다면 다시 좌클릭을 해도 추가로 스크립트가 뜨지 않는다.
-        GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
-        if (ui == null)
-            return;
-        UIPopup.Expendables info = new UIPopup.Expendables();
-        info.text = text;
-        ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
     }
 }

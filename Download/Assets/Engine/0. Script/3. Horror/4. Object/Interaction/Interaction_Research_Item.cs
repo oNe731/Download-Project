@@ -25,44 +25,29 @@ namespace Horror
             if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
                 return;
 
-            GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
-            if (ui == null)
-                return;
-
-            if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_PIPE || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_GUN || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_FLASHLIGHT || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_NOTE)
+            UIPopup.TYPE type = UIPopup.TYPE.T_END;
+            if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_END) // 퀘스트 조합 아이템 (가져가기/ 두고가기)
+                type = UIPopup.TYPE.T_QUESTITEM;
+            else // 노트, 장비, 소모품 아이템, 단서 (가져가기)
             {
-                UIPopup.ItemInfo item = new UIPopup.ItemInfo();
-                item.type = m_noteItem.m_itemType;
-
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item, m_noteItem);
-            }
-            else if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG)
-            {
-                Note playerNote = HorrorManager.Instance.Player.Note;
-                if (playerNote == null)
+                if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_NOTE) // 노트
+                    type = UIPopup.TYPE.T_NOTE;
+                else if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_PIPE || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_GUN || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_FLASHLIGHT) // 장비
+                    type = UIPopup.TYPE.T_WEAPON;
+                else
                 {
-                    Destroy(ui);
-                    return;
+                    Note playerNote = HorrorManager.Instance.Player.Note; // 노트 보유 여부 검사
+                    if (playerNote == null)
+                        return;
+
+                    if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG) // 소모품 아이템
+                        type = UIPopup.TYPE.T_EXPENITEM;
+                    else // 단서
+                        type = UIPopup.TYPE.T_CLUE;
                 }
-
-                // 수첩 아이템에 추가
-                playerNote.Add_Item(m_noteItem);
-
-                // UI 생성
-                UIPopup.Expendables info = new UIPopup.Expendables();
-                info.text = m_noteItem.m_name + "을 획득했다.";
-
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info, m_noteItem);
-            }
-            else // 단서
-            {
-                // UI 생성
-                UIPopup.ItemInfo item = new UIPopup.ItemInfo();
-                item.type = m_noteItem.m_itemType;
-
-                ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_GETITEM, item, m_noteItem);
             }
 
+            HorrorManager.Instance.Active_Popup(type, m_noteItem);
             Destroy_Interaction();
         }
     }

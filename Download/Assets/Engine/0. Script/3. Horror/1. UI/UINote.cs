@@ -26,10 +26,10 @@ namespace Horror
         private float m_duration = 0.8f;
         private Coroutine m_coroutine = null;
 
-        private Dictionary<string, Sprite> m_elementIcon = new Dictionary<string, Sprite>();
+
 
         public NoteItemInfo InfoPanel => m_panelInfo;
-        public Dictionary<string, Sprite> ElementIcon => m_elementIcon;
+
 
         public void Initialize_UINote()
         {
@@ -39,13 +39,6 @@ namespace Horror
             m_rectTransform.anchoredPosition = m_closePosition;
 
             transform.GetChild(0).gameObject.SetActive(false);
-
-            m_elementIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
-            m_elementIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
-            m_elementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
-            m_elementIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
-            m_elementIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
-            m_elementIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
         }
 
         public void Button_Item()

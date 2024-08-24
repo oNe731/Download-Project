@@ -45,7 +45,7 @@ namespace Horror
                 return;
             }
 
-            m_uIItem.Initialize_Icon(m_item, m_note.UiNote);
+            m_uIItem.Initialize_Icon(m_item);
         }
 
         public void Use_Item()
@@ -70,7 +70,7 @@ namespace Horror
             // 정보창 활성화
             m_note.NoteSlot = this;
             m_note.UiNote.InfoPanel.gameObject.SetActive(true);
-            m_note.UiNote.InfoPanel.Update_UIInfo(m_item, m_note.UiNote);
+            m_note.UiNote.InfoPanel.Update_UIInfo(m_item);
 
             // 선택 상태 표시
             GetComponent<Image>().color = new Color(0.3207547f, 0.2815761f, 0.2587219f, 0.4666667f);

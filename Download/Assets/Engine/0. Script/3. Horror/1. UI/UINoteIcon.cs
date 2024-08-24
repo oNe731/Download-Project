@@ -13,13 +13,13 @@ public class UINoteIcon : MonoBehaviour
     [SerializeField] private TMP_Text m_nameText;
     [SerializeField] private TMP_Text m_countText;
 
-    public void Initialize_Icon(NoteItem noteItem, UINote uiNote)
+    public void Initialize_Icon(NoteItem noteItem)
     {
         if (gameObject.activeSelf == false)
             gameObject.SetActive(true);
 
         m_nameText.text = noteItem.m_name;
-        m_Iconimage.sprite = uiNote.ElementIcon[noteItem.m_imageName];
+        m_Iconimage.sprite = HorrorManager.Instance.NoteElementIcon[noteItem.m_imageName];
         switch (noteItem.m_noteType)
         {
             case NoteItem.NOTETYPE.TYPE_WEAPON:

@@ -20,8 +20,8 @@ public class NoteItemMagnifyingGlass : MonoBehaviour
         }
     }
 
-    public void Update_UIInfo(NoteItem item, Horror.UINote uiNote)
+    public void Update_UIInfo(NoteItem item)
     {
-        m_image.sprite = uiNote.ElementIcon[item.m_imageName];
+        m_image.sprite = HorrorManager.Instance.NoteElementIcon[item.m_imageName];
     }
 }

@@ -23,13 +23,7 @@ public class Interaction_Research_Text : Interaction
         if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
             return;
 
-        GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
-        if (ui == null)
-            return;
-        UIPopup.Expendables info = new UIPopup.Expendables();
-        info.text = m_text;
-        ui.GetComponent<UIPopup>().Initialize_UI(UIPopup.TYPE.T_EXPENDABLES, info);
-
+        HorrorManager.Instance.Active_InstructionUI(m_text);
         Destroy_Interaction();
     }
 }

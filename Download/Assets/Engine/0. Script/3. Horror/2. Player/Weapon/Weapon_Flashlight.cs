@@ -10,12 +10,7 @@ namespace Horror
         {
             base.Initialize_Weapon(weaponManagement, uIWeapon);
 
-            m_itemInfo.m_name = "손전등";
-            m_itemInfo.m_details = "어둠을 밝혀줄 손전등이다.";
-            m_itemInfo.m_imageName = "Icon_Flashlight";
-            m_itemInfo.m_count = 1;
-            m_itemInfo.m_noteType = NoteItem.NOTETYPE.TYPE_WEAPON;
-            m_itemInfo.m_itemType = NoteItem.ITEMTYPE.TYPE_FLASHLIGHT;
+            m_damage = 0f;
             transform.localPosition = new Vector3(0f, 0f, 0f);
             transform.localRotation = Quaternion.Euler(0f, -2.92f, -2.73f);
         }

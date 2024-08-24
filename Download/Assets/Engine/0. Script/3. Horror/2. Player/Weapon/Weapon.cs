@@ -10,7 +10,7 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
 
     protected NoteItem m_itemInfo = new NoteItem();
 
-    public NoteItem ItemInfo { get => m_itemInfo; }
+    public NoteItem ItemInfo { get => m_itemInfo; set => m_itemInfo = value; }
 
     public abstract void Attack_Weapon();
 

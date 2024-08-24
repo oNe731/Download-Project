@@ -12,7 +12,6 @@ public class NoteItemInfo : MonoBehaviour
 
     [SerializeField] private NoteItemMagnifyingGlass m_panelMagnifyingGlass;
     private NoteItem m_item;
-    private Horror.UINote m_uiNote;
 
     private void Start()
     {
@@ -27,15 +26,14 @@ public class NoteItemInfo : MonoBehaviour
     public void MagnifyingGlass_Button()
     {
         m_panelMagnifyingGlass.gameObject.SetActive(true);
-        m_panelMagnifyingGlass.Update_UIInfo(m_item, m_uiNote);
+        m_panelMagnifyingGlass.Update_UIInfo(m_item);
     }
 
-    public void Update_UIInfo(NoteItem item, Horror.UINote uiNote)
+    public void Update_UIInfo(NoteItem item)
     {
         m_item   = item;
-        m_uiNote = uiNote;
 
-        m_Image.sprite    = uiNote.ElementIcon[item.m_imageName];
+        m_Image.sprite    = HorrorManager.Instance.NoteElementIcon[item.m_imageName];
         m_namtTxt.text    = m_item.m_name;
         m_detailsTxt.text = m_item.m_details;
     }
