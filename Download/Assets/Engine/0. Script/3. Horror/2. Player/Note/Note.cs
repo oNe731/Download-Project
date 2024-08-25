@@ -36,8 +36,8 @@ namespace Horror
             if(cameraObject != null)
                 m_baseCamera = cameraObject.transform.GetChild(1).GetComponent<Camera>();
 
-            m_itemPageItems = gameObject.transform.GetChild(4).gameObject;
-            m_cluePageItems = gameObject.transform.GetChild(3).gameObject;
+            m_itemPageItems = gameObject.transform.GetChild(1).GetChild(4).gameObject;
+            m_cluePageItems = gameObject.transform.GetChild(1).GetChild(3).gameObject;
 
             // 무기 슬롯 할당
             Transform weaponTransform = m_itemPageItems.transform.GetChild(0);

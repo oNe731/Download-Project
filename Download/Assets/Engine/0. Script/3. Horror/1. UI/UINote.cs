@@ -21,24 +21,22 @@ namespace Horror
         private Image m_page;
         private RectTransform m_rectTransform;
 
-        private Vector3 m_closePosition = new Vector3(-980f, -66f, 0f);
-        private Vector3 m_opnePosition = new Vector3(-341f, -66f, 0f);
+        private Vector3 m_closePosition = new Vector3(-647f, 0f, 0f);
+        private Vector3 m_opnePosition = new Vector3(0f, 0f, 0f);
         private float m_duration = 0.8f;
         private Coroutine m_coroutine = null;
 
-
-
         public NoteItemInfo InfoPanel => m_panelInfo;
-
 
         public void Initialize_UINote()
         {
             m_note = GetComponent<Note>();
-            m_page = transform.GetChild(0).GetComponent<Image>();
-            m_rectTransform = GetComponent<RectTransform>();
+            m_page = transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            m_rectTransform = transform.GetChild(1).GetComponent<RectTransform>();
             m_rectTransform.anchoredPosition = m_closePosition;
 
             transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
         }
 
         public void Button_Item()
@@ -89,6 +87,7 @@ namespace Horror
                 Button_Item();
 
                 transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
             }
 
             float time = 0f;
@@ -107,6 +106,7 @@ namespace Horror
                 m_button[(int)PAGE.PAGE_CLUE].sprite = m_buttonImg[(int)BUTTON.BUTTON_CLUE_OFF];
 
                 transform.GetChild(0).gameObject.SetActive(false);
+                transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
             }
 
             m_rectTransform.anchoredPosition = targetPosition;
