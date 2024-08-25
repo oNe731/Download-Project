@@ -121,23 +121,34 @@ namespace Horror
         protected void Input_Interaction() 
         {
             // 실시간으로 바라보고 있는 UI만 활성화
-            RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
-            if (hit.collider == null) // 제일 가까운 콜라이더 반환
+            RaycastHit interactionHit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
+            if (interactionHit.collider == null) // 제일 가까운 콜라이더 반환
             {
                 Reset_Interaction();
                 return;
             }
 
-           Interaction interaction = hit.collider.gameObject.transform.GetComponent<Interaction>();
+           Interaction interaction = interactionHit.collider.gameObject.transform.GetComponent<Interaction>();
             if (interaction == null)
-                interaction = hit.collider.gameObject.transform.parent.GetComponent<Interaction>();
+                interaction = interactionHit.collider.gameObject.transform.parent.GetComponent<Interaction>();
             if (interaction == null)
             {
                 Reset_Interaction();
                 return;
             }
 
-            if(m_interactionUI != null)
+            // 벽이 먼저 있는가
+            RaycastHit wallHit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Wall"));
+            if (wallHit.collider != null)
+            {
+                if (wallHit.distance < interactionHit.distance) // 벽이 상호작용 요소보다 앞에 있다면 상호작용X
+                {
+                    Reset_Interaction();
+                    return;
+                }
+            }
+
+            if (m_interactionUI != null)
             {
                 if(m_interactionUI != interaction.InteractionUI)
                     m_interactionUI.gameObject.SetActive(false);
