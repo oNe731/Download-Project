@@ -22,6 +22,9 @@ public class UIInstruction : MonoBehaviour
 
     public void Initialize_UI(ACTIVETYPE openType, ACTIVETYPE closeType, float[] activeTimes, string[] texts)
     {
+        if (m_fadeCoroutine != null)
+            StopCoroutine(m_fadeCoroutine);
+
         m_closeType  = closeType;
 
         m_activeTimes = activeTimes;
@@ -40,8 +43,6 @@ public class UIInstruction : MonoBehaviour
                 m_active = true;
                 break;
             case ACTIVETYPE.TYPE_FADE:
-                if (m_fadeCoroutine != null)
-                    StopCoroutine(m_fadeCoroutine);
                 m_fadeCoroutine = StartCoroutine(Fade_Color(0f, 1f, 1f));
                 break;
         }
@@ -85,9 +86,7 @@ public class UIInstruction : MonoBehaviour
 
     private IEnumerator Fade_Color(float startAlpha, float targetAlpha, float duration)
     {
-        m_txt.color = new Color(m_txt.color.r, m_txt.color.g, m_txt.color.b, startAlpha);
-
-        Color startColor = m_txt.color;
+        Color startColor = new Color(m_txt.color.r, m_txt.color.g, m_txt.color.b, startAlpha);
         Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
         float currentTime = 0f;
