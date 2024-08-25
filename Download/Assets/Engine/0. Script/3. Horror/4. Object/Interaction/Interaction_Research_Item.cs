@@ -40,7 +40,7 @@ namespace Horror
                     if (playerNote == null)
                         return;
 
-                    if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG) // 소모품 아이템
+                    if (m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_BULLET || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_DRUG || m_noteItem.m_itemType == NoteItem.ITEMTYPE.TYPE_1KEY) // 소모품 아이템
                         type = UIPopup.TYPE.T_EXPENITEM;
                     else // 단서
                         type = UIPopup.TYPE.T_CLUE;

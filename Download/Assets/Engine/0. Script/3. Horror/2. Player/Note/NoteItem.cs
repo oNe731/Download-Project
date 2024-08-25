@@ -14,6 +14,7 @@ public class NoteItem
         TYPE_GUN, TYPE_PIPE, TYPE_FLASHLIGHT,
 
         TYPE_BULLET, TYPE_DRUG,
+        TYPE_1KEY, // 1스테이지키
 
         TYPE_CLUE1, TYPE_CLUE2, TYPE_CLUE3, TYPE_CLUE4, TYPE_CLUE5,
         TYPE_KEYPAD,

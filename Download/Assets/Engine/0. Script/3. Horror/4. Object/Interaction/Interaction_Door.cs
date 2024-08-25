@@ -5,12 +5,14 @@ using UnityEngine;
 public class Interaction_Door : Interaction
 {
     public enum OPENTYPE { OT_BASICONE, OT_BASICTWO, OT_ANIMATION, OT_END };
-    public enum EVENTTYPE { ET_CLEAR, ET_EVENT, ET_END };
+    public enum EVENTTYPE { ET_NONE, ET_CLEAR, ET_EVENT, ET_END };
 
+    [SerializeField] private int m_doorIndex;
     [SerializeField] private OPENTYPE  m_openType;
     [SerializeField] private EVENTTYPE m_eventType;
     [SerializeField] private Vector3 m_openOffset; // y 150
     [SerializeField] private float m_duration = 2f;
+    public int DoorIndex => m_doorIndex;
 
     private void Start()
     {
@@ -30,11 +32,16 @@ public class Interaction_Door : Interaction
 
         switch (m_eventType)
         {
+            case EVENTTYPE.ET_NONE:
+                Open_Door();
+                break;
+
             case EVENTTYPE.ET_CLEAR:
                 Check_Clear();
                 break;
 
             case EVENTTYPE.ET_EVENT:
+                Open_Door();
                 Check_Event();
                 break;
         }
@@ -56,16 +63,13 @@ public class Interaction_Door : Interaction
         if (m_interact == true)
             Open_Door();
         else
-        {
-            // < 이 스크립트는 1.5초동안 유지된다. (페이드인X, 페이드 아웃 O)
             HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
-        }
     }
 
     private void Check_Event()
     {
         // 문 열림
-        // 선택적 이벤트 추가 발생
+        // 선택적 이벤트 추가 발생 (몬스터 생성 등)
 
         Debug.Log("문 열고 이벤트 발생 판별");
     }

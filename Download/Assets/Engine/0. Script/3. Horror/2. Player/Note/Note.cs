@@ -210,6 +210,20 @@ namespace Horror
             }
         }
 
+        public bool Check_Item(NoteItem.ITEMTYPE itemType)
+        {
+            for (int i = 0; i < m_itemMax; i++)
+            {
+                if (m_itemItems[i].Item == null)
+                    continue;
+
+                if (m_itemItems[i].Item.m_itemType == itemType)
+                    return true;
+            }
+
+            return false;
+        }
+
         public bool Check_Clue(NoteItem.ITEMTYPE clueType)
         {
             for (int i = 0; i < m_clueMax; i++)

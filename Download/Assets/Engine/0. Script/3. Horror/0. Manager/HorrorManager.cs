@@ -61,6 +61,11 @@ public class HorrorManager : MonoBehaviour
         GameManager.Instance.UI.Start_FadeIn(1f, Color.black, ()=> Start_Game());
     }
 
+    private void Update()
+    {
+        m_levelController.Update_Level();
+    }
+
     private void Start_Game()
     {
         m_isGame = true;
