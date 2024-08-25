@@ -5,7 +5,8 @@ using UnityEngine;
 public class Interaction_Research_Text : Interaction
 {
     [SerializeField] UIWorldHint.HINTTYPE m_hintType;
-    [SerializeField] private string m_text;
+    [SerializeField] private float[]  m_activeTimes;
+    [SerializeField] private string[] m_texts;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class Interaction_Research_Text : Interaction
         if (m_interactionUI.gameObject.activeSelf == false || m_interact == true)
             return;
 
-        HorrorManager.Instance.Active_InstructionUI(m_text);
+        HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_BASIC, m_activeTimes, m_texts);
         Destroy_Interaction();
     }
 }

@@ -12,13 +12,16 @@ public class Horror_1stage_StartRoom : Area
     }
 
 
-    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         // 파이프를 획득했는가?
         if (HorrorManager.Instance.Player.WeaponManagement.Get_WeaponIndex(NoteItem.ITEMTYPE.TYPE_PIPE) != -1)
             return true;
 
-        text = "문 너머를 확인할 준비가 되지 않은 것 같다.";
+        activeTimes = new float[1];
+        texts = new string[1];
+        activeTimes[0] = 1f;
+        texts[0] = "문 너머를 확인할 준비가 되지 않은 것 같다.";
         return false;
     }
 

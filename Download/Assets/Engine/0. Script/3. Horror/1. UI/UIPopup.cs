@@ -70,7 +70,15 @@ public class UIPopup : MonoBehaviour
     public void Type_Note()
     {
         HorrorManager.Instance.Player.Acquire_Note(); // 노트 추가
-        HorrorManager.Instance.Active_InstructionUI("아이템 ‘동료의 수첩’을 얻었다.\n[ESC]로 사용 가능"); // 문구 출력
+
+        float[] activeTimes = new float[2];
+        string[] texts = new string[2];
+        activeTimes[0] = 2f;
+        texts[0] = "동료가 사용하던 수첩인 듯 하다...\n내용을 살펴보자.";
+        activeTimes[1] = 3f;
+        texts[1] = "[TAB]으로 수첩 사용 가능";
+
+        HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts); // 문구 출력
     }
 
     public void Type_Weapon()
@@ -94,20 +102,24 @@ public class UIPopup : MonoBehaviour
         HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(weapon);
 
         // 문구 출력
-        string text = "";
+        float[] activeTimes = new float[1];
+        string[] texts = new string[1];
         switch (m_itemInfo.m_itemType)
         {
             case NoteItem.ITEMTYPE.TYPE_PIPE:
-                text = "아이템 ‘파이프’를 얻었다.\n[TAB]으로 사용 가능";
+                activeTimes[0] = 1f;
+                texts[0] = "아이템 ‘파이프’를 얻었다.\n[CTRL]으로 무기 사용 가능";
                 break;
             case NoteItem.ITEMTYPE.TYPE_GUN:
-                text = "[Ctrl]로 장비교체 가능";
+                activeTimes[0] = 1f;
+                texts[0] = "[Ctrl]로 장비교체 가능";
                 break;
             case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
-                text = "[Ctrl]로 장비교체 가능";
+                activeTimes[0] = 1f;
+                texts[0] = "[Ctrl]로 장비교체 가능";
                 break;
         }
-        HorrorManager.Instance.Active_InstructionUI(text);
+        HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
     }
 
     public void Type_Expenitem()

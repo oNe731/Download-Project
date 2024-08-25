@@ -69,7 +69,11 @@ namespace Horror
 
             if(empty == true)
             {
-                HorrorManager.Instance.Active_InstructionUI("탄창이 비어있다");
+                float[] activeTimes = new float[1];
+                string[] texts = new string[1];
+                activeTimes[0] = 1f;
+                texts[0] = "탄창이 비어있다";
+                HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
                 return;
             }
 

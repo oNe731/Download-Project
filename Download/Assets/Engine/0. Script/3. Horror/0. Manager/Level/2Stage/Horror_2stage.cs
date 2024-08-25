@@ -11,7 +11,7 @@ public class Horror_2stage : Horror_Base
         m_levelIndex = (int)HorrorManager.LEVEL.LV_2STAGE;
     }
 
-    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         return true;
     }

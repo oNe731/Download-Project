@@ -18,7 +18,7 @@ public class Horror_1stage_BigRoomIn : Area
     }
 
 
-    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         // 비밀번호 단서를 획득한 상태인가?
         Horror.Note note = HorrorManager.Instance.Player.Note;
@@ -34,7 +34,10 @@ public class Horror_1stage_BigRoomIn : Area
             }
         }
 
-        text = "비밀번호가 필요하다.";
+        activeTimes = new float[1];
+        texts = new string[1];
+        activeTimes[0] = 1f;
+        texts[0] = "비밀번호가 필요하다.";
         return false;
     }
 

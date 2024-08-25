@@ -102,15 +102,13 @@ public class HorrorManager : MonoBehaviour
         m_popupUI.GetComponent<UIPopup>().Initialize_UI(type, itemType);
     }
 
-    public void Active_InstructionUI(string text) // 안내 문구 출력
+    public void Active_InstructionUI(UIInstruction.ACTIVETYPE openType, UIInstruction.ACTIVETYPE closeType, float[] activeTimes, string[] texts) // 안내 문구 출력
     {
         if (m_instructionUI == null)
             m_instructionUI = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.GetChild(2));
         if (m_instructionUI == null)
             return;
 
-        UIInstruction.Expendables info = new UIInstruction.Expendables();
-        info.text = text;
-        m_instructionUI.GetComponent<UIInstruction>().Initialize_UI(info);
+        m_instructionUI.GetComponent<UIInstruction>().Initialize_UI(openType, closeType, activeTimes, texts);
     }
 }

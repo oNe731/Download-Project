@@ -15,7 +15,7 @@ public abstract class Horror_Base : Level
         base.Initialize_Level(levelController);
     }
 
-    public abstract bool Check_Clear(Interaction_Door interaction_Door, ref string text);
+    public abstract bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts);
 
     public override void Enter_Level()
     {

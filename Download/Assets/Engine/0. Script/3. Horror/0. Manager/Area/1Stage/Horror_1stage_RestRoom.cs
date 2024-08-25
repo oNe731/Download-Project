@@ -12,7 +12,7 @@ public class Horror_1stage_RestRoom : Area
     }
 
 
-    public override bool Check_Clear(Interaction_Door interaction_Door, ref string text)
+    public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         return true;
     }

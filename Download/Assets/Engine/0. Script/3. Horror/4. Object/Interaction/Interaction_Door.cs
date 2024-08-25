@@ -44,21 +44,21 @@ public class Interaction_Door : Interaction
     {
         // 해당 구역의 특정 조건 성립 시 문열림
         // 아닐 시 문구 출력
-        string text = "";
+        float[] activeTimes = new float[1];
+        string[] texts = new string[1];
 
         LevelController levelController = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Levels;
         if(levelController == null) // 본 스테이지 클리어 여부 판별
-            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref text);
+            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
         else                        // 세부 스테이지 클리어 여부 판별
-            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref text);
+            m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
 
         if (m_interact == true)
             Open_Door();
         else
         {
             // < 이 스크립트는 1.5초동안 유지된다. (페이드인X, 페이드 아웃 O)
-            // 해당 스크립트가 아직 사라지지 않았다면 다시 좌클릭을 해도 추가로 스크립트가 뜨지 않는다.
-            HorrorManager.Instance.Active_InstructionUI(text);
+            HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
         }
     }
 

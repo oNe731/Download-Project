@@ -58,6 +58,9 @@ public class CameraCutscene : CameraBase
 
     public override void Exit_Camera()
     {
+        if (m_mainCamera == null)
+            return;
+
         // √ ±‚»≠
         m_mainCamera.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
     }
