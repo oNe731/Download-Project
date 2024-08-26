@@ -3,6 +3,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     protected int m_levelIndex = -1;
+    protected bool m_IsVisit = false;
 
     protected LevelController m_levelController;
 
