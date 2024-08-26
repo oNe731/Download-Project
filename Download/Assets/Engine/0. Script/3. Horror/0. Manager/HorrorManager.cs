@@ -14,8 +14,8 @@ public class HorrorManager : MonoBehaviour
 
     private bool m_isGame = false;
     private HorrorPlayer m_player;
-    private GameObject m_popupUI = null;
-    private GameObject m_instructionUI = null;
+    private UIPopup m_popupUI = null;
+    private UIInstruction m_instructionUI = null;
     private Dictionary<string, Sprite> m_noteElementIcon = new Dictionary<string, Sprite>();
 
     public static HorrorManager Instance => m_instance;
@@ -23,6 +23,7 @@ public class HorrorManager : MonoBehaviour
     public bool IsGame => m_isGame;
     public HorrorPlayer Player => m_player;
     public Dictionary<string, Sprite> NoteElementIcon => m_noteElementIcon;
+    public UIInstruction InstructionUI => m_instructionUI;
 
     private void Awake()
     {
@@ -54,6 +55,24 @@ public class HorrorManager : MonoBehaviour
         m_noteElementIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
 
         m_noteElementIcon.Add("Icon_None", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_None"));
+
+        // 사용할 UI 생성
+        if (m_popupUI == null)
+        {
+            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+            if (gameObject == null)
+                return;
+            m_popupUI = gameObject.GetComponent<UIPopup>();
+            m_popupUI.gameObject.SetActive(false);
+        }
+        if (m_instructionUI == null)
+        {
+            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.GetChild(2));
+            if (gameObject == null)
+                return;
+            m_instructionUI = gameObject.GetComponent<UIInstruction>();
+            m_instructionUI.gameObject.SetActive(false);
+        }
     }
 
     private void Start()
@@ -76,7 +95,7 @@ public class HorrorManager : MonoBehaviour
             return;
         GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
         CameraFollow camera = (CameraFollow)GameManager.Instance.Camera.Get_CurCamera();
-        camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
+        camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
     }
 
     public void Set_Pause(bool pause)
@@ -100,20 +119,16 @@ public class HorrorManager : MonoBehaviour
     public void Active_Popup(UIPopup.TYPE type, NoteItem itemType)
     {
         if (m_popupUI == null)
-            m_popupUI = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
-        if (m_popupUI == null)
             return;
 
-        m_popupUI.GetComponent<UIPopup>().Initialize_UI(type, itemType);
+        m_popupUI.Initialize_UI(type, itemType);
     }
 
     public void Active_InstructionUI(UIInstruction.ACTIVETYPE openType, UIInstruction.ACTIVETYPE closeType, float[] activeTimes, string[] texts) // 안내 문구 출력
     {
         if (m_instructionUI == null)
-            m_instructionUI = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.GetChild(2));
-        if (m_instructionUI == null)
             return;
 
-        m_instructionUI.GetComponent<UIInstruction>().Initialize_UI(openType, closeType, activeTimes, texts);
+        m_instructionUI.Initialize_UI(openType, closeType, activeTimes, texts);
     }
 }

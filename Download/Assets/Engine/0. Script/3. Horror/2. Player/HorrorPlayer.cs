@@ -85,6 +85,10 @@ namespace Horror
             m_staminaSlider.maxValue = m_staminaMax;
             Set_Stamina(0);
 
+            // Weapon
+            m_weaponManagement = new WeaponManagement<HorrorPlayer>(gameObject);
+            m_weaponManagement.Initialize_WeaponManagement();
+
             // State
             m_stateMachine = new StateMachine<HorrorPlayer>(gameObject);
 
@@ -95,10 +99,6 @@ namespace Horror
             states.Add(new HorrorPlayer_Attack(m_stateMachine)); // 3
 
             m_stateMachine.Initialize_State(states, (int)State.ST_IDLE);
-
-            // Weapon
-            m_weaponManagement = new WeaponManagement<HorrorPlayer>(gameObject);
-            m_weaponManagement.Initialize_WeaponManagement();
         }
 
         public void Update()

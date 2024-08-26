@@ -20,6 +20,10 @@ public class UIInstruction : MonoBehaviour
 
     private Coroutine m_fadeCoroutine = null;
 
+    public bool Active => m_active;
+    public bool Finish => m_finish;
+    public string[] Texts => m_texts;
+
     public void Initialize_UI(ACTIVETYPE openType, ACTIVETYPE closeType, float[] activeTimes, string[] texts)
     {
         if (m_fadeCoroutine != null)
@@ -86,7 +90,7 @@ public class UIInstruction : MonoBehaviour
 
     private IEnumerator Fade_Color(float startAlpha, float targetAlpha, float duration)
     {
-        Color startColor = new Color(m_txt.color.r, m_txt.color.g, m_txt.color.b, startAlpha);
+        Color startColor  = new Color(m_txt.color.r, m_txt.color.g, m_txt.color.b, startAlpha);
         Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
         float currentTime = 0f;
@@ -102,9 +106,13 @@ public class UIInstruction : MonoBehaviour
         m_txt.color = targetColor;
 
         if(targetAlpha == 0f)
+        {
             gameObject.SetActive(false);
+        }
         else
+        {
             m_active = true;
+        }
 
         yield break;
     }

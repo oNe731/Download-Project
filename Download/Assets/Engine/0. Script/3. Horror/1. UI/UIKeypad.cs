@@ -45,7 +45,7 @@ public class UIKeypad : MonoBehaviour
         HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
     }
 
-    private void OnDisable_Keypad() // 비활성화될 때
+    public void OnDisable_Keypad() // 비활성화될 때
     {
         gameObject.SetActive(false);
         HorrorManager.Instance.Set_Pause(false); // 게임 일시정지
@@ -133,7 +133,7 @@ public class UIKeypad : MonoBehaviour
 
         // 1인칭 플레이 화면으로 전환 후 문이 열린다.
         OnDisable_Keypad();
-        m_interactionDoor.Open_Door();
+        m_interactionDoor.Move_Door();
         Destroy(gameObject);
 
         yield break;

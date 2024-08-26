@@ -9,6 +9,7 @@ namespace Horror
         [SerializeField] private NoteItem m_noteItem;
         public NoteItem NoteItem { set => m_noteItem = value; }
         
+
         private void Start()
         {
             GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform.GetChild(0), m_uiOffset);

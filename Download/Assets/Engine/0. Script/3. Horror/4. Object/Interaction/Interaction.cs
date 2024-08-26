@@ -4,17 +4,20 @@ using UnityEngine;
 
 public abstract class Interaction : MonoBehaviour
 {
-    [SerializeField] protected Vector3 m_uiOffset;
 
+    [SerializeField] protected Vector3 m_uiOffset; // UI 위치 오프셋
     protected UIWorldHint m_interactionUI = null;
 
-    protected bool m_interact = false;
-    protected float m_InteractionDist = 2f;
+    [SerializeField] protected bool m_possible; // UI 활성화 가능 여부
+    protected bool  m_interact = false;         // 상호작용 가능 여부
+    // protected float m_InteractionDist = 2f;
 
     public UIWorldHint InteractionUI => m_interactionUI;
+    public bool Possible => m_possible;
 
     public abstract void Click_Interaction();
 
+    /*
     protected void Update_InteractionUI()
     {
         if (m_interactionUI == null || m_interact == true)
@@ -53,6 +56,7 @@ public abstract class Interaction : MonoBehaviour
         Gizmos.DrawWireSphere(transform.GetChild(0).transform.position, m_InteractionDist);
 #endif
     }
+    */
 
     protected void Destroy_Interaction()
     {

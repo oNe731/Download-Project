@@ -31,8 +31,6 @@ public class CameraFollow : CameraBase
 
     public override void Update_Camera()
     {
-        base.Update_Camera();
-
         // ¿Ãµø
         if(m_isPosition == false)
         {
@@ -64,6 +62,8 @@ public class CameraFollow : CameraBase
 
             m_mainCamera.transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
         }
+
+        base.Update_Camera();
     }
 
     public override void Exit_Camera()

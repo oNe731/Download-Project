@@ -8,10 +8,18 @@ public class Interaction_Door : Interaction
     public enum EVENTTYPE { ET_NONE, ET_CLEAR, ET_EVENT, ET_END };
 
     [SerializeField] private int m_doorIndex;
+
+    [SerializeField] private bool m_isOpen;
+
     [SerializeField] private OPENTYPE  m_openType;
     [SerializeField] private EVENTTYPE m_eventType;
-    [SerializeField] private Vector3 m_openOffset; // y 150
+
+    [SerializeField] private Vector3[] m_openOffset;
+    [SerializeField] private Vector3[] m_closeOffset;
     [SerializeField] private float m_duration = 2f;
+
+    //[SerializeField] private Portal m_portal;
+
     public int DoorIndex => m_doorIndex;
 
     private void Start()
@@ -33,7 +41,7 @@ public class Interaction_Door : Interaction
         switch (m_eventType)
         {
             case EVENTTYPE.ET_NONE:
-                Open_Door();
+                Move_Door();
                 break;
 
             case EVENTTYPE.ET_CLEAR:
@@ -41,7 +49,7 @@ public class Interaction_Door : Interaction
                 break;
 
             case EVENTTYPE.ET_EVENT:
-                Open_Door();
+                Move_Door();
                 Check_Event();
                 break;
         }
@@ -61,7 +69,7 @@ public class Interaction_Door : Interaction
             m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
 
         if (m_interact == true)
-            Open_Door();
+            Move_Door();
         else
             HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
     }
@@ -74,16 +82,18 @@ public class Interaction_Door : Interaction
         Debug.Log("문 열고 이벤트 발생 판별");
     }
 
-    public void Open_Door()
+    public void Move_Door(bool delete = true)
     {
-        Destroy(m_interactionUI.gameObject);
+        if(delete == true)
+            Destroy(m_interactionUI.gameObject);
 
         switch(m_openType)
         {
             case OPENTYPE.OT_BASICONE:
-                StartCoroutine(Open_OneMove());
+                StartCoroutine(Move_OneMove());
                 break;
             case OPENTYPE.OT_BASICTWO:
+                StartCoroutine(Move_TwoMove());
                 break;
             case OPENTYPE.OT_ANIMATION:
                 Open_Animation();
@@ -91,11 +101,16 @@ public class Interaction_Door : Interaction
         }
     }
 
-    private IEnumerator Open_OneMove()
+    private IEnumerator Move_OneMove()
     {
         Quaternion startRotation = transform.rotation;
-        Quaternion endRotation   = startRotation * Quaternion.Euler(m_openOffset.x, m_openOffset.y, m_openOffset.z);
-        
+
+        Quaternion endRotation;
+        if(m_isOpen == false)
+            endRotation = startRotation * Quaternion.Euler(m_openOffset[0].x, m_openOffset[0].y, m_openOffset[0].z);
+        else
+            endRotation = startRotation * Quaternion.Euler(m_closeOffset[0].x, m_closeOffset[0].y, m_closeOffset[0].z);
+
         float elapsedTime = 0;
         while (elapsedTime < m_duration)
         {
@@ -106,6 +121,55 @@ public class Interaction_Door : Interaction
         }
 
         transform.rotation = endRotation;
+
+        if (m_isOpen == true)
+        {
+            m_isOpen = false;
+            m_possible = !m_possible;
+        }
+
+        yield break;
+    }
+
+    private IEnumerator Move_TwoMove()
+    {
+        Transform leftDoor = transform.GetChild(1);
+        Transform rightDoor = transform.GetChild(2);
+
+        Quaternion startRotation_1 = leftDoor.rotation;
+        Quaternion endRotation_1; 
+        if(m_isOpen == false)
+            endRotation_1 = startRotation_1 * Quaternion.Euler(m_openOffset[0].x, m_openOffset[0].y, m_openOffset[0].z);
+        else
+            endRotation_1 = startRotation_1 * Quaternion.Euler(m_closeOffset[0].x, m_closeOffset[0].y, m_closeOffset[0].z);
+
+        Quaternion startRotation_2 = rightDoor.rotation;
+        Quaternion endRotation_2;
+        if (m_isOpen == false)
+            endRotation_2 = startRotation_2 * Quaternion.Euler(m_openOffset[1].x, m_openOffset[1].y, m_openOffset[1].z);
+        else
+            endRotation_2 = startRotation_2 * Quaternion.Euler(m_closeOffset[1].x, m_closeOffset[1].y, m_closeOffset[1].z);
+
+        float elapsedTime = 0;
+        while (elapsedTime < m_duration)
+        {
+            leftDoor.rotation = Quaternion.Lerp(startRotation_1, endRotation_1, elapsedTime / m_duration);
+            rightDoor.rotation = Quaternion.Lerp(startRotation_2, endRotation_2, elapsedTime / m_duration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        leftDoor.rotation = endRotation_1;
+        rightDoor.rotation = endRotation_2;
+
+        if (m_isOpen == true)
+        {
+            m_isOpen = false;
+            m_possible = !m_possible;
+        }
+
+        yield break;
     }
 
     private void Open_Animation()
