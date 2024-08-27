@@ -92,6 +92,13 @@ public class VisualNovelManager : MonoBehaviour
     private void Update()
     {
         m_levelController.Update_Level();
+
+//#if UNITY_EDITOR 임시
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => GameManager.Instance.Change_Scene("Window"), 1f, false);
+        }
+//# endif
     }
 
     private void Create_NpcHeart()
@@ -113,15 +120,15 @@ public class VisualNovelManager : MonoBehaviour
         m_backgroundSpr.Add("BackGround_Cellar",      Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Cellar"));
         
         // 스탠딩 이미지 할당
-        m_standingSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Blue"));
-        m_standingSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Pink"));
-        m_standingSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Standing/Yellow"));
+        m_standingSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Blue/Sprite3"));
+        m_standingSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Yellow/Sprite1"));
+        m_standingSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Pink/Sprite2"));
 
         // 프로필 이미지 할당
-        m_portraitSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Blue"));
-        m_portraitSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Pink"));
-        m_portraitSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/Yellow"));
-        m_portraitSpr.Add("White",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Portrait/White"));
+        m_portraitSpr.Add("Blue",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Blue/Sprite3_crop"));
+        m_portraitSpr.Add("Yellow", Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Yellow/Sprite1_crop"));
+        m_portraitSpr.Add("Pink",   Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Pink/Sprite2_crop"));
+        m_portraitSpr.Add("White",  Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/White/Sprite4_crop"));
 
         // 박스 이미지 할당
         m_boxISpr.Add("UI_VisualNovel_Blue_ChatBox",        Resources.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Box/ChatBox/UI_VisualNovel_Blue_ChatBox"));
