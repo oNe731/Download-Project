@@ -11,6 +11,7 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
     protected NoteItem m_itemInfo = new NoteItem();
 
     protected Animator m_animator;
+    protected AudioSource m_audioSource;
 
     public NoteItem ItemInfo { get => m_itemInfo; }
 
@@ -24,6 +25,8 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
 
         m_animator = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
         gameObject.SetActive(false);
+
+        m_audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public virtual void Enter_Weapon()

@@ -14,12 +14,16 @@ public class GameManager : MonoBehaviour
 
     private string m_playerName = "ÀÌ¸§";
 
+    private AudioSource m_audioSource;
+
     public static GameManager Instance => m_instance;
     public CameraManager Camera => m_cameraManager;
     public UIManager UI => m_uIManager;
-    public SoundManager m_Sound => m_soundManager;
+    public SoundManager Sound => m_soundManager;
 
     public string PlayerName => m_playerName;
+
+    public AudioSource AudioSource => m_audioSource;
 
 
     private void Awake()
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour
             m_uIManager     = gameObject.AddComponent<UIManager>();
             m_soundManager  = gameObject.AddComponent<SoundManager>();
             gameObject.AddComponent<FPS>();
+
+            m_audioSource = GetComponent<AudioSource>();
 
             DontDestroyOnLoad(this.gameObject);
         }

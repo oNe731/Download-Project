@@ -18,6 +18,7 @@ namespace Horror
         public override void Enter_Weapon()
         {
             base.Enter_Weapon();
+            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Handlight_Install", false, 1f);
         }
 
         public override void Update_Weapon()

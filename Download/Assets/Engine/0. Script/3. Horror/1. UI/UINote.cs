@@ -80,10 +80,10 @@ namespace Horror
 
         IEnumerator Move_Note(Vector3 startPosition, Vector3 targetPosition, float duration, bool open)
         {
+            GameManager.Instance.Sound.Play_ManagerAudioSource("Horror_OpenNote", false, 1f);
             if (open == true)
             {
                 HorrorManager.Instance.Set_Pause(true);
-
                 Button_Item();
 
                 transform.GetChild(0).gameObject.SetActive(true);

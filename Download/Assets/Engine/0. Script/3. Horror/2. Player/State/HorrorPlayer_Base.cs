@@ -23,6 +23,7 @@ namespace Horror
         protected Transform m_rotationTransform;
         protected Rigidbody m_rigidbody;
         protected Animator m_animator;
+        protected AudioSource m_audioSource;
 
         protected bool m_conversion = false;
         protected string m_triggerName = "";
@@ -32,6 +33,7 @@ namespace Horror
         {
             m_transform = m_stateMachine.Owner.GetComponent<Transform>();
             m_rigidbody = m_stateMachine.Owner.GetComponent<Rigidbody>();
+            m_audioSource = m_stateMachine.Owner.GetComponent<AudioSource>();
             m_player = m_stateMachine.Owner.GetComponent<HorrorPlayer>();
 
             m_rotationTransform = m_transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform;
@@ -180,7 +182,10 @@ namespace Horror
 
             // 상호작용
             if (Input.GetKeyDown(KeyCode.F))
+            {
+                GameManager.Instance.Sound.Play_ManagerAudioSource("Horror_ClickInteraction", false, 1f);
                 interaction.Click_Interaction();
+            }
         }
 
         private void Reset_Interaction()

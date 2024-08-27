@@ -28,6 +28,8 @@ public class UIPopup : MonoBehaviour
 
     public void Button_Acquire()
     {
+        GameManager.Instance.Sound.Play_ManagerAudioSource("Horror_GetItem", false, 1f);
+
         switch (m_type)
         {
             case TYPE.T_QUESTITEM: // 퀘스트 조합 아이템

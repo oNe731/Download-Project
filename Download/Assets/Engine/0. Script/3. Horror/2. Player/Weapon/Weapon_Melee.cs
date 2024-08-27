@@ -22,6 +22,7 @@ namespace Horror
         public override void Enter_Weapon()
         {
             base.Enter_Weapon();
+            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Bbaru_Install", false, 1f);
         }
 
         public override void Update_Weapon()
@@ -36,6 +37,8 @@ namespace Horror
 
         public override bool Attack_Weapon()
         {
+            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Bbaru_Attack", false, 1f);
+
             // 박스 콜라이더의 중심과 크기
             Vector3 center      = m_attackCollider.bounds.center;
             Vector3 halfExtents = m_attackCollider.bounds.extents;
@@ -48,6 +51,7 @@ namespace Horror
                 Monster monster = hitCollider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
                 if (monster == null)
                     return true;
+                GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Bbaru_Damaged", false, 1f);
                 monster.Damage_Monster(m_damage);
                 return true;
             }

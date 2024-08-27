@@ -13,9 +13,10 @@ namespace Horror
         public override void Enter_State()
         {
             //Debug.Log("뛰기 상태로 전환");
-            m_moveSpeed = 700f;
+            m_moveSpeed = 400f;
 
             Change_Animation("Walk");
+            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Player_Walk", true, 1.8f);
         }
 
         public override void Update_State()
@@ -51,6 +52,7 @@ namespace Horror
         public override void Exit_State()
         {
             Reset_Animation();
+            GameManager.Instance.Sound.Stop_AudioSource(ref m_audioSource);
         }
     }
 }
