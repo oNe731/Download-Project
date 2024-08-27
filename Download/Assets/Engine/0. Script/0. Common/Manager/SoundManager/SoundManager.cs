@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour
 
         // ¹«±â
         m_effect.Add("Horror_Weapon_Bbaru_Install", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Bbaru/Bbaru_Install/Stick_Wearing"));
-        m_effect.Add("Horror_Weapon_Bbaru_Attack", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Bbaru/Bbaru_Attack/Stick_Swing_1"));
+        m_effect.Add("Horror_Weapon_Bbaru_Attack", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Bbaru/Bbaru_Attack/Stick_Swing_2"));
         m_effect.Add("Horror_Weapon_Bbaru_Damaged", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Bbaru/Bbaru_Damaged/Stick_Attack_1"));
 
         m_effect.Add("Horror_Weapon_Gun_Install", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Gun/Gun_Install/Gun_Wearing"));

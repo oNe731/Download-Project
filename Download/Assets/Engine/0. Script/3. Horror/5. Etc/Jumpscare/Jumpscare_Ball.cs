@@ -11,6 +11,7 @@ public class Jumpscare_Ball : Jumpscare
           화살표는 마지막에 공이 멈추는 거리?움직임 까지 고려한 범위입니다.  
           멈춘 공은 그 자리에 그대로 있습니다.* 공 튀기는 소리 사운드 O
         */
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void Start()
