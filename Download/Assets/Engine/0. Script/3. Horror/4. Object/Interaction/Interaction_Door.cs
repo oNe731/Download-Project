@@ -16,7 +16,8 @@ public class Interaction_Door : Interaction
 
     [SerializeField] private Vector3[] m_openOffset;
     [SerializeField] private Vector3[] m_closeOffset;
-    [SerializeField] private float m_duration = 2f;
+    [SerializeField] private float m_openDuration = 2f;
+    [SerializeField] private float m_closeDuration = 2f;
 
     //[SerializeField] private Portal m_portal;
 
@@ -103,18 +104,26 @@ public class Interaction_Door : Interaction
 
     private IEnumerator Move_OneMove()
     {
+        float duration;
+
         Quaternion startRotation = transform.rotation;
 
         Quaternion endRotation;
-        if(m_isOpen == false)
+        if(m_isOpen == false) // ¥›«Ù¿÷¿Ω.
+        {
+            duration = m_openDuration;
             endRotation = startRotation * Quaternion.Euler(m_openOffset[0].x, m_openOffset[0].y, m_openOffset[0].z);
+        }
         else
+        {
+            duration = m_closeDuration;
             endRotation = startRotation * Quaternion.Euler(m_closeOffset[0].x, m_closeOffset[0].y, m_closeOffset[0].z);
+        }
 
         float elapsedTime = 0;
-        while (elapsedTime < m_duration)
+        while (elapsedTime < duration)
         {
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsedTime / m_duration);
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
 
             yield return null;
@@ -133,15 +142,23 @@ public class Interaction_Door : Interaction
 
     private IEnumerator Move_TwoMove()
     {
+        float duration;
+
         Transform leftDoor = transform.GetChild(1);
         Transform rightDoor = transform.GetChild(2);
 
         Quaternion startRotation_1 = leftDoor.rotation;
         Quaternion endRotation_1; 
         if(m_isOpen == false)
+        {
+            duration = m_openDuration;
             endRotation_1 = startRotation_1 * Quaternion.Euler(m_openOffset[0].x, m_openOffset[0].y, m_openOffset[0].z);
+        }
         else
+        {
+            duration = m_closeDuration;
             endRotation_1 = startRotation_1 * Quaternion.Euler(m_closeOffset[0].x, m_closeOffset[0].y, m_closeOffset[0].z);
+        }
 
         Quaternion startRotation_2 = rightDoor.rotation;
         Quaternion endRotation_2;
@@ -151,10 +168,10 @@ public class Interaction_Door : Interaction
             endRotation_2 = startRotation_2 * Quaternion.Euler(m_closeOffset[1].x, m_closeOffset[1].y, m_closeOffset[1].z);
 
         float elapsedTime = 0;
-        while (elapsedTime < m_duration)
+        while (elapsedTime < duration)
         {
-            leftDoor.rotation = Quaternion.Lerp(startRotation_1, endRotation_1, elapsedTime / m_duration);
-            rightDoor.rotation = Quaternion.Lerp(startRotation_2, endRotation_2, elapsedTime / m_duration);
+            leftDoor.rotation = Quaternion.Lerp(startRotation_1, endRotation_1, elapsedTime / duration);
+            rightDoor.rotation = Quaternion.Lerp(startRotation_2, endRotation_2, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
 
             yield return null;
