@@ -23,7 +23,9 @@ public class Straitjacket_Idle : Straitjacket_Base
 
     public override void Update_State()
     {
-        if(Change_Attack() == false)
+        Play_Sound(3f, 5f);
+
+        if (Change_Attack() == false)
         {
             if(Change_Run() == false)
             {

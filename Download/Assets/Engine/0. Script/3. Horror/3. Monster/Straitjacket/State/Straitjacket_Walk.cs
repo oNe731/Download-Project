@@ -26,6 +26,8 @@ public class Straitjacket_Walk : Straitjacket_Base
 
     public override void Update_State()
     {
+        Play_Sound(2f, 4f);
+
         if (Change_Attack() == false)
         {
             if (Change_Run() == false)

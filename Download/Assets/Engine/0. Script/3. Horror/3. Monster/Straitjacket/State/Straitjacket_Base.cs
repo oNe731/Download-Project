@@ -7,12 +7,16 @@ public class Straitjacket_Base : State<Monster>
     protected Straitjacket m_owner  = null;
     protected Animator  m_animator  = null;
     protected Rigidbody m_rigidbody = null;
+    protected AudioSource m_audioSource = null;
 
     protected Vector3 m_moveDirection;
     protected float   m_speed = 5f;
 
     protected float m_chaseDist  = 5f;
     protected float m_attackDist = 2.5f;
+
+    private float m_soundTime = 0f;
+    private float m_nextTime = 0f;
 
     public Straitjacket_Base(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
@@ -22,6 +26,8 @@ public class Straitjacket_Base : State<Monster>
         m_rigidbody = m_owner.gameObject.GetComponent<Rigidbody>();
         m_rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         m_rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+
+        m_audioSource = m_owner.gameObject.GetComponent<AudioSource>();
     }
 
     public override void Enter_State()
@@ -107,5 +113,18 @@ public class Straitjacket_Base : State<Monster>
             return true;
 
         return false;
+    }
+
+    protected void Play_Sound(float min, float max)
+    {
+        if(m_soundTime == 0f)
+            m_nextTime = Random.Range(min, max);
+
+        m_soundTime += Time.deltaTime;
+        if(m_soundTime >= m_nextTime)
+        {
+            m_soundTime = 0f;    
+            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
+        }
     }
 }

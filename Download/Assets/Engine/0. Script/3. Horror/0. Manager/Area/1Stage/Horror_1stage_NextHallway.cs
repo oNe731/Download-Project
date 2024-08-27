@@ -6,6 +6,7 @@ public class Horror_1stage_NextHallway : Area
 {
     [SerializeField] private Dummy m_dummy;
     [SerializeField] private GameObject m_monsterTriger;
+    [SerializeField] private GameObject m_soundTriger;
     private bool m_event = false;
 
     public override void Initialize_Level(LevelController levelController)
@@ -95,6 +96,8 @@ public class Horror_1stage_NextHallway : Area
         }
         #endregion
 
+        m_dummy.Fall_Dummy(); // 더미 오브젝트 이벤트 발생.
+
 #region 카메라 쉐이킹        
         HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
 
@@ -109,13 +112,13 @@ public class Horror_1stage_NextHallway : Area
         }
         
         HorrorManager.Instance.Set_Pause(false); // 게임 일시정지 해제
-        #endregion
-
-        m_dummy.Fall_Dummy(); // 더미 오브젝트 이벤트 발생.
+#endregion
 
 #region 몹 생성 (구속복/ 애벌레)
         m_monsterTriger.SetActive(true);
 #endregion
+
+        m_soundTriger.SetActive(true);
 
 #region 맵 요소 생성 및 변경 (추후 작업)
         // 분홍색 벽 부분에 피로 적힌 글씨가 생긴다.

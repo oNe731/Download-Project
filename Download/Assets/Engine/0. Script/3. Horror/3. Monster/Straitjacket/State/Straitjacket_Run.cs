@@ -24,6 +24,8 @@ public class Straitjacket_Run : Straitjacket_Base
 
     public override void Update_State()
     {
+        Play_Sound(1f, 3f);
+
         if (Change_Attack() == false)
         {
             m_agent.destination = HorrorManager.Instance.Player.transform.position;

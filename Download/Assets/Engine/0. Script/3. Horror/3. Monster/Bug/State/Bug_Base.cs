@@ -7,11 +7,13 @@ public class Bug_Base : State<Monster>
     protected Bug m_owner = null;
     protected float m_chaseDist = 3f;
     protected Animator m_animator = null;
+    protected AudioSource m_audioSource = null;
 
     public Bug_Base(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
         m_owner    = m_stateMachine.Owner.GetComponent<Bug>();
         m_animator = m_owner.Animator;
+        m_audioSource = m_stateMachine.Owner.GetComponent<AudioSource>();
     }
 
     public override void Enter_State()

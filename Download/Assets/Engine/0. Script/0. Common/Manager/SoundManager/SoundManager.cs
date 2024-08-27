@@ -35,8 +35,21 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("Horror_OpenNote", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Etc/OpenNote/BookUI_Open"));
         #endregion
 
+        #region 몬스터
+        m_effect.Add("Horror_Bug_Fly", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Bug/Worm_Flight"));
+        m_effect.Add("Horror_Straitjacket_Idle", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Straitjacket/Zombie_Notice_3"));
+        #endregion
+
         #region 오브젝트
         m_effect.Add("Horror_Open_Door", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Object/Door/Open_Door"));
+
+        m_effect.Add("Horror_Dummy1", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Object/Dummy/Delete_Varigite_1"));
+        m_effect.Add("Horror_Dummy2", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Object/Dummy/Delete_Varigite_2"));
+        #endregion
+
+        #region 기타
+        m_effect.Add("FirstHallway", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Etc/FirstHallway/First_Hallway_1"));
+        m_effect.Add("DummyHallway", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Etc/DummyHallway/Delete_Varigite_Hallway"));
         #endregion
 
         #endregion

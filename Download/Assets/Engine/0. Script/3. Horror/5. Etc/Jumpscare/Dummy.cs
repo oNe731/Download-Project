@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Dummy : MonoBehaviour
 {
-    private AudioSource m_audioSource;
+    private AudioSource[] m_audioSources;
 
     private void Start()
     {
-        m_audioSource = GetComponent<AudioSource>();
+        m_audioSources = GetComponents<AudioSource>();
     }
 
     public void Fall_Dummy()
@@ -24,5 +24,23 @@ public class Dummy : MonoBehaviour
         //    animator.SetBool("", true);
 
         // 무언가 부서지는 소리 및 발자국 소리가 들린다.
+        StartCoroutine(Play_Sound());
+    }
+
+    private IEnumerator Play_Sound()
+    {
+        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSources[0], "Horror_Dummy1", false, 1f);
+
+        float time = 0;
+        while(true)
+        {
+            time += Time.deltaTime;
+            if (time >= 1f)
+                break;
+            yield return null;
+        }
+
+        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSources[1], "Horror_Dummy2", false, 1f);
+        yield break;
     }
 }
