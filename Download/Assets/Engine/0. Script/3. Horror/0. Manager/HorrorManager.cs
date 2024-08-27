@@ -52,7 +52,9 @@ public class HorrorManager : MonoBehaviour
         m_noteElementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
         m_noteElementIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
         m_noteElementIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
+
         m_noteElementIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
+        m_noteElementIcon.Add("Icon_A306File", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
 
         m_noteElementIcon.Add("Icon_None", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_None"));
 

@@ -38,6 +38,7 @@ namespace Horror
         public override void Enter_Weapon()
         {
             base.Enter_Weapon();
+            m_uiAim.SetActive(true);
             GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Install", false, 1f);
         }
 
@@ -49,6 +50,7 @@ namespace Horror
         public override void Exit_Weapon()
         {
             base.Exit_Weapon();
+            m_uiAim.SetActive(false);
         }
 
         public override bool Attack_Weapon()
