@@ -84,22 +84,7 @@ public class UIPopup : MonoBehaviour
     public void Type_Weapon()
     {
         // 아이템 추가
-        string path = "";
-        switch (m_itemInfo.m_itemType)
-        {
-            case NoteItem.ITEMTYPE.TYPE_PIPE:
-                path = "5. Prefab/3. Horror/Character/Weapon/Melee";
-                break;
-            case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
-                path = "5. Prefab/3. Horror/Character/Weapon/Flashlight";
-                break;
-            case NoteItem.ITEMTYPE.TYPE_GUN:
-                path = "5. Prefab/3. Horror/Character/Weapon/Gun";
-                break;
-        }
-        Weapon<HorrorPlayer> weapon = GameManager.Instance.Create_GameObject(path, HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0)).GetComponent<Weapon<HorrorPlayer>>();
-        weapon.ItemInfo = m_itemInfo;
-        HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(weapon);
+        HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(m_itemInfo);
 
         // 문구 출력
         float[] activeTimes = new float[1];

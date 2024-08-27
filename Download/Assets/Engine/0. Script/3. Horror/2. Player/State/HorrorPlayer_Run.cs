@@ -14,11 +14,16 @@ namespace Horror
         {
             //Debug.Log("뛰기 상태로 전환");
             m_moveSpeed = 700f;
+
+            Change_Animation("Walk");
         }
 
         public override void Update_State()
         {
             base.Update_State();
+
+            if (m_animator.gameObject.activeSelf == true && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
+                Reset_Animation();
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -28,8 +33,8 @@ namespace Horror
             {
                 Input_Weapon();
                 Input_Interaction();
-                if (Input_Move())
-                {
+                if (Input_Move() == true)
+                { 
                     m_player.Set_Stamina(-1f * Time.deltaTime); // 스테미나 사용
                     if (m_player.Stamina <= 0 || Input.GetKey(KeyCode.Space) == false)
                     {
@@ -45,6 +50,7 @@ namespace Horror
 
         public override void Exit_State()
         {
+            Reset_Animation();
         }
     }
 }

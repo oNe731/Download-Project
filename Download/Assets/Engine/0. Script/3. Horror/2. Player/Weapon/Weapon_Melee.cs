@@ -8,15 +8,15 @@ namespace Horror
     {
         private BoxCollider m_attackCollider = null;
 
-        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
+        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, NoteItem noteItem, UIWeapon uIWeapon)
         {
-            base.Initialize_Weapon(weaponManagement, uIWeapon);
+            base.Initialize_Weapon(weaponManagement, noteItem, uIWeapon);
 
             m_damage = 1f;
             transform.localPosition = new Vector3(0f, 0f, 0f);
             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
-            m_attackCollider = gameObject.transform.GetChild(1).GetComponent<BoxCollider>();
+            m_attackCollider = gameObject.transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
         }
 
         public override void Enter_Weapon()
@@ -34,10 +34,8 @@ namespace Horror
             base.Exit_Weapon();
         }
 
-        public override void Attack_Weapon()
+        public override bool Attack_Weapon()
         {
-            Debug.Log("근접공격");
-
             // 박스 콜라이더의 중심과 크기
             Vector3 center      = m_attackCollider.bounds.center;
             Vector3 halfExtents = m_attackCollider.bounds.extents;
@@ -46,13 +44,15 @@ namespace Horror
             Collider[] hitColliders = Physics.OverlapBox(center, halfExtents, Quaternion.identity, 1 << LayerMask.NameToLayer("Monster"));
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.parent.parent.gameObject.name}");
-
+                // Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.parent.parent.gameObject.name}");
                 Monster monster = hitCollider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
                 if (monster == null)
-                    return;
+                    return true;
                 monster.Damage_Monster(m_damage);
+                return true;
             }
+
+            return true;
         }
     }
 }

@@ -13,14 +13,18 @@ namespace Horror
         public override void Enter_State()
         {
             //Debug.Log("걷기 상태로 전환");
-
-            Check_Stemina();
+            Check_Stamina();
             m_moveSpeed = 400f;
+
+            Change_Animation("Walk");
         }
 
         public override void Update_State()
         {
             base.Update_State();
+
+            if (m_animator.gameObject.activeSelf == true && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
+                Reset_Animation();
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -30,13 +34,13 @@ namespace Horror
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_RUN);
             }
-            else if(Input_Move() == false)
+            else if(Input_Move() == false) // 이동 입력 값이 없을 때
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_IDLE);
             }
             else
             {
-                Recover_Stemina();
+                Recover_Stamina();
                 Input_Weapon();
                 Input_Interaction();
             }
@@ -44,6 +48,7 @@ namespace Horror
 
         public override void Exit_State()
         {
+            Reset_Animation();
         }
     }
 }

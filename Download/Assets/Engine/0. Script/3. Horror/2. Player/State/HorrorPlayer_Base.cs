@@ -17,17 +17,25 @@ namespace Horror
         protected bool m_isLock = false;
         protected bool m_recoverStamina = false;
 
+        protected NoteItem m_noteItem = null;
+
         protected Transform m_transform;
         protected Transform m_rotationTransform;
         protected Rigidbody m_rigidbody;
+        protected Animator m_animator;
+
+        protected bool m_conversion = false;
+        protected string m_triggerName = "";
+        protected Vector3 m_prePosition;
 
         public HorrorPlayer_Base(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
             m_transform = m_stateMachine.Owner.GetComponent<Transform>();
-            m_rotationTransform = m_transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform;
             m_rigidbody = m_stateMachine.Owner.GetComponent<Rigidbody>();
-
             m_player = m_stateMachine.Owner.GetComponent<HorrorPlayer>();
+
+            m_rotationTransform = m_transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform;
+            m_animator = m_transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
         }
 
         public override void Enter_State()
@@ -131,7 +139,16 @@ namespace Horror
            Interaction interaction = interactionHit.collider.gameObject.transform.GetComponent<Interaction>();
             if (interaction == null)
                 interaction = interactionHit.collider.gameObject.transform.parent.GetComponent<Interaction>();
+            if (interaction == null) // 문 2개 타입
+                interaction = interactionHit.collider.gameObject.transform.parent.parent.GetComponent<Interaction>();
             if (interaction == null)
+            {
+                Reset_Interaction();
+                return;
+            }
+
+            // 상호작용 가능 상태인가
+            if(interaction.Possible == false)
             {
                 Reset_Interaction();
                 return;
@@ -175,7 +192,7 @@ namespace Horror
             m_interactionUI = null;
         }
 
-        protected void Check_Stemina()
+        protected void Check_Stamina()
         {
             if (m_player.Stamina < m_player.StaminaMax)
                 m_recoverStamina = true;
@@ -183,7 +200,7 @@ namespace Horror
                 m_recoverStamina = false;
         }
 
-        protected void Recover_Stemina()
+        protected void Recover_Stamina()
         {
             if (m_recoverStamina == false)
                 return;
@@ -196,6 +213,52 @@ namespace Horror
             m_isLock = isLock;
             if (isLock)
                 m_rigidbody.isKinematic = true;
+        }
+
+        protected void Change_Animation(string stateName)
+        {
+            if (m_animator.gameObject.activeSelf == false)
+                return;
+
+            AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+            m_triggerName = Get_AnimationName(stateName); // 무기 상태 체크
+
+            if (stateInfo.IsName(m_triggerName) == false) // 현재 애니메이션과 이름(무기)이 다르다면 애니메이션 변경
+                m_animator.SetBool(m_triggerName, m_conversion); // m_animator.Play(m_triggerName, 0, 0f); // 트랜지션 없이 변경
+        }
+
+        protected string Get_AnimationName(string stateName)
+        {
+            string weaponName = "Bbaru"; // 기본 상태
+
+            m_noteItem = m_player.WeaponManagement.Get_CurrentWeaoponType();
+            if (m_noteItem != null)
+            {
+                switch (m_noteItem.m_itemType)
+                {
+                    case NoteItem.ITEMTYPE.TYPE_PIPE:
+                        weaponName = "Bbaru";
+                        break;
+                    case NoteItem.ITEMTYPE.TYPE_GUN:
+                        weaponName = "Gun";
+                        break;
+                    case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
+                        weaponName = "Handlight";
+                        break;
+                }
+            }
+
+            m_conversion = true;
+            return weaponName + "_" + stateName;
+        }
+
+        protected void Reset_Animation()
+        {
+            if (m_conversion == false)
+                return;
+
+            m_conversion = false;
+            m_animator.SetBool(m_triggerName, m_conversion);
         }
     }
 }

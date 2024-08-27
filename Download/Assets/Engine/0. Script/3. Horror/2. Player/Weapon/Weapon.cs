@@ -10,20 +10,25 @@ public abstract class Weapon<T> : MonoBehaviour where T : class
 
     protected NoteItem m_itemInfo = new NoteItem();
 
-    public NoteItem ItemInfo { get => m_itemInfo; set => m_itemInfo = value; }
+    protected Animator m_animator;
 
-    public abstract void Attack_Weapon();
+    public NoteItem ItemInfo { get => m_itemInfo; }
 
-    public virtual void Initialize_Weapon(WeaponManagement<T> weaponManagement, UIWeapon uIWeapon)
+    public abstract bool Attack_Weapon();
+
+    public virtual void Initialize_Weapon(WeaponManagement<T> weaponManagement, NoteItem noteItem, UIWeapon uIWeapon)
     {
         m_stateManagement = weaponManagement;
+        m_itemInfo = noteItem;
         m_uIWeapon = uIWeapon;
 
+        m_animator = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
         gameObject.SetActive(false);
     }
 
     public virtual void Enter_Weapon()
     {
+        HorrorManager.Instance.Player.StateMachine.Change_State(HorrorManager.Instance.Player.StateMachine.CurState);
         gameObject.SetActive(true);
     }
 

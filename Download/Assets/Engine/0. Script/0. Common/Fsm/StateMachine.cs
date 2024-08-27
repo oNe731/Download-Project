@@ -47,6 +47,22 @@ public class StateMachine<T> where T : class
         m_states[(int)m_curState].Enter_State();
     }
 
+    public State<T> Get_CurrState()
+    {
+        if (m_curState == -1)
+            return null;
+
+        return m_states[(int)m_curState];
+    }
+
+    public State<T> Get_PreState()
+    {
+        if (m_preState == -1)
+            return null;
+
+        return m_states[(int)m_preState];
+    }
+
     public void OnDrawGizmos()
     {
         m_states[(int)m_curState].OnDrawGizmos();

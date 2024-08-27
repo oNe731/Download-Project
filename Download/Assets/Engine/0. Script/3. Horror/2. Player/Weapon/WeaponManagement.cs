@@ -31,14 +31,29 @@ public class WeaponManagement<T> where T : class
         m_uIWeapon.Initialize_UI();
     }
 
-    public void Add_Weapon(Weapon<T> weapons)
+    public void Add_Weapon(NoteItem noteItem)
     {
-        weapons.Initialize_Weapon(this, m_uIWeapon);
-        m_weapons.Add(weapons);
+        Weapon<T> weapon = null;
+        Transform handTransfom = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1);
+        switch (noteItem.m_itemType)
+        {
+            case NoteItem.ITEMTYPE.TYPE_PIPE:
+                weapon = handTransfom.GetChild(2).GetComponent<Weapon<T>>();
+                break;
+            case NoteItem.ITEMTYPE.TYPE_GUN:
+                weapon = handTransfom.GetChild(3).GetComponent<Weapon<T>>();
+                break;
+            case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
+                weapon = handTransfom.GetChild(4).GetComponent<Weapon<T>>();
+                break;
+        }
+        weapon.Initialize_Weapon(this, noteItem, m_uIWeapon);
+        m_weapons.Add(weapon);
 
         // 현재 장착하고 있는 무기가 없다면 자동 장착
         if (m_curWeapon == -1)
         {
+            m_owner.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).gameObject.SetActive(true); // 손 활성화
             m_uIWeapon.gameObject.SetActive(true);
             Change_Weapon(0);
         }
@@ -47,7 +62,7 @@ public class WeaponManagement<T> where T : class
 
         // 노트가 있다면 무기 정보 추가
         if(HorrorManager.Instance.Player.Note != null)
-            HorrorManager.Instance.Player.Note.Add_Weapon(weapons.ItemInfo);
+            HorrorManager.Instance.Player.Note.Add_Weapon(weapon.ItemInfo);
     }
 
     public void Update_Weapon()
@@ -77,6 +92,9 @@ public class WeaponManagement<T> where T : class
 
     public void Next_Weapon(int value)
     {
+        if (m_weapons.Count <= 1)
+            return;
+
         int index = m_curWeapon + value;
         if (index >= m_weapons.Count)
             index = 0;
@@ -86,12 +104,12 @@ public class WeaponManagement<T> where T : class
         Change_Weapon(index);
     }
 
-    public void Attack_Weapon()
+    public bool Attack_Weapon()
     {
         if (m_curWeapon == -1 || m_curWeapon >= m_weapons.Count)
-            return;
+            return false;
 
-        m_weapons[(int)m_curWeapon].Attack_Weapon();
+        return m_weapons[m_curWeapon].Attack_Weapon();
     }
 
     public int Get_WeaponIndex(NoteItem.ITEMTYPE weaponId)
@@ -156,5 +174,13 @@ public class WeaponManagement<T> where T : class
                 NextIndex = 0;
             m_uis[NextIndex].Update_UI(UIWeapon.POSITION.PT_BACK, false);
         }*/
+    }
+
+    public NoteItem Get_CurrentWeaoponType()
+    {
+        if (m_curWeapon == -1 || m_curWeapon >= m_weapons.Count)
+            return null;
+
+        return m_weapons[m_curWeapon].ItemInfo;
     }
 }

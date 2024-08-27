@@ -6,9 +6,9 @@ namespace Horror
 {
     public class Weapon_Flashlight : Weapon<HorrorPlayer>
     {
-        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, UIWeapon uIWeapon)
+        public override void Initialize_Weapon(WeaponManagement<HorrorPlayer> weaponManagement, NoteItem noteItem, UIWeapon uIWeapon)
         {
-            base.Initialize_Weapon(weaponManagement, uIWeapon);
+            base.Initialize_Weapon(weaponManagement, noteItem, uIWeapon);
 
             m_damage = 0f;
             transform.localPosition = new Vector3(0f, 0f, 0f);
@@ -30,8 +30,9 @@ namespace Horror
             base.Exit_Weapon();
         }
 
-        public override void Attack_Weapon()
+        public override bool Attack_Weapon()
         {
+            return false;
         }
     }
 }
