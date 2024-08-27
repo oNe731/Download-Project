@@ -49,7 +49,7 @@ public class Straitjacket_Base : State<Monster>
 #endif
     }
 
-    protected bool Change_Run()
+    protected bool Change_Run() // 일정범위 내(스포너)로 주인공이 들어갈 시 주인공을 향해 달려든다.
     {
         // 플레이어가 일정 범위 내로 접근하면 추격 상태 전환
         float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
