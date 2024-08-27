@@ -14,7 +14,10 @@ public abstract class Monster : Character
     protected Spawner m_spawner;
 
     protected Animator m_animator;
+    protected SkinnedMeshRenderer[] m_skinnedMeshRenderers;
 
+    protected Coroutine m_colorCorutine = null;
+    protected Coroutine m_fadeCorutine = null;
     public float Hp => m_hp;
     public float Attack => m_attack;
     public StateMachine<Monster> StateMachine => m_stateMachine;
@@ -38,6 +41,12 @@ public abstract class Monster : Character
         gameObject.transform.position   = transform.position;
         gameObject.transform.localScale = transform.localScale;
 
+        if (m_skinnedMeshRenderers == null)
+            m_skinnedMeshRenderers = transform.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        if (m_colorCorutine != null)
+            StopCoroutine(m_colorCorutine);
+        m_colorCorutine = StartCoroutine(Change_Color(new Color(1f, 1f, 1f, 1f), new Color(1f, 0f, 0f, 1f), 0.2f));
     }
 
     public void Initialize_Monster(Spawner spawner)
@@ -51,11 +60,68 @@ public abstract class Monster : Character
 
     private void Start()
     {
-        
     }
 
     private void Update()
     {
         
+    }
+
+    protected IEnumerator Change_Color(Color startColor, Color changeColor, float fadespeed)
+    {
+        Start_Fade(startColor, changeColor, fadespeed);
+
+        while(true)
+        {
+            if (m_fadeCorutine == null)
+                break;
+            yield return null;
+        }
+
+        Start_Fade(changeColor, startColor, fadespeed);
+        yield break;
+    }
+
+    public void Start_Fade(Color startColor, Color changeColor, float duration)
+    {
+        if (m_fadeCorutine != null)
+            StopCoroutine(m_fadeCorutine);
+        m_fadeCorutine = StartCoroutine(FadeCoroutine(startColor, changeColor, duration));
+    }
+
+    private IEnumerator FadeCoroutine(Color startColor, Color changeColor, float duration)
+    {
+        float currentTime = 0f;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+
+            float fadeProgress = currentTime / duration;
+            Set_Color(new Color(
+                Mathf.Lerp(startColor.r, changeColor.r, fadeProgress), 
+                Mathf.Lerp(startColor.g, changeColor.g, fadeProgress), 
+                Mathf.Lerp(startColor.b, changeColor.b, fadeProgress), 
+                Mathf.Lerp(startColor.a, changeColor.a, fadeProgress)));
+
+            yield return null;
+        }
+
+        if (m_fadeCorutine != null)
+        {
+            StopCoroutine(m_fadeCorutine);
+            m_fadeCorutine = null;
+        }
+
+        yield break;
+    }
+
+    protected void Set_Color(Color color)
+    {
+        for (int i = 0; i < m_skinnedMeshRenderers.Length; ++i)
+        {
+            if (m_skinnedMeshRenderers[i].material == null)
+                continue;
+            m_skinnedMeshRenderers[i].material.color = color;
+        }
     }
 }

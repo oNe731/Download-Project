@@ -47,6 +47,8 @@ public class HorrorManager : MonoBehaviour
 
         m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
 
+        m_noteElementIcon.Add("Icon_Note", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Note"));
+
         m_noteElementIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
         m_noteElementIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
         m_noteElementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
