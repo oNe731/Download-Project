@@ -6,6 +6,9 @@ namespace Horror
 {
     public class HorrorPlayer_Attack : HorrorPlayer_Base
     {
+        private bool isAttak = false;
+        private NoteItem.ITEMTYPE m_weaponType;
+
         public HorrorPlayer_Attack(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
         }
@@ -13,11 +16,24 @@ namespace Horror
         public override void Enter_State()
         {
             //Debug.Log("공격 상태로 전환");
-            if (m_player.WeaponManagement.Attack_Weapon() == false) // 공격 가능한 상태인가?
+            NoteItem itemType = m_player.WeaponManagement.Get_CurrentWeaoponType();
+            if(itemType == null)
             {
                 m_player.StateMachine.Change_State(m_player.StateMachine.PreState);
                 return;
             }
+
+            m_weaponType = itemType.m_itemType;
+            switch (m_weaponType)
+            {
+                case NoteItem.ITEMTYPE.TYPE_GUN:
+                    Attak_Weapon();
+                    break;
+
+                case NoteItem.ITEMTYPE.TYPE_FLASHLIGHT:
+                    m_player.StateMachine.Change_State(m_player.StateMachine.PreState);
+                    return;
+            }    
 
             Change_Animation("Attack");
         }
@@ -32,6 +48,16 @@ namespace Horror
                 Reset_Animation();
 
                 float animTime = m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if(isAttak == false)
+                {
+                    switch (m_weaponType)
+                    {
+                        case NoteItem.ITEMTYPE.TYPE_PIPE:
+                            if (animTime >= 0.35f) Attak_Weapon();
+                            break;
+                    }
+                }
+
                 if (animTime >= 1.0f) // 애니메이션 종료
                     m_player.StateMachine.Change_State(m_player.StateMachine.PreState);
             }
@@ -40,6 +66,18 @@ namespace Horror
         public override void Exit_State()
         {
             Reset_Animation();
+            isAttak = false;
+        }
+
+        private void Attak_Weapon()
+        {
+            if (m_player.WeaponManagement.Attack_Weapon() == false) // 공격 시도, 공격 가능한 상태인가?
+            {
+                m_player.StateMachine.Change_State(m_player.StateMachine.PreState);
+                return;
+            }
+
+            isAttak = true;
         }
     }
 }
