@@ -14,8 +14,9 @@ public class SoundManager : MonoBehaviour
 
     private void Load_Resource()
     {
-        /// 공포 게임 사운드
-        // 플레이어
+        #region 공포 게임 사운드
+
+        #region 플레이어
         m_effect.Add("Horror_Player_Walk", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk"));
 
         // 무기
@@ -32,6 +33,13 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("Horror_ClickInteraction", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Etc/ClickInteraction/Click_Interaction"));
         m_effect.Add("Horror_GetItem", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Etc/GetItem/Get_Item"));
         m_effect.Add("Horror_OpenNote", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Etc/OpenNote/BookUI_Open"));
+        #endregion
+
+        #region 오브젝트
+        m_effect.Add("Horror_Open_Door", Resources.Load<AudioClip>("2. Sound/3. Horror/Effect/Object/Door/Open_Door"));
+        #endregion
+
+        #endregion
     }
 
     public void Play_ManagerAudioSource(string name, bool loop, float speed)

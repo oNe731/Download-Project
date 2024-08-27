@@ -19,12 +19,15 @@ public class Interaction_Door : Interaction
     [SerializeField] private float m_openDuration = 2f;
     [SerializeField] private float m_closeDuration = 2f;
 
+    private AudioSource m_audioSource;
     //[SerializeField] private Portal m_portal;
 
     public int DoorIndex => m_doorIndex;
 
     private void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
+
         GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
@@ -88,7 +91,9 @@ public class Interaction_Door : Interaction
         if(delete == true)
             Destroy(m_interactionUI.gameObject);
 
-        switch(m_openType)
+        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Open_Door", false, 1f);
+
+        switch (m_openType)
         {
             case OPENTYPE.OT_BASICONE:
                 StartCoroutine(Move_OneMove());
