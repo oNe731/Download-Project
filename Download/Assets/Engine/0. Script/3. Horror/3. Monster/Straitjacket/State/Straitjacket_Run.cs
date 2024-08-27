@@ -11,6 +11,7 @@ public class Straitjacket_Run : Straitjacket_Base
     {
         m_speed = 5f;
         m_agent = m_owner.GetComponent<NavMeshAgent>();
+        m_agent.speed = m_speed;
     }
 
     public override void Enter_State()
