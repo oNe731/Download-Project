@@ -31,7 +31,7 @@ namespace Horror
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_ATTACK);
             }
-            else if (Input.GetKey(KeyCode.Space) && m_player.Stamina > 0)
+            else if (Input.GetKey(KeyCode.Space) && m_player.Stamina > 1)
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_RUN);
             }

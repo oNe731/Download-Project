@@ -185,9 +185,9 @@ namespace Horror
                     }
                 }
             }
-#endregion
+            #endregion
 
-            Interaction_Research_Item interaction = worldObject.GetComponent<Interaction_Research_Item>();
+            Interaction_Item interaction = worldObject.GetComponent<Interaction_Item>();
             if (interaction == null)
                 return;
             interaction.NoteItem = Item;

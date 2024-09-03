@@ -47,7 +47,7 @@ public class UIInstruction : MonoBehaviour
                 m_active = true;
                 break;
             case ACTIVETYPE.TYPE_FADE:
-                m_fadeCoroutine = StartCoroutine(Fade_Color(0f, 1f, 1f));
+                m_fadeCoroutine = StartCoroutine(Fade_Color(0f, 1f, 0.5f));
                 break;
         }
     }
@@ -72,7 +72,7 @@ public class UIInstruction : MonoBehaviour
                     case ACTIVETYPE.TYPE_FADE:
                         if (m_fadeCoroutine != null)
                             StopCoroutine(m_fadeCoroutine);
-                        m_fadeCoroutine = StartCoroutine(Fade_Color(1f, 0f, 1f));
+                        m_fadeCoroutine = StartCoroutine(Fade_Color(1f, 0f, 0.5f));
                         break;
                 }
                 return;

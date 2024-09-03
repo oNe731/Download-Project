@@ -122,8 +122,8 @@ public class WesternManager : MonoBehaviour
     private void Load_Resource()
     {
         // 배경 이미지 할당
-        m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_01"));
-        m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/IntroChatScript/Background/Background_02"));
+        m_backgroundSpr.Add("Background_01", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_01"));
+        m_backgroundSpr.Add("Background_02", Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_02"));
     }
 
     public void Button_Play()

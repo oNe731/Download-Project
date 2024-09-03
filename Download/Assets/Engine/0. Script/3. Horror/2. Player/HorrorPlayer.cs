@@ -115,7 +115,7 @@ namespace Horror
             if (m_note != null)
                 return;
 
-            GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Note", GameObject.Find("Canvas").transform.GetChild(1));
+            GameObject ui = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Note", GameObject.Find("Canvas").transform.Find("Panel_Down"));
             m_note = ui.GetComponent<Note>();
             m_note.Initialize_Note();
         }

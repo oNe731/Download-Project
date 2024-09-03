@@ -8,60 +8,37 @@ public abstract class Interaction : MonoBehaviour
     [SerializeField] protected Vector3 m_uiOffset; // UI 위치 오프셋
     protected UIWorldHint m_interactionUI = null;
 
-    [SerializeField] protected bool m_possible; // UI 활성화 가능 여부
-    protected bool  m_interact = false;         // 상호작용 가능 여부
-    // protected float m_InteractionDist = 2f;
+    [SerializeField] protected bool m_possible;     // UI 활성화 가능 여부
+    [SerializeField] protected bool m_objectDelete; // 오브젝트 삭제 여부
+    protected bool  m_interact = false;             // 상호작용 가능 여부
 
     public UIWorldHint InteractionUI => m_interactionUI;
     public bool Possible => m_possible;
 
     public abstract void Click_Interaction();
 
-    /*
-    protected void Update_InteractionUI()
+    protected bool No_Click()
     {
-        if (m_interactionUI == null || m_interact == true)
-            return;
-
-        if (Check_PlayerDist() == true)
-        {
-            if (m_interactionUI.gameObject.activeSelf == true)
-                return;
-
-            m_interactionUI.Update_Transform();
-            m_interactionUI.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (m_interactionUI.gameObject.activeSelf == false)
-                return;
-
-            m_interactionUI.gameObject.SetActive(false);
-        }
-    }
-
-    protected bool Check_PlayerDist()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.GetChild(0).transform.position, HorrorManager.Instance.Player.transform.position);
-        if (distanceToPlayer <= m_InteractionDist)
+        if (m_interactionUI == null || m_interactionUI.gameObject.activeSelf == false || m_interact == true)
             return true;
 
         return false;
     }
 
-    public void OnDrawGizmos()
-    {
-#if UNITY_EDITOR
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.GetChild(0).transform.position, m_InteractionDist);
-#endif
-    }
-    */
-
     protected void Destroy_Interaction()
     {
-        //m_interactionUI.gameObject.SetActive(false);
         Destroy(m_interactionUI.gameObject);
         Destroy(gameObject);
+    }
+
+    protected void Check_Delete()
+    {
+        if (m_objectDelete == true)
+            Destroy_Interaction();
+        else
+        {
+            Destroy(m_interactionUI.gameObject);
+            Destroy(transform.GetChild(0).gameObject);
+        }
     }
 }

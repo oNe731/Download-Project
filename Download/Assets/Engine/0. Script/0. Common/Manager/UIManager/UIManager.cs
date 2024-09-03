@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        m_fadeCanvas = Instantiate(Resources.Load<GameObject>("5. Prefab/UICanvas"), transform);
+        m_fadeCanvas = Instantiate(Resources.Load<GameObject>("5. Prefab/0. Common/UICanvas"), transform);
         m_fadeImg    = m_fadeCanvas.GetComponentInChildren<Image>();
 
         m_cursorImage.Add("ShootGameCursor", Resources.Load<Texture2D>("1. Graphic/2D/1. VisualNovel/UI/Shoot/UI_VisualNovel_Shoot_Aim_Green"));

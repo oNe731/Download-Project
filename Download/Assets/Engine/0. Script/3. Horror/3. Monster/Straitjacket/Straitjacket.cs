@@ -46,4 +46,10 @@ public class Straitjacket : Monster
 
         m_stateMachine.OnDrawGizmos();
     }
+
+    private void OnDestroy()
+    {
+        if (m_spawner != null)
+            Destroy(m_spawner.gameObject);
+    }
 }

@@ -47,23 +47,24 @@ public class HorrorManager : MonoBehaviour
 
         m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
 
-        m_noteElementIcon.Add("Icon_Note", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Note"));
+        string basicPath = "1. Graphic/2D/3. Horror/UI/Play/Icon/";
+        m_noteElementIcon.Add("Icon_None", Resources.Load<Sprite>(basicPath + "Etc/Icon_None"));
+        m_noteElementIcon.Add("Icon_Note", Resources.Load<Sprite>(basicPath + "Etc/Icon_Note"));
 
-        m_noteElementIcon.Add("Icon_Stick", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Stick"));
-        m_noteElementIcon.Add("Icon_Gun", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Gun"));
-        m_noteElementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Flashlight"));
-        m_noteElementIcon.Add("Icon_Bullet", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Bullet"));
-        m_noteElementIcon.Add("Icon_Medicine", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_Medicine"));
+        m_noteElementIcon.Add("Icon_Stick", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Stick"));
+        m_noteElementIcon.Add("Icon_Gun", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Gun"));
+        m_noteElementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Flashlight"));
 
-        m_noteElementIcon.Add("Icon_clue", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_clue"));
-        m_noteElementIcon.Add("Icon_A306File", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
+        m_noteElementIcon.Add("Icon_Bullet", Resources.Load<Sprite>(basicPath + "Item/Icon_Bullet"));
+        m_noteElementIcon.Add("Icon_Medicine", Resources.Load<Sprite>(basicPath + "Item/Icon_Medicine"));
 
-        m_noteElementIcon.Add("Icon_None", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_Item/Icon_None"));
+        m_noteElementIcon.Add("Icon_clue", Resources.Load<Sprite>(basicPath + "Clue/Icon_clue"));
+        m_noteElementIcon.Add("Icon_A306File", Resources.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
 
         // 사용할 UI 생성
         if (m_popupUI == null)
         {
-            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.GetChild(2));
+            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
             if (gameObject == null)
                 return;
             m_popupUI = gameObject.GetComponent<UIPopup>();
@@ -71,7 +72,7 @@ public class HorrorManager : MonoBehaviour
         }
         if (m_instructionUI == null)
         {
-            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.GetChild(2));
+            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
             if (gameObject == null)
                 return;
             m_instructionUI = gameObject.GetComponent<UIInstruction>();

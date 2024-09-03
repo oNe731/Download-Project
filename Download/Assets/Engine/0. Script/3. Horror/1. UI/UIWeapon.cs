@@ -23,12 +23,12 @@ public class UIWeapon : MonoBehaviour
 
     public void Initialize_UI()
     {
-        m_WeaponSpr.Add("Gun",   Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Gun"));
-        m_WeaponSpr.Add("Flash", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Flash"));
-        m_WeaponSpr.Add("Pipe",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_Pipe"));
+        m_WeaponSpr.Add("Gun",   Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_Gun"));
+        m_WeaponSpr.Add("Flash", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_Flash"));
+        m_WeaponSpr.Add("Pipe",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_Pipe"));
 
-        m_lightSpr.Add("SlotON",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_SlotON"));
-        m_lightSpr.Add("SlotOFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/UI_horror_WeaponSlot/UI_horror_PlayerWeapon_SlotOFF"));
+        m_lightSpr.Add("SlotON",  Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_SlotON"));
+        m_lightSpr.Add("SlotOFF", Resources.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_SlotOFF"));
 
         GetComponent<RectTransform>().anchoredPosition = new Vector2(530.2f, -343f);
 
