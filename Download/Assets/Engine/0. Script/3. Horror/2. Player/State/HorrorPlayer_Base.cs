@@ -131,7 +131,7 @@ namespace Horror
         protected void Input_Interaction() 
         {
             // 실시간으로 바라보고 있는 UI만 활성화
-            RaycastHit interactionHit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
+            RaycastHit interactionHit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
             if (interactionHit.collider == null) // 제일 가까운 콜라이더 반환
             {
                 Reset_Interaction();
@@ -157,7 +157,7 @@ namespace Horror
             }
 
             // 벽이 먼저 있는가
-            RaycastHit wallHit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Wall"));
+            RaycastHit wallHit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Wall"));
             if (wallHit.collider != null)
             {
                 if (wallHit.distance < interactionHit.distance) // 벽이 상호작용 요소보다 앞에 있다면 상호작용X
@@ -183,7 +183,7 @@ namespace Horror
             // 상호작용
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GameManager.Instance.Sound.Play_ManagerAudioSource("Horror_ClickInteraction", false, 1f);
+                GameManager.Ins.Sound.Play_ManagerAudioSource("Horror_ClickInteraction", false, 1f);
                 interaction.Click_Interaction();
             }
         }

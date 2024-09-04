@@ -30,10 +30,10 @@ namespace Western
             WesternManager.Instance.MainPanel.SetActive(true);
 
             WesternManager.Instance.PlayButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(720f, -200f, 0f);
-            m_bloodObj = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Blood"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+            m_bloodObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Blood", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
             m_bloodObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
 
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         }
 
         public override void Play_Level()
@@ -50,7 +50,7 @@ namespace Western
                 {
                     m_leveltime = 0f;
 
-                    m_clearObj = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Clear"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+                    m_clearObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Clear", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
                     m_clearObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
                     m_clearObj.transform.localScale = m_startScale;
                     m_clearImage = m_clearObj.GetComponent<Image>();
@@ -83,7 +83,7 @@ namespace Western
                             m_leveltime = 0f;
 
                             //UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
-                            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => GameManager.Instance.Change_Scene("Window"), 0f, false);
+                            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 0f, false);
                         }
                     }
                 }

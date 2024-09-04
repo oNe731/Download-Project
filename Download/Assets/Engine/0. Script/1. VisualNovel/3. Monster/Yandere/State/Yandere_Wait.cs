@@ -35,7 +35,7 @@ namespace VisualNovel
             if(m_switch == false && Camera.main.transform.position.z < 11.5f)
             {
                 m_switch = true;
-                GameManager.Instance.UI.Start_FadeOut(0.8f, Color.black, () => Continue_Play(), 0f, false);
+                GameManager.Ins.UI.Start_FadeOut(0.8f, Color.black, () => Continue_Play(), 0f, false);
             }
 
         }
@@ -47,10 +47,10 @@ namespace VisualNovel
 
         private void Continue_Play() // 컷씬 재생 후 게임 재진행
         {
-            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/추격게임 BGM");
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/추격게임 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
 
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             Novel_Chase novel_Chase = VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>();
             novel_Chase.Stage.transform.GetChild(0).gameObject.SetActive(true); // 미니맵 카메라
             novel_Chase.Stage.transform.GetChild(1).gameObject.SetActive(true); // 미니맵 UI
@@ -59,7 +59,7 @@ namespace VisualNovel
             novel_Chase.Player.MoveSpeed = 400f;
 
             m_stateMachine.Change_State((int)HallwayYandere.YandereState.ST_CHASE);
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         }
     }
 }

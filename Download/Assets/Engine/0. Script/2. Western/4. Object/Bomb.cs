@@ -70,7 +70,7 @@ namespace Western
 
                                 Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
                                 if (level.TargetUI == null)
-                                    level.TargetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
+                                    level.TargetUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/TargetUI", position, Quaternion.identity);
                                 else
                                     level.TargetUI.transform.position = position;
 
@@ -117,14 +117,14 @@ namespace Western
                         if (m_uiKey != null)
                             Destroy(m_uiKey);
 
-                        m_uiKey = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Key"), GameObject.Find("Canvas").transform);
+                        m_uiKey = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Key", GameObject.Find("Canvas").transform);
                         m_uiKey.GetComponent<KeyUI>().Owner = gameObject;
                         m_uiKey.GetComponent<KeyUI>().KeyType = m_keyType;
 
                         if (m_uiTime != null)
                             Destroy(m_uiTime);
 
-                        m_uiTime = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Time"), GameObject.Find("Canvas").transform);
+                        m_uiTime = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Time", GameObject.Find("Canvas").transform);
                         m_time = m_uiTime.GetComponent<TimeUI>();
                         m_time.Owner = gameObject;
                     }

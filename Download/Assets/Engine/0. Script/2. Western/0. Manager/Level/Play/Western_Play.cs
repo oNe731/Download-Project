@@ -95,7 +95,7 @@ namespace Western
         protected IEnumerator Update_ReadyGo()
         {
             m_uiIndex = 0;
-            m_readyGoUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_ReadyGo"), GameObject.Find("Canvas").transform);
+            m_readyGoUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_ReadyGo", GameObject.Find("Canvas").transform);
             Animator animator = m_readyGoUI.GetComponent<Animator>();
 
             while (m_uiIndex < 2)
@@ -137,7 +137,7 @@ namespace Western
 
                     Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.collider.gameObject.GetComponent<Person>().Get_GroupZ() - 0.005f); // 맨 앞
                     if (m_targetUI == null)
-                        m_targetUI = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/TargetUI"), position, Quaternion.identity);
+                        m_targetUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/TargetUI", position, Quaternion.identity);
                     else
                         m_targetUI.transform.position = position;
 
@@ -155,13 +155,13 @@ namespace Western
             person.Stop_Animation();
 
             // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
-            GameManager.Instance.UI.Start_FadeIn(0.3f, Color.white);
+            GameManager.Ins.UI.Start_FadeIn(0.3f, Color.white);
 
             // 이펙트 생성
-            Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Person_Effect"), m_targetUI.transform.position, Quaternion.identity);
+            GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Person_Effect", m_targetUI.transform.position, Quaternion.identity);
 
             // 총알자국 오브젝트 생성.
-            Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/BulletMarkUI"), m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);
+            GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/BulletMarkUI", m_targetUI.transform.position, Quaternion.identity, m_targetUI.GetComponent<TargetUI>().Target.transform);
         }
 
         private void Create_SpeechBubble(Person.PERSONTYPE type, Vector3 position, ref List<string> textlist, int index)
@@ -170,7 +170,7 @@ namespace Western
             m_groups.Destroy_Timer();
 
             // 말풍선 UI
-            GameObject uiObject = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_SpeechBubble"), GameObject.Find("Canvas").transform);
+            GameObject uiObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_SpeechBubble", GameObject.Find("Canvas").transform);
             uiObject.GetComponent<SpeechBubble>().PersonType = type;
             uiObject.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(position + new Vector3(0f, 0.5f, 0f));
             uiObject.transform.GetChild(0).GetComponent<TMP_Text>().text = textlist[index];

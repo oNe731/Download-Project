@@ -25,7 +25,7 @@ public class WeaponManagement<T> where T : class
         //m_uiParent = new GameObject("WeaponUIParent");
         //m_uiParent.transform.SetParent(GameObject.Find("Canvas").transform.Find("Panel_Play"), false);
 
-        m_uIWeapon = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Weapon", GameObject.Find("Canvas").transform.Find("Panel_Play")).GetComponent<UIWeapon>();
+        m_uIWeapon = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Weapon", GameObject.Find("Canvas").transform.Find("Panel_Play")).GetComponent<UIWeapon>();
         if (m_uIWeapon == null)
             return;
         m_uIWeapon.Initialize_UI();

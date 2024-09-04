@@ -42,7 +42,7 @@ namespace VisualNovel
                         break;
                 }
 
-                GameObject particleObject = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/UI/" + name), GameObject.Find("Canvas").transform);
+                GameObject particleObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/" + name, GameObject.Find("Canvas").transform);
                 particleObject.transform.position = gameObject.transform.position;
             }
         }

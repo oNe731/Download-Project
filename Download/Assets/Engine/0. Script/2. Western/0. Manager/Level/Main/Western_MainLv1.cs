@@ -16,7 +16,7 @@ namespace Western
         {
             base.Enter_Level();
 
-            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/수배지 BGM");
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/수배지 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 
@@ -43,7 +43,7 @@ namespace Western
         protected override void Start_Dialog()
         {
             m_dialogStart = true;
-            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Main"));
+            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Main"));
         }
     }
 }

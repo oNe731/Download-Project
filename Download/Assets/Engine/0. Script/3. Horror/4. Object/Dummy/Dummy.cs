@@ -30,7 +30,7 @@ public class Dummy : MonoBehaviour
 
     private IEnumerator Play_Sound()
     {
-        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSources[0], "Horror_Dummy1", false, 1f);
+        GameManager.Ins.Sound.Play_AudioSource(ref m_audioSources[0], "Horror_Dummy1", false, 1f);
 
         float time = 0;
         while(true)
@@ -41,7 +41,7 @@ public class Dummy : MonoBehaviour
             yield return null;
         }
 
-        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSources[1], "Horror_Dummy2", false, 1f);
+        GameManager.Ins.Sound.Play_AudioSource(ref m_audioSources[1], "Horror_Dummy2", false, 1f);
         StartCoroutine(Check_Triger());
         yield break;
     }

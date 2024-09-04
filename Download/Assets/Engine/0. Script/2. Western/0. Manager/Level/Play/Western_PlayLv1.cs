@@ -61,21 +61,21 @@ namespace Western
             base.Enter_Level();
 
             // 스테이지 생성
-            m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/1Stage"));
+            m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/1Stage");
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
             m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
 
             // 카메라 설정
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0.62f, m_groups.Start_Position().z));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
             // 다이얼로그 시작
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
 
-            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM");
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 
@@ -84,15 +84,15 @@ namespace Western
             m_tutorialTarget.Clear();
             m_isTutorial = false;
 
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_WALK);
-            m_camera = (CameraWalk)GameManager.Instance.Camera.Get_CurCamera();
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_WALK);
+            m_camera = (CameraWalk)GameManager.Ins.Camera.Get_CurCamera();
             m_camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
             m_camera.Set_Height(0.62f);
 
             Proceed_Next();
 
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM");
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 
@@ -117,7 +117,7 @@ namespace Western
         private void Start_Dialog()
         {
             m_stateType = STATETYPE.TYPE_DIALOGSTART;
-            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play"));
+            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play"));
         }
 
         private void Update_Tutorial()
@@ -150,7 +150,7 @@ namespace Western
                             if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
                             {
                                 WesternManager.Instance.IsShoot = false;
-                                WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
+                                WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
                                 m_stateType = STATETYPE.TYPE_DIALOGFINISH;
                             }
                             else
@@ -159,11 +159,11 @@ namespace Western
                                 switch (m_tutorialIndex)
                                 {
                                     case 0:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1"));
+                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1"));
                                         break;
 
                                     case 1:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Instance.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2"));
+                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2"));
                                         break;
                                 }
 

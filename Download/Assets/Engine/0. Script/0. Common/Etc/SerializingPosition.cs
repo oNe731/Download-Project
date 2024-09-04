@@ -42,11 +42,11 @@ public class SerializingPosition : MonoBehaviour
 
     private void LoadPositions() // 4. Data/1. VisualNovel/Position/ItemPositionData
     {
-        string json = Resources.Load<TextAsset>(m_path).text;
+        string json = GameManager.Ins.Resource.Load<TextAsset>(m_path).text;
         PositionData data = JsonUtility.FromJson<PositionData>(json);
 
         foreach (Transform child in transform) { Destroy(child.gameObject); }
-        foreach (Vector3 position in data.positions) { Instantiate(m_prefab, position, Quaternion.identity, transform); }
+        foreach (Vector3 position in data.positions) { GameManager.Ins.Resource.Create(m_prefab, position, Quaternion.identity, transform); }
 
         Debug.Log("Positions loaded to " + m_path);
     }

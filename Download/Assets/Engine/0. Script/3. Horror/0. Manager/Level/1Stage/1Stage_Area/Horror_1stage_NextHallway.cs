@@ -101,7 +101,7 @@ public class Horror_1stage_NextHallway : Area
 #region 카메라 쉐이킹        
         HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
 
-        CameraFollow camera = (CameraFollow)GameManager.Instance.Camera.Get_CurCamera();
+        CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
         camera.Start_Shake(3f, 1.5f);
 
         while (true)

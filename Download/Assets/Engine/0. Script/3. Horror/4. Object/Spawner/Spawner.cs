@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
 
         for(int i = 0; i < m_count; ++i)
         {
-            GameObject gameObject = GameManager.Instance.Create_GameObject(path, transform);
+            GameObject gameObject = GameManager.Ins.Resource.LoadCreate(path, transform);
             if (gameObject == null)
                 break;
 

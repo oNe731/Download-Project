@@ -31,7 +31,7 @@ namespace Western
 
         protected void Start_Dialog(string path)
         {
-            WesternManager.Instance.DialogIntro.GetComponent<Dialog_IntroWT>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_IntroWT>(path));
+            WesternManager.Instance.DialogIntro.GetComponent<Dialog_IntroWT>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_IntroWT>(path));
         }
     }
 }

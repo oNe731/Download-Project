@@ -14,9 +14,7 @@ public class Straitjacket_Die : Straitjacket_Base
 
         // 사망 이벤트 처리
         m_animator.SetBool("IsDie", true);
-
-        GameObject gameObject = m_owner.gameObject;
-        GameManager.Instance.Destroy_GameObject(ref gameObject);
+        GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }
 
     public override void Update_State()

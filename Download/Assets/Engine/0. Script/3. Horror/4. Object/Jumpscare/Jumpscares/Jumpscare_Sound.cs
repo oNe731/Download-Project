@@ -10,7 +10,7 @@ public class Jumpscare_Sound : Jumpscare
     public override void Active_Jumpscare()
     {
         m_isTrigger = true;
-        GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, m_soundName, m_loop, m_speed);
+        GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, m_soundName, m_loop, m_speed);
     }
 
     private void Start()

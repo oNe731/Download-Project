@@ -13,7 +13,7 @@ public class Horror_1stage_BigRoomIn : Area
         m_levelIndex = (int)Horror_1stage.LEVEL1.LV_BIGROOMIN;
 
         // 키패드 UI 생성
-        GameObject keypadObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Keypad", GameObject.Find("Canvas").transform.Find("Panel_Front"));
+        GameObject keypadObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Keypad", GameObject.Find("Canvas").transform.Find("Panel_Front"));
         m_keypadUI = keypadObject.GetComponent<UIKeypad>();
     }
 

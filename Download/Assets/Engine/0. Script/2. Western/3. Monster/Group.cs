@@ -128,7 +128,7 @@ namespace Western
         {
             Destroy_Timer();
 
-            m_timer = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_Timer"), Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+            m_timer = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Timer", Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
             RectTransform timerTransform = m_timer.GetComponent<RectTransform>();
             timerTransform.anchoredPosition = new Vector2(0f, 250f);
 
@@ -185,22 +185,22 @@ namespace Western
             int count = 0;
             int dir = Random.Range(0, 2); // 0, 1
 
-            GameObject bombPrefab = Resources.Load<GameObject>("5. Prefab/2. Western/Common/Bomb");
+            GameObject bombPrefab = GameManager.Ins.Resource.Load<GameObject>("5. Prefab/2. Western/Common/Bomb");
             Vector3 leftSpawnPosition  = transform.position + new Vector3(-3f, 0.8f, -0.1f);
             Vector3 rightSpawnPosition = transform.position + new Vector3(3f, 0.8f, -0.1f);
 
             GameObject secondBomb = null;
             if(createCount == 2)
             {
-                secondBomb = Instantiate(bombPrefab, Vector3.zero, Quaternion.identity);
-                secondBomb.SetActive(false);
+                secondBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
+                secondBomb.SetActive(false); 
             }
 
             while (count < createCount)
             {
                 if (count == 0) // 霉 锅掳 积己
                 {
-                    GameObject firstBomb = Instantiate(bombPrefab, Vector3.zero, Quaternion.identity);
+                    GameObject firstBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
                     if (dir == 0) // 哭率俊 积己
                         firstBomb.transform.localPosition = leftSpawnPosition;
                     else if (dir == 1) // 坷弗率俊 积己

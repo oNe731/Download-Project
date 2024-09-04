@@ -108,7 +108,7 @@ public class Straitjacket_Base : State<Monster>
 
     private bool Check_Collider(Vector3 dir)
     {
-        RaycastHit hit = GameManager.Instance.Start_Raycast(m_owner.transform.position, dir, 1f, LayerMask.GetMask("Wall", "Static", "Interaction"));
+        RaycastHit hit = GameManager.Ins.Start_Raycast(m_owner.transform.position, dir, 1f, LayerMask.GetMask("Wall", "Static", "Interaction"));
         if (hit.collider != null)
             return true;
 
@@ -124,7 +124,7 @@ public class Straitjacket_Base : State<Monster>
         if(m_soundTime >= m_nextTime)
         {
             m_soundTime = 0f;    
-            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
         }
     }
 }

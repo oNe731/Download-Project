@@ -17,23 +17,23 @@ namespace VisualNovel
             switch (m_levelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).DollType)
             {
                 case DOLLTYPE.DT_BIRD:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollBird"));
+                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollBird"));
                     break;
 
                 case DOLLTYPE.DT_SHEEP:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollSheep"));
+                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollSheep"));
                     break;
 
                 case DOLLTYPE.DT_CAT:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollCat"));
+                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollCat"));
                     break;
 
                 case DOLLTYPE.DT_FAIL:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollFail"));
+                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollFail"));
                     break;
             }
 
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
         }
 
         public override void Play_Level()

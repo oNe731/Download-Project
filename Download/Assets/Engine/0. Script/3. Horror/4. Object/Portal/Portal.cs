@@ -24,7 +24,7 @@ public class Portal : MonoBehaviour
         HorrorManager.Instance.Set_Pause(true); // 일시정지
 
         // 페이드 아웃 -> 이동 -> 인
-        GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => Teleport_Player(), 1f, false);
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Teleport_Player(), 1f, false);
     }
 
     private void Teleport_Player()
@@ -35,6 +35,6 @@ public class Portal : MonoBehaviour
 
         HorrorManager.Instance.Set_Pause(false); // 일시정지 해제
 
-        GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
     }
 }

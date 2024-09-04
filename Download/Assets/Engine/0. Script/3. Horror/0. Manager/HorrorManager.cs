@@ -48,23 +48,23 @@ public class HorrorManager : MonoBehaviour
         m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
 
         string basicPath = "1. Graphic/2D/3. Horror/UI/Play/Icon/";
-        m_noteElementIcon.Add("Icon_None", Resources.Load<Sprite>(basicPath + "Etc/Icon_None"));
-        m_noteElementIcon.Add("Icon_Note", Resources.Load<Sprite>(basicPath + "Etc/Icon_Note"));
+        m_noteElementIcon.Add("Icon_None", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/Icon_None"));
+        m_noteElementIcon.Add("Icon_Note", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/Icon_Note"));
 
-        m_noteElementIcon.Add("Icon_Stick", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Stick"));
-        m_noteElementIcon.Add("Icon_Gun", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Gun"));
-        m_noteElementIcon.Add("Icon_Flashlight", Resources.Load<Sprite>(basicPath + "Weapon/Icon_Flashlight"));
+        m_noteElementIcon.Add("Icon_Stick", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Stick"));
+        m_noteElementIcon.Add("Icon_Gun", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Gun"));
+        m_noteElementIcon.Add("Icon_Flashlight", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Flashlight"));
 
-        m_noteElementIcon.Add("Icon_Bullet", Resources.Load<Sprite>(basicPath + "Item/Icon_Bullet"));
-        m_noteElementIcon.Add("Icon_Medicine", Resources.Load<Sprite>(basicPath + "Item/Icon_Medicine"));
+        m_noteElementIcon.Add("Icon_Bullet", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Icon_Bullet"));
+        m_noteElementIcon.Add("Icon_Medicine", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Icon_Medicine"));
 
-        m_noteElementIcon.Add("Icon_clue", Resources.Load<Sprite>(basicPath + "Clue/Icon_clue"));
-        m_noteElementIcon.Add("Icon_A306File", Resources.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
+        m_noteElementIcon.Add("Icon_clue", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Icon_clue"));
+        m_noteElementIcon.Add("Icon_A306File", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
 
         // 사용할 UI 생성
         if (m_popupUI == null)
         {
-            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
+            GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
             if (gameObject == null)
                 return;
             m_popupUI = gameObject.GetComponent<UIPopup>();
@@ -72,7 +72,7 @@ public class HorrorManager : MonoBehaviour
         }
         if (m_instructionUI == null)
         {
-            GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
+            GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
             if (gameObject == null)
                 return;
             m_instructionUI = gameObject.GetComponent<UIInstruction>();
@@ -82,7 +82,7 @@ public class HorrorManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.UI.Start_FadeIn(1f, Color.black, ()=> Start_Game());
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, ()=> Start_Game());
     }
 
     private void Update()
@@ -98,8 +98,8 @@ public class HorrorManager : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null)
             return;
-        GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
-        CameraFollow camera = (CameraFollow)GameManager.Instance.Camera.Get_CurCamera();
+        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
+        CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
         camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
     }
 
@@ -107,13 +107,13 @@ public class HorrorManager : MonoBehaviour
     {
         m_isGame = !pause;
 
-        GameManager.Instance.Camera.Set_CursorLock(!pause);
+        GameManager.Ins.Camera.Set_CursorLock(!pause);
         Player.StateMachine.Lock = pause;
     }
 
     public GameObject Create_WorldHintUI(UIWorldHint.HINTTYPE hinttype, Transform target, Vector3 m_uiOffset)
     {
-        GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_WorldHint", LevelController.Get_CurrentLevel<Horror_Base>().Stage.transform);
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_WorldHint", LevelController.Get_CurrentLevel<Horror_Base>().Stage.transform);
         if (gameObject == null)
             return null;
 

@@ -50,29 +50,29 @@ namespace VisualNovel
         public override void Enter_Level()
         {
             VisualNovelManager.Instance.Dialog.SetActive(false);
-            m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/Map/Shoot"));
+            m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Shoot");
             m_countTxt = m_stage.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>();
             m_container = m_stage.transform.GetChild(1).GetChild(0).gameObject.GetComponent<ShootContainerBelt>();
 
             m_time = m_maxTime;
             m_countTxt.text = m_time.ToString();
 
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
-            CameraBasic_2D camera = (CameraBasic_2D)GameManager.Instance.Camera.Get_CurCamera();
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
+            CameraBasic_2D camera = (CameraBasic_2D)GameManager.Ins.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0f, -9f));
             camera.Change_Rotation(new Vector3(0f, 0f, 0f));
 
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black);
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         }
 
         public override void Play_Level()
         {
             // 새총 BGM
-            Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS");
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS");
             Camera.main.GetComponent<AudioSource>().Play();
 
             m_shootGameStart = true;
-            GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
+            GameManager.Ins.UI.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);
             m_container.Start_Belt();
         }
 
@@ -90,7 +90,7 @@ namespace VisualNovel
         public override void Exit_Level()
         {
             Camera.main.GetComponent<AudioSource>().Stop();
-            GameManager.Instance.UI.Change_Cursor(CURSORTYPE.CT_ORIGIN);
+            GameManager.Ins.UI.Change_Cursor(CURSORTYPE.CT_ORIGIN);
             Destroy(m_stage);
         }
 
@@ -133,7 +133,7 @@ namespace VisualNovel
                 else if (!m_shootGameNext && m_overTime > 3) // 3) 1.5초 뒤 페이드 아웃으로 전환
                 {
                     m_shootGameNext = true;
-                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => m_levelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => m_levelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
                 }
             }
         }

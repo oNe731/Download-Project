@@ -50,7 +50,7 @@ namespace Western
         public void Change_Attack()
         {
             //m_audioSource.Stop();
-            //m_audioSource.clip = Resources.Load<AudioClip>("2. Sound/2. Western/Effect/UI/범인 잡았을 때");
+            //m_audioSource.clip = ameManager.Instance.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/범인 잡았을 때");
             //m_audioSource.Play();
 
             // 총 쏘는 애니메이션 재생
@@ -67,11 +67,11 @@ namespace Western
             if (m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv1 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
             {
                 // 1라운드 바닥에서 손이 올라온다.
-                GameObject element = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform); // -0.4 -> 0
+                GameObject element = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform); // -0.4 -> 0
                 element.GetComponent<Transform>().localPosition = new Vector3(0f, -0.4f, -0.01f); // 3
                 element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                 element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-                element.GetComponent<MeshRenderer>().materials[0].SetTexture("_BaseMap", Resources.Load<Texture2D>("1. Graphic/3D/2. Western/Character/Round1/Person/Person/Texture/Attack/1_PANNEL_Gun1"));
+                element.GetComponent<MeshRenderer>().materials[0].SetTexture("_BaseMap", GameManager.Ins.Resource.Load<Texture2D>("1. Graphic/3D/2. Western/Character/Round1/Person/Person/Texture/Attack/1_PANNEL_Gun1"));
                 StartCoroutine(element.AddComponent<CriminalGun>().Start_Up());
             }
         }
@@ -85,19 +85,19 @@ namespace Western
 
             // 안대 생성
             elementStruct.blindfold = Person.BLINDFOLD.BLINDFOLD_USE;
-            GameObject element = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+            GameObject element = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
             element.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
             element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            element.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
+            element.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
 
             // 초록색 눈 생성
             elementStruct.eye = Person.EYE.EYE_GREEN;
-            GameObject eye = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+            GameObject eye = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
             eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.01f); // 3
             eye.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             eye.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            eye.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/Eye_Green/AC_Eye_Green");
+            eye.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/Eye_Green/AC_Eye_Green");
 
             // 스카프 4종에서 랜덤 생성
             string name = "";
@@ -129,11 +129,11 @@ namespace Western
                     break;
             }
 
-            GameObject scarf = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+            GameObject scarf = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
             scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
             scarf.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             scarf.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            scarf.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + name);
+            scarf.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + name);
 
             m_element = elementStruct;
         }

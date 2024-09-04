@@ -37,7 +37,7 @@ public abstract class Monster : Character
         }
 
         // 피 이펙트 생성
-        GameObject gameObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
         gameObject.transform.position   = transform.position;
         gameObject.transform.localScale = transform.localScale;
 

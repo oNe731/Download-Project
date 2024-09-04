@@ -38,30 +38,30 @@ namespace Western
             base.Enter_Level();
 
             // 스테이지 생성
-            m_stage = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/2Stage/2Stage"));
+            m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/2Stage/2Stage");
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
 
             // 카메라 설정
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
             camera.Change_Position(new Vector3(0f, 0.62f, -55.65f));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => StartCoroutine(Update_ReadyGo()));
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => StartCoroutine(Update_ReadyGo()));
         }
 
         public override void Play_Level()
         {
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_WALK);
-            m_camera = (CameraWalk)GameManager.Instance.Camera.Get_CurCamera();
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_WALK);
+            m_camera = (CameraWalk)GameManager.Ins.Camera.Get_CurCamera();
             m_camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
             m_camera.Set_Height(0.62f);
 
             Proceed_Next();
 
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli");
             Camera.main.GetComponent<AudioSource>().Play();
         }
 
@@ -82,7 +82,7 @@ namespace Western
         public override void Play_Finish()
         {
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = Instantiate(Resources.Load<AudioClip>("2. Sound/BGM/La Docerola - Quincas Moreira"));
+            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/La Docerola - Quincas Moreira");
             Camera.main.GetComponent<AudioSource>().Play();
         }
     }

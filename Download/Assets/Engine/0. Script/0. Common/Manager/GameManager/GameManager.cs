@@ -8,20 +8,23 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager m_instance = null;
-    private CameraManager m_cameraManager = null;
-    private UIManager     m_uIManager     = null;
-    private SoundManager  m_soundManager  = null;
 
-    private string m_playerName = "이름";
+    private CameraManager   m_cameraManager   = null;
+    private UIManager       m_uIManager       = null;
+    private SoundManager    m_soundManager    = null;
+    private ResourceManager m_resourceManager = null;
+
+    //private string m_playerName = "이름";
 
     private AudioSource m_audioSource;
 
-    public static GameManager Instance => m_instance;
+    public static GameManager Ins => m_instance;
     public CameraManager Camera => m_cameraManager;
     public UIManager UI => m_uIManager;
     public SoundManager Sound => m_soundManager;
+    public ResourceManager Resource => m_resourceManager;
 
-    public string PlayerName => m_playerName;
+    //public string PlayerName => m_playerName;
 
     public AudioSource AudioSource => m_audioSource;
 
@@ -31,9 +34,10 @@ public class GameManager : MonoBehaviour
         if (null == m_instance)
         {
             m_instance = this;
-            m_cameraManager = gameObject.AddComponent<CameraManager>();
-            m_uIManager     = gameObject.AddComponent<UIManager>();
-            m_soundManager  = gameObject.AddComponent<SoundManager>();
+            m_cameraManager   = gameObject.AddComponent<CameraManager>();
+            m_uIManager       = gameObject.AddComponent<UIManager>();
+            m_soundManager    = gameObject.AddComponent<SoundManager>();
+            m_resourceManager = gameObject.AddComponent<ResourceManager>();
             gameObject.AddComponent<FPS>();
 
             m_audioSource = GetComponent<AudioSource>();
@@ -44,21 +48,6 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void Update()
-    {
-    }
-
-
-    public GameObject Create_GameObject(string path, Transform transform = null)
-    {
-        return Instantiate(Resources.Load<GameObject>(path), transform);
-    }
-
-    public void Destroy_GameObject(ref GameObject gameObject)
-    {
-        Destroy(gameObject);
-    }
-
     public void Save_JsonData<T>(string filePath, List<T> saveData)
     {
         var Result = JsonConvert.SerializeObject(saveData);
@@ -67,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     public List<T> Load_JsonData<T>(string filePath)
     {
-        TextAsset jsonAsset = Resources.Load<TextAsset>(filePath);
+        TextAsset jsonAsset = Resource.Load<TextAsset>(filePath);
 
         if (jsonAsset != null)
             return JsonConvert.DeserializeObject<List<T>>(jsonAsset.text);
@@ -76,7 +65,6 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-
 
     public void Change_Scene(string sceneName)
     {

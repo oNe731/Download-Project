@@ -183,7 +183,7 @@ namespace VisualNovel
 
             for (int i = 0; i < m_Dolls.Length; ++i)
             {
-                GameObject clone = Instantiate(m_Hpbar, Vector2.zero, Quaternion.identity, CanvasTransform);
+                GameObject clone = GameManager.Ins.Resource.Create(m_Hpbar, Vector2.zero, Quaternion.identity, CanvasTransform);
                 clone.GetComponent<ShootDollHpbar>().Owner = m_Dolls[i];
                 m_doll[i].Hpbar = clone;
             }

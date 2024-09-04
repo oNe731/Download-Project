@@ -213,28 +213,28 @@ namespace Western
             m_element = elementStruct;
 
             // 传 积己
-            GameObject eye = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+            GameObject eye = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
             eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.01f); // 3
             eye.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             eye.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            eye.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/" + eyeName);
+            eye.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/" + eyeName);
 
             // 救措 积己
             if (elementStruct.blindfold == Person.BLINDFOLD.BLINDFOLD_USE)
             {
-                GameObject blindfold = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+                GameObject blindfold = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
                 blindfold.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
                 blindfold.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                 blindfold.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-                blindfold.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
+                blindfold.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
             }
 
             // 胶墨橇 积己
-            GameObject scarf = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/Common/PersonElement"), gameObject.transform);
+            GameObject scarf = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
             scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
             scarf.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             scarf.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            scarf.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + scarfName);
+            scarf.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + scarfName);
 
         }
 

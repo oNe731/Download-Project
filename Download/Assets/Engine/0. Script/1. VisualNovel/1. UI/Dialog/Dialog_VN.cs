@@ -175,7 +175,7 @@ namespace VisualNovel
             Update_Basic(m_dialogIndex + 1);
 
             m_dialogTxt.text = "";
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Next_FadeIn());
         }
 
         private void Next_FadeIn()
@@ -188,37 +188,37 @@ namespace VisualNovel
         {
             if (!string.IsNullOrEmpty(m_dialogs[m_dialogIndex].choiceDialog[0]))
             {
-                GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
-                    () => Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex].choiceDialog[0])), 0f, false);
+                GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
+                    () => Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex].choiceDialog[0])), 0f, false);
             }
             else
             {
                 // 비어있을 시 페이드 아웃만 진행
-                GameManager.Instance.UI.Start_FadeOut(1f, Color.black);
+                GameManager.Ins.UI.Start_FadeOut(1f, Color.black);
             }
 
         }
 
         private void Update_FadeOutIn()
         {
-            GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
         }
 
         private void Start_ShootGame()
         {
-            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
         }
 
         private void Start_ChaseGame()
         {
-            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
         }
 
         private void Play_ChaseGame()
         {
-            GameManager.Instance.UI.Start_FadeOut(1f, Color.black,
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
                 () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level(), 0.5f, false);
         }
 
@@ -272,14 +272,14 @@ namespace VisualNovel
         private void Update_Blink(BasicValue basicValue) // 인 아웃 // 인 아웃 // 인
         {
             m_dialogBoxObj.SetActive(false);
-            GameManager.Instance.UI.Start_FadeIn(3.5f, Color.black, () => GameManager.Instance.UI.Start_FadeOut(2f, Color.black, () => GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Finish_CutScene(basicValue.nextIndex)), 0f, false)), 0f, false));
+            GameManager.Ins.UI.Start_FadeIn(3.5f, Color.black, () => GameManager.Ins.UI.Start_FadeOut(2f, Color.black, () => GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Finish_CutScene(basicValue.nextIndex)), 0f, false)), 0f, false));
         }
 
         private void Update_Camera(CameraValue cameraValue)
         {
-            GameManager.Instance.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
 
-            CameraCutscene camera = (CameraCutscene)GameManager.Instance.Camera.Get_CurCamera();
+            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
             if (cameraValue.usePosition == true)
                 camera.Start_Position(cameraValue.targetPosition, cameraValue.positionSpeed);
             if (cameraValue.useRotation == true)
@@ -458,7 +458,7 @@ namespace VisualNovel
             {
                 int ButtonIndex = i + 1; // 버튼 고유 인덱스
 
-                GameObject Clone = Instantiate(Resources.Load<GameObject>("5. Prefab/1. VisualNovel/UI/Button_Choice_VN"));
+                GameObject Clone = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Button_Choice_VN");
                 if (Clone)
                 {
                     Clone.transform.SetParent(gameObject.transform);
@@ -526,7 +526,7 @@ namespace VisualNovel
                     break;
 
                 case DialogData_VN.CHOICEEVENT_TYPE.CET_DIALOG: // 다음 다이얼로그 불러오고 해당 다이얼로그로 이어서 출력
-                    Start_Dialog(GameManager.Instance.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex - 1].choiceDialog[index - 1])); ;
+                    Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(m_dialogs[m_dialogIndex - 1].choiceDialog[index - 1])); ;
                     break;
             }
         }

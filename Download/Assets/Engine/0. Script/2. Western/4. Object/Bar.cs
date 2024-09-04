@@ -61,7 +61,7 @@ public class Bar : MonoBehaviour
             {
                 m_time = 0f;
                 // 노래 재생
-                Camera.main.GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira2");
+                Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira2");
                 Camera.main.GetComponent<AudioSource>().loop = false;
                 Camera.main.GetComponent<AudioSource>().Play();
 
@@ -69,7 +69,7 @@ public class Bar : MonoBehaviour
                 m_peoples.Dance_Peoples();
 
                 // 하늘에서 꽃가루 파티클이 떨어진다.
-                GameObject particle = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/1Stage/Effect/Particle_Flower"));
+                GameObject particle = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Particle_Flower");
                 particle.transform.position = new Vector3(0f, 1.471f, 19.72f);
                 particle.transform.rotation = Quaternion.Euler(new Vector3(68.88f, - 90f, -90f));
 
@@ -95,7 +95,7 @@ public class Bar : MonoBehaviour
                 if (m_time > 2f)
                 {
                     m_time = 0f;
-                    GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
+                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
                     m_event = EVENT.EVENT_END;
                 }
             }

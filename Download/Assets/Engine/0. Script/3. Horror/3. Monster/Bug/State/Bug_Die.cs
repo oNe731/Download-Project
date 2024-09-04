@@ -12,9 +12,7 @@ public class Bug_Die : Bug_Base
     {
         // ªÁ∏¡ ¿Ã∫•∆Æ √≥∏Æ
         Debug.Log("Bug ªÁ∏¡");
-
-        GameObject gameObject = m_owner.gameObject;
-        GameManager.Instance.Destroy_GameObject(ref gameObject);
+        GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }
 
     public override void Update_State()

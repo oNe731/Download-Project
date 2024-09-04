@@ -134,10 +134,10 @@ namespace VisualNovel
                 Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
                 Transform canvasTransform = GameObject.Find("Canvas").transform;
 
-                GameObject targetUI = Instantiate(m_target, Vector2.zero, Quaternion.identity, canvasTransform);
+                GameObject targetUI = GameManager.Ins.Resource.Create(m_target, Vector2.zero, Quaternion.identity, canvasTransform);
                 targetUI.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(targetPosition);
 
-                GameObject ballObject = Instantiate(m_ball);
+                GameObject ballObject = GameManager.Ins.Resource.Create(m_ball);
                 ballObject.GetComponent<Transform>().position = NewPosition;
 
                 ShootBall ball = ballObject.GetComponent<ShootBall>();

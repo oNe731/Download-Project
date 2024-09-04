@@ -4,7 +4,7 @@ public class StartManager : MonoBehaviour
 {
     public void Button_Start()
     {
-        GameManager.Instance.Change_Scene("Window"); // Intro
+        GameManager.Ins.Change_Scene("Window"); // Intro
     }
 
     public void Button_Exit()

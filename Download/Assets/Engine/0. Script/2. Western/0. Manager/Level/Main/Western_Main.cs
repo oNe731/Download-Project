@@ -38,7 +38,7 @@ namespace Western
             m_rectTransform.anchoredPosition = m_startPosition;
             WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = false;
 
-            GameManager.Instance.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
         }
 
         public override void Play_Level()
@@ -98,19 +98,19 @@ namespace Western
                 {
                     m_time = 0f;
 
-                    GameObject bulletMark = Instantiate(Resources.Load<GameObject>("5. Prefab/2. Western/UI/UI_BulletMark"), Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+                    GameObject bulletMark = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_BulletMark", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
                     switch (m_shootCount)
                     {
                         case 0: // 醚磊惫 积己
                             bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(-438f, 125f, 0f);
                             bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1.2f, 1.2f, 1f);
-                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_1");
+                            bulletMark.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_1");
                             break;
 
                         case 1: // 醚磊惫 积己
                             bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(174.9f, -29.4f, 0f);
                             bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1f, 1f, 1f);
-                            bulletMark.GetComponent<Image>().sprite = Resources.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_2");
+                            bulletMark.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_2");
                             break;
                     }
                     m_shootCount++;
@@ -120,7 +120,7 @@ namespace Western
             {
                 if (m_time >= m_darkDuration)
                 {
-                    GameManager.Instance.UI.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
+                    GameManager.Ins.UI.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
                     m_shootCount++;
                 }
             }

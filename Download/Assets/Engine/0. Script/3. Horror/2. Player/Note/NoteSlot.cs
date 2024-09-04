@@ -23,7 +23,7 @@ namespace Horror
         {
             m_note = note;
 
-            GameObject gameObject = Instantiate(Resources.Load<GameObject>("5. Prefab/3. Horror/UI/UI_NoteIcon"), transform);
+            GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_NoteIcon", transform);
             m_uIItem = gameObject.GetComponent<UINoteIcon>();
             m_uIItem.gameObject.SetActive(false);
         }
@@ -141,7 +141,7 @@ namespace Horror
                 return;
 
             // 월드 아이템 생성
-            GameObject worldObject = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Item/Research_Item");
+            GameObject worldObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Item/Research_Item");
 
 #region  위치 지정
             Ray ray = m_note.BaseCamera.ScreenPointToRay(Input.mousePosition);
@@ -165,12 +165,12 @@ namespace Horror
                 { // 바닥이 아닌 경우 Ex. 상단 방향 등
 
                     float dist = Random.Range(2f, 3f);
-                    RaycastHit playerHit = GameManager.Instance.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, dist, LayerMask.GetMask("Wall"));
+                    RaycastHit playerHit = GameManager.Ins.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, dist, LayerMask.GetMask("Wall"));
                     if (playerHit.collider == null) // 벽이 아닌 경우 해당 방향으로 이동 가능
                         worldObject.transform.position = HorrorManager.Instance.Player.transform.position + (HorrorManager.Instance.Player.transform.forward * dist);
                     else // 벽 끝으로 이동
                     {
-                        RaycastHit wallOutHit = GameManager.Instance.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, Mathf.Infinity, LayerMask.GetMask("Wall"));
+                        RaycastHit wallOutHit = GameManager.Ins.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, Mathf.Infinity, LayerMask.GetMask("Wall"));
                         if (wallOutHit.collider != null)
                         {
                             worldObject.transform.position = wallOutHit.point;

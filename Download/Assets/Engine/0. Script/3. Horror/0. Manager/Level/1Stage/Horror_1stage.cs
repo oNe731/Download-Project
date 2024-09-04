@@ -24,7 +24,7 @@ public class Horror_1stage : Horror_Base
         {
             m_IsVisit = true;
             // 스테이지 생성
-            m_stage = GameObject.Find("World").transform.GetChild(1).gameObject; //Instantiate(Resources.Load<GameObject>("5. Prefab/3. Horror/Map/Stage1"));
+            m_stage = GameObject.Find("World").transform.GetChild(1).gameObject;
 
             // 레벨 초기화
             GameObject collider_Area = m_stage.transform.GetChild(1).GetChild(1).GetChild(0).gameObject; // etc -> Collider -> Collider_Area

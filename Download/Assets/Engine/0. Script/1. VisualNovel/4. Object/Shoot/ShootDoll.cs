@@ -89,7 +89,7 @@ namespace VisualNovel
                     else if (!m_over && m_clearTime > 4.5) // 4) 1.5초 뒤 페이드 아웃으로 전환
                     {
                         m_over = true;
-                        GameManager.Instance.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
                     }
                 }
             }
@@ -171,7 +171,7 @@ namespace VisualNovel
 
         private void Create_Particle()
         {
-            GameObject clone = Instantiate(m_Particle);
+            GameObject clone = GameManager.Ins.Resource.Create(m_Particle);
             clone.transform.position = transform.position;
         }
 

@@ -15,9 +15,9 @@ public class Weapon_Gun_Effect : MonoBehaviour
         m_meshRenderer = GetComponent<MeshRenderer>();
 
         m_textures = new Texture2D[3];
-        m_textures[0] = Resources.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_1");
-        m_textures[1] = Resources.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_2");
-        m_textures[2] = Resources.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_3");
+        m_textures[0] = GameManager.Ins.Resource.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_1");
+        m_textures[1] = GameManager.Ins.Resource.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_2");
+        m_textures[2] = GameManager.Ins.Resource.Load<Texture2D>("1. Graphic/2D/3. Horror/Effect/GunLight/Gun_Light_3");
 
         gameObject.SetActive(false);
     }

@@ -26,7 +26,7 @@ public class CameraFollow : CameraBase
     public override void Enter_Camera()
     {
         base.Enter_Camera();
-        GameManager.Instance.Camera.Set_CursorLock(true);
+        GameManager.Ins.Camera.Set_CursorLock(true);
     }
 
     public override void Update_Camera()
@@ -68,7 +68,7 @@ public class CameraFollow : CameraBase
 
     public override void Exit_Camera()
     {
-        GameManager.Instance.Camera.Set_CursorLock(false);
+        GameManager.Ins.Camera.Set_CursorLock(false);
     }
 
     public void Set_FollowInfo(Transform positiontarget, Transform rotationtarget, bool isPosition, bool isRotation, Vector3 offset, float moveSpeed, float lerpSpeed, Vector2 rotationLimit, bool isXRotate, bool isYRotate)

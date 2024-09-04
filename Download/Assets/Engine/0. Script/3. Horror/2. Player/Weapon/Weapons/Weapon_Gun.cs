@@ -27,7 +27,7 @@ namespace Horror
             m_itemInfo.m_itemInfo = gunInfo;
 
             // 조준점 생성
-            m_uiAim = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform.Find("Panel_Play"));
+            m_uiAim = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Aim", GameObject.Find("Canvas").transform.Find("Panel_Play"));
             m_uiAim.SetActive(false);
 
             // 사격 이펙트 생성
@@ -39,7 +39,7 @@ namespace Horror
         {
             base.Enter_Weapon();
             m_uiAim.SetActive(true);
-            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Install", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Install", false, 1f);
         }
 
         public override void Update_Weapon()
@@ -82,7 +82,7 @@ namespace Horror
             // 이펙트 활성화
             m_effect.Reset_Effect();
             // 파티클 생성
-            GameObject particle = GameManager.Instance.Create_GameObject("5. Prefab/3. Horror/Effect/GunshotDust/Effect_Gunshot");
+            GameObject particle = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/GunshotDust/Effect_Gunshot");
             particle.transform.position = transform.GetChild(0).transform.position;
             // UI 업데이트
             noteItem.m_count--;
@@ -91,9 +91,9 @@ namespace Horror
             HorrorManager.Instance.Player.Note.Set_Item(NoteItem.ITEMTYPE.TYPE_BULLET, noteItem);
             m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
 
-            GameManager.Instance.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Attack", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Attack", false, 1f);
 
-            RaycastHit hit = GameManager.Instance.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Monster"));
+            RaycastHit hit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Monster"));
             if (hit.collider != null)
             {
                 // Debug.Log($"원거리공격 {hit.collider.gameObject.transform.parent.parent.parent.gameObject.name}");
