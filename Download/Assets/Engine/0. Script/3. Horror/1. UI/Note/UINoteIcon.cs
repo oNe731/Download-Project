@@ -19,7 +19,7 @@ public class UINoteIcon : MonoBehaviour
             gameObject.SetActive(true);
 
         m_nameText.text = noteItem.m_name;
-        m_Iconimage.sprite = HorrorManager.Instance.NoteElementIcon[noteItem.m_imageName];
+        m_Iconimage.sprite = HorrorManager.Instance.NoteElementIcon[noteItem.m_imageName + "_1"];
         switch (noteItem.m_noteType)
         {
             case NoteItem.NOTETYPE.TYPE_WEAPON:

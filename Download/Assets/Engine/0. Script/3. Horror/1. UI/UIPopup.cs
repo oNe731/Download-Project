@@ -21,7 +21,7 @@ public class UIPopup : MonoBehaviour
             transform.GetChild(0).GetChild(1).gameObject.SetActive(true); // 두고가기 버튼
         else // 노트, 장비, 소모품 아이템, 단서 (가져가기)
             transform.GetChild(0).GetChild(1).gameObject.SetActive(false); // 두고가기 버튼
-        transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = HorrorManager.Instance.NoteElementIcon[m_itemInfo.m_imageName];
+        transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = HorrorManager.Instance.NoteElementIcon[m_itemInfo.m_imageName + "_1"];
 
         gameObject.SetActive(true);
     }

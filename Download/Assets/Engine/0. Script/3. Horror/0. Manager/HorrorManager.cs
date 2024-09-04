@@ -48,18 +48,30 @@ public class HorrorManager : MonoBehaviour
         m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
 
         string basicPath = "1. Graphic/2D/3. Horror/UI/Play/Icon/";
-        m_noteElementIcon.Add("Icon_None", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/Icon_None"));
-        m_noteElementIcon.Add("Icon_Note", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/Icon_Note"));
+        m_noteElementIcon.Add("Icon_None_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/None/Icon_None_1"));
+        m_noteElementIcon.Add("Icon_None_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/None/Icon_None_2"));
+        m_noteElementIcon.Add("Icon_None_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/None/Icon_None_3"));
 
-        m_noteElementIcon.Add("Icon_Stick", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Stick"));
-        m_noteElementIcon.Add("Icon_Gun", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Gun"));
-        m_noteElementIcon.Add("Icon_Flashlight", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Icon_Flashlight"));
+        m_noteElementIcon.Add("Icon_Note_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Basic/Note/Icon_Note_1"));
 
-        m_noteElementIcon.Add("Icon_Bullet", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Icon_Bullet"));
-        m_noteElementIcon.Add("Icon_Medicine", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Icon_Medicine"));
+        m_noteElementIcon.Add("Icon_Stick_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Stick/Icon_Stick_1"));
+        m_noteElementIcon.Add("Icon_Stick_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Stick/Icon_Stick_2"));
+        m_noteElementIcon.Add("Icon_Gun_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Gun/Icon_Gun_1"));
+        m_noteElementIcon.Add("Icon_Gun_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Gun/Icon_Gun_2"));
+        m_noteElementIcon.Add("Icon_Flashlight_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Flashlight/Icon_Flashlight_1"));
+        m_noteElementIcon.Add("Icon_Flashlight_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Weapon/Flashlight/Icon_Flashlight_2"));
 
-        m_noteElementIcon.Add("Icon_clue", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Icon_clue"));
-        m_noteElementIcon.Add("Icon_A306File", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_Maxsize"));
+        m_noteElementIcon.Add("Icon_Bullet_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Bullet/Icon_Bullet_1"));
+        m_noteElementIcon.Add("Icon_Bullet_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Bullet/Icon_Bullet_2"));
+        m_noteElementIcon.Add("Icon_Medicine_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Medicine/Icon_Medicine_1"));
+        m_noteElementIcon.Add("Icon_Medicine_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Medicine/Icon_Medicine_2"));
+
+        m_noteElementIcon.Add("Icon_clue_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_1"));
+        m_noteElementIcon.Add("Icon_clue_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_2"));
+        m_noteElementIcon.Add("Icon_clue_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_3"));
+        m_noteElementIcon.Add("Icon_A306File_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_1"));
+        m_noteElementIcon.Add("Icon_A306File_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_2"));
+        m_noteElementIcon.Add("Icon_A306File_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_3"));
 
         // 사용할 UI 생성
         if (m_popupUI == null)

@@ -14,6 +14,7 @@ namespace Horror
         [SerializeField] private Sprite[] m_buttonImg;
         [SerializeField] private Sprite[] m_pageImg;
         [SerializeField] private NoteItemInfo m_panelInfo;
+        [SerializeField] private NoteItemMagnifyingGlass m_panelMagnifyingGlass;
 
         private Note m_note = null;
 
@@ -116,6 +117,7 @@ namespace Horror
         private void ActiveFalse_PanelInfo()
         {
             m_panelInfo.gameObject.SetActive(false);
+            m_panelMagnifyingGlass.gameObject.SetActive(false);
             if (m_note.NoteSlot != null)
                 m_note.NoteSlot.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
         }

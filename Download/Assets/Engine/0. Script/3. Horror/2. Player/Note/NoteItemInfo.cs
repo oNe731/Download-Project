@@ -29,12 +29,17 @@ public class NoteItemInfo : MonoBehaviour
         m_panelMagnifyingGlass.Update_UIInfo(m_item);
     }
 
-    public void Update_UIInfo(NoteItem item)
+    public void Update_UIInfo(NoteItem.NOTETYPE m_slotType, NoteItem item)
     {
-        m_item   = item;
+        m_item = item;
 
-        m_Image.sprite    = HorrorManager.Instance.NoteElementIcon[item.m_imageName];
+        m_Image.sprite    = HorrorManager.Instance.NoteElementIcon[item.m_imageName + "_2"];
         m_namtTxt.text    = m_item.m_name;
         m_detailsTxt.text = m_item.m_details;
+
+        if (m_slotType == NoteItem.NOTETYPE.TYPE_CLUE)
+            transform.GetChild(3).gameObject.SetActive(true);
+        else
+            transform.GetChild(3).gameObject.SetActive(false);
     }
 }
