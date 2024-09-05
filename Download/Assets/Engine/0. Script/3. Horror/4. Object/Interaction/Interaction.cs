@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Interaction : MonoBehaviour
 {
-
+    [SerializeField] protected float m_dist;
     [SerializeField] protected Vector3 m_uiOffset; // UI 위치 오프셋
     protected UIWorldHint m_interactionUI = null;
 
@@ -12,6 +12,7 @@ public abstract class Interaction : MonoBehaviour
     [SerializeField] protected bool m_objectDelete; // 오브젝트 삭제 여부
     protected bool  m_interact = false;             // 상호작용 가능 여부
 
+    public float Dist => m_dist;
     public UIWorldHint InteractionUI => m_interactionUI;
     public bool Possible => m_possible;
 

@@ -147,6 +147,14 @@ namespace Horror
                 return;
             }
 
+            // 상호작용 가능한 거리인가(개별 설정)
+            float distance = Vector3.Distance(m_player.gameObject.transform.position, interaction.gameObject.transform.position);
+            if (distance >= interaction.Dist)
+            {
+                Reset_Interaction();
+                return;
+            }
+
             // 벽이 먼저 있는가
             RaycastHit wallHit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Wall"));
             if (wallHit.collider != null)
