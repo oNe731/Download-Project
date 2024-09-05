@@ -61,9 +61,7 @@ public class Bar : MonoBehaviour
             {
                 m_time = 0f;
                 // 노래 재생
-                Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira2");
-                Camera.main.GetComponent<AudioSource>().loop = false;
-                Camera.main.GetComponent<AudioSource>().Play();
+                GameManager.Ins.Sound.Play_AudioSourceBGM("Western_BarBGM", false, 1f);
 
                 // 댄스 애니메이션 재생
                 m_peoples.Dance_Peoples();

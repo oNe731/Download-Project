@@ -259,7 +259,7 @@ namespace Horror
                 soundTime = 0f;
 
                 int Index = Random.Range(0, 18);
-                GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Player_Walk_" + Index.ToString(), false, speed);
+                GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Player_Walk_" + Index.ToString(), false, speed);
             }
         }
     }

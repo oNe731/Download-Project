@@ -68,8 +68,7 @@ namespace VisualNovel
         public override void Play_Level()
         {
             // ªı√— BGM
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ShootBGM", true, 1f);
 
             m_shootGameStart = true;
             GameManager.Ins.UI.Change_Cursor(CURSORTYPE.CT_NOVELSHOOT);

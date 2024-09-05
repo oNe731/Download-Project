@@ -47,8 +47,7 @@ namespace VisualNovel
 
         private void Continue_Play() // 컷씬 재생 후 게임 재진행
         {
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/추격게임 BGM");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ChaseBGM", true, 1f);
 
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             Novel_Chase novel_Chase = VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>();

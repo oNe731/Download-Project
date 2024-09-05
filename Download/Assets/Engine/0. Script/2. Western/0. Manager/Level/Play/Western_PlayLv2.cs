@@ -74,8 +74,7 @@ namespace Western
             Proceed_Next();
 
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_PlayBGM", true, 1f);
         }
 
         public override void Update_Level()
@@ -95,8 +94,7 @@ namespace Western
         public override void Play_Finish()
         {
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/La Docerola - Quincas Moreira");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_BarBGM", true, 1f);
         }
     }
 }

@@ -58,6 +58,6 @@ public class ResourceManager : MonoBehaviour
         if (gameObject == null)
             return;
 
-        Object.Destroy(gameObject);     
+        Object.Destroy(gameObject);
     }
 }

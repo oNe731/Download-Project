@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public enum SOUNDTYPE { TYPE_BGM, TYPE_EFFECT };
+
     private Dictionary<string, AudioClip> m_bgm = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioClip> m_effect = new Dictionary<string, AudioClip>();
 
@@ -14,6 +16,24 @@ public class SoundManager : MonoBehaviour
 
     private void Load_Resource()
     {
+        #region 미연시 게임 사운드
+        m_bgm.Add("VisualNovel_ShootBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS"));
+        m_bgm.Add("VisualNovel_CellarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/지하실 BGM"));
+        m_bgm.Add("VisualNovel_ChaseBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/추격게임 BGM"));
+        #endregion
+
+        #region 서부 게임 사운드
+        m_bgm.Add("Western_MainBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/메인화면 BGM"));
+        m_bgm.Add("Western_WantedBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/수배지 BGM"));
+        m_bgm.Add("Western_TutorialBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM"));
+        m_bgm.Add("Western_TutorialAfterBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM"));
+        m_bgm.Add("Western_PlayBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
+        m_bgm.Add("Western_BarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira2"));
+
+        m_effect.Add("Western_Gun_Attacked", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/에임 맞췄을 때"));
+        m_effect.Add("Western_Gun_Shoot", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/총소리"));
+        #endregion
+
         #region 공포 게임 사운드
 
         #region 플레이어
@@ -75,15 +95,10 @@ public class SoundManager : MonoBehaviour
     public void Play_ManagerAudioSource(string name, bool loop, float speed)
     {
         AudioSource audioSource = GameManager.Ins.AudioSource;
-        audioSource.Stop();
-
-        audioSource.clip = m_effect[name];
-        audioSource.loop = loop;
-        audioSource.pitch = speed; // 기본1f
-        audioSource.Play();
+        Play_AudioSource(audioSource, name, loop, speed);
     }
 
-    public void Play_AudioSource(ref AudioSource audioSource, string name, bool loop, float speed)
+    public void Play_AudioSource(AudioSource audioSource, string name, bool loop, float speed)
     {
         audioSource.Stop();
 
@@ -93,7 +108,18 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void Stop_AudioSource(ref AudioSource audioSource)
+    public void Play_AudioSourceBGM(string name, bool loop, float speed)
+    {
+        AudioSource audioSource = Camera.main.GetComponent<AudioSource>();
+        audioSource.Stop();
+
+        audioSource.clip = m_bgm[name];
+        audioSource.loop = loop;
+        audioSource.pitch = speed; // 기본1f
+        audioSource.Play();
+    }
+
+    public void Stop_AudioSource(AudioSource audioSource)
     {
         audioSource.Stop();
     }

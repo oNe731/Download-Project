@@ -91,7 +91,7 @@ public class Interaction_Door : Interaction
         if(delete == true)
             Destroy(m_interactionUI.gameObject);
 
-        GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Open_Door", false, 1f);
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Open_Door", false, 1f);
 
         switch (m_openType)
         {

@@ -12,13 +12,5 @@ public class Jumpscare_Door : Jumpscare
 
         // Ãâ±¸ ¹®ÀÌ Äç ´ÝÈû
         m_door.Move_Door(false);
-
-        // ÄçÇÏ´Â »ç¿îµå Àç»ý
-        AudioSource audioSource = m_door.GetComponent<AudioSource>();
-        if (audioSource == null)
-            return;
-        //audioSource.clip;
-        //audioSource.loop = false;
-        //audioSource.Play();
     }
 }

@@ -13,15 +13,11 @@ public class Gun : MonoBehaviour
 
     public void Click_Gun()
     {
-        m_audioSource.Stop();
-        m_audioSource.clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/ø°¿” ∏¬√Ë¿ª ∂ß");
-        m_audioSource.Play();
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Western_Gun_Attacked", false, 1f);
     }
 
     public void Shoot_Gun()
     {
-        m_audioSource.Stop();
-        m_audioSource.clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/√—º“∏Æ");
-        m_audioSource.Play();
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Western_Gun_Shoot", false, 1f);
     }
 }

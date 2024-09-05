@@ -16,8 +16,7 @@ namespace Western
         {
             base.Enter_Level();
 
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/ผ๖น่ม๖ BGM");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_WantedBGM", true, 1f);
         }
 
         public override void Play_Level()

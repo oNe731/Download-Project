@@ -124,7 +124,7 @@ public class Straitjacket_Base : State<Monster>
         if(m_soundTime >= m_nextTime)
         {
             m_soundTime = 0f;    
-            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
         }
     }
 }

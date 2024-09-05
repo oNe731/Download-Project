@@ -75,8 +75,7 @@ namespace Western
             // 다이얼로그 시작
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
 
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_TutorialBGM", true, 1f);
         }
 
         public override void Play_Level() // 튜토리얼 진행 후 Ready Go UI 출력 후 해당 함수 호출
@@ -92,8 +91,7 @@ namespace Western
             Proceed_Next();
 
             // BGM 변경
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_TutorialAfterBGM", true, 1f);
         }
 
         public override void Update_Level()

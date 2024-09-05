@@ -39,7 +39,7 @@ namespace Horror
         {
             base.Enter_Weapon();
             m_uiAim.SetActive(true);
-            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Install", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Weapon_Gun_Install", false, 1f);
         }
 
         public override void Update_Weapon()
@@ -91,7 +91,7 @@ namespace Horror
             HorrorManager.Instance.Player.Note.Set_Item(NoteItem.ITEMTYPE.TYPE_BULLET, noteItem);
             m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
 
-            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Gun_Attack", false, 1f);
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Weapon_Gun_Attack", false, 1f);
 
             RaycastHit hit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 10f, LayerMask.GetMask("Monster"));
             if (hit.collider != null)

@@ -79,8 +79,7 @@ namespace VisualNovel
             m_playerBodyObj.transform.localScale = new Vector3(1.1273f, 1.1273f, 1.1273f);
 
             // 지하실 BGM
-            Camera.main.GetComponent<AudioSource>().clip = GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/지하실 BGM");
-            Camera.main.GetComponent<AudioSource>().Play();
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
 
             // 지하실 다이얼로그 시작 (페이드 인)
             Dialog_VN dialog = VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>();

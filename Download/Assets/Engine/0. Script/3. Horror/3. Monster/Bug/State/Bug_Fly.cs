@@ -11,7 +11,7 @@ public class Bug_Fly : Bug_Base
     public override void Enter_State()
     {
         m_animator.SetBool("IsFly", true);
-        GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Bug_Fly", true, 1f);
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Fly", true, 1f);
     }
 
     public override void Update_State()
