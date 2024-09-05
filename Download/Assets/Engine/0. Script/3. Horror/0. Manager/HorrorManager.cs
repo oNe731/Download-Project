@@ -112,7 +112,7 @@ public class HorrorManager : MonoBehaviour
             return;
         GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
         CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
-        camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 100.0f, new Vector2(-45f, 45f), true, true);
+        camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 30.0f, new Vector2(-45f, 45f), true, true);
     }
 
     public void Set_Pause(bool pause)

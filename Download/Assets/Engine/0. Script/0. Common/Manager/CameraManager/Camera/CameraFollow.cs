@@ -46,7 +46,8 @@ public class CameraFollow : CameraBase
         // È¸Àü
         if (m_isPosition == false)
         {
-            m_mainCamera.transform.rotation = m_cameraRotationTarget.rotation;
+            //m_mainCamera.transform.rotation = m_cameraRotationTarget.rotation;
+            m_mainCamera.transform.rotation = Quaternion.Lerp(m_mainCamera.transform.rotation, m_cameraRotationTarget.rotation, Time.deltaTime * m_lerpSpeed);
         }
         else
         {
