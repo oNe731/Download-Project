@@ -12,19 +12,13 @@ namespace Horror
 
         public override void Enter_State()
         {
-            //Debug.Log("아이들 상태로 전환");
-            Check_Stamina();
+            Check_Stamina(); // 스테미나 회복 여부 판별
 
-            Change_Animation("Idle");
+            Change_Animation("Idle"); // 아이들 애니메이션 재생
         }
 
         public override void Update_State()
         {
-            base.Update_State();
-
-            if (m_animator.gameObject.activeSelf == true && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
-                Reset_Animation();
-
             if (Input.GetMouseButtonDown(0)) // 왼쪽 마우스 버튼
             {
                 m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_ATTACK);
@@ -39,11 +33,14 @@ namespace Horror
             }
             else
             {
-                Recover_Stamina();
                 Input_Rotation();
-                Input_Weapon();
                 Input_Interaction();
+                Input_Weapon();
+                Recover_Stamina();
             }
+
+            if (m_animator.gameObject.activeSelf == false || m_animator.IsInTransition(0) == true) return; // 손이 활성화 상태인가/ true == 애니메이션 보간중
+            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
         }
 
         public override void Exit_State()

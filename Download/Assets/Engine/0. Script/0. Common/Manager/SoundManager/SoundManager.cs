@@ -17,7 +17,24 @@ public class SoundManager : MonoBehaviour
         #region 공포 게임 사운드
 
         #region 플레이어
-        m_effect.Add("Horror_Player_Walk", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk"));
+        m_effect.Add("Horror_Player_Walk_0", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_0"));
+        m_effect.Add("Horror_Player_Walk_1", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_1"));
+        m_effect.Add("Horror_Player_Walk_2", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_2"));
+        m_effect.Add("Horror_Player_Walk_3", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_3"));
+        m_effect.Add("Horror_Player_Walk_4", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_4"));
+        m_effect.Add("Horror_Player_Walk_5", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_5"));
+        m_effect.Add("Horror_Player_Walk_6", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_6"));
+        m_effect.Add("Horror_Player_Walk_7", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_7"));
+        m_effect.Add("Horror_Player_Walk_8", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_8"));
+        m_effect.Add("Horror_Player_Walk_9", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_9"));
+        m_effect.Add("Horror_Player_Walk_10", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_10"));
+        m_effect.Add("Horror_Player_Walk_11", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_11"));
+        m_effect.Add("Horror_Player_Walk_12", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_12"));
+        m_effect.Add("Horror_Player_Walk_13", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_13"));
+        m_effect.Add("Horror_Player_Walk_14", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_14"));
+        m_effect.Add("Horror_Player_Walk_15", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_15"));
+        m_effect.Add("Horror_Player_Walk_16", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_16"));
+        m_effect.Add("Horror_Player_Walk_17", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_17"));
 
         // 무기
         m_effect.Add("Horror_Weapon_Bbaru_Install", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Weapon/Bbaru/Bbaru_Install/Stick_Wearing"));

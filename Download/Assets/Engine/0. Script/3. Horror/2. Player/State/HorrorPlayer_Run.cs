@@ -6,25 +6,28 @@ namespace Horror
 {
     public class HorrorPlayer_Run : HorrorPlayer_Base
     {
+        private float m_soundTime = 0f;
+
         public HorrorPlayer_Run(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter_State()
         {
-            //Debug.Log("뛰기 상태로 전환");
-            m_moveSpeed = 400f;
+            m_soundTime = 0f;
 
-            Change_Animation("Walk");
-            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Player_Walk", true, 1.8f);
+            m_player.MoveSpeed = 400f;
+
+            if(m_player.StateMachine.PreState != (int)HorrorPlayer.State.ST_WALK)
+                Change_Animation("Walk");
+                
+            m_animator.speed = 1.3f;
+            m_audioSource.pitch = 1.8f;
         }
 
         public override void Update_State()
         {
-            base.Update_State();
-
-            if (m_animator.gameObject.activeSelf == true && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
-                Reset_Animation();
+            Play_WalkSound(ref m_soundTime, 0.4f, 1f);
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -32,27 +35,29 @@ namespace Horror
             }
             else
             {
-                Input_Weapon();
                 Input_Interaction();
+                Input_Weapon();
+
                 if (Input_Move() == true)
                 { 
                     m_player.Set_Stamina(-1f * Time.deltaTime); // 스테미나 사용
+
                     if (m_player.Stamina <= 0 || Input.GetKey(KeyCode.Space) == false)
-                    {
                         m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_WALK);
-                    }
                 }
                 else
                 {
                     m_player.StateMachine.Change_State((int)HorrorPlayer.State.ST_IDLE);
                 }
             }
+
+            if (m_animator.gameObject.activeSelf == false || m_animator.IsInTransition(0) == true) return; // 손이 활성화 상태인가/ true == 애니메이션 보간중
+            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
         }
 
         public override void Exit_State()
         {
             Reset_Animation();
-            GameManager.Ins.Sound.Stop_AudioSource(ref m_audioSource);
         }
     }
 }

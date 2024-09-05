@@ -7,13 +7,15 @@ public class StateMachine<T> where T : class
     private GameObject m_owner;
     private int m_curState = -1;
     private int m_preState = -1;
+    private int m_nexState = -1;
     private List<State<T>> m_states;
 
     private bool m_lock = false;
 
-    public GameObject Owner { get { return m_owner; } }
-    public int CurState { get { return m_curState; } }
-    public int PreState { get { return m_preState; } }
+    public GameObject Owner => m_owner;
+    public int CurState => m_curState;
+    public int PreState => m_preState;
+    public int NexState => m_nexState;
 
     public bool Lock { get => m_lock; set => m_lock = value; }
 
@@ -38,6 +40,8 @@ public class StateMachine<T> where T : class
 
     public void Change_State(int stateIndex)
     {
+        m_nexState = stateIndex;
+
         if (m_curState != -1)
             m_states[(int)m_curState].Exit_State();
 

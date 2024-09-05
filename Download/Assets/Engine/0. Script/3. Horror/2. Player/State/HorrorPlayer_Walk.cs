@@ -6,26 +6,29 @@ namespace Horror
 {
     public class HorrorPlayer_Walk : HorrorPlayer_Base
     {
+        private float m_soundTime = 0f;
+
         public HorrorPlayer_Walk(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter_State()
         {
-            //Debug.Log("걷기 상태로 전환");
-            Check_Stamina();
-            m_moveSpeed = 270f;
+            m_soundTime = 0f;
 
-            Change_Animation("Walk");
-            GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Player_Walk", true, 1f);
+            Check_Stamina(); // 스테미나 회복 여부 판별
+            m_player.MoveSpeed = 270f;
+
+            if (m_player.StateMachine.PreState != (int)HorrorPlayer.State.ST_RUN)
+                Change_Animation("Walk");
+                
+            m_animator.speed = 0.8f;
+            m_audioSource.pitch = 1f;
         }
 
         public override void Update_State()
         {
-            base.Update_State();
-
-            if (m_animator.gameObject.activeSelf == true && m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
-                Reset_Animation();
+            Play_WalkSound(ref m_soundTime, 0.6f, 1f);
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -41,16 +44,18 @@ namespace Horror
             }
             else
             {
-                Recover_Stamina();
-                Input_Weapon();
                 Input_Interaction();
+                Input_Weapon();
+                Recover_Stamina();
             }
+
+            if (m_animator.gameObject.activeSelf == false || m_animator.IsInTransition(0) == true) return; // 손이 활성화 상태인가/ true == 애니메이션 보간중
+            if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
         }
 
         public override void Exit_State()
         {
             Reset_Animation();
-            GameManager.Ins.Sound.Stop_AudioSource(ref m_audioSource);
         }
     }
 }

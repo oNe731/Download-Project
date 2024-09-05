@@ -11,7 +11,6 @@ public class Bug_Die : Bug_Base
     public override void Enter_State()
     {
         // ªÁ∏¡ ¿Ã∫•∆Æ √≥∏Æ
-        Debug.Log("Bug ªÁ∏¡");
         GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }
 

@@ -1,58 +1,62 @@
 using UnityEngine;
 
-public abstract class Weapon<T> : MonoBehaviour where T : class
+namespace Horror
 {
-    protected float m_damage = 0f;
-
-    protected UIWeapon m_uIWeapon;
-
-    protected WeaponManagement<T> m_stateManagement;
-
-    protected NoteItem m_itemInfo = new NoteItem();
-
-    protected Animator m_animator;
-    protected AudioSource m_audioSource;
-
-    public NoteItem ItemInfo { get => m_itemInfo; }
-
-    public abstract bool Attack_Weapon();
-
-    public virtual void Initialize_Weapon(WeaponManagement<T> weaponManagement, NoteItem noteItem, UIWeapon uIWeapon)
+    public abstract class Weapon<T> : MonoBehaviour where T : class
     {
-        m_stateManagement = weaponManagement;
-        m_itemInfo = noteItem;
-        m_uIWeapon = uIWeapon;
+        protected float m_damage = 0f;
 
-        m_animator = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
-        gameObject.SetActive(false);
+        protected UIWeapon m_uIWeapon;
 
-        m_audioSource = gameObject.GetComponent<AudioSource>();
-    }
+        protected WeaponManagement<T> m_stateManagement;
 
-    public virtual void Enter_Weapon()
-    {
-        HorrorManager.Instance.Player.StateMachine.Change_State(HorrorManager.Instance.Player.StateMachine.CurState);
-        gameObject.SetActive(true);
-    }
+        protected NoteItem m_itemInfo = new NoteItem();
 
-    public virtual void Update_Weapon()
-    {
-    }
+        protected Animator m_animator;
+        protected AudioSource m_audioSource;
 
-    public virtual void Exit_Weapon()   
-    {
-        gameObject.SetActive(false);
-    }
+        public NoteItem ItemInfo { get => m_itemInfo; }
 
-    public void Update_WeaponUI()
-    {
-        if (m_uIWeapon == null)
-            return;
+        public abstract bool Attack_Weapon();
 
-        m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
-    }
+        public virtual void Initialize_Weapon(WeaponManagement<T> weaponManagement, NoteItem noteItem, UIWeapon uIWeapon)
+        {
+            m_stateManagement = weaponManagement;
+            m_itemInfo = noteItem;
+            m_uIWeapon = uIWeapon;
 
-    public virtual void OnDrawGizmos()
-    {
+            m_animator = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
+            gameObject.SetActive(false);
+
+            m_audioSource = gameObject.GetComponent<AudioSource>();
+        }
+
+        public virtual void Enter_Weapon()
+        {
+            HorrorManager.Instance.Player.StateMachine.Change_State((int)HorrorPlayer.State.ST_CHANGE);
+            //gameObject.SetActive(true);
+        }
+
+        public virtual void Update_Weapon()
+        {
+        }
+
+        public virtual void Exit_Weapon()
+        {
+            //gameObject.SetActive(false);
+        }
+
+        public void Update_WeaponUI()
+        {
+            if (m_uIWeapon == null)
+                return;
+
+            m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
+        }
+
+        public virtual void OnDrawGizmos()
+        {
+        }
     }
 }
+

@@ -8,26 +8,17 @@ namespace Horror
     {
         protected HorrorPlayer m_player = null;
         protected UIWorldHint m_interactionUI = null;
+        protected NoteItem    m_noteItem = null;
 
-        protected float m_moveSpeed = 400.0f;
-        protected float m_lerpSpeed = 5.0f;
-        protected float m_rotationSpeed = 100.0f;
-        protected Vector2 m_rotationLimit = new Vector2(-80f, 80f);
-
-        protected bool m_isLock = false;
         protected bool m_recoverStamina = false;
-
-        protected NoteItem m_noteItem = null;
-
-        protected Transform m_transform;
-        protected Transform m_rotationTransform;
-        protected Rigidbody m_rigidbody;
-        protected Animator m_animator;
-        protected AudioSource m_audioSource;
-
-        protected bool m_conversion = false;
+        protected bool   m_conversion = false;
         protected string m_triggerName = "";
-        protected Vector3 m_prePosition;
+
+        protected Transform   m_transform;
+        protected Transform   m_rotationTransform;
+        protected Rigidbody   m_rigidbody;
+        protected Animator    m_animator;
+        protected AudioSource m_audioSource;
 
         public HorrorPlayer_Base(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
         {
@@ -61,13 +52,13 @@ namespace Horror
 
             Vector3 velocity = Vector3.zero;
             if (Input.GetKey(KeyCode.W))
-                velocity += forwardDir * m_moveSpeed * Time.deltaTime;
+                velocity += forwardDir * m_player.MoveSpeed * Time.deltaTime;
             else if (Input.GetKey(KeyCode.S))
-                velocity += -forwardDir * m_moveSpeed * Time.deltaTime;
+                velocity += -forwardDir * m_player.MoveSpeed * Time.deltaTime;
             if (Input.GetKey(KeyCode.D))
-                velocity += rightDir * m_moveSpeed * Time.deltaTime;
+                velocity += rightDir * m_player.MoveSpeed * Time.deltaTime;
             else if (Input.GetKey(KeyCode.A))
-                velocity += -rightDir * m_moveSpeed * Time.deltaTime;
+                velocity += -rightDir * m_player.MoveSpeed * Time.deltaTime;
 
             if (velocity == Vector3.zero)
             {
@@ -76,7 +67,7 @@ namespace Horror
             else
             {
                 m_rigidbody.isKinematic = false;
-                m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, velocity, Time.deltaTime * m_lerpSpeed);
+                m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, velocity, Time.deltaTime * m_player.LerpSpeed);
                 return true;
             }
 
@@ -89,13 +80,13 @@ namespace Horror
                 return 0f;
 
             // Y축 좌우 회전
-            float yRotateSize = Input.GetAxis("Mouse X") * m_rotationSpeed * Time.deltaTime;
+            float yRotateSize = Input.GetAxis("Mouse X") * m_player.RotationSpeed * Time.deltaTime;
             float yRotate = m_transform.eulerAngles.y + yRotateSize;
             m_transform.eulerAngles = new Vector3(m_transform.eulerAngles.x, yRotate, 0);
 
             // X축 상하 회전
-            float xRotateSize = -Input.GetAxis("Mouse Y") * m_rotationSpeed * Time.deltaTime;
-            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_rotationLimit.x, m_rotationLimit.y); // 각도 제한(-45, 80)
+            float xRotateSize = -Input.GetAxis("Mouse Y") * m_player.RotationSpeed * Time.deltaTime;
+            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_player.RotationLimit.x, m_player.RotationLimit.y); // 각도 제한(-45, 80)
             m_rotationTransform.eulerAngles = new Vector3(m_player.XRotate, m_rotationTransform.eulerAngles.y, 0);
 
             return yRotate;
@@ -213,23 +204,17 @@ namespace Horror
             m_recoverStamina = m_player.Set_Stamina(0.5f * Time.deltaTime);
         }
 
-        public void Set_Lock(bool isLock)
-        {
-            m_isLock = isLock;
-            if (isLock)
-                m_rigidbody.isKinematic = true;
-        }
-
-        protected void Change_Animation(string stateName)
+        protected void Change_Animation(string stateName, bool play = false)
         {
             if (m_animator.gameObject.activeSelf == false)
                 return;
-
             AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
             m_triggerName = Get_AnimationName(stateName); // 무기 상태 체크
 
-            if (stateInfo.IsName(m_triggerName) == false) // 현재 애니메이션과 이름(무기)이 다르다면 애니메이션 변경
-                m_animator.SetBool(m_triggerName, m_conversion); // m_animator.Play(m_triggerName, 0, 0f); // 트랜지션 없이 변경
+            if(stateInfo.IsName(m_triggerName) == true || play == true)
+                m_animator.Play(m_triggerName, 0, 0f); // 트랜지션 없이 변경
+            else
+                m_animator.SetBool(m_triggerName, m_conversion);
         }
 
         protected string Get_AnimationName(string stateName)
@@ -264,6 +249,18 @@ namespace Horror
 
             m_conversion = false;
             m_animator.SetBool(m_triggerName, m_conversion);
+        }
+
+        protected void Play_WalkSound(ref float soundTime, float retryTime, float speed)
+        {
+            soundTime += Time.deltaTime;
+            if (soundTime >= retryTime)
+            {
+                soundTime = 0f;
+
+                int Index = Random.Range(0, 18);
+                GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Player_Walk_" + Index.ToString(), false, speed);
+            }
         }
     }
 }

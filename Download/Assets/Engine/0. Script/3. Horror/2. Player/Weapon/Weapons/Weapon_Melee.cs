@@ -50,10 +50,9 @@ namespace Horror
                 // Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.parent.parent.gameObject.name}");
                 Monster monster = hitCollider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
                 if (monster == null)
-                    return true;
+                    continue;
                 GameManager.Ins.Sound.Play_AudioSource(ref m_audioSource, "Horror_Weapon_Bbaru_Damaged", false, 1f);
                 monster.Damage_Monster(m_damage);
-                return true;
             }
 
             return true;
