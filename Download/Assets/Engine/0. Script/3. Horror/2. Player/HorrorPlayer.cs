@@ -94,10 +94,13 @@ namespace Horror
 
             m_hp = m_hpMax;
             m_hpSlider.maxValue = m_hpMax;
+            m_hpSlider.transform.parent.GetChild(0).GetComponent<Slider>().maxValue = m_hpSlider.maxValue;
             Damage_Player(0);
 
             m_stamina = m_staminaMax;
             m_staminaSlider.maxValue = m_staminaMax;
+            m_staminaSlider.transform.parent.GetChild(0).GetComponent<Slider>().maxValue = m_staminaSlider.maxValue;
+
             Set_Stamina(0);
 
             // Weapon
