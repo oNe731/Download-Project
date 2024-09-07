@@ -8,7 +8,11 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
-        // 충돌 무시
-        Physics.IgnoreCollision(m_Colliders[0], m_Colliders[1], true);
+        // 모든 콜라이더 간의 충돌을 무시
+        for (int i = 0; i < m_Colliders.Length; i++)
+        {
+            for (int j = i + 1; j < m_Colliders.Length; j++)
+                Physics.IgnoreCollision(m_Colliders[i], m_Colliders[j], true);
+        }
     }
 }
