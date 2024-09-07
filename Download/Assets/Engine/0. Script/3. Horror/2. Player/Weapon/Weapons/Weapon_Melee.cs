@@ -48,7 +48,7 @@ namespace Horror
             foreach (var hitCollider in hitColliders)
             {
                 // Debug.Log($"근접공격 {hitCollider.gameObject.transform.parent.parent.parent.gameObject.name}");
-                Monster monster = hitCollider.gameObject.transform.parent.parent.parent.GetComponent<Monster>();
+                Monster monster = hitCollider.gameObject.transform.parent.GetComponent<Monster>();
                 if (monster == null)
                     continue;
                 GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Weapon_Bbaru_Damaged", false, 1f);

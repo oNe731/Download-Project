@@ -13,8 +13,6 @@ public class Straitjacket_Idle : Straitjacket_Base
 
     public override void Enter_State()
     {
-        base.Enter_State();
-
         m_time = 0f;
         m_change = Random.Range(0.5f, 1.5f);
 
@@ -40,8 +38,6 @@ public class Straitjacket_Idle : Straitjacket_Base
 
     public override void Exit_State()
     {
-        base.Exit_State();
-
         m_animator.SetBool("IsIdle", false);
     }
 }

@@ -13,11 +13,8 @@ public class Straitjacket_Attack : Straitjacket_Base
 
     public override void Enter_State()
     {
-        base.Enter_State();
-
-        //Debug.Log("플레이어 공격");
-        HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
         m_time = 0;
+        HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
 
         m_animator.SetBool("IsAttack", true);
     }
@@ -28,15 +25,13 @@ public class Straitjacket_Attack : Straitjacket_Base
         m_time += Time.deltaTime;
         if(m_time >= m_change)
         {
-            if (Change_Attack() == false) // 거리가 일정 이상일 시 재 추격
+            if (Change_Attack() == false) // 거리가 일정 이상일 시 재 추격, 아닐 시 재공격
                 m_stateMachine.Change_State((int)Straitjacket.State.ST_RUN);
         }
     }
 
     public override void Exit_State()
     {
-        base.Exit_State();
-
         m_animator.SetBool("IsAttack", false);
     }
 }

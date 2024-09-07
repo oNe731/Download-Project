@@ -10,9 +10,6 @@ public class Straitjacket_Die : Straitjacket_Base
 
     public override void Enter_State()
     {
-        base.Enter_State();
-
-        // 사망 이벤트 처리
         m_animator.SetBool("IsDie", true);
         GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }
@@ -23,6 +20,5 @@ public class Straitjacket_Die : Straitjacket_Base
 
     public override void Exit_State()
     {
-        base.Exit_State();
     }
 }

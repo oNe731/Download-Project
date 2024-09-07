@@ -9,7 +9,7 @@ public class Straitjacket_Base : State<Monster>
     protected Rigidbody m_rigidbody = null;
     protected AudioSource m_audioSource = null;
 
-    protected Vector3 m_moveDirection;
+    protected Vector3 m_targetPosition;
     protected float   m_speed = 5f;
 
     protected float m_chaseDist  = 5f;
@@ -81,34 +81,12 @@ public class Straitjacket_Base : State<Monster>
         return false;
     }
 
-    protected void Move_Monster()
+    protected bool Check_Collider(Vector3 dir, int layerIndex) // ~0
     {
-        Vector3 newPos = m_owner.gameObject.transform.position + m_moveDirection * m_speed * Time.deltaTime;
-        if (m_owner.Spawner != null && m_owner.Spawner.Check_Position(newPos) == true && Check_Collider(m_moveDirection) == false)
-        {
-            m_owner.transform.forward  = m_moveDirection.normalized;
-            m_owner.transform.position = newPos;
-        }
-        else
-            Reset_RandomDirection();
-    }
+        Vector3 startPosition = m_owner.transform.position;
+        startPosition.y += 0.3f;
 
-    protected void Reset_RandomDirection()
-    {
-        Vector3 newDir = Random.insideUnitSphere;
-        newDir = newDir.normalized;
-        newDir.y = 0;
-
-        Vector3 newPos = m_owner.gameObject.transform.position + newDir * m_speed * Time.deltaTime;
-        if (m_owner.Spawner != null && m_owner.Spawner.Check_Position(newPos) == true && Check_Collider(newDir) == false)
-            m_moveDirection = newDir;
-        else
-            m_moveDirection = -m_moveDirection;
-    }
-
-    private bool Check_Collider(Vector3 dir)
-    {
-        RaycastHit hit = GameManager.Ins.Start_Raycast(m_owner.transform.position, dir, 1f, LayerMask.GetMask("Wall", "Static", "Interaction"));
+        RaycastHit hit = GameManager.Ins.Start_Raycast(startPosition, dir, 1f, layerIndex);
         if (hit.collider != null)
             return true;
 
