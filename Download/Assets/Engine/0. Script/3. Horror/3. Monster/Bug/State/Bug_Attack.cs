@@ -10,9 +10,8 @@ public class Bug_Attack : Bug_Base
 
     public override void Enter_State()
     {
-        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
-        if (distanceToPlayer <= m_attackDist)
-            HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
+        Look_Player();
+        HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
     }
 
     public override void Update_State()

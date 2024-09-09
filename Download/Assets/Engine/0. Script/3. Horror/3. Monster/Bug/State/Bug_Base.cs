@@ -6,7 +6,8 @@ public class Bug_Base : State<Monster>
 {
     protected Bug m_owner = null;
 
-    protected float m_attackDist = 1.5f;
+    protected float m_flyDist = 3f;
+    protected float m_attackDist = 2f;
     protected float m_chaseDist = 3f;
 
     protected Animator m_animator = null;
@@ -32,11 +33,15 @@ public class Bug_Base : State<Monster>
     {
     }
 
+    protected float Get_PlayerDistance()
+    {
+        return Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
+    }
+
     protected bool Change_FLY()
     {
         // 플레이어가 일정 범위 내로 접근하면 비행 상태 전환
-        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
-        if (distanceToPlayer <= m_chaseDist)
+        if (Get_PlayerDistance() <= m_flyDist)
         {
             m_stateMachine.Change_State((int)Bug.State.ST_FLY); // 비행 상태로 전환
             return true;
@@ -45,17 +50,24 @@ public class Bug_Base : State<Monster>
         return false;
     }
 
-    public override void OnDrawGizmos()
+    protected void Look_Player()
     {
-#if UNITY_EDITOR
-        // 추격 범위 표시
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_chaseDist);
+        //m_owner.transform.LookAt(HorrorManager.Instance.Player.transform);
+        //m_owner.transform.Rotate(-90, 0, 0); // X축으로 -90도 회전 추가
 
-        // 공격 범위 표시
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_attackDist);
-#endif
+        Quaternion targetRotation = Quaternion.LookRotation(HorrorManager.Instance.Player.transform.position - m_owner.transform.position);
+        m_owner.transform.rotation = targetRotation * Quaternion.Euler(-90, 0, 0); // X축으로 -90도 회전 추가
+    }
+
+    protected bool Check_Collider(Vector3 dir, int layerIndex) // ~0
+    {
+        Vector3 startPosition = m_owner.transform.position;
+
+        RaycastHit hit = GameManager.Ins.Start_Raycast(startPosition, dir, 1f, layerIndex);
+        if (hit.collider != null)
+            return true;
+
+        return false;
     }
 
     protected Vector3 Calculate_BezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) // Bezier curve calculation method
@@ -81,5 +93,22 @@ public class Bug_Base : State<Monster>
         Vector3 B1 = Vector3.Lerp(M1, M2, t);
 
         return Vector3.Lerp(B0, B1, t);*/
+    }
+
+    public override void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        // 변신 범위 표시
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_flyDist);
+
+        // 추격 범위 표시
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_chaseDist);
+
+        // 공격 범위 표시
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_attackDist);
+#endif
     }
 }

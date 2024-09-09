@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bug : Monster
 {
-    public enum State { ST_IDLE, ST_FLY, ST_CHARGE, ST_ATTACK, ST_RETREAT, ST_DIE, ST_END } // 4
+    public enum State { ST_IDLE, ST_FLY, ST_CHARGE, ST_ATTACK, ST_RETREAT, ST_CHASE, ST_DIE, ST_END } // 4
 
     public override void Damage_Monster(float damage)
     {
@@ -27,13 +27,17 @@ public class Bug : Monster
         states.Add(new Bug_Charge(m_stateMachine));  // 2
         states.Add(new Bug_Attack(m_stateMachine));  // 3
         states.Add(new Bug_Retreat(m_stateMachine)); // 4
-        states.Add(new Bug_Die(m_stateMachine));     // 5
+        states.Add(new Bug_Chase(m_stateMachine));   // 5
+        states.Add(new Bug_Die(m_stateMachine));     // 6
 
         m_stateMachine.Initialize_State(states, (int)State.ST_IDLE);
     }
 
     private void Update()
     {
+        if (m_stateMachine == null)
+            return;
+
         m_stateMachine.Update_State();
     }
 

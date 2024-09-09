@@ -22,12 +22,11 @@ public class Bug_Fly : Bug_Base
 
     public override void Update_State()
     {
-        m_owner.transform.LookAt(HorrorManager.Instance.Player.transform);
-        m_owner.transform.Rotate(-90, 0, 0); // X축으로 -90도 회전 추가
-
         m_time += Time.deltaTime;
         if(m_time >= m_ataackTime)
             m_stateMachine.Change_State((int)Bug.State.ST_CHARGE); // 공격 상태로 전환
+        else
+            Look_Player();
     }
 
     public override void Exit_State()
