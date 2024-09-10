@@ -1,25 +1,45 @@
+using System.Collections;
+using UnityEngine;
+
 public class Jumpscare_Girl : Jumpscare
 {
+    [SerializeField] private GameObject m_girl;
+
     public override void Active_Jumpscare()
     {
         m_isTrigger = true;
 
-        /*
-         [A]범위에 주인공이 들어가면[B]에 서있던 어린 여자아이가 화살표 방향으로 걸어간다.
-         주인공이 [A]에 들어간 순간 바로 웃음소리가 나고
-         동시에 여자아이는 0.3초 정도 서 있다가 움직이기 시작
-         화살표가 끝나는 곳 쯤에서 여자아이 오브젝트 삭제시키면 될 것 같습니다.
-         여자아이 웃음소리 사운드 O
-        */
+        // 웃음소리 사운드 재생
+        //
+
+        m_girl.SetActive(true);
+        StartCoroutine(Move_Girl());
     }
 
-    private void Start()
+    private IEnumerator Move_Girl()
     {
+        // 대기 ---
+        float time = 0f;
+        while(true)
+        {
+            time += Time.deltaTime;
+            if (time >= 0.3f) // 0.3초 정도
+                break;
+            yield return null;
+        }
 
-    }
+        // 걷기 ---
+        float speed = 2f;
+        while (true)
+        {
+            m_girl.transform.localPosition = new Vector3(m_girl.transform.localPosition.x, m_girl.transform.localPosition.y, m_girl.transform.localPosition.z + speed * Time.deltaTime);
+            if (m_girl.transform.localPosition.z >= 3.2f)
+                break;
+            yield return null;
+        }
 
-    private void Update()
-    {
-
+        // 여자아이 삭제 ---
+        Destroy(m_girl);
+        yield break;
     }
 }
