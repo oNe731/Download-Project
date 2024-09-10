@@ -8,11 +8,8 @@ public class Bug_Retreat : Bug_Base
     private float m_curveDuration = 2.0f;
     private float m_t = 0f;
 
-    private Rigidbody m_rigidbody;
-
     public Bug_Retreat(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
-        m_rigidbody = m_owner.GetComponent<Rigidbody>();
     }
 
     public override void Enter_State()
@@ -56,10 +53,11 @@ public class Bug_Retreat : Bug_Base
         endPoint.z += Random.Range(-0.5f, 0.5f);
 
         float distance = Random.Range(1.5f, 3f);
+        float height = Random.Range(0f, 1.5f);
         m_controlPoints = new Vector3[4];
         m_controlPoints[0] = startPoint;
-        m_controlPoints[1] = startPoint + new Vector3(Random.Range(-distance, distance), Random.Range(0f, distance), Random.Range(-distance, distance)); // Random mid-point
-        m_controlPoints[2] = endPoint + new Vector3(Random.Range(-distance, distance), Random.Range(0f, distance), Random.Range(-distance, distance)); // Another random mid-point
+        m_controlPoints[1] = startPoint + new Vector3(Random.Range(-distance, distance), Random.Range(0f, height), Random.Range(-distance, distance)); // Random mid-point
+        m_controlPoints[2] = endPoint + new Vector3(Random.Range(-distance, distance), Random.Range(0f, height), Random.Range(-distance, distance)); // Another random mid-point
         m_controlPoints[3] = endPoint;
     }
 }

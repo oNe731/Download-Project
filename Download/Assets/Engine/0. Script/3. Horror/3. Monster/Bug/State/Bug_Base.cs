@@ -52,11 +52,7 @@ public class Bug_Base : State<Monster>
 
     protected void Look_Player()
     {
-        //m_owner.transform.LookAt(HorrorManager.Instance.Player.transform);
-        //m_owner.transform.Rotate(-90, 0, 0); // X축으로 -90도 회전 추가
-
-        Quaternion targetRotation = Quaternion.LookRotation(HorrorManager.Instance.Player.transform.position - m_owner.transform.position);
-        m_owner.transform.rotation = targetRotation * Quaternion.Euler(-90, 0, 0); // X축으로 -90도 회전 추가
+        m_owner.transform.rotation = Quaternion.LookRotation(HorrorManager.Instance.Player.transform.position - m_owner.transform.position);
     }
 
     protected bool Check_Collider(Vector3 dir, int layerIndex) // ~0
