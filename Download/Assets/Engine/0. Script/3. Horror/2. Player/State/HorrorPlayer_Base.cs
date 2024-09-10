@@ -270,6 +270,42 @@ namespace Horror
                 GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Player_Walk_" + Index.ToString(), false, speed);
             }
         }
+
+        protected void Check_PreStateWalk(ref bool preWalk)
+        {
+            if (m_player.StateMachine.PreState == (int)HorrorPlayer.State.ST_WALK) // 걷기 상태
+            {
+                preWalk = true;
+                Check_Stamina(); // 스테미나 회복 여부 판별
+            }
+            else // 달리기 상태
+            {
+                preWalk = false;
+            }
+        }
+
+        protected void Update_PreStateWalk(ref bool preWalk, ref float soundTime)
+        {
+            if (Input_Move() == true) // 이동 입력 값이 있을 때
+            {
+                if (preWalk == true) // 걷기 상태
+                {
+                    Play_WalkSound(ref soundTime, 0.6f, 1f);
+                    Recover_Stamina();
+                }
+                else // 달리기 상태
+                {
+                    Play_WalkSound(ref soundTime, 0.4f, 1f);
+                    m_player.Set_Stamina(-1f * Time.deltaTime); // 스테미나 사용
+
+                    if (m_player.Stamina <= 0)
+                    {
+                        preWalk = true;
+                        Check_Stamina();
+                    }
+                }
+            }
+        }
     }
 }
 

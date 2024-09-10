@@ -9,6 +9,7 @@ namespace Horror
         private bool isAttak = false;
         private NoteItem.ITEMTYPE m_weaponType;
 
+        private bool m_preWalk = true;
         private float m_soundTime = 0f;
 
         public HorrorPlayer_Attack(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
@@ -41,17 +42,13 @@ namespace Horror
             // 공격 애니메이션 변경
             Change_Animation("Attack");
             m_soundTime = 0f;
+
+            Check_PreStateWalk(ref m_preWalk);
         }
 
         public override void Update_State()
         {
-            if (Input_Move() == true) // 이동 입력 값이 있을 때
-            {
-                if(m_player.StateMachine.PreState == (int)HorrorPlayer.State.ST_WALK)
-                    Play_WalkSound(ref m_soundTime, 0.6f, 1f);
-                else
-                    Play_WalkSound(ref m_soundTime, 0.4f, 1f);
-            }
+            Update_PreStateWalk(ref m_preWalk, ref m_soundTime);
 
             // 현재 애니메이션 상태 확인
             if (m_animator.gameObject.activeSelf == false || m_animator.IsInTransition(0) == true) return;
