@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Monster : Character
 {
-    public enum TYPE { TYPE_STRAITJACKER, TYPE_BUG, TYPE_END };
+    public enum TYPE { TYPE_STRAITJACKER, TYPE_BUG, TYPE_BASICUPPERBODY, TYPE_FASTUPPERBODY, TYPE_END };
 
     protected float m_hp;
     protected float m_attack;

@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Monster.TYPE m_type;
     [SerializeField] private int m_count;
 
+    private List<Monster> m_monster;
     private Collider[] m_areas;
 
     private void Awake()
@@ -16,21 +17,30 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        string path = "";
+        string path = "5. Prefab/3. Horror/Monster/";
         switch(m_type)
         {
             case Monster.TYPE.TYPE_STRAITJACKER:
-                path = "5. Prefab/3. Horror/Monster/Straitjacket";
+                path += "Straitjacket";
                 break;
 
             case Monster.TYPE.TYPE_BUG:
-                path = "5. Prefab/3. Horror/Monster/Bug";
+                path += "Bug";
+                break;
+
+            case Monster.TYPE.TYPE_BASICUPPERBODY:
+                path += "BasicUpperBody";
+                break;
+
+            case Monster.TYPE.TYPE_FASTUPPERBODY:
+                path += "FastUpperBody";
                 break;
         }
 
-        for(int i = 0; i < m_count; ++i)
+        m_monster = new List<Monster>();
+        for (int i = 0; i < m_count; ++i)
         {
-            GameObject gameObject = GameManager.Ins.Resource.LoadCreate(path, transform);
+            GameObject gameObject = GameManager.Ins.Resource.LoadCreate(path);
             if (gameObject == null)
                 break;
 
@@ -38,6 +48,29 @@ public class Spawner : MonoBehaviour
             if (monster == null)
                 break;
             monster.Initialize_Monster(this);
+            m_monster.Add(monster);
+        }
+    }
+
+    private void OnEnable() // 활성화될 때
+    {
+        if (m_monster == null) return;
+
+        for (int i = 0; i < m_monster.Count; ++i)
+        {
+            if (m_monster[i] == null) continue;
+            m_monster[i].gameObject.SetActive(true);
+        }
+    }
+
+    private void OnDisable() // 비활성화될 때
+    {
+        if (m_monster == null) return;
+
+        for (int i = 0; i < m_monster.Count; ++i)
+        {
+            if (m_monster[i] == null) continue;
+            m_monster[i].gameObject.SetActive(false);
         }
     }
 
