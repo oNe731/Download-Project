@@ -14,15 +14,15 @@ public class BasicUpperBody_Die : BasicUpperBody_Base
         // 
 
         // 2窜拌 各 积己
-        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/FastUpperBody", m_owner.Spawner.transform);
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/FastUpperBody");
         if (gameObject == null)
             return;
         Monster monster = gameObject.GetComponent<Monster>();
         if (monster == null)
             return;
         monster.Initialize_Monster(m_owner.Spawner);
-        monster.gameObject.transform.localPosition = m_owner.gameObject.transform.localPosition;
-        monster.gameObject.transform.localRotation = m_owner.gameObject.transform.localRotation;
+        monster.gameObject.transform.position = m_owner.gameObject.transform.position;
+        monster.gameObject.transform.rotation = m_owner.gameObject.transform.rotation;
 
         // 1窜拌 各 家戈
         GameManager.Ins.Resource.Destroy(m_owner.gameObject);

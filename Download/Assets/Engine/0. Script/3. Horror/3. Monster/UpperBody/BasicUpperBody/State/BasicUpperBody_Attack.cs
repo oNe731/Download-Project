@@ -16,18 +16,8 @@ public class BasicUpperBody_Attack : BasicUpperBody_Base
 
     public override void Enter_State()
     {
-        // 원거리 공격 : 입에서 투사체 액체 발사
         m_time = 0;
-
-        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/Etc/BasicUpperBody_Bullet");
-        if (gameObject == null)
-            return;
-        Bullet bullet = gameObject.GetComponent<Bullet>();
-        if (bullet == null)
-            return;
-        Vector3 targetPosition = HorrorManager.Instance.Player.transform.position;
-        targetPosition.y += 1f;
-        bullet.Initialize_Bullet(m_mouseTransform.position, targetPosition, m_owner.Attack, 5f);
+        Attack_Bullet();
     }
 
     public override void Update_State()
@@ -43,5 +33,18 @@ public class BasicUpperBody_Attack : BasicUpperBody_Base
 
     public override void Exit_State()
     {
+    }
+
+    private void Attack_Bullet() // 원거리 공격 : 입에서 투사체 액체 발사
+    {
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/Etc/BasicUpperBody_Bullet");
+        if (gameObject == null)
+            return;
+        Bullet bullet = gameObject.GetComponent<Bullet>();
+        if (bullet == null)
+            return;
+        Vector3 targetPosition = HorrorManager.Instance.Player.transform.position;
+        targetPosition.y += 1f;
+        bullet.Initialize_Bullet(m_mouseTransform.position, targetPosition, m_owner.Attack, 5f);
     }
 }

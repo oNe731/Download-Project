@@ -9,7 +9,7 @@ public class BasicUpperBody_Base : State<Monster>
     protected Vector3 m_targetPosition;
     protected float m_speed = 5f;
 
-    protected float m_chaseDist = 5f;
+    protected float m_chaseDist = 4f;
     protected float m_attackDist = 4.5f;
 
     public BasicUpperBody_Base(StateMachine<Monster> stateMachine) : base(stateMachine)
@@ -32,6 +32,13 @@ public class BasicUpperBody_Base : State<Monster>
     public override void OnDrawGizmos()
     {
 #if UNITY_EDITOR
+        // 추격 범위 표시
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_chaseDist);
+
+        // 공격 범위 표시
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(m_stateMachine.Owner.transform.position, m_attackDist);
 #endif
     }
 
