@@ -30,6 +30,7 @@ namespace Horror
         private Note m_note;
 
         protected Rigidbody m_rigidbody;
+        protected Animator m_animator;
 
         public float Hp => m_hp;
         public float HpMax => m_hpMax;
@@ -91,6 +92,7 @@ namespace Horror
         private void Start()
         {
             m_rigidbody = GetComponent<Rigidbody>();
+            m_animator = transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
 
             m_hp = m_hpMax;
             m_hpSlider.maxValue = m_hpMax;
@@ -141,8 +143,18 @@ namespace Horror
         public void Set_Lock(bool isLock)
         {
             m_isLock = isLock;
-            if (isLock)
-                m_rigidbody.isKinematic = true;
+            m_stateMachine.Lock = isLock;
+            m_rigidbody.isKinematic = isLock;
+        }
+
+        public void Stop_Player(bool stop)
+        {
+            Set_Lock(stop);
+
+            if (stop == false)
+                m_animator.StopPlayback();
+            else
+                m_animator.StartPlayback();
         }
     }
 }

@@ -115,12 +115,13 @@ public class HorrorManager : MonoBehaviour
         camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 30.0f, new Vector2(-45f, 45f), true, true);
     }
 
-    public void Set_Pause(bool pause)
+    public void Set_Pause(bool pause, bool Setcursur = true)
     {
         m_isGame = !pause;
+        Player.Stop_Player(pause);
 
-        GameManager.Ins.Camera.Set_CursorLock(!pause);
-        Player.StateMachine.Lock = pause;
+        if (Setcursur == true)
+            GameManager.Ins.Camera.Set_CursorLock(!pause);
     }
 
     public GameObject Create_WorldHintUI(UIWorldHint.HINTTYPE hinttype, Transform target, Vector3 m_uiOffset)

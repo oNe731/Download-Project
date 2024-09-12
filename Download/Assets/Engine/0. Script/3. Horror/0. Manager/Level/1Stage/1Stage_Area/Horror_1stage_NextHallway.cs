@@ -7,6 +7,7 @@ public class Horror_1stage_NextHallway : Area
     [SerializeField] private Dummy m_dummy;
     [SerializeField] private GameObject m_monsterTriger;
     [SerializeField] private GameObject m_soundTriger;
+    [SerializeField] private GameObject m_Effect;
     private bool m_event = false;
 
     public override void Initialize_Level(LevelController levelController)
@@ -80,6 +81,8 @@ public class Horror_1stage_NextHallway : Area
 
     private IEnumerator Event_Door(string text)
     {
+        HorrorManager.Instance.Set_Pause(true, false); // 게임 일시정지
+
 #region 안내 문구가 끝났다면 이벤트 발생
         UIInstruction instruction = HorrorManager.Instance.InstructionUI;
         while (true)
@@ -99,8 +102,6 @@ public class Horror_1stage_NextHallway : Area
         m_dummy.Fall_Dummy(); // 더미 오브젝트 이벤트 발생.
 
 #region 카메라 쉐이킹        
-        HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
-
         CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
         camera.Start_Shake(3f, 1.5f);
 
@@ -110,8 +111,6 @@ public class Horror_1stage_NextHallway : Area
                 break;
             yield return null;
         }
-        
-        HorrorManager.Instance.Set_Pause(false); // 게임 일시정지 해제
 #endregion
 
 #region 몹 생성 (구속복/ 애벌레)
@@ -120,10 +119,11 @@ public class Horror_1stage_NextHallway : Area
 
         m_soundTriger.SetActive(true);
 
-#region 맵 요소 생성 및 변경 (추후 작업)
-        // 분홍색 벽 부분에 피로 적힌 글씨가 생긴다.
-        // 빗금표시(////)되어있는 곳에 발자국(발없는 보스로 바뀌면서 다른 흔적으로 변경 예상)이 생긴다.
-#endregion
+#region 맵 요소 생성 및 변경
+        m_Effect.SetActive(true);
+        #endregion
+
+        HorrorManager.Instance.Set_Pause(false, false); // 게임 일시정지 해제
 
         yield break;
     }
