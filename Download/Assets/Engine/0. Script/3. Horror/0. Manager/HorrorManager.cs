@@ -150,4 +150,13 @@ public class HorrorManager : MonoBehaviour
 
         m_instructionUI.Initialize_UI(openType, closeType, activeTimes, texts);
     }
+
+    public void Restart_Game()
+    {
+        // 체크포인트에서 게임 재시작
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        HorrorManager.Instance.Set_Pause(false, false);
+
+        m_isGame = true;
+    }
 }
