@@ -16,6 +16,9 @@ public class Bug_Retreat : Bug_Base
     {
         m_t = 0f;
         Generate_RandomCurve();
+
+        if (m_audioSource.loop == false)
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Fly", true, 1f);
     }
 
     public override void Update_State()

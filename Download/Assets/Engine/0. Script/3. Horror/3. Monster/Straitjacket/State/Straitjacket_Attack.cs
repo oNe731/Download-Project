@@ -16,6 +16,7 @@ public class Straitjacket_Attack : Straitjacket_Base
         m_time = 0;
         HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
 
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Straitjacket_Attack", false, 1f);
         m_animator.SetBool("IsAttack", true);
     }
 

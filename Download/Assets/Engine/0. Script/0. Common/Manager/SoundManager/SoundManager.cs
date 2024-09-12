@@ -74,7 +74,9 @@ public class SoundManager : MonoBehaviour
 
         #region 몬스터
         m_effect.Add("Horror_Bug_Fly", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Bug/Worm_Flight"));
+        m_effect.Add("Horror_Bug_Attack", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Bug/Worm_Attack"));
         m_effect.Add("Horror_Straitjacket_Idle", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Straitjacket/Zombie_Notice_3"));
+        m_effect.Add("Horror_Straitjacket_Attack", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Straitjacket/Zombie_Attack"));
         #endregion
 
         #region 오브젝트

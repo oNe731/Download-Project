@@ -17,7 +17,8 @@ public class Bug_Fly : Bug_Base
         m_ataackTime = Random.Range(0.3f, 0.6f);
 
         m_animator.SetBool("IsFly", true);
-        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Fly", true, 1f);
+        if(m_audioSource.loop == false)
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Fly", true, 1f);
     }
 
     public override void Update_State()

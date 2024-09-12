@@ -9,9 +9,6 @@ public class Jumpscare_Girl : Jumpscare
     {
         m_isTrigger = true;
 
-        // 웃음소리 사운드 재생
-        //
-
         m_girl.SetActive(true);
         StartCoroutine(Move_Girl());
     }
@@ -29,7 +26,7 @@ public class Jumpscare_Girl : Jumpscare
         }
 
         // 걷기 ---
-        float speed = 2f;
+        float speed = 2.5f;
         while (true)
         {
             m_girl.transform.localPosition = new Vector3(m_girl.transform.localPosition.x, m_girl.transform.localPosition.y, m_girl.transform.localPosition.z + speed * Time.deltaTime);
