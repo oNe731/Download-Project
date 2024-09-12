@@ -17,9 +17,9 @@ public class SoundManager : MonoBehaviour
     private void Load_Resource()
     {
         #region 미연시 게임 사운드
-        m_bgm.Add("VisualNovel_ShootBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/SS"));
-        m_bgm.Add("VisualNovel_CellarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/지하실 BGM"));
-        m_bgm.Add("VisualNovel_ChaseBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/추격게임 BGM"));
+        m_bgm.Add("VisualNovel_ShootBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Shoot"));
+        m_bgm.Add("VisualNovel_CellarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
+        m_bgm.Add("VisualNovel_ChaseBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Chase"));
         #endregion
 
         #region 서부 게임 사운드
