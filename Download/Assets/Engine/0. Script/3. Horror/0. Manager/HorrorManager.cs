@@ -94,7 +94,7 @@ public class HorrorManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, ()=> Start_Game());
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
     }
 
     private void Update()
@@ -102,8 +102,9 @@ public class HorrorManager : MonoBehaviour
         m_levelController.Update_Level();
     }
 
-    private void Start_Game()
+    public void Start_Game()
     {
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         m_isGame = true;
 
         // 카메라 설정
