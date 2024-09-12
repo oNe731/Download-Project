@@ -92,13 +92,6 @@ public class VisualNovelManager : MonoBehaviour
     private void Update()
     {
         m_levelController.Update_Level();
-
-//#if UNITY_EDITOR юс╫ц
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
-        }
-//# endif
     }
 
     private void Create_NpcHeart()
