@@ -14,6 +14,9 @@
         },
         {
             "m_Id": "337b1fc1eecc47e9957f1668a0ce4d75"
+        },
+        {
+            "m_Id": "dcdf840fd58d4a76b8932ef4a8d57c30"
         }
     ],
     "m_Keywords": [],
@@ -95,6 +98,9 @@
         },
         {
             "m_Id": "64e05681bbfb4ae09606def636bfe957"
+        },
+        {
+            "m_Id": "3c4aee957d194066bbdb5acbb2781c84"
         }
     ],
     "m_GroupDatas": [],
@@ -140,6 +146,20 @@
                     "m_Id": "7e8a0bb3d8a14c58934e06e0eb19f51a"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "3c4aee957d194066bbdb5acbb2781c84"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "a8a8d83fafc5404ba28c69717dfe2aad"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -808,6 +828,42 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "3c4aee957d194066bbdb5acbb2781c84",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -624.0,
+            "y": 243.99998474121095,
+            "width": 130.0,
+            "height": 34.00004577636719
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f928b34a92014d249f7b0f5e66a5d3b9"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "dcdf840fd58d4a76b8932ef4a8d57c30"
     }
 }
 
@@ -1501,10 +1557,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1040.0,
-            "y": 555.0,
-            "width": 110.0,
-            "height": 34.00006103515625
+            "x": -1117.0001220703125,
+            "y": 563.0000610351563,
+            "width": 110.00006103515625,
+            "height": 33.99993896484375
         }
     },
     "m_Slots": [
@@ -1951,6 +2007,9 @@
         },
         {
             "m_Id": "337b1fc1eecc47e9957f1668a0ce4d75"
+        },
+        {
+            "m_Id": "dcdf840fd58d4a76b8932ef4a8d57c30"
         }
     ]
 }
@@ -1988,9 +2047,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1067.0,
-            "y": 614.0,
-            "width": 124.0,
+            "x": -1131.0001220703125,
+            "y": 633.0000610351563,
+            "width": 124.00006103515625,
             "height": 173.0
         }
     },
@@ -2403,6 +2462,36 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "dcdf840fd58d4a76b8932ef4a8d57c30",
+    "m_Guid": {
+        "m_GuidSerialized": "80a8805c-4841-4267-b067-74b9a2dd7bc1"
+    },
+    "m_Name": "watertex",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "watertex",
+    "m_DefaultReferenceName": "_watertex",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
     "m_ObjectId": "dd402844c3894d96a9355321466e61a6",
     "m_Id": 3,
@@ -2608,10 +2697,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -874.0,
-            "y": 528.0000610351563,
+            "x": -988.0000610351563,
+            "y": 561.0,
             "width": 208.0,
-            "height": 301.99993896484377
+            "height": 302.0
         }
     },
     "m_Slots": [
@@ -2670,6 +2759,19 @@
         "m_Guid": ""
     },
     "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "f928b34a92014d249f7b0f5e66a5d3b9",
+    "m_Id": 0,
+    "m_DisplayName": "watertex",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {
