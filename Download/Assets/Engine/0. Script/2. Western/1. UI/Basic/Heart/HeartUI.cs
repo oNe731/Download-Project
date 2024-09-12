@@ -47,8 +47,7 @@ namespace Western
                         }
                         else
                         {
-                            Debug.Log("게임 종료");
-                            //
+                            WesternManager.Instance.Over_Game();
                         }
 
                         m_update = false;

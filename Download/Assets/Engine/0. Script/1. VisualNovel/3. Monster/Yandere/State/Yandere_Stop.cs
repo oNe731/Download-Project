@@ -25,10 +25,12 @@ namespace VisualNovel
         public override void Enter_State()
         {
             m_time = 0.0f;
-            m_agent.destination = m_agent.transform.position;
-
+            
             m_minimapIcon.SetActive(true);
             m_stopLight.SetActive(true);
+
+            if (m_agent.gameObject.activeSelf == true)
+                m_agent.destination = m_agent.transform.position;
 
             // 파티클 생성
         }

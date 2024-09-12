@@ -114,7 +114,6 @@ namespace VisualNovel
 
         public override void Exit_Level()
         {
-            //CameraManager.Instance.Change_Camera(CAMERATYPE.CT_END);
         }
 
         public override void OnDrawGizmos()
@@ -123,13 +122,77 @@ namespace VisualNovel
 
         private void Clear_ChaseGame()
         {
-            // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환(다음 씬 서부로 전환)
+            // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환
+            StartCoroutine(Clear_Game());
+        }
+
+        private IEnumerator Clear_Game()
+        {
+            ////* 임시
+            GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Clear", GameObject.Find("Canvas").transform);
+            float time = 0f;
+            while (time < 1f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+            yield break;
         }
 
         public void Fail_ChaseGame()
         {
             // 얀데레 메시 비활성화
             m_yandereObj.transform.GetChild(0).gameObject.SetActive(false);
+
+            // 게임 오버 이벤트 발생
+            StartCoroutine(Fail_GameEvent());
+        }
+
+        private IEnumerator Fail_GameEvent()
+        {
+            Animator handAnimator = null;
+            CameraCutscene camera = null;
+            GameObject redPanel = null;
+
+            float time = 0f;
+            bool fadeOut = false;
+
+            // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작 (재도전 UI 출력)
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
+            camera.Start_FOV(10f, 20f);
+
+            // 손 생성
+            GameObject handObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Character/YandereHand", Camera.main.transform);
+            handObject.transform.localPosition = new Vector3(0f, -0.01f, 9.05f);
+            handAnimator = handObject.transform.GetChild(0).GetComponent<Animator>();
+
+            while (fadeOut == false)
+            {
+                if (redPanel == null)
+                {
+                    if (camera != null && Camera.main.fieldOfView <= 25f && handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !handAnimator.IsInTransition(0))
+                    {
+                        redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Red", GameObject.Find("Canvas").transform);
+                    }
+                }
+                else
+                {
+                    time += Time.deltaTime;
+                    if (fadeOut == false && time > 1f)
+                    {
+                        fadeOut = true;
+                        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+                    }
+                }
+                yield return null;
+            }
+
+            yield break;
         }
 
         public void Appear_Monster()
@@ -223,7 +286,7 @@ namespace VisualNovel
             if (m_CdCurrentCount >= m_CdMaxCount)
             {
                 // 추격 게임 종료 및 컷씬 재생
-                Exit_Level();
+                Clear_ChaseGame();
             }
             else
             {
