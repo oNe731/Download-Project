@@ -128,4 +128,25 @@ public class WesternManager : MonoBehaviour
     {
         m_levelController.Get_CurrentLevel<Western_Main>().Button_Play();
     }
+
+    public void Over_Game()
+    {
+        StartCoroutine(Clear_Game());
+    }
+
+    private IEnumerator Clear_Game()
+    {
+        ////* 임시
+        GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/Panel_Fail", GameObject.Find("Canvas").transform);
+        float time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+        yield break;
+    }
 }
