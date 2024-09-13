@@ -29,7 +29,8 @@ public class Interaction_Event : Interaction
         switch(m_eventType)
         {
             case EVENTTYPE.TYPE_CUTSCENE_1FBOSS:
-                Debug.Log("1Ãþ º¸½º µîÀå ÄÆ¾À Àç»ý");
+                //Debug.Log("1Ãþ º¸½º µîÀå ÄÆ¾À Àç»ý");
+                GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/1FBoss");
                 break;
         }
 
