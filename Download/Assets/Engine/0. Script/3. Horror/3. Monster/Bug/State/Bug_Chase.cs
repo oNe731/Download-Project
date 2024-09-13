@@ -11,7 +11,7 @@ public class Bug_Chase : Bug_Base
     public Bug_Chase(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
         m_agent = m_owner.GetComponent<NavMeshAgent>();
-        m_agent.speed = 5f;
+        m_agent.speed = 4f;
     }
 
     public override void Enter_State()

@@ -10,7 +10,7 @@ public class Straitjacket_Run : Straitjacket_Base
 
     public Straitjacket_Run(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
-        m_speed = 5f;
+        m_speed = 3f;
         m_agent = m_owner.GetComponent<NavMeshAgent>();
         m_agent.speed = m_speed;
     }

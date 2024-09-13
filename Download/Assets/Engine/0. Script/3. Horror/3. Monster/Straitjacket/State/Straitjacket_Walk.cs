@@ -9,7 +9,7 @@ public class Straitjacket_Walk : Straitjacket_Base
 
     public Straitjacket_Walk(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
-        m_speed = 2.5f;
+        m_speed = 1f;
     }
 
     public override void Enter_State()
