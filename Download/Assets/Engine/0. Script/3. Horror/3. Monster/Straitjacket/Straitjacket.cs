@@ -34,6 +34,9 @@ public class Straitjacket : Monster
 
     private void Update()
     {
+        if (HorrorManager.Instance.IsGame == false)
+            return;
+
         if (m_stateMachine == null)
             return;
 

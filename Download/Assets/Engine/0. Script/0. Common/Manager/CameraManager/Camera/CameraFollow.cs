@@ -31,7 +31,7 @@ public class CameraFollow : CameraBase
 
     public override void Update_Camera()
     {
-        if (m_cameraPositionTarget == null)
+        if (m_mainCamera == null || m_cameraPositionTarget == null)
             return;
 
         // ¿Ãµø

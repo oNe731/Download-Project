@@ -151,12 +151,23 @@ public class HorrorManager : MonoBehaviour
         m_instructionUI.Initialize_UI(openType, closeType, activeTimes, texts);
     }
 
+    public void Over_Game()
+    {
+        if (IsGame == false) return;
+
+        Set_Pause(true, false);
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameOver");
+        if (gameObject == null)
+            return;
+        gameObject.GetComponent<UIGameOver>().Start_GameOver();
+    }
+
     public void Restart_Game()
     {
         // 체크포인트에서 게임 재시작
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
-        HorrorManager.Instance.Set_Pause(false, false);
-
-        m_isGame = true;
+        //GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        //HorrorManager.Instance.Set_Pause(false, false);
+        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
+        GameManager.Ins.Change_Scene("Horror");
     }
 }

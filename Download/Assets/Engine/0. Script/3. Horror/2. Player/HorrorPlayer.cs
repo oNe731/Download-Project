@@ -14,7 +14,7 @@ namespace Horror
         [SerializeField] private UIBlood m_blood;
 
         private float m_hp = 0f;
-        private float m_hpMax = 10f;
+        private float m_hpMax = 15f;
         private float m_stamina = 0f;
         private float m_staminaMax = 10f;
 
@@ -52,13 +52,13 @@ namespace Horror
             m_hp -= damage;
 
             // Temp
-            if (m_hp < 1)
-                m_hp = 1;
+            //if (m_hp < 1)
+            //    m_hp = 1;
 
             if (m_hp <= 0)
             {
                 m_hp = 0f;
-                Debug.Log("플레이어 사망");
+                HorrorManager.Instance.Over_Game();
             }
             else
             {
