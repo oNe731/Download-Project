@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.IO;
 using TMPro;
+using UnityEngine.UI;
 
 namespace VisualNovel
 {
@@ -89,23 +90,35 @@ namespace VisualNovel
 
         public override void Play_Level()
         {
+            VisualNovelManager.Instance.Dialog.SetActive(false);
+
             Destroy(m_playerBodyObj);
             m_yandereObj.SetActive(false);
 
-            VisualNovelManager.Instance.Dialog.SetActive(false);
-
             Create_CD();
             Create_Lever(m_LeverMaxCount);
-            m_player.Set_Lock(false);
 
-            GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
-
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player == null)
-                return;
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
-            camera.Set_FollowInfo(player.transform, player.transform, true, true, new Vector3(0.0f, 1.3f, 0.0f), 80.0f, 100.0f, new Vector2(-20f, 20f), true, true);
+            camera.Set_FollowInfo(m_player.transform, m_player.transform, true, true, new Vector3(0.0f, 1.3f, 0.0f), 80.0f, 100.0f, new Vector2(-20f, 20f), true, true, true);
+            camera.IsRock = true;
+
+            // 规过芒 积己
+            GameManager.Ins.Camera.Set_CursorLock(false);
+            GameObject methodObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Common/Panel_Method", m_stage.transform.GetChild(1));
+            if (methodObj == null) return;
+            methodObj.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/Method/Method_Chase");
+            methodObj.GetComponent<MethodWindow>().DeleteAction = Move_Player;
+
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        }
+
+        private void Move_Player()
+        {
+            m_player.Set_Lock(false);
+            GameManager.Ins.Camera.Set_CursorLock(true);
+            CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
+            camera.IsRock = false;
         }
 
         public override void Update_Level()

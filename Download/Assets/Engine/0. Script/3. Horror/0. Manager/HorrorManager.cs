@@ -72,6 +72,9 @@ public class HorrorManager : MonoBehaviour
         m_noteElementIcon.Add("Icon_A306File_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_1"));
         m_noteElementIcon.Add("Icon_A306File_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_2"));
         m_noteElementIcon.Add("Icon_A306File_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_3"));
+        m_noteElementIcon.Add("Icon_clueNumber_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_1"));
+        m_noteElementIcon.Add("Icon_clueNumber_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_2"));
+        m_noteElementIcon.Add("Icon_clueNumber_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_3"));
 
         // 사용할 UI 생성
         if (m_popupUI == null)
