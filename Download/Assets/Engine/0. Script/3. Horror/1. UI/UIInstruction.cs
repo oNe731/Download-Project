@@ -134,6 +134,9 @@ public class UIInstruction : MonoBehaviour
 
         for (int i = 0; i < m_texts.Length; ++i)
         {
+            if (i >= texts.Length)
+                continue;
+
             if (m_texts[i] == texts[i])
                 return false;
         }

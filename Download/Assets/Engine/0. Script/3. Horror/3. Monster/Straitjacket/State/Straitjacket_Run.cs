@@ -20,7 +20,7 @@ public class Straitjacket_Run : Straitjacket_Base
         m_agent.enabled = true;
         m_agent.stoppingDistance = stopDistance;
 
-        m_animator.SetBool("IsRun", true);
+        Change_Animation("IsRun");
     }
 
     public override void Update_State()
@@ -48,14 +48,17 @@ public class Straitjacket_Run : Straitjacket_Base
             if (Check_Collider(direction, LayerMask.GetMask("Monster")) == false) // 회전이 완료된 후 이동
                 m_agent.destination = m_targetPosition;
             else
-                m_stateMachine.Change_State((int)Straitjacket.State.ST_WAIT);
+                m_stateMachine.Change_State((int)Straitjacket.State.ST_RUNWAIT);
         }
+
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
     }
 
     public override void Exit_State()
     {
         m_agent.enabled = false;
 
-        m_animator.SetBool("IsRun", false);
+        Reset_Animation();
     }
 }

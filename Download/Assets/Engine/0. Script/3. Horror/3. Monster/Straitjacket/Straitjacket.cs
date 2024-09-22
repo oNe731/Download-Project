@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Straitjacket : Monster
 {
-    public enum State { ST_IDLE, ST_WALK, ST_RUN, ST_WAIT, ST_ATTACK, ST_DIE, ST_END } // 4
+    public enum State { ST_IDLE, ST_WALK, ST_RUN, ST_RUNWAIT, ST_ATTACK, ST_ATTACKWAIT, ST_DIE, ST_END } // 4
 
     public override void Damage_Monster(float damage)
     {
@@ -22,12 +22,13 @@ public class Straitjacket : Monster
         m_stateMachine = new StateMachine<Monster>(gameObject);
 
         List<State<Monster>> states = new List<State<Monster>>();
-        states.Add(new Straitjacket_Idle(m_stateMachine));   // 0
-        states.Add(new Straitjacket_Walk(m_stateMachine));   // 1
-        states.Add(new Straitjacket_Run(m_stateMachine));    // 2
-        states.Add(new Straitjacket_Wait(m_stateMachine));   // 3
-        states.Add(new Straitjacket_Attack(m_stateMachine)); // 4
-        states.Add(new Straitjacket_Die(m_stateMachine));    // 5
+        states.Add(new Straitjacket_Idle(m_stateMachine));        // 0
+        states.Add(new Straitjacket_Walk(m_stateMachine));        // 1
+        states.Add(new Straitjacket_Run(m_stateMachine));         // 2
+        states.Add(new Straitjacket_RunWait(m_stateMachine));     // 3
+        states.Add(new Straitjacket_Attack(m_stateMachine));      // 4
+        states.Add(new Straitjacket_AttackWait(m_stateMachine));  // 5
+        states.Add(new Straitjacket_Die(m_stateMachine));         // 6
 
         m_stateMachine.Initialize_State(states, (int)State.ST_IDLE);
     }

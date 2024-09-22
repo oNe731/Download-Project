@@ -35,7 +35,7 @@ public class Bug_Retreat : Bug_Base
         if (Check_Collider(direction, LayerMask.GetMask("Ground", "Wall", "Ceiling", "Interaction")) == false)
             m_owner.transform.position = targetPosition;
         else
-            m_stateMachine.Change_State((int)Bug.State.ST_CHARGE);////ST_FLY); // 대기 상태로 변경
+            m_stateMachine.Change_State((int)Bug.State.ST_CHARGE); // 돌격 상태로 변경
 
         //m_rigidbody.MovePosition(targetPosition);
         //m_rigidbody.velocity = direction * 5f;

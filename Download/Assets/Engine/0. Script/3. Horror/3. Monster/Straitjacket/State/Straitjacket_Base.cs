@@ -13,10 +13,13 @@ public class Straitjacket_Base : State<Monster>
     protected float   m_speed = 5f;
 
     protected float m_chaseDist  = 5f;
-    protected float m_attackDist = 2.5f;
+    protected float m_attackDist = 1.5f;
 
     private float m_soundTime = 0f;
     private float m_nextTime = 0f;
+
+    protected bool m_conversion = false;
+    protected string m_triggerName = "";
 
     public Straitjacket_Base(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
@@ -104,5 +107,26 @@ public class Straitjacket_Base : State<Monster>
             m_soundTime = 0f;    
             GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Straitjacket_Idle", false, 1f);
         }
+    }
+
+    protected void Change_Animation(string stateName, bool play = false)
+    {
+        AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+        m_triggerName = stateName;
+        m_conversion = true;
+
+        if (stateInfo.IsName(m_triggerName) == true || play == true)
+            m_animator.Play(m_triggerName, 0, 0f); // 트랜지션 없이 변경
+        else
+            m_animator.SetBool(m_triggerName, m_conversion);
+    }
+
+    protected void Reset_Animation()
+    {
+        if (m_conversion == false)
+            return;
+
+        m_conversion = false;
+        m_animator.SetBool(m_triggerName, m_conversion);
     }
 }

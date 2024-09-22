@@ -11,6 +11,7 @@ namespace Horror
         protected NoteItem    m_noteItem = null;
 
         protected bool m_recoverStamina = false;
+
         protected bool   m_conversion = false;
         protected string m_triggerName = "";
 

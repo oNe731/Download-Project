@@ -47,8 +47,8 @@ public class BasicUpperBody_Chase : BasicUpperBody_Base
 
             if (Check_Collider(direction, LayerMask.GetMask("Monster")) == false) // 회전이 완료된 후 이동
                 m_agent.destination = m_targetPosition;
-            else
-                m_stateMachine.Change_State((int)Straitjacket.State.ST_WAIT);
+            //else
+            //    m_stateMachine.Change_State((int)BasicUpperBody.State.ST_WAIT);
         }
     }
 

@@ -84,20 +84,28 @@ public class Horror_1stage_NextHallway : Area
         HorrorManager.Instance.Set_Pause(true, false); // 게임 일시정지
 
 #region 안내 문구가 끝났다면 이벤트 발생
+        bool active = false;
         UIInstruction instruction = HorrorManager.Instance.InstructionUI;
+
         while (true)
         {
-            if (instruction.Texts.Length != 0)
+            if(active == false)
             {
-                if (instruction.Texts[0] == text)
+                if(instruction.Texts != null)
                 {
-                    if (instruction.Active == true && instruction.gameObject.activeSelf == false)
-                        break;
+                    if (instruction.Texts.Length != 0)
+                        active = true;
                 }
             }
-            yield return null;
+            else
+            {
+                if (instruction.Texts == null)
+                    break;
+            }
+
+             yield return null;
         }
-        #endregion
+#endregion
 
         m_dummy.Fall_Dummy(); // 더미 오브젝트 이벤트 발생.
 
