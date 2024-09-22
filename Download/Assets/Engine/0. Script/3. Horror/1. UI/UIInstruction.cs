@@ -129,8 +129,10 @@ public class UIInstruction : MonoBehaviour
     {
         if (m_texts == null) 
             return true;
+        else if (texts == null)
+            return false;
 
-        for(int i = 0; i < m_texts.Length; ++i)
+        for (int i = 0; i < m_texts.Length; ++i)
         {
             if (m_texts[i] == texts[i])
                 return false;
