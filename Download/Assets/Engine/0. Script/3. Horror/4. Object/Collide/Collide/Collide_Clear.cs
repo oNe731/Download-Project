@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jumpscare_End : Jumpscare // 임시 클리어 작업
+public class Collide_Clear : Collide
 {
-    public override void Active_Jumpscare()
+    public override void Trigger_Event()
     {
-        m_isTrigger = true;
-
         HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
-        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameClear");
-        if (gameObject == null)
-            return;
+        GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameClear");
+
         StartCoroutine(End_Game());
     }
 
-    IEnumerator End_Game()
+    private IEnumerator End_Game()
     {
         float time = 0;
         while(time < 2f)

@@ -1,14 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class Jumpscare_Girl : Jumpscare
+public class Collide_Girl : Collide
 {
     [SerializeField] private GameObject m_girl;
 
-    public override void Active_Jumpscare()
+    public override void Trigger_Event()
     {
-        m_isTrigger = true;
-
         m_girl.SetActive(true);
         StartCoroutine(Move_Girl());
     }

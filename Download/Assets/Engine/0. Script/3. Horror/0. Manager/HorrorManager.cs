@@ -148,7 +148,7 @@ public class HorrorManager : MonoBehaviour
 
     public void Active_InstructionUI(UIInstruction.ACTIVETYPE openType, UIInstruction.ACTIVETYPE closeType, float[] activeTimes, string[] texts) // 안내 문구 출력
     {
-        if (m_instructionUI == null)
+        if (m_instructionUI == null || m_instructionUI.Check_Text(texts) == false)
             return;
 
         m_instructionUI.Initialize_UI(openType, closeType, activeTimes, texts);
