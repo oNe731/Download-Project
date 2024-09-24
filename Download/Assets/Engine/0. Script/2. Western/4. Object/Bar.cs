@@ -93,7 +93,7 @@ public class Bar : MonoBehaviour
                 if (m_time > 2f)
                 {
                     m_time = 0f;
-                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
+                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Western.LevelController.Change_NextLevel(), 0f, false);
                     m_event = EVENT.EVENT_END;
                 }
             }

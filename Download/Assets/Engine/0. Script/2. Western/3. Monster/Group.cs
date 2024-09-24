@@ -75,20 +75,24 @@ namespace Western
             float time    = 0f;
             while (m_grouptransform.rotation != m_wakeUpQuaternion)
             {
-                time += Time.deltaTime;
-                if(isEvent == false && time > 0.8f)
+                if(GameManager.Ins.IsGame == true)
                 {
-                    isEvent = true;
-                    if (useEvent == true)
-                        Use_Event();
+                    time += Time.deltaTime;
+                    if (isEvent == false && time > 0.8f)
+                    {
+                        isEvent = true;
+                        if (useEvent == true)
+                            Use_Event();
 
-                    if (isCount) // 카운트 시작
-                        Start_Count(timerSpeed);
-                    else
-                        WesternManager.Instance.IsShoot = true;
+                        if (isCount) // 카운트 시작
+                            Start_Count(timerSpeed);
+                        else
+                            GameManager.Ins.Western.IsShoot = true;
+                    }
+
+                    m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_wakeUpQuaternion, m_wakeUpRotationSpeed * Time.deltaTime);
+
                 }
-
-                m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_wakeUpQuaternion, m_wakeUpRotationSpeed * Time.deltaTime);
                 yield return null;
             }
 
@@ -119,7 +123,7 @@ namespace Western
 
             // 자동 전진
             if (nextMove == true)
-                WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Proceed_Next();
+                GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Proceed_Next();
 
             yield break;
         }
@@ -165,7 +169,7 @@ namespace Western
 
         private void Use_Event()
         {
-            switch (WesternManager.Instance.LevelController.Curlevel)
+            switch (GameManager.Ins.Western.LevelController.Curlevel)
             {
                 // Temp -----------------------------------------
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
@@ -198,42 +202,45 @@ namespace Western
 
             while (count < createCount)
             {
-                if (count == 0) // 첫 번째 생성
+                if (GameManager.Ins.IsGame == true)
                 {
-                    GameObject firstBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
-                    if (dir == 0) // 왼쪽에 생성
-                        firstBomb.transform.localPosition = leftSpawnPosition;
-                    else if (dir == 1) // 오른쪽에 생성
-                        firstBomb.transform.localPosition = rightSpawnPosition;
-
-                    Bomb script = firstBomb.GetComponent<Bomb>();
-                    script.TargetPosition = transform.position;
-                    script.TimerMax = 2f;
-
-                    if(secondBomb != null) // 두번째 폭탄이 존재할 때 순서 지정 등
+                    if (count == 0) // 첫 번째 생성
                     {
-                        script.Order = Bomb.ORDER.OD_FIRST;
-                        script.DifferentBomb = secondBomb;
+                        GameObject firstBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
+                        if (dir == 0) // 왼쪽에 생성
+                            firstBomb.transform.localPosition = leftSpawnPosition;
+                        else if (dir == 1) // 오른쪽에 생성
+                            firstBomb.transform.localPosition = rightSpawnPosition;
+
+                        Bomb script = firstBomb.GetComponent<Bomb>();
+                        script.TargetPosition = transform.position;
+                        script.TimerMax = 2f;
+
+                        if (secondBomb != null) // 두번째 폭탄이 존재할 때 순서 지정 등
+                        {
+                            script.Order = Bomb.ORDER.OD_FIRST;
+                            script.DifferentBomb = secondBomb;
+                        }
                     }
+                    else if (count == 1) // 두 번째 생성
+                    {
+                        yield return new WaitForSeconds(2f);
+
+                        secondBomb.SetActive(true);
+                        if (dir == 0) // 오른쪽에 생성
+                            secondBomb.transform.localPosition = rightSpawnPosition;
+                        else if (dir == 1) // 왼쪽에 생성
+                            secondBomb.transform.localPosition = leftSpawnPosition;
+
+                        Bomb script = secondBomb.GetComponent<Bomb>();
+                        script.TargetPosition = transform.position;
+                        script.TimerMax = 3f;
+
+                        script.Order = Bomb.ORDER.OD_SECOND;
+                    }
+                    count++;
                 }
-                else if (count == 1) // 두 번째 생성
-                {
-                    yield return new WaitForSeconds(2f);
 
-                    secondBomb.SetActive(true);
-                    if (dir == 0) // 오른쪽에 생성
-                        secondBomb.transform.localPosition = rightSpawnPosition;
-                    else if (dir == 1) // 왼쪽에 생성
-                        secondBomb.transform.localPosition = leftSpawnPosition;
-
-                    Bomb script = secondBomb.GetComponent<Bomb>();
-                    script.TargetPosition = transform.position;
-                    script.TimerMax = 3f;
-
-                    script.Order = Bomb.ORDER.OD_SECOND;
-                }
-
-                count++;
                 yield return null;
             }
 

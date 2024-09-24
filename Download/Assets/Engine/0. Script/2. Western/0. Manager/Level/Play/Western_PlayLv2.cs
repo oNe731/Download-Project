@@ -61,7 +61,7 @@ namespace Western
             camera.Change_Position(new Vector3(0f, 0.62f, -55.65f));
             camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
-            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => StartCoroutine(Update_ReadyGo()));
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => GameManager.Ins.StartCoroutine(Update_ReadyGo()));
         }
 
         public override void Play_Level()

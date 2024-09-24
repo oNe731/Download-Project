@@ -96,6 +96,9 @@ namespace Western
 
         public override void Update_Level()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             if (m_isTutorial)
                 Update_Tutorial();
             else
@@ -115,14 +118,14 @@ namespace Western
         private void Start_Dialog()
         {
             m_stateType = STATETYPE.TYPE_DIALOGSTART;
-            WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play"));
+            GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(true, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Play"));
         }
 
         private void Update_Tutorial()
         {
             if (m_stateType == STATETYPE.TYPE_DIALOGSTART) // 마지막 다이얼로그가 전부 출력되면 판넬 활성화 및 튜토리얼 진행
             {
-                if (WesternManager.Instance.DialogPlay.LastIndex == true)
+                if (GameManager.Ins.Western.DialogPlay.LastIndex == true)
                 {
                     m_stateType = STATETYPE.TYPE_TUTORIALPLAY;
                     m_groups.WakeUp_Next(ref m_eventIndex, false, 0.4f);
@@ -130,7 +133,7 @@ namespace Western
             }
             else if (m_stateType == STATETYPE.TYPE_TUTORIALPLAY)
             {
-                if (WesternManager.Instance.IsShoot == true)
+                if (GameManager.Ins.Western.IsShoot == true)
                 {
                     if (Input.GetMouseButtonDown(0)) { Click_Panel(); }
                     else if (Input.GetKeyDown(KeyCode.Space))
@@ -147,8 +150,8 @@ namespace Western
                         {
                             if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
                             {
-                                WesternManager.Instance.IsShoot = false;
-                                WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
+                                GameManager.Ins.Western.IsShoot = false;
+                                GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
                                 m_stateType = STATETYPE.TYPE_DIALOGFINISH;
                             }
                             else
@@ -157,11 +160,11 @@ namespace Western
                                 switch (m_tutorialIndex)
                                 {
                                     case 0:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1"));
+                                        GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen1"));
                                         break;
 
                                     case 1:
-                                        WesternManager.Instance.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2"));
+                                        GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Citizen2"));
                                         break;
                                 }
 
@@ -171,13 +174,13 @@ namespace Western
                             Space_Panel();
                         }
 
-                        Destroy(m_targetUI);
+                        GameManager.Ins.Resource.Destroy(m_targetUI);
                     }
                 }
             }
             else if (m_stateType == STATETYPE.TYPE_DIALOGFINISH)
             {
-                if (WesternManager.Instance.DialogPlay.Active == false)
+                if (GameManager.Ins.Western.DialogPlay.Active == false)
                 {
                     m_tutorialIndex = 0;
                     m_stateType = STATETYPE.TYPE_GAMESTART;
@@ -187,7 +190,7 @@ namespace Western
             }
             else if (m_stateType == STATETYPE.TYPE_GAMESTART) // 레디 고 UI 출력 후 게임 시작
             {
-                StartCoroutine(Update_ReadyGo());
+                GameManager.Ins.StartCoroutine(Update_ReadyGo());
                 m_stateType = STATETYPE.TYPE_END;
             }
         }

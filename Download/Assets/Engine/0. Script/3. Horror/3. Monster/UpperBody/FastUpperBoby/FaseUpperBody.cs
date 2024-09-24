@@ -32,6 +32,9 @@ public class FaseUpperBody : Monster
 
     private void Update()
     {
+        if (GameManager.Ins.IsGame == false)
+            return;
+
         if (m_stateMachine == null)
             return;
 

@@ -118,7 +118,7 @@ public class UIWeapon : MonoBehaviour
             case NoteItem.ITEMTYPE.TYPE_GUN:
                 int currentCount;
 
-                Note note = HorrorManager.Instance.Player.Note;
+                Note note = GameManager.Ins.Horror.Player.Note;
                 if (note == null)
                     currentCount = 0;
                 else

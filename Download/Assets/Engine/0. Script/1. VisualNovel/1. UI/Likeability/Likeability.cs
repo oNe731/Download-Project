@@ -43,7 +43,7 @@ namespace VisualNovel
             }
             else if(m_button == null && m_panel == null)
             {
-                VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().CutScene = false;
+                GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>().CutScene = false;
                 Destroy(gameObject);
             }
         }

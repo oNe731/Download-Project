@@ -16,7 +16,7 @@ public class Straitjacket_Idle : Straitjacket_Base
         m_time = 0f;
         m_change = Random.Range(0.5f, 1.5f);
 
-        m_animator.SetBool("IsIdle", true);
+        Change_Animation("IsIdle");
     }
 
     public override void Update_State()
@@ -34,10 +34,13 @@ public class Straitjacket_Idle : Straitjacket_Base
                 }
             }
         }
+
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
     }
 
     public override void Exit_State()
     {
-        m_animator.SetBool("IsIdle", false);
+        Reset_Animation();
     }
 }

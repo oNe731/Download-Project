@@ -12,6 +12,8 @@ public abstract class Interaction : MonoBehaviour
     [SerializeField] protected bool m_objectDelete; // 오브젝트 삭제 여부
     protected bool  m_interact = false;             // 상호작용 가능 여부
 
+    [SerializeField] protected GameObject m_deleteObject;
+
     public float Dist => m_dist;
     public UIWorldHint InteractionUI => m_interactionUI;
     public bool Possible => m_possible;
@@ -41,5 +43,8 @@ public abstract class Interaction : MonoBehaviour
             Destroy(m_interactionUI.gameObject);
             Destroy(transform.GetChild(0).gameObject);
         }
+
+        if(m_deleteObject != null)
+            Destroy(m_deleteObject);
     }
 }

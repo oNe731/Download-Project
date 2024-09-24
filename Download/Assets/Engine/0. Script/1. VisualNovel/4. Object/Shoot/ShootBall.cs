@@ -19,13 +19,13 @@ namespace VisualNovel
 
         private SphereCollider m_collider;
 
-        public ShootSlingshot Owner { set { m_Owner = value; }}
-        public GameObject TargetUI { set { m_targetUI = value; }}
-        public Vector3 TargetPosition { set { m_targetPosition = value; }}
-        public float Speed { set { m_speed = value; }}
-
-        private void Start()
+        public void Initialize_Ball(ShootSlingshot owner, GameObject targetUI, Vector3 targetPosition, float speed)
         {
+            m_Owner          = owner;
+            m_targetUI       = targetUI;
+            m_targetPosition = targetPosition;
+            m_speed          = speed;
+
             m_startPosition = transform.position;
             m_maxY = transform.position.y;
 
@@ -42,6 +42,9 @@ namespace VisualNovel
 
         private void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             float nextX = Mathf.MoveTowards(transform.position.x, m_targetPosition.x, m_speed * Time.deltaTime);
 
             float distance = m_targetPosition.x - m_startPosition.x;
@@ -64,7 +67,7 @@ namespace VisualNovel
         private void LateUpdate()
         {
             // 게임 종료 시 존재하는 공 삭제
-            if (VisualNovelManager.Instance.LevelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).ShootGameOver)
+            if (GameManager.Ins.Novel.LevelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).ShootGameOver)
             {
                 Destroy(m_targetUI);
                 Destroy(gameObject);

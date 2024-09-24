@@ -35,7 +35,7 @@ public class Bug_Base : State<Monster>
 
     protected float Get_PlayerDistance()
     {
-        return Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
+        return Vector3.Distance(m_stateMachine.Owner.transform.position, GameManager.Ins.Horror.Player.transform.position);
     }
 
     protected bool Change_FLY()
@@ -52,7 +52,7 @@ public class Bug_Base : State<Monster>
 
     protected void Look_Player()
     {
-        m_owner.transform.rotation = Quaternion.LookRotation(HorrorManager.Instance.Player.transform.position - m_owner.transform.position);
+        m_owner.transform.rotation = Quaternion.LookRotation(GameManager.Ins.Horror.Player.transform.position - m_owner.transform.position);
     }
 
     protected bool Check_Collider(Vector3 dir, int layerIndex) // ~0

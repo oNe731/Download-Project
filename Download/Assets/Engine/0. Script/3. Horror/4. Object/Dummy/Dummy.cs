@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dummy : MonoBehaviour
 {
-    [SerializeField] private Jumpscare m_soundJumpscare;
+    [SerializeField] private Collide m_soundCollide;
     private AudioSource[] m_audioSources;
 
     private void Start()
@@ -50,7 +50,7 @@ public class Dummy : MonoBehaviour
     {
         while(true)
         {
-            if (m_soundJumpscare == null || m_soundJumpscare.IsTriger == true)
+            if (m_soundCollide == null || m_soundCollide.IsTrigger == true)
                 break;
 
             yield return null;

@@ -10,8 +10,13 @@ public class PositionData
 
 public class SerializingPosition : MonoBehaviour
 {
-    [SerializeField] private string     m_path = "4. Data/1. VisualNovel/Position/ItemPositionData";
-    [SerializeField] private GameObject m_prefab;
+    private string     m_path = "4. Data/1. VisualNovel/Position/ItemPositionData";
+    private GameObject m_prefab;
+
+    private void Start()
+    {
+        m_prefab = GameManager.Ins.Resource.Load<GameObject>("5. Prefab/0. Common/PositionTemp");
+    }
 
     private void Update()
     {

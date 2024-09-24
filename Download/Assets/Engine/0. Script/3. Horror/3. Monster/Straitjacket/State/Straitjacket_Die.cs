@@ -10,15 +10,18 @@ public class Straitjacket_Die : Straitjacket_Base
 
     public override void Enter_State()
     {
-        m_animator.SetBool("IsDie", true);
+        Change_Animation("IsDie");
         GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }
 
     public override void Update_State()
     {
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
     }
 
     public override void Exit_State()
     {
+        Reset_Animation();
     }
 }

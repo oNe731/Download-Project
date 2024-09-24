@@ -1,29 +1,39 @@
 using UnityEngine;
 
-public class WindowManager : MonoBehaviour
+public class WindowManager : StageManager
 {
-    private void Start()
+    public WindowManager() : base()
     {
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        m_stageLevel = STAGE.LEVEL_WINDOW;
+        m_sceneName  = "Window";
     }
 
-    private void Update()
+    protected override void Load_Resource()
     {
-        
     }
 
-    public void Button_VisualNovel()
+    public override void Enter_Stage()
     {
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("VisualNovel"), 0f, false);
+        base.Enter_Stage();
     }
 
-    public void Button_Western()
+    protected override void Load_Scene()
     {
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Western"), 0f, false);
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
     }
 
-    public void Button_Horror()
+    public override void Update_Stage()
     {
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Horror"), 0f, false);
+    }
+
+    public override void LateUpdate_Stage()
+    {
+    }
+
+    public override void Exit_Stage()
+    {
+        base.Exit_Stage();
     }
 }

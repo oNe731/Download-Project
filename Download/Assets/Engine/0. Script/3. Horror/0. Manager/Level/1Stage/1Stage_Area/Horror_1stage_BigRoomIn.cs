@@ -21,7 +21,7 @@ public class Horror_1stage_BigRoomIn : Area
     public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         // 비밀번호 단서를 획득한 상태인가?
-        Horror.Note note = HorrorManager.Instance.Player.Note;
+        Horror.Note note = GameManager.Ins.Horror.Player.Note;
         if(note != null)
         {
             if (note.Check_Clue(NoteItem.ITEMTYPE.TYPE_KEYPADNUMBER))

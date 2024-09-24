@@ -14,7 +14,7 @@ public class FaseUpperBody_Attack : FaseUpperBody_Base
         // 
 
         if(Get_Attacked() == true)
-            HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
+            GameManager.Ins.Horror.Player.Damage_Player(m_owner.Attack);
     }
 
     public override void Update_State()
@@ -28,7 +28,7 @@ public class FaseUpperBody_Attack : FaseUpperBody_Base
 
     private bool Get_Attacked()
     {
-        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
+        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, GameManager.Ins.Horror.Player.transform.position);
         if (distanceToPlayer <= 2f)
             return true;
 

@@ -54,10 +54,10 @@ public class Bug_Charge : Bug_Base
 
     private void Generate_RandomCurve() // µ¹°Ý
     {
-        Vector3 playerDirection = HorrorManager.Instance.Player.transform.forward;
+        Vector3 playerDirection = GameManager.Ins.Horror.Player.transform.forward;
 
         Vector3 startPoint = m_owner.transform.position;
-        Vector3 endPoint = HorrorManager.Instance.Player.transform.position + (playerDirection * 0.8f);
+        Vector3 endPoint = GameManager.Ins.Horror.Player.transform.position + (playerDirection * 0.8f);
         endPoint.y = Camera.main.transform.position.y;
 
         float distance = Random.Range(1.5f, 3f);

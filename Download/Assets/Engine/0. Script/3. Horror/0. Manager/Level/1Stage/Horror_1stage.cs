@@ -29,24 +29,26 @@ public class Horror_1stage : Horror_Base
             // 레벨 초기화
             GameObject collider_Area = m_stage.transform.GetChild(1).GetChild(1).GetChild(0).gameObject; // etc -> Collider -> Collider_Area
 
-            m_levels = gameObject.AddComponent<LevelController>();
-            List<Level> levels = new List<Level>();
-            foreach (Transform child in collider_Area.transform)
-                levels.Add(null);
-            foreach (Transform child in collider_Area.transform)
+            m_levels = new LevelController();
+            List<Level> levels = new List<Level>
             {
-                Horror_Base stage = child.gameObject.GetComponent<Horror_Base>();
-                stage.Initialize_Level(m_levels);
-
-                levels[stage.LevelIndex] = stage;
-            }
-
-            m_levels.Initialize_Level(levels);
+                new Horror_1stage_StartRoom(),
+                new Horror_1stage_StartHallway(),
+                new Horror_1stage_NextRoom(),
+                new Horror_1stage_RestRoom(),
+                new Horror_1stage_NextHallway(),
+                new Horror_1stage_FinishRoom(),
+                new Horror_1stage_BigRoomOut(),
+                new Horror_1stage_BigRoomIn(),
+            };
+            for (int i = 0; i < levels.Count; ++i)
+                levels[i].Initialize_Level(m_levels);
+            m_levels.Initialize_Level(levels, (int)LEVEL1.LV_STARTROOM);
         }
         else
         {
             // 플레이어 위치 및 회전 변경
-            Transform playerTransform = HorrorManager.Instance.Player.gameObject.transform;
+            Transform playerTransform = GameManager.Ins.Horror.Player.gameObject.transform;
             playerTransform.position = new Vector3(26.38f, 0f, 24.99f);
             playerTransform.rotation = Quaternion.Euler(0f, -90f, 0f);
         }

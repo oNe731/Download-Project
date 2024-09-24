@@ -9,7 +9,7 @@ public class Straitjacket_Walk : Straitjacket_Base
 
     public Straitjacket_Walk(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
-        m_speed = 2.5f;
+        m_speed = 1f;
     }
 
     public override void Enter_State()
@@ -18,7 +18,7 @@ public class Straitjacket_Walk : Straitjacket_Base
         m_changeCount = Random.Range(1, 4);
         Set_RandomTargetPosition();
 
-        m_animator.SetBool("IsWalk", true);
+        Change_Animation("IsWalk");
     }
 
     public override void Update_State()
@@ -32,11 +32,14 @@ public class Straitjacket_Walk : Straitjacket_Base
                 Move_Monster();
             }
         }
+
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
     }
 
     public override void Exit_State()
     {
-        m_animator.SetBool("IsWalk", false);
+        Reset_Animation();
     }
 
     private void Move_Monster()

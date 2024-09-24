@@ -56,7 +56,7 @@ namespace Horror
         public override bool Attack_Weapon()
         {
             bool empty = false;
-            Note m_note = HorrorManager.Instance.Player.Note;
+            Note m_note = GameManager.Ins.Horror.Player.Note;
             NoteItem noteItem = null;
 
             if (m_note == null)
@@ -74,7 +74,7 @@ namespace Horror
                 string[] texts = new string[1];
                 activeTimes[0] = 1f;
                 texts[0] = "탄창이 비어있다";
-                HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
+                GameManager.Ins.Horror.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_BASIC, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
                 return false;
             }
 
@@ -128,7 +128,7 @@ namespace Horror
             noteItem.m_count--;
             if (noteItem.m_count < 0)
                 noteItem.m_count = 0;
-            HorrorManager.Instance.Player.Note.Set_Item(NoteItem.ITEMTYPE.TYPE_BULLET, noteItem);
+            GameManager.Ins.Horror.Player.Note.Set_Item(NoteItem.ITEMTYPE.TYPE_BULLET, noteItem);
             m_uIWeapon.Update_Info(m_itemInfo.m_itemType, m_itemInfo.m_itemInfo);
 
             // 사운드 재생

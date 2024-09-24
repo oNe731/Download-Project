@@ -59,7 +59,7 @@ namespace VisualNovel
 
         private void Update()
         {
-            if (!m_useBelt)
+            if (!m_useBelt || GameManager.Ins.IsGame == false)
                 return;
 
             // 움직임 이벤트 발생

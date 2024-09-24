@@ -84,7 +84,7 @@ namespace Horror
             GameManager.Ins.Sound.Play_ManagerAudioSource("Horror_OpenNote", false, 1f);
             if (open == true)
             {
-                HorrorManager.Instance.Set_Pause(true);
+                GameManager.Ins.Set_Pause(true);
                 Button_Item();
 
                 transform.GetChild(0).gameObject.SetActive(true);
@@ -101,7 +101,7 @@ namespace Horror
 
             if (open == false)
             {
-                HorrorManager.Instance.Set_Pause(false);
+                GameManager.Ins.Set_Pause(false);
 
                 m_button[(int)PAGE.PAGE_ITEM].sprite = m_buttonImg[(int)BUTTON.BUTTON_ITEM_OFF];
                 m_button[(int)PAGE.PAGE_CLUE].sprite = m_buttonImg[(int)BUTTON.BUTTON_CLUE_OFF];

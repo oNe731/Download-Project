@@ -29,6 +29,9 @@ namespace Western
 
         private void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 Update_Dialog();
         }
@@ -81,7 +84,7 @@ namespace Western
             if (m_dialogs[index].fontColor.Length != 0)
                 m_dialogTxt.color = new Color(m_dialogs[index].fontColor[0], m_dialogs[index].fontColor[1], m_dialogs[index].fontColor[2], m_dialogs[index].fontColor[3]);
             if (!string.IsNullOrEmpty(m_dialogs[index].backgroundSpr))
-                m_backgroundImg.sprite = WesternManager.Instance.BackgroundSpr[m_dialogs[index].backgroundSpr];
+                m_backgroundImg.sprite = GameManager.Ins.Western.BackgroundSpr[m_dialogs[index].backgroundSpr];
         }
 
         private void Update_None()
@@ -136,7 +139,7 @@ namespace Western
         private void Next_NextMain()
         {
             Close_Dialog();
-            WesternManager.Instance.LevelController.Change_Level(int.Parse(m_dialogs[m_dialogIndex].nextInfo));
+            GameManager.Ins.Western.LevelController.Change_Level(int.Parse(m_dialogs[m_dialogIndex].nextInfo));
 
             m_dialogIndex++;
         }

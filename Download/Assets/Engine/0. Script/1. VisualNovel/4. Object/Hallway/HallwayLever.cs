@@ -36,7 +36,7 @@ namespace VisualNovel
                     m_time += Time.deltaTime;
                     if (m_time > m_waitTime)
                     {
-                        VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Use_Lever(m_positionIndex);
+                        GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Use_Lever(m_positionIndex);
                         Destroy(gameObject);
                     }
                 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace VisualNovel
 {
@@ -13,10 +14,17 @@ namespace VisualNovel
         [SerializeField] private GameObject m_stopLight;
 
         private StateMachine<HallwayYandere> m_stateMachine;
+
+        private NavMeshAgent m_agent;
+        private Animator m_animator;
+
         public StateMachine<HallwayYandere> StateMachine => m_stateMachine;
 
         private void Start()
         {
+            m_agent    = gameObject.GetComponent<NavMeshAgent>();
+            m_animator = GetComponentInChildren<Animator>();
+
             m_stateMachine = new StateMachine<HallwayYandere>(gameObject);
 
             List<State<HallwayYandere>> states = new List<State<HallwayYandere>>();
@@ -38,6 +46,27 @@ namespace VisualNovel
         public void Used_Lever()
         {
             m_stateMachine.Change_State((int)YandereState.ST_STOP);
+        }
+
+        public void Stop_Yandere(bool stop)
+        {
+            Set_Lock(stop);
+
+            if (stop == false)
+                m_animator.StopPlayback();
+            else
+                m_animator.StartPlayback();
+        }
+
+        public void Set_Lock(bool isLock)
+        {
+            m_stateMachine.Lock = isLock;
+            if(m_agent.enabled && m_agent.isOnNavMesh)
+            {
+                m_agent.isStopped = isLock;
+                if (m_agent.isStopped == true)
+                    m_agent.velocity = Vector3.zero;
+            }
         }
 
         private void OnDrawGizmos()

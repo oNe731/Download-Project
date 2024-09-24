@@ -16,6 +16,9 @@ public class Bug_Retreat : Bug_Base
     {
         m_t = 0f;
         Generate_RandomCurve();
+
+        if (m_audioSource.loop == false)
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Fly", true, 1f);
     }
 
     public override void Update_State()
@@ -32,7 +35,7 @@ public class Bug_Retreat : Bug_Base
         if (Check_Collider(direction, LayerMask.GetMask("Ground", "Wall", "Ceiling", "Interaction")) == false)
             m_owner.transform.position = targetPosition;
         else
-            m_stateMachine.Change_State((int)Bug.State.ST_CHARGE);////ST_FLY); // 대기 상태로 변경
+            m_stateMachine.Change_State((int)Bug.State.ST_CHARGE); // 돌격 상태로 변경
 
         //m_rigidbody.MovePosition(targetPosition);
         //m_rigidbody.velocity = direction * 5f;
@@ -47,7 +50,7 @@ public class Bug_Retreat : Bug_Base
     private void Generate_RandomCurve() // 후퇴
     {
         Vector3 startPoint = m_owner.transform.position;
-        Vector3 endPoint = m_owner.transform.position + (HorrorManager.Instance.Player.transform.forward * 2f);
+        Vector3 endPoint = m_owner.transform.position + (GameManager.Ins.Horror.Player.transform.forward * 2f);
         endPoint.y = Camera.main.transform.position.y;
         endPoint.x += Random.Range(-0.5f, 0.5f);
         endPoint.z += Random.Range(-0.5f, 0.5f);

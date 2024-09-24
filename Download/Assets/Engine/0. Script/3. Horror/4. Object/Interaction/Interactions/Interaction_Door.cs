@@ -30,7 +30,7 @@ public class Interaction_Door : Interaction
     {
         m_audioSource = GetComponent<AudioSource>();
 
-        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform.GetChild(0), m_uiOffset);
+        GameObject gameObject = GameManager.Ins.Horror.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_OPENDOOR, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
 
@@ -68,16 +68,16 @@ public class Interaction_Door : Interaction
         float[] activeTimes = new float[1];
         string[] texts = new string[1];
 
-        LevelController levelController = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Levels;
+        LevelController levelController = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>().Levels;
         if(levelController == null) // 본 스테이지 클리어 여부 판별
-            m_interact = HorrorManager.Instance.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
+            m_interact = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
         else                        // 세부 스테이지 클리어 여부 판별
             m_interact = levelController.Get_CurrentLevel<Horror_Base>().Check_Clear(this, ref activeTimes, ref texts);
 
         if (m_interact == true)
             Move_Door();
         else
-            HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
+            GameManager.Ins.Horror.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
     }
 
     private void Check_Event()

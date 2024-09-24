@@ -1,16 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class LevelController
 {
     private int m_curlevel = -1;
     private int m_prelevel = -1;
     private List<Level> m_levels;
 
-    public int Curlevel { get { return m_curlevel; } }
-    public int Prelevel { get { return m_prelevel; } }
-    public List<Level> Levels { get { return m_levels; } }
+    public int Curlevel { get => m_curlevel; }
+    public int Prelevel { get => m_prelevel; }
+    public List<Level> Levels { get => m_levels; }
 
     public void Initialize_Level(List<Level> levels, int startlevels = -1)
     {
