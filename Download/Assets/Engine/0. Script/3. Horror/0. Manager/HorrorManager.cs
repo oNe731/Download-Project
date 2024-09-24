@@ -121,7 +121,8 @@ public class HorrorManager : StageManager
     public override void Set_Pause(bool pause, bool Setcursur)
     {
         base.Set_Pause(pause, Setcursur);
-        Player.Stop_Player(pause);
+        if(Player != null)
+            Player.Stop_Player(pause);
     }
 
 

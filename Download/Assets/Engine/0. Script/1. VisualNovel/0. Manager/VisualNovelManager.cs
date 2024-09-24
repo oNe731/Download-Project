@@ -132,6 +132,9 @@ public class VisualNovelManager : StageManager
     public override void Set_Pause(bool pause, bool Setcursur)
     {
         base.Set_Pause(pause, Setcursur);
+
+        if (LevelController == null || LevelController.Curlevel == -1)
+            return;
         switch(LevelController.Curlevel)
         {
             case (int)LEVELSTATE.LS_CHASEGAME:

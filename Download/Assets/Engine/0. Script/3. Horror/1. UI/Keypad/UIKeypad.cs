@@ -113,9 +113,7 @@ public class UIKeypad : MonoBehaviour
         else
         { // 오답 : 마지막 번호를 입력했을 때 틀렸다는 것을 알려주는 부저음같은게 난다.
             // 부저음 재생
-            //m_audioSource.clip = null;
-            //m_audioSource.loop = false;
-            //m_audioSource.Play();
+            //GameManager.Ins.Sound.Play_AudioSource(null, "", false, 1f);
             Reset_Number();
         }
     }

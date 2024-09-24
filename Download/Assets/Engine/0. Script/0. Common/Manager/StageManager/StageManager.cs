@@ -44,7 +44,7 @@ public abstract class StageManager
         }
 
         // 씬 전환 시 초기화 셋팅
-        GameManager.Ins.Setting.Close_Panel();
+        GameManager.Ins.Setting.Active_Panel(false);
 
         Load_Scene();
     }

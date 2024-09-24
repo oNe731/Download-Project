@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public VisualNovelManager Novel => (VisualNovelManager)m_stages[(int)StageManager.STAGE.LEVEL_VISUALNOVEL];
     public WesternManager Western => (WesternManager)m_stages[(int)StageManager.STAGE.LEVEL_WESTERN];
     public HorrorManager Horror => (HorrorManager)m_stages[(int)StageManager.STAGE.LEVEL_HORROR];
+    public StageManager CurStage => m_stages[m_curStage];
     public bool IsGame { get => m_isGame; set => m_isGame = value; }
     public CameraManager Camera => m_cameraManager;
     public UIManager UI => m_uIManager;
