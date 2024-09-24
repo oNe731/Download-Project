@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Western
 {
-    public class Western_Start : MonoBehaviour
+    public class Western_StartPanel : MonoBehaviour
     {
         public enum Type { Type_Start, Type_Exit, Type_End }
 
@@ -50,7 +50,7 @@ namespace Western
                     if (m_currentType == type)
                     {
                         Destroy(gameObject);
-                        WesternManager.Instance.LevelController.Change_Level((int)m_startState);
+                        GameManager.Ins.Western.LevelController.Change_Level((int)m_startState);
                         break;
                     }
                     Update_Position(Type.Type_Start);
@@ -60,7 +60,7 @@ namespace Western
                 case Type.Type_Exit:
                     if (m_currentType == type)
                     {
-                        SceneManager.LoadScene("Window");
+                        GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW);
                         break;
                     }
                     Update_Position(Type.Type_Exit);

@@ -42,13 +42,13 @@ public class UIKeypad : MonoBehaviour
         m_interactionDoor = interaction_Door;
 
         gameObject.SetActive(true);
-        HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
+        GameManager.Ins.Set_Pause(true); // 게임 일시정지
     }
 
     public void OnDisable_Keypad() // 비활성화될 때
     {
         gameObject.SetActive(false);
-        HorrorManager.Instance.Set_Pause(false); // 게임 일시정지
+        GameManager.Ins.Set_Pause(false); // 게임 일시정지
         Reset_Number();
     }
     

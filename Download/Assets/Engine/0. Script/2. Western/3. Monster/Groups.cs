@@ -18,9 +18,9 @@ namespace Western
         private void Start()
         {
             for (int i = 0; i < m_groups.Length; ++i)
-                m_groups[i].Initialize(i, this, WesternManager.Instance.LevelController.Curlevel);
+                m_groups[i].Initialize(i, this, GameManager.Ins.Western.LevelController.Curlevel);
 
-            switch(WesternManager.Instance.LevelController.Curlevel)
+            switch(GameManager.Ins.Western.LevelController.Curlevel)
             {
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
                     m_currentIndex = -1;
@@ -41,8 +41,8 @@ namespace Western
             m_currentIndex++;
             if (m_currentIndex >= m_groups.Length - 1)
             {
-                WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().finishGroup = true;
-                WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Play_Finish();
+                GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().finishGroup = true;
+                GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Play_Finish();
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace Western
 
         public bool Check_ElementCriminal(int groupIndex, Person.ElementType element)
         {
-            switch(WesternManager.Instance.LevelController.Curlevel)
+            switch(GameManager.Ins.Western.LevelController.Curlevel)
             {
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
                     Person.ElementType1 element1 = (Person.ElementType1)element;
@@ -120,7 +120,7 @@ namespace Western
         public bool Check_ElementCitizen(int groupIndex, int personIndex, Person.ElementType element)
         {
             // 같은 라인 내에서 중복 금지
-            switch (WesternManager.Instance.LevelController.Curlevel)
+            switch (GameManager.Ins.Western.LevelController.Curlevel)
             {
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv1:
                     if(personIndex == 1) // 2개 이상 같은 요소가 있으면 다시 조합

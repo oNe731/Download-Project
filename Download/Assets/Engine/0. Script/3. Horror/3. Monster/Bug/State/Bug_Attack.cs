@@ -15,7 +15,7 @@ public class Bug_Attack : Bug_Base
         m_time = 0f;
 
         Look_Player();
-        HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
+        GameManager.Ins.Horror.Player.Damage_Player(m_owner.Attack);
         GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Bug_Attack", false, 1f);
     }
 

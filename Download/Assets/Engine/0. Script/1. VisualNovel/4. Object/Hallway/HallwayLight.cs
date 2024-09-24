@@ -22,12 +22,12 @@ namespace VisualNovel
             m_light = GetComponent<Light>();
             m_changeTime = Random.Range(1.0f, 3.0f);
 
-            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Light.Add(this);
+            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Light.Add(this);
         }
 
         private void Update()
         {
-            if (false == m_blink)
+            if (GameManager.Ins.IsGame == false || m_blink == false)
                 return;
 
             m_time += Time.deltaTime;

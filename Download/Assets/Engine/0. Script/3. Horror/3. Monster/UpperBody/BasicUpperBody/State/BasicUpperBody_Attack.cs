@@ -43,7 +43,7 @@ public class BasicUpperBody_Attack : BasicUpperBody_Base
         Bullet bullet = gameObject.GetComponent<Bullet>();
         if (bullet == null)
             return;
-        Vector3 targetPosition = HorrorManager.Instance.Player.transform.position;
+        Vector3 targetPosition = GameManager.Ins.Horror.Player.transform.position;
         targetPosition.y += 1f;
         bullet.Initialize_Bullet(m_mouseTransform.position, targetPosition, m_owner.Attack, 5f);
     }

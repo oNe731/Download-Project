@@ -50,7 +50,7 @@ public class Bug_Retreat : Bug_Base
     private void Generate_RandomCurve() // ÈÄÅð
     {
         Vector3 startPoint = m_owner.transform.position;
-        Vector3 endPoint = m_owner.transform.position + (HorrorManager.Instance.Player.transform.forward * 2f);
+        Vector3 endPoint = m_owner.transform.position + (GameManager.Ins.Horror.Player.transform.forward * 2f);
         endPoint.y = Camera.main.transform.position.y;
         endPoint.x += Random.Range(-0.5f, 0.5f);
         endPoint.z += Random.Range(-0.5f, 0.5f);

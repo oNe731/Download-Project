@@ -677,7 +677,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1627372299}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
         m_MethodName: Active_Popup
         m_Mode: 1
@@ -988,7 +988,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1627372299}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
         m_MethodName: Active_Popup
         m_Mode: 1
@@ -1196,8 +1196,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1627372299}
-        m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
+      - m_Target: {fileID: 954649939}
+        m_TargetAssemblyTypeName: VisualNovel.VisualNovel_Start, Assembly-CSharp
         m_MethodName: Button_Exit
         m_Mode: 1
         m_Arguments:
@@ -1941,6 +1941,7 @@ GameObject:
   - component: {fileID: 954649936}
   - component: {fileID: 954649938}
   - component: {fileID: 954649937}
+  - component: {fileID: 954649939}
   m_Layer: 5
   m_Name: Panel_Start
   m_TagString: Untagged
@@ -2009,6 +2010,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954649935}
   m_CullTransparentMesh: 1
+--- !u!114 &954649939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954649935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7184495b883dc7a41bfa0a49e8cc8c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_startState: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,8 +2757,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1627372299}
-        m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
+      - m_Target: {fileID: 954649939}
+        m_TargetAssemblyTypeName: VisualNovel.VisualNovel_Start, Assembly-CSharp
         m_MethodName: Button_Start
         m_Mode: 1
         m_Arguments:
@@ -3256,35 +3270,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627372300}
-  - component: {fileID: 1627372299}
   - component: {fileID: 1627372301}
   m_Layer: 0
-  m_Name: StageManager
+  m_Name: SerializingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1627372299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627372298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c1f611125ea944a8fd7cca18a836ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_startState: 0
-  m_StartPanel: {fileID: 954649935}
-  m_dialog: {fileID: 1439278259}
-  m_likeabilityPanel: {fileID: 1226568886}
-  m_likeabilityHeartPanel:
-  - {fileID: 1792825147}
-  - {fileID: 1186022774}
-  - {fileID: 1623270577}
+  m_IsActive: 0
 --- !u!4 &1627372300
 Transform:
   m_ObjectHideFlags: 0
@@ -3312,8 +3305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14029d0786db8e49a2322cb312bba2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_path: 4. Data/1. VisualNovel/Position/ItemPositionData
-  m_prefab: {fileID: 3044813614554844372, guid: 44558726eee21f443ac8b8517766c5ff, type: 3}
 --- !u!1 &1654762534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,7 +4170,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 806482063}
-  - {fileID: 1627372300}
   - {fileID: 963194228}
   - {fileID: 693949010}
   - {fileID: 1616901901}
+  - {fileID: 1627372300}

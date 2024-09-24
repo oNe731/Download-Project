@@ -15,7 +15,7 @@ public class Horror_1stage_StartRoom : Area
     public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
     {
         // ÆÄÀÌÇÁ¸¦ È¹µæÇß´Â°¡?
-        if (HorrorManager.Instance.Player.WeaponManagement.Get_WeaponIndex(NoteItem.ITEMTYPE.TYPE_PIPE) != -1)
+        if (GameManager.Ins.Horror.Player.WeaponManagement.Get_WeaponIndex(NoteItem.ITEMTYPE.TYPE_PIPE) != -1)
             return true;
 
         activeTimes = new float[1];

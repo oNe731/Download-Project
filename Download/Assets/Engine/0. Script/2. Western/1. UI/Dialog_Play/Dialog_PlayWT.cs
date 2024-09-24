@@ -51,16 +51,6 @@ namespace Western
             m_targetPosition = new Vector3(48f, 300f, 0f);
         }
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-
         private void Update_Dialog()
         {
             if (m_isTyping)
@@ -111,7 +101,7 @@ namespace Western
             if (m_dialogs[index].fontColor.Length != 0)
                 m_dialogTxt.color = new Color(m_dialogs[index].fontColor[0], m_dialogs[index].fontColor[1], m_dialogs[index].fontColor[2], m_dialogs[index].fontColor[3]);
             if (!string.IsNullOrEmpty(m_dialogs[index].profileSpr))
-                m_profileImg.sprite = WesternManager.Instance.BackgroundSpr[m_dialogs[index].profileSpr];
+                m_profileImg.sprite = GameManager.Ins.Western.BackgroundSpr[m_dialogs[index].profileSpr];
         }
 
         private void Update_None()
@@ -170,6 +160,14 @@ namespace Western
                 yield return null;
             }
 
+            // 게임 일시정지 대기
+            while (true)
+            {
+                if (GameManager.Ins.IsGame == true)
+                    break;
+                yield return null;
+            }
+
             m_activeTime = 0f;
             Close_Type();
             yield break;
@@ -181,6 +179,14 @@ namespace Western
             {
                 if (m_isTyping == false)
                     m_activeTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // 게임 일시정지 대기
+            while(true)
+            {
+                if (GameManager.Ins.IsGame == true)
+                    break;
                 yield return null;
             }
 

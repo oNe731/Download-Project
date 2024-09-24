@@ -10,7 +10,7 @@ namespace VisualNovel
 
         public override void Enter_State()
         {
-            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Fail_ChaseGame();
+            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Fail_ChaseGame();
         }
 
         public override void Update_State()

@@ -22,11 +22,6 @@ namespace VisualNovel
             m_ownerDoll = m_Owner.GetComponent<ShootDoll>();
         }
 
-        private void Update()
-        {
-
-        }
-
         private void LateUpdate()
         {
             if (m_Owner == null)

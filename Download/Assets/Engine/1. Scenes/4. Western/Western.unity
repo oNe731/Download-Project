@@ -1629,8 +1629,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1777372012}
-        m_TargetAssemblyTypeName: WesternManager, Assembly-CSharp
+      - m_Target: {fileID: 1737845385}
+        m_TargetAssemblyTypeName: Western_MainPanel, Assembly-CSharp
         m_MethodName: Button_Play
         m_Mode: 1
         m_Arguments:
@@ -4095,6 +4095,7 @@ GameObject:
   - component: {fileID: 1737845383}
   - component: {fileID: 1737845382}
   - component: {fileID: 1737845384}
+  - component: {fileID: 1737845385}
   m_Layer: 5
   m_Name: Panel_Main
   m_TagString: Untagged
@@ -4178,58 +4179,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433aaada41f75b74ba07aead4fe0a18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1777372010
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1777372011}
-  - component: {fileID: 1777372012}
-  m_Layer: 0
-  m_Name: StageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1777372011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777372010}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1777372012
+--- !u!114 &1737845385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777372010}
+  m_GameObject: {fileID: 1737845380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee05e0881d5b0e043bf0d0d10bd0e0f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 07f38357aeb25e54e87d0813da442d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_introPanel: {fileID: 943014910}
-  m_dialogIntro: {fileID: 943014912}
-  m_MainPanel: {fileID: 1737845380}
-  m_dialogPlay: {fileID: 1470158932}
-  m_playButton: {fileID: 789782201}
-  m_heartUI: {fileID: 444449520}
-  m_statusBarUI: {fileID: 1663040811}
-  m_gun: {fileID: 1658188634}
 --- !u!1 &1800485439
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,7 +4947,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1656775363}
-  - {fileID: 1777372011}
   - {fileID: 963194228}
   - {fileID: 1601174172}
   - {fileID: 1811216229}

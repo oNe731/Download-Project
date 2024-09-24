@@ -35,7 +35,7 @@ public class Bug : Monster
 
     private void Update()
     {
-        if (HorrorManager.Instance.IsGame == false)
+        if (GameManager.Ins.IsGame == false)
             return;
 
         if (m_stateMachine == null)

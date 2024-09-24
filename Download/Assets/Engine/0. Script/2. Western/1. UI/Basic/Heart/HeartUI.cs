@@ -43,11 +43,11 @@ namespace Western
                             if (m_laydown == false)
                                 return;
 
-                            WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().LayDown_Group(true);
+                            GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().LayDown_Group(true);
                         }
                         else
                         {
-                            WesternManager.Instance.Over_Game();
+                            GameManager.Ins.Western.Over_Game();
                         }
 
                         m_update = false;

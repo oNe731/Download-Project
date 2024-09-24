@@ -48,22 +48,25 @@ namespace Western
         private IEnumerator Count(float timerSpeed)
         {
             isCount = true;
-            WesternManager.Instance.IsShoot = true;
+            GameManager.Ins.Western.IsShoot = true;
 
             while (m_currentCount > 0)
             {
-                m_count += Time.deltaTime * timerSpeed;
-                m_nextImage.fillAmount = m_count;
-                if (m_count >= 1f)
+                if(GameManager.Ins.IsGame == true)
                 {
-                    m_count = 0f;
-
-                    m_currentCount--;
-                    m_currentImage.sprite = m_numberSprite[m_currentCount];
-                    if (0 <= m_currentCount - 1)
+                    m_count += Time.deltaTime * timerSpeed;
+                    m_nextImage.fillAmount = m_count;
+                    if (m_count >= 1f)
                     {
-                        m_nextImage.fillAmount = 0f;
-                        m_nextImage.sprite = m_numberSprite[m_currentCount - 1];
+                        m_count = 0f;
+
+                        m_currentCount--;
+                        m_currentImage.sprite = m_numberSprite[m_currentCount];
+                        if (0 <= m_currentCount - 1)
+                        {
+                            m_nextImage.fillAmount = 0f;
+                            m_nextImage.sprite = m_numberSprite[m_currentCount - 1];
+                        }
                     }
                 }
 
@@ -72,7 +75,7 @@ namespace Western
 
             // ½ÇÆÐ
             isCount = false;
-            WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Fail_Group();
+            GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Fail_Group();
 
             Destroy(gameObject);
             yield break;

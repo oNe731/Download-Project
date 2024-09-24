@@ -9,6 +9,9 @@ public class CameraManager : MonoBehaviour
     private CAMERATYPE m_currentCameraType = CAMERATYPE.CT_END;
     private CameraBase[] m_cameras;
 
+    private bool m_ShakeUpdate = false;
+    public bool ShakeUpdate { get => m_ShakeUpdate; set => m_ShakeUpdate = value; }
+
     private void Start()
     {
         m_cameras = new CameraBase[CAMERATYPE.GetValues(typeof(CAMERATYPE)).Length];
@@ -26,6 +29,13 @@ public class CameraManager : MonoBehaviour
     {
         if (m_currentCameraType == CAMERATYPE.CT_END)
             return;
+
+        if(GameManager.Ins.IsGame == false)
+        {
+            if(m_ShakeUpdate == true)
+                m_cameras[(int)m_currentCameraType].Update_Shake();
+            return;
+        }
 
         m_cameras[(int)m_currentCameraType].Update_Camera();
     }

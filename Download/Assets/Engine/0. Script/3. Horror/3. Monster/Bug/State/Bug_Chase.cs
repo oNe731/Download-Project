@@ -30,7 +30,7 @@ public class Bug_Chase : Bug_Base
             m_stateMachine.Change_State((int)Bug.State.ST_FLY);
         else
         {
-            Vector3 targetPosition = HorrorManager.Instance.Player.transform.position + (HorrorManager.Instance.Player.transform.forward * 0.8f);
+            Vector3 targetPosition = GameManager.Ins.Horror.Player.transform.position + (GameManager.Ins.Horror.Player.transform.forward * 0.8f);
             //m_agent.destination = position;
             m_agent.destination = new Vector3(targetPosition.x, m_owner.transform.position.y, targetPosition.z);
 

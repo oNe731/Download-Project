@@ -15,10 +15,8 @@ public class MethodWindow : MonoBehaviour
         if (m_time < 1f)
             return;
 
-        if (Input.anyKeyDown)
-        {
+        if (GameManager.Ins.Get_AnyKeyDown())
             Destroy(gameObject);
-        }
     }
 
     private void OnDestroy()

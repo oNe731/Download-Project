@@ -41,7 +41,7 @@ namespace VisualNovel
         }
         public GameObject ItemText => m_itemText;
 
-        public GameObject Yandere { get => m_yandereObj; }
+        public HallwayYandere Yandere { get => m_yandere; }
         public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
         public GameObject Stage { get => m_stage; }
 
@@ -83,16 +83,16 @@ namespace VisualNovel
             GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
 
             // 지하실 다이얼로그 시작 (페이드 인)
-            Dialog_VN dialog = VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>();
+            Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
             dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
             dialog.Close_Background();
         }
 
         public override void Play_Level()
         {
-            VisualNovelManager.Instance.Dialog.SetActive(false);
+            GameManager.Ins.Novel.Dialog.SetActive(false);
 
-            Destroy(m_playerBodyObj);
+            GameManager.Ins.Resource.Destroy(m_playerBodyObj);
             m_yandereObj.SetActive(false);
 
             Create_CD();
@@ -136,7 +136,7 @@ namespace VisualNovel
         private void Clear_ChaseGame()
         {
             // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환
-            StartCoroutine(Clear_Game());
+            GameManager.Ins.StartCoroutine(Clear_Game());
         }
 
         private IEnumerator Clear_Game()
@@ -151,7 +151,7 @@ namespace VisualNovel
             }
 
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
             yield break;
         }
 
@@ -161,7 +161,7 @@ namespace VisualNovel
             m_yandereObj.transform.GetChild(0).gameObject.SetActive(false);
 
             // 게임 오버 이벤트 발생
-            StartCoroutine(Fail_GameEvent());
+            GameManager.Ins.StartCoroutine(Fail_GameEvent());
         }
 
         private IEnumerator Fail_GameEvent()
@@ -185,12 +185,13 @@ namespace VisualNovel
 
             while (fadeOut == false)
             {
+                if(GameManager.Ins.IsGame == false)
+                    yield return null;
+
                 if (redPanel == null)
                 {
                     if (camera != null && Camera.main.fieldOfView <= 25f && handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !handAnimator.IsInTransition(0))
-                    {
                         redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Red", GameObject.Find("Canvas").transform);
-                    }
                 }
                 else
                 {
@@ -199,7 +200,7 @@ namespace VisualNovel
                     {
                         fadeOut = true;
                         GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
                     }
                 }
                 yield return null;
@@ -321,7 +322,7 @@ namespace VisualNovel
                     case 1:
                         // 속도 감소 및 컷씬 재생
                         m_player.MoveSpeed = 200f;
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
                         break;
 
                     case 2:
@@ -355,8 +356,8 @@ namespace VisualNovel
         public void Change_Text(string str)
         {
             if (m_ItemTextCoroutine != null)
-                StopCoroutine(m_ItemTextCoroutine);
-            StartCoroutine(Wait_Text(str));
+                GameManager.Ins.StopCoroutine(m_ItemTextCoroutine);
+            GameManager.Ins.StartCoroutine(Wait_Text(str));
         }
 
         private IEnumerator Wait_Text(string str)

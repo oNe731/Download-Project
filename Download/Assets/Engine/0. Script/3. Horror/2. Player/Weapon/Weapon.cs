@@ -25,7 +25,7 @@ namespace Horror
             m_itemInfo = noteItem;
             m_uIWeapon = uIWeapon;
 
-            m_animator = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
+            m_animator = GameManager.Ins.Horror.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1).GetComponent<Animator>();
             gameObject.SetActive(false);
 
             m_audioSource = gameObject.GetComponent<AudioSource>();
@@ -33,7 +33,7 @@ namespace Horror
 
         public virtual void Enter_Weapon()
         {
-            HorrorManager.Instance.Player.StateMachine.Change_State((int)HorrorPlayer.State.ST_CHANGE);
+            GameManager.Ins.Horror.Player.StateMachine.Change_State((int)HorrorPlayer.State.ST_CHANGE);
             //gameObject.SetActive(true);
         }
 

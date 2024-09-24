@@ -19,7 +19,7 @@ public class UINoteIcon : MonoBehaviour
             gameObject.SetActive(true);
 
         m_nameText.text = noteItem.m_name;
-        m_Iconimage.sprite = HorrorManager.Instance.NoteElementIcon[noteItem.m_imageName + "_1"];
+        m_Iconimage.sprite = GameManager.Ins.Horror.NoteElementIcon[noteItem.m_imageName + "_1"];
         switch (noteItem.m_noteType)
         {
             case NoteItem.NOTETYPE.TYPE_WEAPON:
@@ -38,7 +38,7 @@ public class UINoteIcon : MonoBehaviour
                 switch (noteItem.m_itemType)
                 {
                     case NoteItem.ITEMTYPE.TYPE_BULLET:
-                        HorrorManager.Instance.Player.WeaponManagement.Update_WeaponUI(NoteItem.ITEMTYPE.TYPE_GUN); // 무기 ui 업데이트
+                        GameManager.Ins.Horror.Player.WeaponManagement.Update_WeaponUI(NoteItem.ITEMTYPE.TYPE_GUN); // 무기 ui 업데이트
                         break;
                 }
                 break;

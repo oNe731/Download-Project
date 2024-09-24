@@ -13,21 +13,13 @@ namespace VisualNovel
         [SerializeField] private GameObject m_darkPanelObj;
         [SerializeField] private GameObject m_backgroundObj;
         [SerializeField] private GameObject[] m_standingObj;
-        //[SerializeField] private GameObject m_portraitObj;
         [SerializeField] private GameObject m_dialogBoxObj;
-        //[SerializeField] private GameObject m_ellipseObj;
-        //[SerializeField] private GameObject m_arrowObj;
         [SerializeField] private TMP_Text m_nameTxt;
         [SerializeField] private TMP_Text m_dialogTxt;
         [SerializeField] private NpcLike m_heartScr;
 
         private Image m_backgroundImg;
         private Image[] m_standingImg;
-        //private Image m_portraitImg;
-        //private Image m_dialogBoxImg;
-        //private Image m_ellipseImg;
-        //private Image m_arrowImg;
-        //private Coroutine m_arrowCoroutine = null;
 
         private int m_choiceIndex = 0;
         private List<GameObject> m_choice_Button = new List<GameObject>();
@@ -42,15 +34,17 @@ namespace VisualNovel
             m_standingImg = new Image[m_standingObj.Length];
             for (int i = 0; i < m_standingObj.Length; i++)
                 m_standingImg[i] = m_standingObj[i].GetComponent<Image>();
-
-            //m_portraitImg = m_portraitObj.GetComponent<Image>();
-            //m_dialogBoxImg = m_dialogBoxObj.GetComponent<Image>();
-            //m_ellipseImg = m_ellipseObj.GetComponent<Image>();
-            //m_arrowImg = m_arrowObj.GetComponent<Image>();
         }
 
         private void Update()
         {
+            /*if(Input.GetKeyDown(KeyCode.F1))
+            {
+                m_dialogIndex = m_dialogs.Count - 1;
+                m_isTyping    = false;
+                Update_Dialog();
+            }*/
+
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 Update_Dialog();
 
@@ -128,36 +122,16 @@ namespace VisualNovel
         #region Update
         private void Update_Basic(int index)
         {
-            //m_backgroundObj.SetActive(true);
             m_dialogBoxObj.SetActive(true);
 
-            //if (!string.IsNullOrEmpty(m_dialogs[index].nameFont))
-            //    m_nameTxt.font = VisualNovelManager.Instance.FontAst[m_dialogs[index].nameFont];
-            //if (!string.IsNullOrEmpty(m_dialogs[index].dialogFont))
-            //    m_dialogTxt.font = VisualNovelManager.Instance.FontAst[m_dialogs[index].dialogFont];
-
             // 다이얼로그 업데이트
-            //m_arrowObj.SetActive(false);
             m_nameTxt.text = m_dialogs[index].nameText;
             m_heartScr.Set_Owner(m_dialogs[index].owner); // 호감도 업데이트
 
             // 리소스 업데이트
             if (!string.IsNullOrEmpty(m_dialogs[index].backgroundSpr))
-                m_backgroundImg.sprite = VisualNovelManager.Instance.BackgroundSpr[m_dialogs[index].backgroundSpr];
+                m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[m_dialogs[index].backgroundSpr];
             Update_Standing(index);
-            //if (!string.IsNullOrEmpty(m_dialogs[index].portraitSpr))
-            //{
-            //    m_portraitObj.SetActive(true);
-            //    m_portraitImg.sprite = VisualNovelManager.Instance.PortraitSpr[m_dialogs[index].portraitSpr];
-            //}
-            //else
-            //    m_portraitObj.SetActive(false);
-            //if (!string.IsNullOrEmpty(m_dialogs[index].boxSpr))
-            //    m_dialogBoxImg.sprite = VisualNovelManager.Instance.BoxISpr[m_dialogs[index].boxSpr];
-            //if (!string.IsNullOrEmpty(m_dialogs[index].ellipseSpr))
-            //    m_ellipseImg.sprite = VisualNovelManager.Instance.EllipseSpr[m_dialogs[index].ellipseSpr];
-            //if (!string.IsNullOrEmpty(m_dialogs[index].arrawSpr))
-            //    m_arrowImg.sprite = VisualNovelManager.Instance.ArrawSpr[m_dialogs[index].arrawSpr];
         }
 
         private void Update_None(bool nextUpdate = false)
@@ -207,19 +181,19 @@ namespace VisualNovel
         private void Start_ShootGame()
         {
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
-                () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
+                () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME), 0.5f, false);
         }
 
         private void Start_ChaseGame()
         {
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
-                () => VisualNovelManager.Instance.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
+                () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME), 0.5f, false);
         }
 
         private void Play_ChaseGame()
         {
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black,
-                () => VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level(), 0.5f, false);
+                () => GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level(), 0.5f, false);
         }
 
         private void Update_Shaking()
@@ -293,7 +267,7 @@ namespace VisualNovel
             switch (animationValue.objectType)
             {
                 case AnimationValue.OBJECT_TYPE.OJ_YANDERE:
-                    VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().YandereAnimator.SetTrigger(animationValue.animatroTriger);
+                    GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().YandereAnimator.SetTrigger(animationValue.animatroTriger);
                     break;
             }
 
@@ -309,7 +283,7 @@ namespace VisualNovel
                 time += Time.deltaTime;
                 if (time >= 0.5f)
                 {
-                    VisualNovelManager.Instance.LikeabilityPanel.SetActive(true);
+                    GameManager.Ins.Novel.LikeabilityPanel.SetActive(true);
                     break;
                 }
 
@@ -322,7 +296,7 @@ namespace VisualNovel
                 time += Time.deltaTime;
                 if (time >= 1.0f)
                 {
-                    VisualNovelManager.Instance.LikeabilityPanel.GetComponent<Likeability>().Shake_Heart();
+                    GameManager.Ins.Novel.LikeabilityPanel.GetComponent<Likeability>().Shake_Heart();
                     break;
                 }
 
@@ -338,7 +312,7 @@ namespace VisualNovel
             switch(activeValue.objectType)
             {
                 case ActiveValue.OBJECT_TYPE.OJ_SAW:
-                    VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Yandere.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(activeValue.active);
+                    GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Yandere.gameObject.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(activeValue.active);
                     break;
             }
 
@@ -400,7 +374,7 @@ namespace VisualNovel
                     {
                         m_standingObj[0].SetActive(true);
                         m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                        m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[0]];
                     }
 
                     m_standingObj[1].SetActive(false);
@@ -412,14 +386,14 @@ namespace VisualNovel
                     {
                         m_standingObj[0].SetActive(true);
                         m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                        m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[0]];
                     }
 
                     if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[1]))
                     {
                         m_standingObj[1].SetActive(true);
                         m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
-                        m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
+                        m_standingImg[1].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[1]];
                     }
                     m_standingObj[2].SetActive(false);
                     break;
@@ -429,21 +403,21 @@ namespace VisualNovel
                     {
                         m_standingObj[0].SetActive(true);
                         m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
-                        m_standingImg[0].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[0]];
+                        m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[0]];
                     }
 
                     if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[1]))
                     {
                         m_standingObj[1].SetActive(true);
                         m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
-                        m_standingImg[1].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[1]];
+                        m_standingImg[1].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[1]];
                     }
 
                     if (!string.IsNullOrEmpty(m_dialogs[index].standingSpr[2]))
                     { 
                         m_standingObj[2].SetActive(true);
                         m_standingObj[2].transform.localPosition = new Vector3(500.0f, -460.0f, 0.0f);
-                        m_standingImg[2].sprite = VisualNovelManager.Instance.StandingSpr[m_dialogs[index].standingSpr[2]];
+                        m_standingImg[2].sprite = GameManager.Ins.Novel.StandingSpr[m_dialogs[index].standingSpr[2]];
                     }
                     break;
             }
@@ -484,7 +458,7 @@ namespace VisualNovel
             }
 
             m_choiceIndex = 0;
-            m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = VisualNovelManager.Instance.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"];
+            m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = GameManager.Ins.Novel.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"];
         }
 
         private void Update_Button()
@@ -537,9 +511,9 @@ namespace VisualNovel
             for (int i = 0; i < m_choice_Button.Count; ++i)
             {
                 if (i == m_choiceIndex)
-                    m_choice_Button[i].GetComponent<Image>().sprite = VisualNovelManager.Instance.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"]; // 버튼 On
+                    m_choice_Button[i].GetComponent<Image>().sprite = GameManager.Ins.Novel.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"]; // 버튼 On
                 else
-                    m_choice_Button[i].GetComponent<Image>().sprite = VisualNovelManager.Instance.ChoiceButtonSpr["UI_VisualNovel_White_ButtonOFF"]; // 버튼 Off
+                    m_choice_Button[i].GetComponent<Image>().sprite = GameManager.Ins.Novel.ChoiceButtonSpr["UI_VisualNovel_White_ButtonOFF"]; // 버튼 Off
             }
         }
 
@@ -579,7 +553,7 @@ namespace VisualNovel
             gameObject.SetActive(false);
         }
 
-        IEnumerator Type_Text(int index, TMP_Text currentText, /*GameObject arrow,*/ bool nextUpdate)
+        IEnumerator Type_Text(int index, TMP_Text currentText, bool nextUpdate)
         {
             m_isTyping = true;
             m_cancelTyping = false;
@@ -599,11 +573,6 @@ namespace VisualNovel
 
             m_isTyping = false;
 
-            // 화살표 효과
-            //if (m_arrowCoroutine != null)
-            //    StopCoroutine(m_arrowCoroutine);
-            //m_arrowCoroutine = StartCoroutine(Use_Arrow(arrow));
-
             // 선택지 생성
             if (0 < m_dialogs[index].choiceText.Count)
                 Create_ChoiceButton(index);
@@ -611,7 +580,7 @@ namespace VisualNovel
             // 호감도 증가
             if (m_dialogs[index].dialogEvent == DialogData_VN.DIALOGEVENT_TYPE.DET_LIKEADD)
             {
-                VisualNovelManager.Instance.NpcHeart[(int)m_dialogs[index].owner]++;
+                GameManager.Ins.Novel.NpcHeart[(int)m_dialogs[index].owner]++;
                 m_heartScr.Set_Owner(m_dialogs[index].owner);
             }
 
@@ -621,17 +590,6 @@ namespace VisualNovel
 
             yield break;
         }
-
-        //IEnumerator Use_Arrow(GameObject arrow)
-        //{
-        //    while (false == m_isTyping)
-        //    {
-        //        arrow.SetActive(!arrow.activeSelf);
-        //        yield return new WaitForSeconds(m_arrowSpeed);
-        //    }
-
-        //    yield break;
-        //}
         #endregion
     }
 }

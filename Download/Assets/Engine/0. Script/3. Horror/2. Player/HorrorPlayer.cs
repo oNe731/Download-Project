@@ -58,7 +58,7 @@ namespace Horror
             if (m_hp <= 0)
             {
                 m_hp = 0f;
-                HorrorManager.Instance.Over_Game();
+                GameManager.Ins.Horror.Over_Game();
             }
             else
             {
@@ -123,7 +123,7 @@ namespace Horror
 
         public void Update()
         {
-            if (HorrorManager.Instance.IsGame == false)
+            if (GameManager.Ins.IsGame == false)
                 return;
 
             m_stateMachine.Update_State();

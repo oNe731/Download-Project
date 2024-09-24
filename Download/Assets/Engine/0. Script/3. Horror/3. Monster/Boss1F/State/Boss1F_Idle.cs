@@ -14,7 +14,7 @@ public class Boss1F_Idle : Boss1F_Base
 
     public override void Update_State()
     {
-        Vector3 direction = HorrorManager.Instance.Player.transform.position - m_owner.transform.position;
+        Vector3 direction = GameManager.Ins.Horror.Player.transform.position - m_owner.transform.position;
         direction.y = 0f;
         direction = direction.normalized;
         if (direction != Vector3.zero)

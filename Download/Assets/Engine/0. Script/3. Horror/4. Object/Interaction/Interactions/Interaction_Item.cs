@@ -12,7 +12,7 @@ namespace Horror
 
         private void Start()
         {
-            GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform.GetChild(0), m_uiOffset);
+            GameObject gameObject = GameManager.Ins.Horror.Create_WorldHintUI(UIWorldHint.HINTTYPE.HT_RESEARCH, transform.GetChild(0), m_uiOffset);
             m_interactionUI = gameObject.GetComponent<UIWorldHint>();
         }
 
@@ -37,7 +37,7 @@ namespace Horror
                     type = UIPopup.TYPE.T_WEAPON;
                 else
                 {
-                    Note playerNote = HorrorManager.Instance.Player.Note; // 노트 보유 여부 검사
+                    Note playerNote = GameManager.Ins.Horror.Player.Note; // 노트 보유 여부 검사
                     if (playerNote == null)
                         return;
 
@@ -48,7 +48,7 @@ namespace Horror
                 }
             }
 
-            HorrorManager.Instance.Active_Popup(type, m_noteItem);
+            GameManager.Ins.Horror.Active_Popup(type, m_noteItem);
 
             Check_Delete();
         }

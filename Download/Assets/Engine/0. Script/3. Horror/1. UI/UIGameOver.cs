@@ -94,6 +94,6 @@ public class UIGameOver : MonoBehaviour
     private void Restart_Game()
     {
         Destroy(gameObject);
-        HorrorManager.Instance.Restart_Game();
+        GameManager.Ins.Horror.Restart_Game();
     }
 }

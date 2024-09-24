@@ -12,7 +12,7 @@ public class Interaction_Event : Interaction
 
     private void Start()
     {
-        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(m_hintType, transform.GetChild(0), m_uiOffset);
+        GameObject gameObject = GameManager.Ins.Horror.Create_WorldHintUI(m_hintType, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
     }
 

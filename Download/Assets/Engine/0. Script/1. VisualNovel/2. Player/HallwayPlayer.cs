@@ -21,6 +21,9 @@ namespace VisualNovel
 
         public void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             if (!m_isLock)
                 Input_Player();
         }
@@ -77,6 +80,11 @@ namespace VisualNovel
             m_isLock = isLock;
             if (isLock)
                 m_rigidbody.isKinematic = true;
+        }
+
+        public void Stop_Player(bool stop)
+        {
+            Set_Lock(stop);
         }
     }
 }

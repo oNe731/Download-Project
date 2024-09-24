@@ -47,7 +47,7 @@ public class Horror_2stage : Horror_Base
         m_stage.SetActive(true);
 
         // 플레이어 위치 및 회전 변경
-        Transform playerTransform = HorrorManager.Instance.Player.gameObject.transform;
+        Transform playerTransform = GameManager.Ins.Horror.Player.gameObject.transform;
         playerTransform.position = new Vector3(0f, 134.8f, -90.16f);
         playerTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }

@@ -37,12 +37,4 @@ public class Area : Horror_Base
     public override void OnDrawGizmos()
     {
     }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") == false)
-            return;
-
-        m_levelController.Change_Level(m_levelIndex);
-    }
 }

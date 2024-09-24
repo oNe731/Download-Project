@@ -34,6 +34,9 @@ namespace VisualNovel
 
         private void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             if (!m_click)
             {
                 if (m_methodObj == null)
@@ -72,7 +75,7 @@ namespace VisualNovel
 
         private void Finish_Count()
         {
-            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
+            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
             Destroy(gameObject);
         }
     }

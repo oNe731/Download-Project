@@ -65,7 +65,8 @@ namespace VisualNovel
 
         public void Update_Heart()
         {
-            if (VisualNovelManager.Instance.NpcHeart == null)
+            VisualNovelManager manager = GameManager.Ins.Novel;
+            if (manager.NpcHeart == null)
                 return;
 
             Sprite spriteOn = null;
@@ -73,22 +74,22 @@ namespace VisualNovel
             switch (m_npcIndex)
             {
                 case VisualNovelManager.NPCTYPE.OT_BLUE:
-                    spriteOn = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartON"];
-                    spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartOFF"];
+                    spriteOn  = manager.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartON"];
+                    spriteOff = manager.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartOFF"];
                     break;
 
                 case VisualNovelManager.NPCTYPE.OT_YELLOW:
-                    spriteOn = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartON"];
-                    spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartOFF"];
+                    spriteOn  = manager.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartON"];
+                    spriteOff = manager.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartOFF"];
                     break;
 
                 case VisualNovelManager.NPCTYPE.OT_PINK:
-                    spriteOn = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartON"];
-                    spriteOff = VisualNovelManager.Instance.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartOFF"];
+                    spriteOn  = manager.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartON"];
+                    spriteOff = manager.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartOFF"];
                     break;
             }
 
-            int currentCount = VisualNovelManager.Instance.NpcHeart[(int)m_npcIndex];
+            int currentCount = manager.NpcHeart[(int)m_npcIndex];
             for (int i = 0; i < currentCount; i++)
             {
                 if (i >= m_heart.Length)

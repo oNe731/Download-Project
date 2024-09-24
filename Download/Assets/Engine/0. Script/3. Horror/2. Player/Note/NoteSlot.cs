@@ -154,7 +154,7 @@ namespace Horror
                 if (Physics.Raycast(wallHit.point, Vector3.down, out groundHit, Mathf.Infinity, LayerMask.GetMask("Ground")))
                     worldObject.transform.position = groundHit.point;
                 else // !
-                    worldObject.transform.position = HorrorManager.Instance.Player.transform.position;
+                    worldObject.transform.position = GameManager.Ins.Horror.Player.transform.position;
             }
             else
             {
@@ -165,12 +165,12 @@ namespace Horror
                 { // 바닥이 아닌 경우 Ex. 상단 방향 등
 
                     float dist = Random.Range(2f, 3f);
-                    RaycastHit playerHit = GameManager.Ins.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, dist, LayerMask.GetMask("Wall"));
+                    RaycastHit playerHit = GameManager.Ins.Start_Raycast(GameManager.Ins.Horror.Player.transform.position, GameManager.Ins.Horror.Player.transform.forward, dist, LayerMask.GetMask("Wall"));
                     if (playerHit.collider == null) // 벽이 아닌 경우 해당 방향으로 이동 가능
-                        worldObject.transform.position = HorrorManager.Instance.Player.transform.position + (HorrorManager.Instance.Player.transform.forward * dist);
+                        worldObject.transform.position = GameManager.Ins.Horror.Player.transform.position + (GameManager.Ins.Horror.Player.transform.forward * dist);
                     else // 벽 끝으로 이동
                     {
-                        RaycastHit wallOutHit = GameManager.Ins.Start_Raycast(HorrorManager.Instance.Player.transform.position, HorrorManager.Instance.Player.transform.forward, Mathf.Infinity, LayerMask.GetMask("Wall"));
+                        RaycastHit wallOutHit = GameManager.Ins.Start_Raycast(GameManager.Ins.Horror.Player.transform.position, GameManager.Ins.Horror.Player.transform.forward, Mathf.Infinity, LayerMask.GetMask("Wall"));
                         if (wallOutHit.collider != null)
                         {
                             worldObject.transform.position = wallOutHit.point;
@@ -181,7 +181,7 @@ namespace Horror
                                 worldObject.transform.position = wallOutHit.point;//HorrorManager.Instance.Player.transform.position;
                         }
                         else
-                            worldObject.transform.position = HorrorManager.Instance.Player.transform.position;
+                            worldObject.transform.position = GameManager.Ins.Horror.Player.transform.position;
                     }
                 }
             }

@@ -35,10 +35,10 @@ public class Straitjacket_Attack : Straitjacket_Base
                     {
                         isAttak = true;
 
-                        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, HorrorManager.Instance.Player.transform.position);
+                        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, GameManager.Ins.Horror.Player.transform.position);
                         if (distanceToPlayer <= m_attackDist)
                         {
-                            HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
+                            GameManager.Ins.Horror.Player.Damage_Player(m_owner.Attack);
                             GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Straitjacket_Attack", false, 1f);
                         }
                     }

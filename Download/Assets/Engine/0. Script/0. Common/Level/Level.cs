@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class Level : MonoBehaviour
+public class Level
 {
     protected int m_levelIndex = -1;
     protected bool m_IsVisit = false;

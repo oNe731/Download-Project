@@ -1,52 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 using Horror;
 
-public class HorrorManager : MonoBehaviour
+public class HorrorManager : StageManager
 {
     public enum LEVEL { LV_1STAGE, LV_2STAGE, LV_END };
 
-    private static HorrorManager m_instance = null;
-    private LevelController m_levelController = null;
-
-    private bool m_isGame = false;
-    private HorrorPlayer m_player;
-    private UIPopup m_popupUI = null;
-    private UIInstruction m_instructionUI = null;
     private Dictionary<string, Sprite> m_noteElementIcon = new Dictionary<string, Sprite>();
 
-    public static HorrorManager Instance => m_instance;
-    public LevelController LevelController => m_levelController;
-    public bool IsGame => m_isGame;
-    public HorrorPlayer Player => m_player;
+    private HorrorPlayer  m_player;
+    private UIPopup       m_popupUI = null;
+    private UIInstruction m_instructionUI = null;
+
     public Dictionary<string, Sprite> NoteElementIcon => m_noteElementIcon;
+    public HorrorPlayer Player => m_player;
     public UIInstruction InstructionUI => m_instructionUI;
 
-    private void Awake()
+    public HorrorManager() : base()
     {
-        if (null == m_instance)
-            m_instance = this;
+        m_stageLevel = STAGE.LEVEL_HORROR;
+        m_sceneName = "Horror";
+    }
 
-        GameObject playergameObject = GameObject.FindWithTag("Player");
-        if (playergameObject != null)
-            m_player = playergameObject.GetComponent<HorrorPlayer>();
-
-        m_levelController = gameObject.AddComponent<LevelController>();
-
-        List<Level> levels = new List<Level>
-        {
-            gameObject.AddComponent<Horror_1stage>(),
-            gameObject.AddComponent<Horror_2stage>(),
-        };
-
-        gameObject.GetComponent<Horror_1stage>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Horror_2stage>().Initialize_Level(m_levelController);
-
-        m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
-
+    protected override void Load_Resource()
+    {
         string basicPath = "1. Graphic/2D/3. Horror/UI/Play/Icon/";
         m_noteElementIcon.Add("Icon_None_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/None/Icon_None_1"));
         m_noteElementIcon.Add("Icon_None_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Etc/None/Icon_None_2"));
@@ -75,40 +53,82 @@ public class HorrorManager : MonoBehaviour
         m_noteElementIcon.Add("Icon_clueNumber_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_1"));
         m_noteElementIcon.Add("Icon_clueNumber_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_2"));
         m_noteElementIcon.Add("Icon_clueNumber_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_3"));
-
-        // 사용할 UI 생성
-        if (m_popupUI == null)
-        {
-            GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
-            if (gameObject == null)
-                return;
-            m_popupUI = gameObject.GetComponent<UIPopup>();
-            m_popupUI.gameObject.SetActive(false);
-        }
-        if (m_instructionUI == null)
-        {
-            GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
-            if (gameObject == null)
-                return;
-            m_instructionUI = gameObject.GetComponent<UIInstruction>();
-            m_instructionUI.gameObject.SetActive(false);
-        }
     }
 
-    private void Start()
+    public override void Enter_Stage()
     {
+        base.Enter_Stage();
+    }
+
+    protected override void Load_Scene()
+    {
+        // 변수 할당
+        GameObject playergameObject = GameObject.FindWithTag("Player");
+        if (playergameObject != null)
+            m_player = playergameObject.GetComponent<HorrorPlayer>();
+
+        // 기본 값 초기화
+        GameObject popup = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Popup", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
+        if (popup == null)
+            return;
+        m_popupUI = popup.GetComponent<UIPopup>();
+        m_popupUI.gameObject.SetActive(false);
+
+        GameObject instruction = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_Instruction", GameObject.Find("Canvas").transform.Find("Panel_Middle"));
+        if (instruction == null)
+            return;
+        m_instructionUI = instruction.GetComponent<UIInstruction>();
+        m_instructionUI.gameObject.SetActive(false);
+
+        // 레벨 초기화
+        m_levelController = new LevelController();
+        List<Level> levels = new List<Level>
+        {
+            new Horror_1stage(),
+            new Horror_2stage(),
+        };
+        for (int i = 0; i < levels.Count; ++i)
+            levels[i].Initialize_Level(m_levelController);
+        m_levelController.Initialize_Level(levels, (int)LEVEL.LV_1STAGE);
+
+        // 게임 시작
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Ins.UI.EventUpdate = true;
         GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
     }
 
-    private void Update()
+    public override void Update_Stage()
     {
+        if (m_levelController == null)
+            return;
+
         m_levelController.Update_Level();
     }
+
+    public override void LateUpdate_Stage()
+    {
+        if (m_levelController == null)
+            return;
+
+        m_levelController.LateUpdate_Level();
+    }
+
+    public override void Exit_Stage()
+    {
+        base.Exit_Stage();
+    }
+    
+    public override void Set_Pause(bool pause, bool Setcursur)
+    {
+        base.Set_Pause(pause, Setcursur);
+        Player.Stop_Player(pause);
+    }
+
 
     public void Start_Game()
     {
         GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
-        m_isGame = true;
+        GameManager.Ins.IsGame = true;
 
         // 카메라 설정
         GameObject player = GameObject.FindWithTag("Player");
@@ -119,18 +139,9 @@ public class HorrorManager : MonoBehaviour
         camera.Set_FollowInfo(player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(0).transform, player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).transform, false, false, new Vector3(0.0f, 1.3f, 0.0f), 200.0f, 30.0f, new Vector2(-45f, 45f), true, true);
     }
 
-    public void Set_Pause(bool pause, bool Setcursur = true)
-    {
-        m_isGame = !pause;
-        Player.Stop_Player(pause);
-
-        if (Setcursur == true)
-            GameManager.Ins.Camera.Set_CursorLock(!pause);
-    }
-
     public GameObject Create_WorldHintUI(UIWorldHint.HINTTYPE hinttype, Transform target, Vector3 m_uiOffset)
     {
-        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_WorldHint", LevelController.Get_CurrentLevel<Horror_Base>().Stage.transform);
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_WorldHint");//, LevelController.Get_CurrentLevel<Horror_Base>().Stage.transform);
         if (gameObject == null)
             return null;
 
@@ -156,9 +167,9 @@ public class HorrorManager : MonoBehaviour
 
     public void Over_Game()
     {
-        if (IsGame == false) return;
+        if (GameManager.Ins.IsGame == false) return;
 
-        Set_Pause(true, false);
+        GameManager.Ins.Set_Pause(true, false);
         GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameOver");
         if (gameObject == null)
             return;
@@ -171,6 +182,6 @@ public class HorrorManager : MonoBehaviour
         //GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         //HorrorManager.Instance.Set_Pause(false, false);
         GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-        GameManager.Ins.Change_Scene("Horror");
+        GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_HORROR);
     }
 }

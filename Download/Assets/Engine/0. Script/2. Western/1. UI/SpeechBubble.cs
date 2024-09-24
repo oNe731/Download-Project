@@ -30,9 +30,9 @@ namespace Western
             if (m_time >= m_deleteTime)
             {
                 if (m_personType == Person.PERSONTYPE.PT_CRIMINAL)
-                    WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().LayDown_Group(true);
+                    GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().LayDown_Group(true);
                 else // Ω√πŒ¿œ ∂ß
-                    WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Fail_Group();
+                    GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Fail_Group();
                 Destroy(gameObject);
             }
         }

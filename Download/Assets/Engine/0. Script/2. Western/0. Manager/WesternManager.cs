@@ -1,137 +1,127 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 using Western;
-public class WesternManager : MonoBehaviour
+public class WesternManager : StageManager
 {
-    public enum LEVELSTATE
-    {  // 게임 로고 -> 인트로컷씬(클릭/스페이스/엔터로 넘김) -> 수배지확인화면 -> 게임 시작
-        LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, 
-        LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2,
-        LS_IntroLv3, LS_MainLv3, LS_PlayLv3, LS_ClearLv3,
-        // LS_FINISH
-        LS_END
-    };
+    public enum LEVELSTATE { LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2, LS_IntroLv3, LS_MainLv3, LS_PlayLv3, LS_ClearLv3, LS_END };
 
-
-    private static WesternManager m_instance = null;
-
-    [Header("[ LS_INTRO ]")]
-    [SerializeField] GameObject m_introPanel;
-    [SerializeField] Dialog_IntroWT m_dialogIntro;
-
-    [Header("[ LS_MAIN ]")]
-    [SerializeField] GameObject m_MainPanel;
-    [SerializeField] Dialog_PlayWT m_dialogPlay;
-    [SerializeField] GameObject m_playButton;
-
-    [Header("[ LS_PLAY ]")]
-    [SerializeField] HeartUI m_heartUI;
-    [SerializeField] StatusBarUI m_statusBarUI;
-    [SerializeField] Gun m_gun;
 
     private bool m_isShoot = false;
-    private LevelController m_levelController = null;
+    private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
 
-    public static WesternManager Instance => m_instance;
-    public GameObject IntroPanel => m_introPanel;
+    private Dialog_IntroWT m_dialogIntro;
+    private Dialog_PlayWT  m_dialogPlay;
+    private GameObject m_MainPanel;
+    private GameObject m_playButton;
+    private HeartUI     m_heartUI;
+    private StatusBarUI m_statusBarUI;
+    private Gun         m_gun;
+
+    public bool IsShoot { get => m_isShoot; set => m_isShoot = value; }
+    public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; } }
     public Dialog_IntroWT DialogIntro => m_dialogIntro;
-    public GameObject MainPanel => m_MainPanel;
     public Dialog_PlayWT DialogPlay => m_dialogPlay;
+    public GameObject MainPanel => m_MainPanel;
     public GameObject PlayButton => m_playButton;
     public HeartUI HeartUI => m_heartUI;
     public StatusBarUI StatusBarUI => m_statusBarUI;
     public Gun Gun => m_gun;
-    public bool IsShoot
+
+
+    public WesternManager() : base()
     {
-        get => m_isShoot;
-        set => m_isShoot = value;
-    }
-    public LevelController LevelController => m_levelController;
-
-    #region Resource
-    private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
-    public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; } }
-    #endregion
-
-    private void Awake()
-    {
-        if (null == m_instance)
-            m_instance = this;
-
-        Load_Resource();
-
-        m_levelController = gameObject.AddComponent<LevelController>();
-
-        List<Level> levels = new List<Level>
-        { 
-            gameObject.AddComponent<Western_IntroLv1>(),
-            gameObject.AddComponent<Western_MainLv1>(),
-            gameObject.AddComponent<Western_PlayLv1>(),
-            gameObject.AddComponent<Western_ClearLv1>(),
-
-            gameObject.AddComponent<Western_IntroLv2>(),
-            gameObject.AddComponent<Western_MainLv2>(),
-            gameObject.AddComponent<Western_PlayLv2>(),
-            gameObject.AddComponent<Western_ClearLv2>(),
-
-            gameObject.AddComponent<Western_IntroLv3>(),
-            gameObject.AddComponent<Western_MainLv3>(),
-            gameObject.AddComponent<Western_PlayLv3>(),
-            gameObject.AddComponent<Western_ClearLv3>(),
-        };
-
-        gameObject.GetComponent<Western_IntroLv1>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_MainLv1>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_PlayLv1>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_ClearLv1>().Initialize_Level(m_levelController);
-
-        gameObject.GetComponent<Western_IntroLv2>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_MainLv2>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_PlayLv2>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_ClearLv2>().Initialize_Level(m_levelController);
-
-        gameObject.GetComponent<Western_IntroLv3>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_MainLv3>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_PlayLv3>().Initialize_Level(m_levelController);
-        gameObject.GetComponent<Western_ClearLv3>().Initialize_Level(m_levelController);
-
-        m_levelController.Initialize_Level(levels);
+        m_stageLevel = STAGE.LEVEL_WESTERN;
+        m_sceneName = "Western";
     }
 
-    private void Start()
-    {
-        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
-    }
-
-    private void Update()
-    {
-        m_levelController.Update_Level();
-    }
-
-    private void LateUpdate()
-    {
-        m_levelController.LateUpdate_Level();
-    }
-
-    private void Load_Resource()
+    protected override void Load_Resource()
     {
         // 배경 이미지 할당
         m_backgroundSpr.Add("Background_01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_01"));
         m_backgroundSpr.Add("Background_02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_02"));
     }
 
-    public void Button_Play()
+    public override void Enter_Stage()
     {
-        m_levelController.Get_CurrentLevel<Western_Main>().Button_Play();
+        base.Enter_Stage();
     }
+
+    protected override void Load_Scene()
+    {
+        // 변수 할당
+        GameObject canvas = GameObject.Find("Canvas");
+        m_dialogIntro = canvas.transform.GetChild(3).gameObject.GetComponent<Dialog_IntroWT>();
+        m_dialogPlay  = canvas.transform.GetChild(2).gameObject.GetComponent<Dialog_PlayWT>();
+        m_MainPanel   = canvas.transform.GetChild(1).gameObject;
+        m_playButton  = canvas.transform.GetChild(1).GetChild(6).gameObject;
+        m_heartUI     = canvas.transform.GetChild(0).GetChild(1).GetComponent<HeartUI>();
+        m_statusBarUI = canvas.transform.GetChild(0).GetChild(0).GetComponent<StatusBarUI>();
+        m_gun         = canvas.transform.GetChild(0).GetChild(3).GetComponent<Gun>();
+
+        // 기본 값 초기화
+
+        // 레벨 초기화
+        m_levelController = new LevelController();
+        List<Level> levels = new List<Level>
+        {
+            new Western_IntroLv1(),
+            new Western_MainLv1(),
+            new Western_PlayLv1(),
+            new Western_ClearLv1(),
+
+            new Western_IntroLv2(),
+            new Western_MainLv2(),
+            new Western_PlayLv2(),
+            new Western_ClearLv2(),
+
+            new Western_IntroLv3(),
+            new Western_MainLv3(),
+            new Western_PlayLv3(),
+            new Western_ClearLv3(),
+        };
+        for(int i = 0; i < levels.Count; ++i)
+            levels[i].Initialize_Level(m_levelController);
+        m_levelController.Initialize_Level(levels);
+
+        // 게임 시작
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
+    }
+
+    protected override void In_Game()
+    {
+        base.In_Game();
+        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
+    }
+
+    public override void Update_Stage()
+    {
+        if (m_levelController == null)
+            return;
+
+        m_levelController.Update_Level();
+    }
+
+    public override void LateUpdate_Stage()
+    {
+        if (m_levelController == null)
+            return;
+
+        m_levelController.LateUpdate_Level();
+    }
+
+    public override void Exit_Stage()
+    {
+        base.Exit_Stage();
+    }
+
 
     public void Over_Game()
     {
-        StartCoroutine(Clear_Game());
+        GameManager.Ins.StartCoroutine(Clear_Game());
     }
 
     private IEnumerator Clear_Game()
@@ -146,7 +136,7 @@ public class WesternManager : MonoBehaviour
         }
 
         GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 1f, false);
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
         yield break;
     }
 }

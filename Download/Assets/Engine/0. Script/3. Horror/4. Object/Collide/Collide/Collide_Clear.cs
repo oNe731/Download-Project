@@ -6,7 +6,7 @@ public class Collide_Clear : Collide
 {
     public override void Trigger_Event()
     {
-        HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
+        GameManager.Ins.Set_Pause(true); // 게임 일시정지
         GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameClear");
 
         StartCoroutine(End_Game());
@@ -21,11 +21,7 @@ public class Collide_Clear : Collide
             yield return null;
         }
 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        GameManager.Ins.End_Game();
         yield break;
     }
 }
