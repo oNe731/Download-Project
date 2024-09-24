@@ -15,7 +15,7 @@ namespace Western
         public override void Enter_Level()
         {
             base.Enter_Level();
-            WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = true;
+            GameManager.Ins.Western.PlayButton.GetComponent<Button>().interactable = true;
         }
 
         public override void Play_Level()

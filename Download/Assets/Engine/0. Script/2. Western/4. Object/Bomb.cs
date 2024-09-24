@@ -47,6 +47,16 @@ namespace Western
 
         private void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+            {
+                m_rigidbody.isKinematic = true;
+                return;
+            }
+            else
+            {
+                m_rigidbody.isKinematic = false;
+            }
+
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             if (m_uiTime != null)
             {
@@ -64,7 +74,7 @@ namespace Western
                         {
                             if (hit.collider.gameObject == gameObject)
                             {
-                                Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+                                Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
                                 if (level == null)
                                     return;
 
@@ -80,19 +90,19 @@ namespace Western
                     }
                     else if (Input.GetKeyDown(m_keyType))
                     {
-                        Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+                        Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
                         if (level == null || level.TargetUI == null)
                             return;
 
                         if(m_order != ORDER.OD_FIRST)
-                            WesternManager.Instance.IsShoot = true;
+                            GameManager.Ins.Western.IsShoot = true;
 
                         Is_Destroy();
                     }
                 }
                 else // Æã
                 {
-                    Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+                    Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
                     if (level == null)
                         return;
                     level.Fail_Group();
@@ -143,7 +153,7 @@ namespace Western
 
         private void Initialize_Bomb()
         {
-            WesternManager.Instance.IsShoot = false;
+            GameManager.Ins.Western.IsShoot = false;
 
             transform.position = m_startPosition;
             m_timer = m_timerMax;
@@ -204,7 +214,7 @@ namespace Western
             if (m_uiTime != null)
                 Destroy(m_uiTime);
 
-            Western_Play level = WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>();
+            Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
             if (level != null)
             {
                 if (level.TargetUI != null)

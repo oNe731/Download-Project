@@ -76,8 +76,8 @@ namespace Horror
             }
 
             // 노트 무기함에 현재 가지고 있는 무기 정보 업데이트
-            for (int i = 0; i < HorrorManager.Instance.Player.WeaponManagement.Weapons.Count; ++i)
-                Add_Weapon(HorrorManager.Instance.Player.WeaponManagement.Weapons[i].ItemInfo);
+            for (int i = 0; i < GameManager.Ins.Horror.Player.WeaponManagement.Weapons.Count; ++i)
+                Add_Weapon(GameManager.Ins.Horror.Player.WeaponManagement.Weapons[i].ItemInfo);
         }
 
         private void Update()

@@ -10,7 +10,7 @@ public class Straitjacket_Run : Straitjacket_Base
 
     public Straitjacket_Run(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
-        m_speed = 5f;
+        m_speed = 3f;
         m_agent = m_owner.GetComponent<NavMeshAgent>();
         m_agent.speed = m_speed;
     }
@@ -20,7 +20,7 @@ public class Straitjacket_Run : Straitjacket_Base
         m_agent.enabled = true;
         m_agent.stoppingDistance = stopDistance;
 
-        m_animator.SetBool("IsRun", true);
+        Change_Animation("IsRun");
     }
 
     public override void Update_State()
@@ -29,7 +29,7 @@ public class Straitjacket_Run : Straitjacket_Base
 
         if (Change_Attack() == false)
         {
-            m_targetPosition = HorrorManager.Instance.Player.transform.position;
+            m_targetPosition = GameManager.Ins.Horror.Player.transform.position;
 
             Vector3 direction = m_targetPosition - m_owner.transform.position;
             direction.y = 0;
@@ -48,14 +48,17 @@ public class Straitjacket_Run : Straitjacket_Base
             if (Check_Collider(direction, LayerMask.GetMask("Monster")) == false) // 회전이 완료된 후 이동
                 m_agent.destination = m_targetPosition;
             else
-                m_stateMachine.Change_State((int)Straitjacket.State.ST_WAIT);
+                m_stateMachine.Change_State((int)Straitjacket.State.ST_RUNWAIT);
         }
+
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
     }
 
     public override void Exit_State()
     {
         m_agent.enabled = false;
 
-        m_animator.SetBool("IsRun", false);
+        Reset_Animation();
     }
 }

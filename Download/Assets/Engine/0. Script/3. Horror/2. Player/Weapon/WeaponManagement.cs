@@ -32,7 +32,7 @@ namespace Horror
         public void Add_Weapon(NoteItem noteItem)
         {
             Weapon<T> weapon = null;
-            Transform handTransfom = HorrorManager.Instance.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1);
+            Transform handTransfom = GameManager.Ins.Horror.Player.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).GetChild(1);
             switch (noteItem.m_itemType)
             {
                 case NoteItem.ITEMTYPE.TYPE_PIPE:
@@ -59,8 +59,8 @@ namespace Horror
                 Update_UIWeapons();
 
             // 노트가 있다면 무기 정보 추가
-            if (HorrorManager.Instance.Player.Note != null)
-                HorrorManager.Instance.Player.Note.Add_Weapon(weapon.ItemInfo);
+            if (GameManager.Ins.Horror.Player.Note != null)
+                GameManager.Ins.Horror.Player.Note.Add_Weapon(weapon.ItemInfo);
         }
 
         public void Update_Weapon()

@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            HorrorManager.Instance.Player.Damage_Player(m_damage);
+            GameManager.Ins.Horror.Player.Damage_Player(m_damage);
             Destroy(gameObject);
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("Wall") || other.gameObject.layer == LayerMask.NameToLayer("Ceiling"))

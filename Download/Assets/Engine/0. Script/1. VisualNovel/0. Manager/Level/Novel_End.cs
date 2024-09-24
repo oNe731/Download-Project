@@ -13,23 +13,25 @@ namespace VisualNovel
 
         public override void Enter_Level()
         {
-            VisualNovelManager.Instance.Dialog.SetActive(true);
+            VisualNovelManager manager = GameManager.Ins.Novel;
+
+            manager.Dialog.SetActive(true);
             switch (m_levelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).DollType)
             {
                 case DOLLTYPE.DT_BIRD:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollBird"));
+                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollBird"));
                     break;
 
                 case DOLLTYPE.DT_SHEEP:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollSheep"));
+                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollSheep"));
                     break;
 
                 case DOLLTYPE.DT_CAT:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollCat"));
+                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollCat"));
                     break;
 
                 case DOLLTYPE.DT_FAIL:
-                    VisualNovelManager.Instance.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollFail"));
+                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog4_DollFail"));
                     break;
             }
 
@@ -43,7 +45,7 @@ namespace VisualNovel
         public override void Update_Level()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
-                VisualNovelManager.Instance.Active_Popup();
+                GameManager.Ins.Novel.Active_Popup();
         }
 
         public override void Exit_Level()

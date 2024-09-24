@@ -33,7 +33,7 @@ public class NoteItemInfo : MonoBehaviour
     {
         m_item = item;
 
-        m_Image.sprite    = HorrorManager.Instance.NoteElementIcon[item.m_imageName + "_2"];
+        m_Image.sprite    = GameManager.Ins.Horror.NoteElementIcon[item.m_imageName + "_2"];
         m_namtTxt.text    = m_item.m_name;
         m_detailsTxt.text = m_item.m_details;
 

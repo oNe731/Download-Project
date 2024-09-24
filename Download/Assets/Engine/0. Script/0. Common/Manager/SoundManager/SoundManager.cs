@@ -9,9 +9,27 @@ public class SoundManager : MonoBehaviour
     private Dictionary<string, AudioClip> m_bgm = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioClip> m_effect = new Dictionary<string, AudioClip>();
 
+    private float m_bgmSound    = 0.5f;
+    private float m_effectSound = 0.5f;
+
+    public float BgmSound { get => m_bgmSound; set => m_bgmSound = value; }
+    public float EffectSound { get => m_effectSound; set => m_effectSound = value; }
+
     private void Start()
     {
         Load_Resource();
+    }
+
+    public void Update_AllAudioSources()
+    {
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        foreach (var audioSource in allAudioSources)
+        {
+            if (audioSource.gameObject.CompareTag("MainCamera") == true)
+                audioSource.volume = m_bgmSound;
+            else
+                audioSource.volume = m_effectSound;
+        }
     }
 
     private void Load_Resource()
@@ -74,7 +92,9 @@ public class SoundManager : MonoBehaviour
 
         #region 몬스터
         m_effect.Add("Horror_Bug_Fly", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Bug/Worm_Flight"));
+        m_effect.Add("Horror_Bug_Attack", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Bug/Worm_Attack"));
         m_effect.Add("Horror_Straitjacket_Idle", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Straitjacket/Zombie_Notice_3"));
+        m_effect.Add("Horror_Straitjacket_Attack", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Monster/Straitjacket/Zombie_Attack"));
         #endregion
 
         #region 오브젝트
@@ -100,22 +120,22 @@ public class SoundManager : MonoBehaviour
 
     public void Play_AudioSource(AudioSource audioSource, string name, bool loop, float speed)
     {
-        audioSource.Stop();
-
-        audioSource.clip  = m_effect[name];
-        audioSource.loop  = loop;
-        audioSource.pitch = speed; // 기본1f
-        audioSource.Play();
+        Play_AudioSource(audioSource, m_effect[name], loop, speed, m_effectSound);
     }
 
     public void Play_AudioSourceBGM(string name, bool loop, float speed)
     {
-        AudioSource audioSource = Camera.main.GetComponent<AudioSource>();
+        Play_AudioSource(Camera.main.GetComponent<AudioSource>(), m_bgm[name], loop, speed, m_bgmSound);
+    }
+
+    public void Play_AudioSource(AudioSource audioSource, AudioClip audioClip, bool loop, float speed, float volume)
+    {
         audioSource.Stop();
 
-        audioSource.clip = m_bgm[name];
-        audioSource.loop = loop;
-        audioSource.pitch = speed; // 기본1f
+        audioSource.clip   = audioClip;
+        audioSource.loop   = loop;
+        audioSource.pitch  = speed; // 기본1f
+        audioSource.volume = volume;
         audioSource.Play();
     }
 

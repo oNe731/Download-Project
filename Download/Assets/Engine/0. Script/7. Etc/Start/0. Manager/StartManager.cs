@@ -4,15 +4,11 @@ public class StartManager : MonoBehaviour
 {
     public void Button_Start()
     {
-        GameManager.Ins.Change_Scene("Window"); // Intro
+        GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW); // Intro
     }
 
     public void Button_Exit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        GameManager.Ins.End_Game();
     }
 }

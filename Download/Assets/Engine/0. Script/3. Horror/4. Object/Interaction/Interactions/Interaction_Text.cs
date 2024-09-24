@@ -14,7 +14,7 @@ public class Interaction_Text : Interaction
 
     private void Start()
     {
-        GameObject gameObject = HorrorManager.Instance.Create_WorldHintUI(m_hintType, transform.GetChild(0), m_uiOffset);
+        GameObject gameObject = GameManager.Ins.Horror.Create_WorldHintUI(m_hintType, transform.GetChild(0), m_uiOffset);
         m_interactionUI = gameObject.GetComponent<UIWorldHint>();
 
         for (int i = 0; i < m_texts.Length; ++i)
@@ -31,7 +31,7 @@ public class Interaction_Text : Interaction
         if (No_Click())
             return;
 
-        HorrorManager.Instance.Active_InstructionUI(m_uiOpenType, m_uiCloseType, m_activeTimes, m_texts);
+        GameManager.Ins.Horror.Active_InstructionUI(m_uiOpenType, m_uiCloseType, m_activeTimes, m_texts);
 
         if(m_repeat == false)
             Destroy_Interaction();

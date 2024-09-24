@@ -22,7 +22,7 @@ public class FaseUpperBody_Chase : FaseUpperBody_Base // 단 한번의 돌격
         m_agent.speed = 50f;
         m_agent.stoppingDistance = m_attackDist;
 
-        m_targetPosition = HorrorManager.Instance.Player.transform.position;
+        m_targetPosition = GameManager.Ins.Horror.Player.transform.position;
 
         // m_animator.SetBool("IsRun", true);
     }

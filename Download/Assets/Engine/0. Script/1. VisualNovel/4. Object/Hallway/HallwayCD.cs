@@ -38,7 +38,7 @@ namespace VisualNovel
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD(m_positionIndex);
+                GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD(m_positionIndex);
                 Destroy(gameObject);
             }
         }

@@ -42,7 +42,7 @@ namespace Western
                 {
                     // 손이 다 올라오면 HP가 깎인다.
                     m_attack = false;
-                    WesternManager.Instance.LevelController.Get_CurrentLevel<Western_Play>().Attacked_Player();
+                    GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Attacked_Player();
                 }
             }
         }

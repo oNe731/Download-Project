@@ -15,8 +15,6 @@ public class UIGameOver : MonoBehaviour
 
     public void Start_GameOver()
     {
-        HorrorManager.Instance.Set_Pause(true, false);
-
         m_redImage.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0f);
         m_blackImage.color = new Color(Color.black.r, Color.black.g, Color.black.b, 0f);
         m_Details.SetActive(false);
@@ -96,6 +94,6 @@ public class UIGameOver : MonoBehaviour
     private void Restart_Game()
     {
         Destroy(gameObject);
-        HorrorManager.Instance.Restart_Game();
+        GameManager.Ins.Horror.Restart_Game();
     }
 }

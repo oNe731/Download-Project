@@ -23,7 +23,16 @@ public class CameraBase
 
     public virtual void Update_Camera()
     {
-        if(m_isShake)
+        Update_Shake();
+    }
+
+    public virtual void Exit_Camera()
+    {
+    }
+
+    public void Update_Shake()
+    {
+        if (m_isShake)
         {
             m_time += Time.deltaTime;
             Vector3 randomPoint = m_startPosition + Random.insideUnitSphere * m_shakeAmount;
@@ -31,14 +40,12 @@ public class CameraBase
 
             if (m_time >= m_shakeTime)
             {
+                GameManager.Ins.Camera.ShakeUpdate = false;
+
                 m_isShake = false;
                 m_mainCamera.transform.localPosition = m_startPosition;
             }
         }
-    }
-
-    public virtual void Exit_Camera()
-    {
     }
 
     public void Change_Position(Vector3 position)

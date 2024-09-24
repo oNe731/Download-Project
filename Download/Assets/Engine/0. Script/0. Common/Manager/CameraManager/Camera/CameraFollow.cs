@@ -19,6 +19,9 @@ public class CameraFollow : CameraBase
 
     private float xRotate = 0.0f;
 
+    private bool isRock = false;
+    public bool IsRock { get => isRock; set => isRock = value; }
+
     public override void Initialize_Camera()
     {
     }
@@ -31,7 +34,7 @@ public class CameraFollow : CameraBase
 
     public override void Update_Camera()
     {
-        if (m_cameraPositionTarget == null)
+        if (m_mainCamera == null || m_cameraPositionTarget == null || isRock == true)
             return;
 
         // ¿Ãµø
@@ -75,7 +78,7 @@ public class CameraFollow : CameraBase
         GameManager.Ins.Camera.Set_CursorLock(false);
     }
 
-    public void Set_FollowInfo(Transform positiontarget, Transform rotationtarget, bool isPosition, bool isRotation, Vector3 offset, float moveSpeed, float lerpSpeed, Vector2 rotationLimit, bool isXRotate, bool isYRotate)
+    public void Set_FollowInfo(Transform positiontarget, Transform rotationtarget, bool isPosition, bool isRotation, Vector3 offset, float moveSpeed, float lerpSpeed, Vector2 rotationLimit, bool isXRotate, bool isYRotate, bool update = false)
     {
         m_cameraPositionTarget = positiontarget;
         m_cameraRotationTarget = rotationtarget;
@@ -89,5 +92,8 @@ public class CameraFollow : CameraBase
         m_rotationLimit = rotationLimit;
         m_isXRotate = isXRotate;
         m_isYRotate = isYRotate;
+
+        if (update == true)
+            Update_Camera();
     }
 }

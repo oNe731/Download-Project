@@ -16,12 +16,12 @@ public class UIPopup : MonoBehaviour
         m_type      = type;
         m_itemInfo  = itemInfo;
 
-        HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
+        GameManager.Ins.Set_Pause(true); // 게임 일시정지
         if (m_type == TYPE.T_QUESTITEM) // 퀘스트 조합 아이템 (가져가기/ 두고가기)
             transform.GetChild(0).GetChild(1).gameObject.SetActive(true); // 두고가기 버튼
         else // 노트, 장비, 소모품 아이템, 단서 (가져가기)
             transform.GetChild(0).GetChild(1).gameObject.SetActive(false); // 두고가기 버튼
-        transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = HorrorManager.Instance.NoteElementIcon[m_itemInfo.m_imageName + "_1"];
+        transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Ins.Horror.NoteElementIcon[m_itemInfo.m_imageName + "_1"];
 
         gameObject.SetActive(true);
     }
@@ -49,13 +49,13 @@ public class UIPopup : MonoBehaviour
                 break;
         }
 
-        HorrorManager.Instance.Set_Pause(false); // 일시정지 해제
+        GameManager.Ins.Set_Pause(false); // 일시정지 해제
         gameObject.SetActive(false);
     }
 
     public void Button_Leave()
     {
-        HorrorManager.Instance.Set_Pause(false); // 일시정지 해제
+        GameManager.Ins.Set_Pause(false); // 일시정지 해제
         gameObject.SetActive(false);
     }
 
@@ -63,7 +63,7 @@ public class UIPopup : MonoBehaviour
     public void Type_QuestItem()
     {
         // 퀘스트 조합용 아이템 추가
-        Note playerNote = HorrorManager.Instance.Player.Note;
+        Note playerNote = GameManager.Ins.Horror.Player.Note;
         if (playerNote == null)
             return;
         playerNote.Add_Item(m_itemInfo);
@@ -71,7 +71,7 @@ public class UIPopup : MonoBehaviour
 
     public void Type_Note()
     {
-        HorrorManager.Instance.Player.Acquire_Note(); // 노트 추가
+        GameManager.Ins.Horror.Player.Acquire_Note(); // 노트 추가
 
         float[] activeTimes = new float[2];
         string[] texts = new string[2];
@@ -80,13 +80,13 @@ public class UIPopup : MonoBehaviour
         activeTimes[1] = 3f;
         texts[1] = "[TAB]으로 수첩 사용 가능";
 
-        HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts); // 문구 출력
+        GameManager.Ins.Horror.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts); // 문구 출력
     }
 
     public void Type_Weapon()
     {
         // 아이템 추가
-        HorrorManager.Instance.Player.WeaponManagement.Add_Weapon(m_itemInfo);
+        GameManager.Ins.Horror.Player.WeaponManagement.Add_Weapon(m_itemInfo);
 
         // 문구 출력
         float[] activeTimes = new float[1];
@@ -106,13 +106,13 @@ public class UIPopup : MonoBehaviour
                 texts[0] = "[Ctrl]로 장비교체 가능";
                 break;
         }
-        HorrorManager.Instance.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
+        GameManager.Ins.Horror.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, activeTimes, texts);
     }
 
     public void Type_Expenitem()
     {
         // 소모품 아이템 추가
-        Note playerNote = HorrorManager.Instance.Player.Note;
+        Note playerNote = GameManager.Ins.Horror.Player.Note;
         if (playerNote == null)
             return;
         playerNote.Add_Item(m_itemInfo);
@@ -121,7 +121,7 @@ public class UIPopup : MonoBehaviour
     public void Type_Clue()
     {
         // 단서 추가
-        Note playerNote = HorrorManager.Instance.Player.Note;
+        Note playerNote = GameManager.Ins.Horror.Player.Note;
         if (playerNote == null)
             return;
         playerNote.Add_Clue(m_itemInfo);

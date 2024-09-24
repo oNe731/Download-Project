@@ -10,6 +10,8 @@ public abstract class Monster : Character
     protected float m_attack;
     protected int m_DieStateIndex;
 
+    protected Vector3 m_effectOffset = Vector3.zero;
+
     protected StateMachine<Monster> m_stateMachine;
     protected Spawner m_spawner;
 
@@ -38,7 +40,7 @@ public abstract class Monster : Character
 
         // 피 이펙트 생성
         GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
-        gameObject.transform.position   = transform.position;
+        gameObject.transform.position   = transform.position + m_effectOffset;
         gameObject.transform.localScale = transform.localScale;
 
         if (m_skinnedMeshRenderers == null)

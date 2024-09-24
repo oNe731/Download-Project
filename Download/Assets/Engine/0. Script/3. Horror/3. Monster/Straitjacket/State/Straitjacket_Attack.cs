@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Straitjacket_Attack : Straitjacket_Base
 {
-    private float m_change = 1f;
-    private float m_time   = 0f;
+    private bool isAttak = false;
 
     public Straitjacket_Attack(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
@@ -13,25 +12,43 @@ public class Straitjacket_Attack : Straitjacket_Base
 
     public override void Enter_State()
     {
-        m_time = 0;
-        HorrorManager.Instance.Player.Damage_Player(m_owner.Attack);
-
-        m_animator.SetBool("IsAttack", true);
+        isAttak = false;
+        Change_Animation("IsAttack");
     }
 
     public override void Update_State()
     {
-        // 공격 모션이 끝나면 다시 공격
-        m_time += Time.deltaTime;
-        if(m_time >= m_change)
+        // 현재 애니메이션 상태 확인
+        if (m_animator.IsInTransition(0) == true) return;
+        if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true)
         {
-            if (Change_Attack() == false) // 거리가 일정 이상일 시 재 추격, 아닐 시 재공격
-                m_stateMachine.Change_State((int)Straitjacket.State.ST_RUN);
+            Reset_Animation();
+
+            float animTime = m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (animTime >= 1.0f) // 애니메이션 종료
+                m_stateMachine.Change_State((int)Straitjacket.State.ST_ATTACKWAIT);
+            else
+            {
+                if (isAttak == false)
+                {
+                    if (animTime >= 0.35f)
+                    {
+                        isAttak = true;
+
+                        float distanceToPlayer = Vector3.Distance(m_stateMachine.Owner.transform.position, GameManager.Ins.Horror.Player.transform.position);
+                        if (distanceToPlayer <= m_attackDist)
+                        {
+                            GameManager.Ins.Horror.Player.Damage_Player(m_owner.Attack);
+                            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Horror_Straitjacket_Attack", false, 1f);
+                        }
+                    }
+                }
+            }
         }
     }
 
     public override void Exit_State()
     {
-        m_animator.SetBool("IsAttack", false);
+        Reset_Animation();
     }
 }

@@ -24,7 +24,7 @@ namespace Western
         public override void Initialize_Level(LevelController levelController)
         {
             base.Initialize_Level(levelController);
-            m_rectTransform = WesternManager.Instance.PlayButton.GetComponent<RectTransform>();
+            m_rectTransform = GameManager.Ins.Western.PlayButton.GetComponent<RectTransform>();
             m_startPosition = new Vector3(0f, 0f, 0f);
             m_targetPosition = new Vector3(720f, -200f, 0f);
         }
@@ -33,10 +33,11 @@ namespace Western
 
         public override void Enter_Level()
         {
-            WesternManager.Instance.MainPanel.SetActive(true);
+            WesternManager stage = GameManager.Ins.Western;
+            stage.MainPanel.SetActive(true);
 
             m_rectTransform.anchoredPosition = m_startPosition;
-            WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = false;
+            stage.PlayButton.GetComponent<Button>().interactable = false;
 
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
         }
@@ -56,16 +57,16 @@ namespace Western
         public override void LateUpdate_Level()
         {
             // 버튼 활성화
-            if (m_dialogStart && WesternManager.Instance.DialogPlay.Active == false)
+            if (m_dialogStart && GameManager.Ins.Western.DialogPlay.Active == false)
             {
                 m_dialogStart = false;
-                WesternManager.Instance.PlayButton.GetComponent<Button>().interactable = true;
+                GameManager.Ins.Western.PlayButton.GetComponent<Button>().interactable = true;
             }
         }
 
         public override void Exit_Level()
         {
-            WesternManager.Instance.MainPanel.SetActive(false);
+            GameManager.Ins.Western.MainPanel.SetActive(false);
         }
 
         public void Button_Play()
@@ -91,6 +92,9 @@ namespace Western
 
         private void Shoot_Gun()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             m_time += Time.deltaTime;
             if (m_shootCount < 2)
             {
@@ -98,7 +102,7 @@ namespace Western
                 {
                     m_time = 0f;
 
-                    GameObject bulletMark = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_BulletMark", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+                    GameObject bulletMark = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_BulletMark", Vector2.zero, Quaternion.identity, GameManager.Ins.Western.MainPanel.transform);
                     switch (m_shootCount)
                     {
                         case 0: // 총자국 생성
@@ -120,7 +124,7 @@ namespace Western
             {
                 if (m_time >= m_darkDuration)
                 {
-                    GameManager.Ins.UI.Start_FadeWaitAction(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 1f, false);
+                    GameManager.Ins.UI.Start_FadeWaitAction(1f, Color.black, () => GameManager.Ins.Western.LevelController.Change_NextLevel(), 1f, false);
                     m_shootCount++;
                 }
             }

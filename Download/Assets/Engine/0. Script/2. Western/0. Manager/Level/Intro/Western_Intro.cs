@@ -13,7 +13,7 @@ namespace Western
 
         public override void Enter_Level()
         {
-            WesternManager.Instance.IntroPanel.SetActive(true);
+            GameManager.Ins.Western.DialogIntro.gameObject.SetActive(true);
         }
 
         public override void Play_Level()
@@ -26,12 +26,12 @@ namespace Western
 
         public override void Exit_Level()
         {
-            WesternManager.Instance.IntroPanel.SetActive(false);
+            GameManager.Ins.Western.DialogIntro.gameObject.SetActive(false);
         }
 
         protected void Start_Dialog(string path)
         {
-            WesternManager.Instance.DialogIntro.GetComponent<Dialog_IntroWT>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_IntroWT>(path));
+            GameManager.Ins.Western.DialogIntro.GetComponent<Dialog_IntroWT>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_IntroWT>(path));
         }
     }
 }

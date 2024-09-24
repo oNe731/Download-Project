@@ -42,13 +42,13 @@ public class UIKeypad : MonoBehaviour
         m_interactionDoor = interaction_Door;
 
         gameObject.SetActive(true);
-        HorrorManager.Instance.Set_Pause(true); // 게임 일시정지
+        GameManager.Ins.Set_Pause(true); // 게임 일시정지
     }
 
     public void OnDisable_Keypad() // 비활성화될 때
     {
         gameObject.SetActive(false);
-        HorrorManager.Instance.Set_Pause(false); // 게임 일시정지
+        GameManager.Ins.Set_Pause(false); // 게임 일시정지
         Reset_Number();
     }
     
@@ -113,9 +113,7 @@ public class UIKeypad : MonoBehaviour
         else
         { // 오답 : 마지막 번호를 입력했을 때 틀렸다는 것을 알려주는 부저음같은게 난다.
             // 부저음 재생
-            //m_audioSource.clip = null;
-            //m_audioSource.loop = false;
-            //m_audioSource.Play();
+            //GameManager.Ins.Sound.Play_AudioSource(null, "", false, 1f);
             Reset_Number();
         }
     }

@@ -46,7 +46,7 @@ namespace Western
 
         public override void Enter_Level()
         {
-            WesternManager.Instance.HeartUI.Reset_Heart();
+            GameManager.Ins.Western.HeartUI.Reset_Heart();
         }
 
         public override void Play_Level()
@@ -63,7 +63,7 @@ namespace Western
                     m_startGroup = false;
                     m_groups.WakeUp_Next(ref m_eventIndex, true, 0.4f);
                 }
-                else if (WesternManager.Instance.IsShoot == true)
+                else if (GameManager.Ins.Western.IsShoot == true)
                 {
                     if (Input.GetMouseButtonDown(0)) { Click_Panel(); }
                     else if (Input.GetKeyDown(KeyCode.Space))
@@ -71,14 +71,14 @@ namespace Western
                         if (m_targetUI == null)
                             return;
 
-                        WesternManager.Instance.IsShoot = false;
+                        GameManager.Ins.Western.IsShoot = false;
                         if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
                             Create_SpeechBubble(Person.PERSONTYPE.PT_CRIMINAL, m_groups.Get_Criminal().transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
                         else
                             Create_SpeechBubble(Person.PERSONTYPE.PT_CITIZEN, m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
 
                         Space_Panel();
-                        Destroy(m_targetUI);
+                        GameManager.Ins.Resource.Destroy(m_targetUI);
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace Western
 
         public override void Exit_Level()
         {
-            Destroy(m_stage);
+            GameManager.Ins.Resource.Destroy(m_stage);
         }
 
 
@@ -112,7 +112,7 @@ namespace Western
                 {
                     if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)  // 애니메이션 종료일 시
                     {
-                        Destroy(m_readyGoUI);
+                        GameManager.Ins.Resource.Destroy(m_readyGoUI);
                         Play_Level();
                         m_uiIndex++;
                     }
@@ -133,7 +133,7 @@ namespace Western
             {
                 if (hit.collider.gameObject.CompareTag("Person"))
                 {
-                    WesternManager.Instance.Gun.Click_Gun();
+                    GameManager.Ins.Western.Gun.Click_Gun();
 
                     Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.collider.gameObject.GetComponent<Person>().Get_GroupZ() - 0.005f); // 맨 앞
                     if (m_targetUI == null)
@@ -148,7 +148,7 @@ namespace Western
 
         protected void Space_Panel()
         {
-            WesternManager.Instance.Gun.Shoot_Gun();
+            GameManager.Ins.Western.Gun.Shoot_Gun();
 
             Person person = m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>();
             person.Start_Shake();
@@ -186,25 +186,25 @@ namespace Western
             m_camera.Start_Move(m_groups.Next_Position());
 
             // UI 업데이트
-            WesternManager.Instance.StatusBarUI.Start_UpdateValue(m_groups.CurrentIndex, m_groups.CurrentIndex + 1,
+            GameManager.Ins.Western.StatusBarUI.Start_UpdateValue(m_groups.CurrentIndex, m_groups.CurrentIndex + 1,
                 Camera.main.transform.position, m_groups.Next_Position());
         }
 
         public void Fail_Group()
         {
             if (m_targetUI != null)
-                Destroy(m_targetUI);
+                GameManager.Ins.Resource.Destroy(m_targetUI);
 
             m_groups.Destroy_Timer();
 
-            WesternManager.Instance.IsShoot = false;
+            GameManager.Ins.Western.IsShoot = false;
             m_groups.Get_Criminal().GetComponent<Criminal>().Change_Attack();
         }
 
         public void Attacked_Player(bool laydown = true)
         {
             m_life--;
-            WesternManager.Instance.HeartUI.Start_Update(m_life, laydown);
+            GameManager.Ins.Western.HeartUI.Start_Update(m_life, laydown);
         }
 
         public void LayDown_Group(bool nextMove = false)

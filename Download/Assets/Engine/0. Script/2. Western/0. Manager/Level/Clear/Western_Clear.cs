@@ -27,10 +27,11 @@ namespace Western
 
         public override void Enter_Level()
         {
-            WesternManager.Instance.MainPanel.SetActive(true);
+            WesternManager stage = GameManager.Ins.Western;
+            stage.MainPanel.SetActive(true);
 
-            WesternManager.Instance.PlayButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(720f, -200f, 0f);
-            m_bloodObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Blood", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+            stage.PlayButton.GetComponent<RectTransform>().anchoredPosition = new Vector3(720f, -200f, 0f);
+            m_bloodObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Blood", Vector2.zero, Quaternion.identity, stage.MainPanel.transform);
             m_bloodObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
 
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
@@ -50,7 +51,7 @@ namespace Western
                 {
                     m_leveltime = 0f;
 
-                    m_clearObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Clear", Vector2.zero, Quaternion.identity, WesternManager.Instance.MainPanel.transform);
+                    m_clearObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Clear", Vector2.zero, Quaternion.identity, GameManager.Ins.Western.MainPanel.transform);
                     m_clearObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, 0f, 0f);
                     m_clearObj.transform.localScale = m_startScale;
                     m_clearImage = m_clearObj.GetComponent<Image>();
@@ -83,7 +84,7 @@ namespace Western
                             m_leveltime = 0f;
 
                             //UIManager.Instance.Start_FadeOut(1f, Color.black, () => WesternManager.Instance.LevelController.Change_NextLevel(), 0f, false);
-                            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene("Window"), 0f, false);
+                            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 0f, false);
                         }
                     }
                 }
@@ -96,14 +97,14 @@ namespace Western
 
         public override void Exit_Level()
         {
-            if(WesternManager.Instance != null)
-                WesternManager.Instance.MainPanel.SetActive(false);
+            if(GameManager.Ins.Western != null)
+                GameManager.Ins.Western.MainPanel.SetActive(false);
 
             if (m_bloodObj != null)
-                Destroy(m_bloodObj);
+                GameManager.Ins.Resource.Destroy(m_bloodObj);
 
             if (m_clearObj != null)
-                Destroy(m_clearObj);
+                GameManager.Ins.Resource.Destroy(m_clearObj);
         }
     }
 }

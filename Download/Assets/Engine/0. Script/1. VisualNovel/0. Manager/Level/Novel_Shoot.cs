@@ -49,7 +49,7 @@ namespace VisualNovel
 
         public override void Enter_Level()
         {
-            VisualNovelManager.Instance.Dialog.SetActive(false);
+            GameManager.Ins.Novel.Dialog.SetActive(false);
             m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Shoot");
             m_countTxt = m_stage.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<TMP_Text>();
             m_container = m_stage.transform.GetChild(1).GetChild(0).gameObject.GetComponent<ShootContainerBelt>();
@@ -77,7 +77,7 @@ namespace VisualNovel
 
         public override void Update_Level()
         {
-            if (!m_shootGameStart || m_shootGameStop)
+            if (GameManager.Ins.IsGame == false || !m_shootGameStart || m_shootGameStop)
                 return;
 
             if (!m_shootGameOver)
@@ -90,7 +90,7 @@ namespace VisualNovel
         {
             Camera.main.GetComponent<AudioSource>().Stop();
             GameManager.Ins.UI.Change_Cursor(CURSORTYPE.CT_ORIGIN);
-            Destroy(m_stage);
+            GameManager.Ins.Resource.Destroy(m_stage);
         }
 
         public override void OnDrawGizmos()

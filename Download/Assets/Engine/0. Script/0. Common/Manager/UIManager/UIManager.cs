@@ -15,6 +15,9 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, Texture2D> m_cursorImage = new Dictionary<string, Texture2D>();
 
+    private bool m_eventUpdate = false;
+    public bool EventUpdate { get => m_eventUpdate; set => m_eventUpdate = value; }
+
     private void Start()
     {
         m_fadeCanvas = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Common/UICanvas", transform);
@@ -91,6 +94,15 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
+
+        // 일시정지 시 대기
+        while (true)
+        {
+            if (GameManager.Ins.IsGame == true || EventUpdate == true)
+                break;
+            yield return null;
+        }
+        EventUpdate = false;
 
         m_fadeImg.color = targetColor;
         m_isFade = false;

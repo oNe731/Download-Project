@@ -22,6 +22,6 @@ public class NoteItemMagnifyingGlass : MonoBehaviour
 
     public void Update_UIInfo(NoteItem item)
     {
-        m_image.sprite = HorrorManager.Instance.NoteElementIcon[item.m_imageName + "_3"];
+        m_image.sprite = GameManager.Ins.Horror.NoteElementIcon[item.m_imageName + "_3"];
     }
 }

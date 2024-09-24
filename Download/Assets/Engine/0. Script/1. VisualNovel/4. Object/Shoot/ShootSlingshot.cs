@@ -46,7 +46,8 @@ namespace VisualNovel
 
         private void Update()
         {
-            if (!VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStart || VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop)
+            VisualNovelManager manager = GameManager.Ins.Novel;
+            if (GameManager.Ins.IsGame == false || !manager.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStart || manager.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop)
                 return;
 
             if (m_use)
@@ -57,7 +58,51 @@ namespace VisualNovel
 
         private void Ok_Use()
         {
-            if (Input.GetMouseButton(0))
+            if(GameManager.Ins.IsGame == false)
+                return;
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Vector3 NewPosition = Vector3.zero;
+
+                Vector3 mousePosition = Input.mousePosition;
+                if (mousePosition.y <= 255f)
+                {
+                    Reset_Use();
+                    StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
+                    return;
+                }
+
+                float screenWidth = Screen.width;
+                float sectionWidth = screenWidth / 3f;
+                int section = (int)(mousePosition.x / sectionWidth);
+                switch (section)
+                {
+                    case 0:
+                        NewPosition = new Vector3(7.948f, -4.5f, 0f);
+                        break;
+                    case 1:
+                        NewPosition = new Vector3(6.861f, -4.5f, 0f);
+                        break;
+                    case 2:
+                        NewPosition = new Vector3(5.7f, -4.5f, 0f);
+                        break;
+                }
+
+                Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
+                Transform canvasTransform = GameObject.Find("Canvas").transform;
+
+                GameObject targetUI = GameManager.Ins.Resource.Create(m_target, Vector2.zero, Quaternion.identity, canvasTransform);
+                targetUI.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(targetPosition);
+
+                GameObject ballObject = GameManager.Ins.Resource.Create(m_ball);
+                ballObject.GetComponent<Transform>().position = NewPosition;
+                ballObject.GetComponent<ShootBall>().Initialize_Ball(this, targetUI, targetPosition, m_curSpeed);
+
+                Reset_Use();
+                m_use = false;
+            }
+            else if (Input.GetMouseButton(0))
             {
                 // 마우스의 현재 위치를 가져옴
                 Vector3 mousePosition = Input.mousePosition;
@@ -103,52 +148,11 @@ namespace VisualNovel
                 }
                 m_barSlider.value = m_curSpeed;
             }
-            if (Input.GetMouseButtonUp(0))
+            else
             {
-                Vector3 NewPosition = Vector3.zero;
-
-                Vector3 mousePosition = Input.mousePosition;
-                if (mousePosition.y <= 255f)
-                {
-                    Reset_Use();
-                    StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
-                    return;
-                }
-
-                float screenWidth = Screen.width;
-                float sectionWidth = screenWidth / 3f;
-                int section = (int)(mousePosition.x / sectionWidth);
-                switch (section)
-                {
-                    case 0:
-                        NewPosition = new Vector3(7.948f, -4.5f, 0f);
-                        break;
-                    case 1:
-                        NewPosition = new Vector3(6.861f, -4.5f, 0f);
-                        break;
-                    case 2:
-                        NewPosition = new Vector3(5.7f, -4.5f, 0f);
-                        break;
-                }
-
-                Vector3 targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, -Camera.main.transform.position.z));
-                Transform canvasTransform = GameObject.Find("Canvas").transform;
-
-                GameObject targetUI = GameManager.Ins.Resource.Create(m_target, Vector2.zero, Quaternion.identity, canvasTransform);
-                targetUI.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(targetPosition);
-
-                GameObject ballObject = GameManager.Ins.Resource.Create(m_ball);
-                ballObject.GetComponent<Transform>().position = NewPosition;
-
-                ShootBall ball = ballObject.GetComponent<ShootBall>();
-                ball.Owner = this;
-                ball.TargetUI = targetUI;
-                ball.TargetPosition = targetPosition;
-                ball.Speed = m_curSpeed;
-
                 Reset_Use();
-                m_use = false;
             }
+            
         }
 
         private void No_Use()

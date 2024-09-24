@@ -67,7 +67,7 @@ public class UIInstruction : MonoBehaviour
                 switch (m_closeType)
                 {
                     case ACTIVETYPE.TYPE_BASIC:
-                        gameObject.SetActive(false);
+                        Close_UI();
                         break;
                     case ACTIVETYPE.TYPE_FADE:
                         if (m_fadeCoroutine != null)
@@ -107,7 +107,7 @@ public class UIInstruction : MonoBehaviour
 
         if(targetAlpha == 0f)
         {
-            gameObject.SetActive(false);
+            Close_UI();
         }
         else
         {
@@ -115,5 +115,32 @@ public class UIInstruction : MonoBehaviour
         }
 
         yield break;
+    }
+
+    private void Close_UI()
+    {
+        gameObject.SetActive(false);
+
+        m_texts = null;
+        m_activeTimes = null;
+    }
+
+    public bool Check_Text(string[] texts)
+    {
+        if (m_texts == null) 
+            return true;
+        else if (texts == null)
+            return false;
+
+        for (int i = 0; i < m_texts.Length; ++i)
+        {
+            if (i >= texts.Length)
+                continue;
+
+            if (m_texts[i] == texts[i])
+                return false;
+        }
+
+        return true;
     }
 }

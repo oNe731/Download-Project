@@ -19,21 +19,27 @@ namespace VisualNovel
         private float m_updatTime = 1.0f;
         private float m_time = 0.0f;
 
+        private GameObject m_methodObj;
         private Image m_countImage;
 
         private void Start()
         {
             m_countImage = m_count.GetComponent<Image>();
+
+            // 방법창 생성
+            m_methodObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Common/Panel_Method", transform.parent);
+            if (m_methodObj == null) return;
+            m_methodObj.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/Method/Method_Shoot");
         }
 
         private void Update()
         {
+            if (GameManager.Ins.IsGame == false)
+                return;
+
             if (!m_click)
             {
-                if (EventSystem.current.IsPointerOverGameObject()) // 커서가 UI 위치상에 존재할 시 반환
-                    return;
-
-                if (Input.GetMouseButtonDown(0))
+                if (m_methodObj == null)
                 {
                     m_click = true;
                     Start_Count();
@@ -69,7 +75,7 @@ namespace VisualNovel
 
         private void Finish_Count()
         {
-            VisualNovelManager.Instance.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
+            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
             Destroy(gameObject);
         }
     }
