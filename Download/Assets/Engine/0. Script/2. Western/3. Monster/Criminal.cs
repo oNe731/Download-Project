@@ -72,64 +72,32 @@ namespace Western
             }
         }
 
+        // 범인요소 내에서만 랜덤으로 조합.
+        // 스카프는 이전 2개의 그룹과 중복이 아닐 시 허용.
         public void Combine_Round1()
         {
-            // 범인요소 내에서만 랜덤으로 조합.
-            // 스카프만 이전 2개의 그룹과 중복이 아닐 시 허용.
-
-            Person.ElementType1 elementStruct = new Person.ElementType1();
+            string defaultAnimatorPath = "6. Animation/2. Western/Character/Round1/Person/Element/";
+            ElementType1 elementStruct = new ElementType1();
 
             // 안대 생성
-            elementStruct.blindfold = Person.BLINDFOLD.BLINDFOLD_USE;
-            GameObject element = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
-            element.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
-            element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-            element.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            element.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Blindfold/Blindfold/AC_Blindfold");
+            elementStruct.blindfold = BLINDFOLD.BLINDFOLD_USE;
+            Create_Element(new Vector3(0f, 0f, -0.005f), defaultAnimatorPath + "Blindfold/Blindfold/AC_Blindfold");
 
             // 초록색 눈 생성
-            elementStruct.eye = Person.EYE.EYE_GREEN;
-            GameObject eye = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
-            eye.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.01f); // 3
-            eye.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-            eye.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            eye.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Eye/Eye_Green/AC_Eye_Green");
+            elementStruct.eye = EYE.EYE_GREEN;
+            Create_Element(new Vector3(0f, 0f, -0.01f), defaultAnimatorPath + "Eye/Eye_Green/AC_Eye_Green");
 
-            // 스카프 4종에서 랜덤 생성
+            // 무늬 스카프 4종에서 랜덤 생성
             string name = "";
             while (true)
             {
-                int index = Random.Range(0, 4);
-                switch (index)
-                {
-                    case 0:
-                        elementStruct.scarf = Person.SCARF.SCARF_SPRITE;
-                        name = "Scarf_Sprite/AC_Scarf_Sprite";
-                        break;
-                    case 1:
-                        elementStruct.scarf = Person.SCARF.SCARF_WAVE;
-                        name = "Scarf_Wave/AC_Scarf_Wave";
-                        break;
-                    case 2:
-                        elementStruct.scarf = Person.SCARF.SCARF_WATERDROP;
-                        name = "Scarf_Waterdrop/AC_Scarf_Waterdrop";
-                        break;
-                    case 3:
-                        elementStruct.scarf = Person.SCARF.SCARF_PAINTING;
-                        name = "Scarf_Painting/AC_Scarf_Painting";
-                        break;
-                }
+                Get_RandomRound1_Scarf(ref elementStruct, ref name, 1, 5);
 
-                // 이전 그룹이 존재하면 중복 검사 후 중복이 아니라면 탈출
+                // 이전 그룹이 존재하면 중복 검사
                 if (m_groups.Check_ElementCriminal(m_groupIndex, elementStruct) == false)
                     break;
             }
-
-            GameObject scarf = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
-            scarf.GetComponent<Transform>().localPosition = new Vector3(0f, 0f, -0.005f); // 2
-            scarf.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-            scarf.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            scarf.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>("6. Animation/2. Western/Character/Round1/Person/Element/Scarf/" + name);
+            Create_Element(new Vector3(0f, 0f, -0.005f), defaultAnimatorPath + "Scarf/" + name);
 
             m_element = elementStruct;
         }
@@ -145,4 +113,3 @@ namespace Western
         }
     }
 }
-

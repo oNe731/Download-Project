@@ -72,6 +72,85 @@ namespace Western
             //gameObject.SetActive(false);
         }
 
+        protected void Create_Element(Vector3 position, string animatorPath)
+        {
+            GameObject element = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform);
+            element.GetComponent<Transform>().localPosition = position;
+            element.GetComponent<Transform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            element.GetComponent<Transform>().localScale    = new Vector3(1f, 1f, 1f);
+            element.GetComponent<Animator>().runtimeAnimatorController = GameManager.Ins.Resource.Load<RuntimeAnimatorController>(animatorPath);
+        }
+
+        protected void Get_RandomRound1_Eye(ref ElementType1 elementStruct, ref string name, int startIndex = 0, int maxIndex = 4)
+        {
+            int index = Random.Range(startIndex, maxIndex);
+            switch (index)
+            {
+                case 0:
+                    elementStruct.eye = EYE.EYE_PINK;
+                    name = "Eye_Pink/AC_Eye_Pink";
+                    break;
+                case 1:
+                    elementStruct.eye = EYE.EYE_BLUE;
+                    name = "Eye_Blue/AC_Eye_Blue";
+                    break;
+                case 2:
+                    elementStruct.eye = EYE.EYE_WHITE;
+                    name = "Eye_White/AC_Eye_White";
+                    break;
+
+                case 3: // 범인 요소
+                    elementStruct.eye = EYE.EYE_GREEN;
+                    name = "Eye_Green/AC_Eye_Green";
+                    break;
+            }
+        }
+
+        protected void Get_RandomRound1_Blindfold(ref ElementType1 elementStruct, int startIndex = 0, int maxIndex = 2)
+        {
+            int index = Random.Range(startIndex, maxIndex);
+            switch (index)
+            {
+                case 0:
+                    elementStruct.blindfold = BLINDFOLD.BLINDFOLD_NON;
+                    break;
+
+                case 1: // 범인 요소
+                    elementStruct.blindfold = BLINDFOLD.BLINDFOLD_USE;
+                    break;
+            }
+        }
+
+        protected void Get_RandomRound1_Scarf(ref ElementType1 elementStruct, ref string name, int startIndex = 0, int maxIndex = 5)
+        {
+            int index = Random.Range(startIndex, maxIndex);
+            switch (index)
+            {
+                case 0:
+                    elementStruct.scarf = SCARF.SCARF_SOLID;
+                    name = "Scarf_Solid/AC_Scarf_Solid";
+                    break;
+
+                case 1: // 범인 요소
+                    elementStruct.scarf = SCARF.SCARF_SPRITE;
+                    name = "Scarf_Sprite/AC_Scarf_Sprite";
+                    break;
+                case 2: // 범인 요소
+                    elementStruct.scarf = SCARF.SCARF_WAVE;
+                    name = "Scarf_Wave/AC_Scarf_Wave";
+                    break;
+                case 3: // 범인 요소
+                    elementStruct.scarf = SCARF.SCARF_WATERDROP;
+                    name = "Scarf_Waterdrop/AC_Scarf_Waterdrop";
+                    break;
+                case 4: // 범인 요소
+                    elementStruct.scarf = SCARF.SCARF_PAINTING;
+                    name = "Scarf_Painting/AC_Scarf_Painting";
+                    break;
+            }
+        }
+
+
         public void Start_Shake()
         {
             StartCoroutine(Shake(m_shakeAmount, m_shakeTime));
