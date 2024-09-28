@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager m_instance = null;
 
-    //private string m_playerName = "이름";
+    private string m_playerName = "";
 
     private List<StageManager> m_stages;
     private int m_curStage = -1;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     private AudioSource m_audioSource;
 
     public static GameManager Ins => m_instance;
-    //public string PlayerName => m_playerName;
+    public string PlayerName { get => m_playerName; set => m_playerName = value; }
     public WindowManager Window => (WindowManager)m_stages[(int)StageManager.STAGE.LEVEL_WINDOW];
     public VisualNovelManager Novel => (VisualNovelManager)m_stages[(int)StageManager.STAGE.LEVEL_VISUALNOVEL];
     public WesternManager Western => (WesternManager)m_stages[(int)StageManager.STAGE.LEVEL_WESTERN];
@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
 
             // 매니저
             m_stages = new List<StageManager>();
+            m_stages.Add(new LoadingManager());
+            m_stages.Add(new LoginManager());
             m_stages.Add(new WindowManager());
             m_stages.Add(new VisualNovelManager());
             m_stages.Add(new WesternManager());

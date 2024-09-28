@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class StageManager
 {
-    public enum STAGE { LEVEL_WINDOW, LEVEL_VISUALNOVEL, LEVEL_WESTERN, LEVEL_HORROR, LEVEL_END };
+    public enum STAGE { LEVEL_LOADING, LEVEL_LOGIN, LEVEL_WINDOW, LEVEL_VISUALNOVEL, LEVEL_WESTERN, LEVEL_HORROR, LEVEL_END };
 
     protected STAGE  m_stageLevel = STAGE.LEVEL_END;
     protected string m_sceneName;
