@@ -20,6 +20,8 @@ public class CameraFollow : CameraBase
     private float xRotate = 0.0f;
 
     private bool isRock = false;
+    public Transform CameraPositionTarget { get => m_cameraPositionTarget; }
+    public Transform CameraRotationTarget { get => m_cameraRotationTarget; }
     public bool IsRock { get => isRock; set => isRock = value; }
 
     public override void Initialize_Camera()

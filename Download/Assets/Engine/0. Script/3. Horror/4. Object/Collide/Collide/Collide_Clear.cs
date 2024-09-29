@@ -6,10 +6,16 @@ public class Collide_Clear : Collide
 {
     public override void Trigger_Event()
     {
-        GameManager.Ins.Set_Pause(true); // 게임 일시정지
-        GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameClear");
+        //GameManager.Ins.Set_Pause(true); // 게임 일시정지
+        //GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameClear");
 
-        StartCoroutine(End_Game());
+        GameManager.Ins.Set_Pause(true, false);
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/Canvas_GameOver");
+        if (gameObject == null)
+            return;
+        gameObject.GetComponent<UIGameOver>().Start_GameOver();
+
+        // StartCoroutine(End_Game());
     }
 
     private IEnumerator End_Game()

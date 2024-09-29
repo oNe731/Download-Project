@@ -50,10 +50,17 @@ public class Horror_2stage : Horror_Base
         Transform playerTransform = GameManager.Ins.Horror.Player.gameObject.transform;
         playerTransform.position = new Vector3(0f, 134.8f, -90.16f);
         playerTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
+        Camera.main.transform.position = camera.CameraPositionTarget.position;
+        Camera.main.transform.rotation = camera.CameraRotationTarget.rotation;
+
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Play_Level());
     }
 
     public override void Play_Level()
     {
+        GameManager.Ins.Set_Pause(false); // 일시정지 해제
     }
 
     public override void Update_Level()

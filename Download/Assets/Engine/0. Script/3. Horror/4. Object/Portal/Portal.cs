@@ -17,14 +17,6 @@ public class Portal : MonoBehaviour
 
         // 페이드 아웃 -> 이동 -> 인
         GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Teleport_Player(), 1f, false);
-    }
-
-    private void Teleport_Player()
-    {
-        GameManager.Ins.Horror.LevelController.Change_Level((int)m_changelevel);
-        GameManager.Ins.Set_Pause(false); // 일시정지 해제
-
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Horror.LevelController.Change_Level((int)m_changelevel), 1f, false);
     }
 }
