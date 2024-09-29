@@ -43,6 +43,8 @@ public class HorrorManager : StageManager
         m_noteElementIcon.Add("Icon_Bullet_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Bullet/Icon_Bullet_2"));
         m_noteElementIcon.Add("Icon_Medicine_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Medicine/Icon_Medicine_1"));
         m_noteElementIcon.Add("Icon_Medicine_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Medicine/Icon_Medicine_2"));
+        m_noteElementIcon.Add("Icon_Key_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Key/Icon_Key_1"));
+        m_noteElementIcon.Add("Icon_Key_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Key/Icon_Key_2"));
 
         m_noteElementIcon.Add("Icon_clue_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_1"));
         m_noteElementIcon.Add("Icon_clue_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_2"));
@@ -150,12 +152,12 @@ public class HorrorManager : StageManager
         return gameObject;
     }
 
-    public void Active_Popup(UIPopup.TYPE type, NoteItem itemType)
+    public void Active_Popup(UIPopup.TYPE type, NoteItem itemType, bool closeText = false, float[] activeTimes = null, string[] texts = null, bool closeEvent = false, UIPopup.EVENT eventType = UIPopup.EVENT.E_END)
     {
         if (m_popupUI == null)
             return;
 
-        m_popupUI.Initialize_UI(type, itemType);
+        m_popupUI.Initialize_UI(type, itemType, closeText, activeTimes, texts, closeEvent, eventType);
     }
 
     public void Active_InstructionUI(UIInstruction.ACTIVETYPE openType, UIInstruction.ACTIVETYPE closeType, float[] activeTimes, string[] texts) // 안내 문구 출력

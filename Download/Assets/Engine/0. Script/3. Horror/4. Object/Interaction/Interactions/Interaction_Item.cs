@@ -8,6 +8,13 @@ namespace Horror
     {
         [SerializeField] private NoteItem m_noteItem;
 
+        [SerializeField] private bool     m_closeText;
+        [SerializeField] private float[]  m_activeTimes;
+        [SerializeField] private string[] m_texts;
+
+        [SerializeField] private bool          m_closeEvent;
+        [SerializeField] private UIPopup.EVENT m_eventType;
+
         public NoteItem NoteItem { set => m_noteItem = value; }
 
         private void Start()
@@ -48,7 +55,7 @@ namespace Horror
                 }
             }
 
-            GameManager.Ins.Horror.Active_Popup(type, m_noteItem);
+            GameManager.Ins.Horror.Active_Popup(type, m_noteItem, m_closeText, m_activeTimes, m_texts, m_closeEvent, m_eventType);
 
             Check_Delete();
         }
