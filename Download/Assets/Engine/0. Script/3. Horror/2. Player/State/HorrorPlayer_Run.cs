@@ -16,9 +16,9 @@ namespace Horror
         {
             m_soundTime = 0f;
 
-            m_player.MoveSpeed = 400f;
+            m_player.MoveSpeed = 400f + GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>().PlayerSpeedAdd;
 
-            if(m_player.StateMachine.PreState != (int)HorrorPlayer.State.ST_WALK)
+            if (m_player.StateMachine.PreState != (int)HorrorPlayer.State.ST_WALK)
                 Change_Animation("Walk");
                 
             m_animator.speed = 1.3f;

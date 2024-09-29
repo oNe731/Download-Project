@@ -17,7 +17,7 @@ namespace Horror
             m_soundTime = 0f;
 
             Check_Stamina(); // 스테미나 회복 여부 판별
-            m_player.MoveSpeed = 270f;
+            m_player.MoveSpeed = 270f + GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>().PlayerSpeedAdd;
 
             if (m_player.StateMachine.PreState != (int)HorrorPlayer.State.ST_RUN)
                 Change_Animation("Walk");

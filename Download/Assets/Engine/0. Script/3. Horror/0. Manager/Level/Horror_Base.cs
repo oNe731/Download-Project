@@ -6,9 +6,11 @@ public abstract class Horror_Base : Level
 {
     protected LevelController m_levels = null;
     protected GameObject m_stage = null;
+    protected float m_playerSpeedAdd = 0f;
 
     public LevelController Levels => m_levels;
     public GameObject Stage => m_stage;
+    public float PlayerSpeedAdd => m_playerSpeedAdd;
 
     public override void Initialize_Level(LevelController levelController)
     {

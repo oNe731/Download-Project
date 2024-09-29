@@ -11,6 +11,7 @@ public class Horror_2stage : Horror_Base
         base.Initialize_Level(levelController);
 
         m_levelIndex = (int)HorrorManager.LEVEL.LV_2STAGE;
+        m_playerSpeedAdd = 100;
     }
 
     public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)
@@ -23,25 +24,7 @@ public class Horror_2stage : Horror_Base
         if (m_IsVisit == false)
         {
             m_IsVisit = true;
-            // 스테이지 생성
             m_stage = GameObject.Find("World").transform.GetChild(2).gameObject;
-
-            // 레벨 초기화
-            //GameObject collider_Area = m_stage.transform.GetChild(1).GetChild(1).GetChild(0).gameObject; // etc -> Collider -> Collider_Area
-
-            //m_levels = gameObject.AddComponent<LevelController>();
-            //List<Level> levels = new List<Level>();
-            //foreach (Transform child in collider_Area.transform)
-            //    levels.Add(null);
-            //foreach (Transform child in collider_Area.transform)
-            //{
-            //    Horror_Base stage = child.gameObject.GetComponent<Horror_Base>();
-            //    stage.Initialize_Level(m_levels);
-
-            //    levels[stage.LevelIndex] = stage;
-            //}
-
-            //m_levels.Initialize_Level(levels);
         }
 
         m_stage.SetActive(true);
