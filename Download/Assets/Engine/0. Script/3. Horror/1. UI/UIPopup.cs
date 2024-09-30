@@ -7,20 +7,42 @@ using UnityEngine.UI;
 public class UIPopup : MonoBehaviour
 {
     public enum TYPE { T_NOTE, T_WEAPON, T_QUESTITEM, T_EXPENITEM, T_CLUE, T_END };
+    public enum EVENT { E_NONE, E_FIRSTBULLET, E_END };
 
     private TYPE      m_type = TYPE.T_END;
     private NoteItem  m_itemInfo;
 
-    public void Initialize_UI(TYPE type, NoteItem itemInfo)
+    private bool      m_closeText = false;
+    private float[]   m_activeTimes;
+    private string[]  m_texts;
+
+    private bool  m_closeEvent = false;
+    private EVENT m_eventType  = EVENT.E_END;
+
+    public void Initialize_UI(TYPE type, NoteItem itemInfo, bool closeText, float[] activeTimes, string[] texts, bool closeEvent, EVENT eventType)
     {
         m_type      = type;
         m_itemInfo  = itemInfo;
 
+        m_closeText   = closeText;
+        m_activeTimes = activeTimes;
+        m_texts       = texts;
+
+        m_closeEvent = closeEvent;
+        m_eventType  = eventType;
+
         GameManager.Ins.Set_Pause(true); // 게임 일시정지
         if (m_type == TYPE.T_QUESTITEM) // 퀘스트 조합 아이템 (가져가기/ 두고가기)
+        {
+            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, -200f);
+            transform.GetChild(0).GetChild(1).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(200f, -200f);
             transform.GetChild(0).GetChild(1).gameObject.SetActive(true); // 두고가기 버튼
+        }
         else // 노트, 장비, 소모품 아이템, 단서 (가져가기)
+        {
+            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -200f);
             transform.GetChild(0).GetChild(1).gameObject.SetActive(false); // 두고가기 버튼
+        }
         transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Ins.Horror.NoteElementIcon[m_itemInfo.m_imageName + "_1"];
 
         gameObject.SetActive(true);
@@ -50,6 +72,21 @@ public class UIPopup : MonoBehaviour
         }
 
         GameManager.Ins.Set_Pause(false); // 일시정지 해제
+        if(m_closeText == true)
+        {
+            m_closeText = false;
+            GameManager.Ins.Horror.Active_InstructionUI(UIInstruction.ACTIVETYPE.TYPE_FADE, UIInstruction.ACTIVETYPE.TYPE_FADE, m_activeTimes, m_texts);
+        }
+        if(m_closeEvent == true)
+        {
+            m_closeEvent = false;
+            switch(m_eventType)
+            {
+                case EVENT.E_FIRSTBULLET:
+                    GameManager.Ins.StartCoroutine(Event_Bullet());
+                    break;
+            }
+        }
         gameObject.SetActive(false);
     }
 
@@ -125,5 +162,56 @@ public class UIPopup : MonoBehaviour
         if (playerNote == null)
             return;
         playerNote.Add_Clue(m_itemInfo);
+    }
+
+
+    public IEnumerator Event_Bullet()
+    {
+        Horror_Base level = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>();
+        HorrorLight light = level.Light.transform.GetChild(0).GetComponent<HorrorLight>();
+
+        float time = 0f;
+        while (true)
+        {
+            if(GameManager.Ins.IsGame == true)
+            {
+                time += Time.deltaTime;
+                if(time >= 0.5f) // 총알 획득창을 닫고 1초 뒤...
+                {
+                    // 거울이 깨지며 (유리조각 이펙트)
+                    //
+
+                    // 붉은 글씨가 나타난다.들어가는 문구: “DO YOU RECOGNIZE ME” (지금은 깨진거울없이 그냥 거울 위에)
+                    light.Light.enabled = false;
+
+                    GameObject doyou = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/BloodPont/DoYou/DoYou", level.Stage.transform);
+                    doyou.transform.position = new Vector3(-13.29f, 2.045f, 15.52f);
+                    doyou.transform.rotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
+                    doyou.transform.localScale = new Vector3(0.3377168f, 2.045f, 0.1591384f);
+                    break;
+                }
+            }
+
+            yield return null;
+        }
+
+        time = 0f;
+        while (true)
+        {
+            if (GameManager.Ins.IsGame == true)
+            {
+                time += Time.deltaTime;
+                if (time >= 0.2f)
+                {
+                    light.Light.enabled = true;
+                    light.Start_Blink(true, 0.4f, 0.8f, true, 3f); // 화장실 불이 깜빡거린다.
+                    break;
+                }
+            }
+
+            yield return null;
+        }
+
+        yield break;
     }
 }

@@ -194,12 +194,24 @@ public class Interaction_Door : Interaction
         yield break;
     }
 
-    private void Open_Animation()
+    private void Open_Animation() // 열리는 문 애니메이션 재생
     {
-        // Temp
+        GameManager.Ins.Set_Pause(true); // 일시정지
+
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Fadeln_Animation(), 1f, false);
+    }
+
+    private void Fadeln_Animation()
+    {
         Destroy(gameObject);
 
-        // 열리는 문 애니메이션 재생
-        //
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Play_Level());
+    }
+
+    private void Play_Level()
+    {
+        GameManager.Ins.Set_Pause(false); // 일시정지 해제
     }
 }

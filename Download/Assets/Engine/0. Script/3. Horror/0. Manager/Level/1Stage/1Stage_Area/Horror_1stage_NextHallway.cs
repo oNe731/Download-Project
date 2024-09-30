@@ -77,7 +77,10 @@ public class Horror_1stage_NextHallway : Area
 
     private IEnumerator Event_Door(string text)
     {
+        GameObject UIPanel = GameObject.Find("Canvas").transform.GetChild(0).GetChild(2).gameObject;
+
         GameManager.Ins.Set_Pause(true, false); // 게임 일시정지
+        UIPanel.SetActive(false);
 
 #region 안내 문구가 끝났다면 이벤트 발생
         bool active = false;
@@ -124,7 +127,12 @@ public class Horror_1stage_NextHallway : Area
         GameObject tigerDoor = level.Stage.transform.GetChild(1).GetChild(3).GetChild(0).gameObject;
         tigerDoor.SetActive(true);
 
+        // 조명 이벤트
+        level.Light.transform.GetChild(3).GetComponent<HorrorLight>().Start_Blink(true, 0.3f, 0.5f);
+        level.Light.transform.GetChild(4).GetComponent<HorrorLight>().Start_Blink(true, 0.4f, 0.6f);
+
         GameManager.Ins.Set_Pause(false, false); // 게임 일시정지 해제
+        UIPanel.SetActive(true);
 
         yield break;
     }

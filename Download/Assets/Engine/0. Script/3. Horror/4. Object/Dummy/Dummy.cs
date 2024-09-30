@@ -56,6 +56,11 @@ public class Dummy : MonoBehaviour
             yield return null;
         }
 
+        // 조명 이벤트 종료
+        Horror_Base level = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>();
+        level.Light.transform.GetChild(3).GetComponent<HorrorLight>().Finish_Event();
+        level.Light.transform.GetChild(4).GetComponent<HorrorLight>().Finish_Event();
+
         transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Animator>().enabled = true;
         transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         yield break;

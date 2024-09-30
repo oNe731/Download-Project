@@ -25,6 +25,7 @@ public class Horror_1stage : Horror_Base
         {
             m_IsVisit = true;
             m_stage = GameObject.Find("World").transform.GetChild(1).gameObject;
+            m_light = m_stage.transform.GetChild(1).GetChild(0).GetChild(1).gameObject;
 
             // 레벨 초기화
             m_levels = new LevelController();

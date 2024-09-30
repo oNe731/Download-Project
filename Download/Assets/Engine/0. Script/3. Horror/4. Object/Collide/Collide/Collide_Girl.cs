@@ -13,6 +13,10 @@ public class Collide_Girl : Collide
 
     private IEnumerator Move_Girl()
     {
+        Horror_Base level = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_Base>();
+        HorrorLight light1 = level.Light.transform.GetChild(1).GetComponent<HorrorLight>();
+        HorrorLight light2 = level.Light.transform.GetChild(2).GetComponent<HorrorLight>();
+
         // 대기 ---
         float time = 0f;
         while(true)
@@ -23,6 +27,9 @@ public class Collide_Girl : Collide
             yield return null;
         }
 
+        light1.Start_Blink(true, 0.3f, 0.4f);
+        light2.Start_Blink(true, 0.4f, 0.5f);
+
         // 걷기 ---
         float speed = 2.5f;
         while (true)
@@ -32,6 +39,9 @@ public class Collide_Girl : Collide
                 break;
             yield return null;
         }
+
+        light1.Finish_Event();
+        light2.Finish_Event();
 
         // 여자아이 삭제 ---
         Destroy(m_girl);
