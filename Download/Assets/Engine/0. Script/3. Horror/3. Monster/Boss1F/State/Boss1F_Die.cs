@@ -12,7 +12,7 @@ public class Boss1F_Die : Boss1F_Base
     {
         GameObject item = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Object/Item/Research_1FKey");
         if (item != null)
-            item.transform.position = new Vector3(11.902f, 1.235f, 7.82f);
+            item.transform.position = new Vector3(12.314f, 1.265f, 7.82f);
 
         GameManager.Ins.Resource.Destroy(m_owner.gameObject);
     }

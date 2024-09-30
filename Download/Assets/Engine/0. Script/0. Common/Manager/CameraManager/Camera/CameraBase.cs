@@ -9,6 +9,7 @@ public class CameraBase
     private float m_shakeTime;
     private float m_shakeAmount;
     private Vector3 m_startPosition;
+    private bool m_positionUpdate;
 
     public bool IsShake => m_isShake;
 
@@ -35,6 +36,10 @@ public class CameraBase
         if (m_isShake)
         {
             m_time += Time.deltaTime;
+
+            if(m_positionUpdate == true)
+                m_startPosition = m_mainCamera.transform.localPosition;
+
             Vector3 randomPoint = m_startPosition + Random.insideUnitSphere * m_shakeAmount;
             m_mainCamera.transform.localPosition = Vector3.Lerp(m_startPosition, randomPoint, Time.deltaTime);
 
@@ -58,12 +63,13 @@ public class CameraBase
         m_mainCamera.transform.rotation = Quaternion.Euler(rotation);
     }
 
-    public void Start_Shake(float ShakeAmount, float ShakeTime)
+    public void Start_Shake(float ShakeAmount, float ShakeTime, bool positionUpdate = false)
     {
         m_isShake = true;
         m_time = 0f;
         m_shakeTime = ShakeTime;
         m_shakeAmount = ShakeAmount;
+        m_positionUpdate = positionUpdate;
         m_startPosition = m_mainCamera.transform.localPosition;
     }
 }

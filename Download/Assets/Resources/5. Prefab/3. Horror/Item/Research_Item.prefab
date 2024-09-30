@@ -46,12 +46,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5e0af9d4236d246b30092fa5b142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dist: 0
   m_uiOffset: {x: 0, y: 0, z: 0}
+  m_possible: 0
+  m_objectDelete: 0
+  m_deleteObject: {fileID: 0}
   m_noteItem:
     m_noteType: 3
     m_itemType: 11
     m_name: 
+    m_details: 
+    m_imageName: 
     m_count: 0
+  m_closeText: 0
+  m_activeTimes: []
+  m_texts: []
+  m_closeEvent: 0
+  m_eventType: 0
 --- !u!1 &3909776177823678441
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +112,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3909776177823678441}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
