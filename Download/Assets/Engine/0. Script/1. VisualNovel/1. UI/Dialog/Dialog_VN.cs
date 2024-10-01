@@ -125,7 +125,10 @@ namespace VisualNovel
             m_dialogBoxObj.SetActive(true);
 
             // 다이얼로그 업데이트
-            m_nameTxt.text = m_dialogs[index].nameText;
+            if (m_dialogs[index].owner == VisualNovelManager.NPCTYPE.OT_WHITE)
+                m_nameTxt.text = GameManager.Ins.PlayerName;
+            else
+                m_nameTxt.text = m_dialogs[index].nameText;
             m_heartScr.Set_Owner(m_dialogs[index].owner); // 호감도 업데이트
 
             // 리소스 업데이트

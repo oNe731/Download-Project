@@ -5,7 +5,7 @@ using UnityEngine;
 public class LoadingBar : MonoBehaviour
 {
     private int m_barCount    = 0;
-    private int m_changeCount = 3;
+    private int m_changeCount = 7;
 
     private float m_moveSpeed = 500f;
     private float m_position  = 391.6f;

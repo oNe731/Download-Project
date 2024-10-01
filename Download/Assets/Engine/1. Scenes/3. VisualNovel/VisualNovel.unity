@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 298844204}
   - component: {fileID: 298844203}
   - component: {fileID: 298844202}
+  - component: {fileID: 298844206}
   - component: {fileID: 298844205}
   m_Layer: 5
   m_Name: Button_Likeability
@@ -677,9 +678,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
-        m_MethodName: Active_Popup
+      - m_Target: {fileID: 298844206}
+        m_TargetAssemblyTypeName: LikeabilityButton, Assembly-CSharp
+        m_MethodName: Active_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -755,6 +756,18 @@ MonoBehaviour:
   m_maxAngle: 70
   m_minRotationSpeed: 20
   m_maxRotationSpeed: 20
+--- !u!114 &298844206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298844200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779b7a07a245d6d408f4fa02eb7f98a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &422685725
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,6 +930,7 @@ GameObject:
   - component: {fileID: 487165719}
   - component: {fileID: 487165718}
   - component: {fileID: 487165717}
+  - component: {fileID: 487165720}
   m_Layer: 5
   m_Name: Button_Close
   m_TagString: Untagged
@@ -988,9 +1002,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VisualNovelManager, Assembly-CSharp
-        m_MethodName: Active_Popup
+      - m_Target: {fileID: 487165720}
+        m_TargetAssemblyTypeName: LikeabilityButton, Assembly-CSharp
+        m_MethodName: Active_Button
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1038,6 +1052,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 487165715}
   m_CullTransparentMesh: 1
+--- !u!114 &487165720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487165715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779b7a07a245d6d408f4fa02eb7f98a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &588132990
 GameObject:
   m_ObjectHideFlags: 0
