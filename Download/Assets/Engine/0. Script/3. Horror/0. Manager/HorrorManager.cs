@@ -105,6 +105,11 @@ public class HorrorManager : StageManager
             return;
 
         m_levelController.Update_Level();
+
+#if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.F2))
+            m_levelController.Change_Level((int)LEVEL.LV_2STAGE);
+#endif
     }
 
     public override void LateUpdate_Stage()

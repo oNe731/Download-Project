@@ -49,6 +49,8 @@ namespace Horror
                 Recover_Stamina();
             }
 
+            Update_Gravity();
+
             if (m_animator.gameObject.activeSelf == false || m_animator.IsInTransition(0) == true) return; // 손이 활성화 상태인가/ true == 애니메이션 보간중
             if (m_animator.GetCurrentAnimatorStateInfo(0).IsName(m_triggerName) == true) Reset_Animation();
         }

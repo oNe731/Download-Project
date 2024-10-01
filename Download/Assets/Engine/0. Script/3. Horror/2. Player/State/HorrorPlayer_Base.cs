@@ -8,17 +8,20 @@ namespace Horror
     {
         protected HorrorPlayer m_player = null;
         protected UIWorldHint m_interactionUI = null;
-        protected NoteItem    m_noteItem = null;
+        protected NoteItem m_noteItem = null;
 
         protected bool m_recoverStamina = false;
 
-        protected bool   m_conversion = false;
+        protected bool m_conversion = false;
         protected string m_triggerName = "";
 
-        protected Transform   m_transform;
-        protected Transform   m_rotationTransform;
-        protected Rigidbody   m_rigidbody;
-        protected Animator    m_animator;
+        private float m_gravity = -9.81f; // 중력 가속도 값
+        private Vector3 m_velocity;
+
+        protected Transform m_transform;
+        protected Transform m_rotationTransform;
+        protected Rigidbody m_rigidbody;
+        protected Animator m_animator;
         protected AudioSource m_audioSource;
 
         public HorrorPlayer_Base(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
@@ -49,7 +52,7 @@ namespace Horror
             float yRotate = Input_Rotation();
 
             Vector3 forwardDir = Quaternion.Euler(0, yRotate, 0) * Vector3.forward;
-            Vector3 rightDir   = Quaternion.Euler(0, yRotate, 0) * Vector3.right;
+            Vector3 rightDir = Quaternion.Euler(0, yRotate, 0) * Vector3.right;
 
             Vector3 velocity = Vector3.zero;
             if (Input.GetKey(KeyCode.W))
@@ -120,7 +123,7 @@ namespace Horror
             return false;
         }
 
-        protected void Input_Interaction() 
+        protected void Input_Interaction()
         {
             // 실시간으로 바라보고 있는 UI만 활성화
             RaycastHit interactionHit = GameManager.Ins.Start_Raycast(Camera.main.transform.position, Camera.main.transform.forward, 5f, LayerMask.GetMask("Interaction"));
@@ -130,7 +133,7 @@ namespace Horror
                 return;
             }
 
-           Interaction interaction = interactionHit.collider.gameObject.transform.GetComponent<Interaction>();
+            Interaction interaction = interactionHit.collider.gameObject.transform.GetComponent<Interaction>();
             if (interaction == null)
                 interaction = interactionHit.collider.gameObject.transform.parent.GetComponent<Interaction>();
             if (interaction == null) // 문 2개 타입
@@ -142,7 +145,7 @@ namespace Horror
             }
 
             // 상호작용 가능 상태인가
-            if(interaction.Possible == false)
+            if (interaction.Possible == false)
             {
                 Reset_Interaction();
                 return;
@@ -169,12 +172,12 @@ namespace Horror
 
             if (m_interactionUI != null)
             {
-                if(m_interactionUI != interaction.InteractionUI)
+                if (m_interactionUI != interaction.InteractionUI)
                     m_interactionUI.gameObject.SetActive(false);
             }
 
             m_interactionUI = interaction.InteractionUI;
-            if(m_interactionUI != null)
+            if (m_interactionUI != null)
             {
                 m_interactionUI.Update_Transform();
                 m_interactionUI.gameObject.SetActive(true);
@@ -220,7 +223,7 @@ namespace Horror
             AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
             m_triggerName = Get_AnimationName(stateName); // 무기 상태 체크
 
-            if(stateInfo.IsName(m_triggerName) == true || play == true)
+            if (stateInfo.IsName(m_triggerName) == true || play == true)
                 m_animator.Play(m_triggerName, 0, 0f); // 트랜지션 없이 변경
             else
                 m_animator.SetBool(m_triggerName, m_conversion);
@@ -306,6 +309,22 @@ namespace Horror
                     }
                 }
             }
+        }
+
+        protected void Update_Gravity()
+        {
+            //RaycastHit ray;
+            //if (Physics.Raycast(m_transform.position, Vector3.down, out ray, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            //{
+            //    m_velocity.y += m_gravity * Time.deltaTime;
+            //    m_transform.position += m_velocity * Time.deltaTime;
+            //    //Debug.Log("중력 적용중");
+            //}
+            //else
+            //{
+            //    m_velocity.y = 0;
+            //    //Debug.Log("바닥 판정중");
+            //}
         }
     }
 }
