@@ -15,13 +15,13 @@ namespace Horror
         protected bool m_conversion = false;
         protected string m_triggerName = "";
 
-        private float m_gravity = -9.81f; // 중력 가속도 값
-        private Vector3 m_velocity;
+        private bool m_gravityUpdate = false;
+        private Vector3 m_gravityVelocity;
 
         protected Transform m_transform;
         protected Transform m_rotationTransform;
         protected Rigidbody m_rigidbody;
-        protected Animator m_animator;
+        protected Animator  m_animator;
         protected AudioSource m_audioSource;
 
         public HorrorPlayer_Base(StateMachine<HorrorPlayer> stateMachine) : base(stateMachine)
@@ -47,6 +47,24 @@ namespace Horror
         {
         }
 
+        protected float Input_Rotation()
+        {
+            if (m_player == null)
+                return 0f;
+
+            // Y축 좌우 회전
+            float yRotateSize = Input.GetAxis("Mouse X") * m_player.RotationSpeed * Time.deltaTime;
+            float yRotate = m_transform.eulerAngles.y + yRotateSize;
+            m_transform.eulerAngles = new Vector3(m_transform.eulerAngles.x, yRotate, 0);
+
+            // X축 상하 회전
+            float xRotateSize = -Input.GetAxis("Mouse Y") * m_player.RotationSpeed * Time.deltaTime;
+            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_player.RotationLimit.x, m_player.RotationLimit.y); // 각도 제한(-45, 80)
+            m_rotationTransform.eulerAngles = new Vector3(m_player.XRotate, m_rotationTransform.eulerAngles.y, 0);
+
+            return yRotate;
+        }
+
         protected bool Input_Move()
         {
             float yRotate = Input_Rotation();
@@ -66,10 +84,14 @@ namespace Horror
 
             if (velocity == Vector3.zero)
             {
+                m_gravityUpdate = false;
+
                 m_rigidbody.isKinematic = true;
             }
             else
             {
+                m_gravityUpdate = true;
+
                 m_rigidbody.isKinematic = false;
                 m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, velocity, Time.deltaTime * m_player.LerpSpeed);
                 return true;
@@ -78,22 +100,31 @@ namespace Horror
             return false;
         }
 
-        protected float Input_Rotation()
+        protected void Update_Gravity()
         {
-            if (m_player == null)
-                return 0f;
+            RaycastHit hit;
+            if (Physics.Raycast(m_transform.position, Vector3.down, out hit, 0.2f, LayerMask.GetMask("Ground")))
+            {
+                if (m_gravityUpdate == false)
+                    return;
 
-            // Y축 좌우 회전
-            float yRotateSize = Input.GetAxis("Mouse X") * m_player.RotationSpeed * Time.deltaTime;
-            float yRotate = m_transform.eulerAngles.y + yRotateSize;
-            m_transform.eulerAngles = new Vector3(m_transform.eulerAngles.x, yRotate, 0);
+                Vector3 slopeDirection = Vector3.Cross(hit.normal, Vector3.Cross(Vector3.up, hit.normal));
+                Vector3 moveDirection  = slopeDirection.normalized * 5f * Time.deltaTime;
+                m_transform.position += new Vector3(0f, moveDirection.y, 0f);
 
-            // X축 상하 회전
-            float xRotateSize = -Input.GetAxis("Mouse Y") * m_player.RotationSpeed * Time.deltaTime;
-            m_player.XRotate = Mathf.Clamp(m_player.XRotate + xRotateSize, m_player.RotationLimit.x, m_player.RotationLimit.y); // 각도 제한(-45, 80)
-            m_rotationTransform.eulerAngles = new Vector3(m_player.XRotate, m_rotationTransform.eulerAngles.y, 0);
+                // 중력 리셋
+                m_gravityVelocity.y = 0;
+            }
+            else
+            {
+                // 중력 적용
+                m_gravityVelocity.y += -9.81f * Time.deltaTime;
+                m_transform.position += m_gravityVelocity * Time.deltaTime;
+            }
 
-            return yRotate;
+#if UNITY_EDITOR
+            Debug.DrawRay(m_transform.position, Vector3.down * 0.2f, Color.yellow);
+#endif
         }
 
         protected bool Input_Weapon()
@@ -309,22 +340,6 @@ namespace Horror
                     }
                 }
             }
-        }
-
-        protected void Update_Gravity()
-        {
-            //RaycastHit ray;
-            //if (Physics.Raycast(m_transform.position, Vector3.down, out ray, Mathf.Infinity, LayerMask.GetMask("Ground")))
-            //{
-            //    m_velocity.y += m_gravity * Time.deltaTime;
-            //    m_transform.position += m_velocity * Time.deltaTime;
-            //    //Debug.Log("중력 적용중");
-            //}
-            //else
-            //{
-            //    m_velocity.y = 0;
-            //    //Debug.Log("바닥 판정중");
-            //}
         }
     }
 }
