@@ -68,7 +68,6 @@ namespace Horror
         protected bool Input_Move()
         {
             float yRotate = Input_Rotation();
-
             Vector3 forwardDir = Quaternion.Euler(0, yRotate, 0) * Vector3.forward;
             Vector3 rightDir = Quaternion.Euler(0, yRotate, 0) * Vector3.right;
 
@@ -109,7 +108,7 @@ namespace Horror
                     return;
 
                 Vector3 slopeDirection = Vector3.Cross(hit.normal, Vector3.Cross(Vector3.up, hit.normal));
-                Vector3 moveDirection  = slopeDirection.normalized * 5f * Time.deltaTime;
+                Vector3 moveDirection = slopeDirection.normalized * (m_player.MoveSpeed * 0.01f) * Time.deltaTime;
                 m_transform.position += new Vector3(0f, moveDirection.y, 0f);
 
                 // 중력 리셋
