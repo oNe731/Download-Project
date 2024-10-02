@@ -31,7 +31,7 @@ public class Horror_2stage : Horror_Base
 
         // 플레이어 위치 및 회전 변경
         Transform playerTransform = GameManager.Ins.Horror.Player.gameObject.transform;
-        playerTransform.position = new Vector3(0f, 134.8f, -90.16f);
+        playerTransform.position = new Vector3(-37.97f, 135.66f, 127.5f);//new Vector3(0f, 134.8f, -90.16f);
         playerTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
         CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
         Camera.main.transform.position = camera.CameraPositionTarget.position;

@@ -68,6 +68,7 @@ namespace Horror
         protected bool Input_Move()
         {
             float yRotate = Input_Rotation();
+
             Vector3 forwardDir = Quaternion.Euler(0, yRotate, 0) * Vector3.forward;
             Vector3 rightDir = Quaternion.Euler(0, yRotate, 0) * Vector3.right;
 
@@ -101,8 +102,17 @@ namespace Horror
 
         protected void Update_Gravity()
         {
+            Vector3 slopeOrigin = m_transform.position + (m_transform.forward * 0.2f);
+            Vector3 downOrigin = m_transform.position;
+            downOrigin.y += 0.2f;
+
+#if UNITY_EDITOR
+            Debug.DrawRay(slopeOrigin, Vector3.down * 0.5f, Color.yellow);
+            Debug.DrawRay(downOrigin, Vector3.down * 0.2f, Color.red);
+#endif
+
             RaycastHit hit;
-            if (Physics.Raycast(m_transform.position, Vector3.down, out hit, 0.2f, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(slopeOrigin, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Ground")))
             {
                 if (m_gravityUpdate == false)
                     return;
@@ -116,14 +126,18 @@ namespace Horror
             }
             else
             {
-                // 중력 적용
-                m_gravityVelocity.y += -9.81f * Time.deltaTime;
-                m_transform.position += m_gravityVelocity * Time.deltaTime;
+                if (Physics.Raycast(downOrigin, Vector3.down, out hit, 0.2f, LayerMask.GetMask("Ground")))
+                {
+                    // 중력 리셋
+                    m_gravityVelocity.y = 0;
+                }
+                else
+                {
+                    // 중력 적용
+                    m_gravityVelocity.y += -9.81f * Time.deltaTime;
+                    m_transform.position += m_gravityVelocity * Time.deltaTime;
+                }
             }
-
-#if UNITY_EDITOR
-            Debug.DrawRay(m_transform.position, Vector3.down * 0.2f, Color.yellow);
-#endif
         }
 
         protected bool Input_Weapon()
