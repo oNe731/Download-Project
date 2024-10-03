@@ -558,6 +558,9 @@ namespace VisualNovel
 
         IEnumerator Type_Text(int index, TMP_Text currentText, bool nextUpdate)
         {
+            // 플레이어 이름이 사용될 시 입력 받은 이름으로 변경
+            m_dialogs[index].dialogText = m_dialogs[index].dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
+
             m_isTyping = true;
             m_cancelTyping = false;
 
