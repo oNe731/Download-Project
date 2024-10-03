@@ -34,6 +34,8 @@ namespace VisualNovel
             m_standingImg = new Image[m_standingObj.Length];
             for (int i = 0; i < m_standingObj.Length; i++)
                 m_standingImg[i] = m_standingObj[i].GetComponent<Image>();
+
+            m_typeSpeed = 0.045f;
         }
 
         private void Update()
