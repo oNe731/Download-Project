@@ -18,22 +18,21 @@ namespace VisualNovel
 
         private HallwayYandere m_yandere;
         private HallwayPlayer m_player;
-        private Transform m_yandereTr;
-        private Transform m_playerTr;
 
         private int m_CdMaxCount = 5;
         private int m_CdCurrentCount = 0;
         private int m_LeverMaxCount = 2;
-        GameObject m_itemText = null;
-        Coroutine m_ItemTextCoroutine = null;
+        private GameObject m_itemText = null;
+        private Coroutine m_ItemTextCoroutine = null;
         //private float m_CdMinDistance = 20.0f;
         //private float m_CdMaxDistance = 200.0f;
+        private List<GameObject> m_cds = new List<GameObject>();
+        private List<GameObject> m_levers = new List<GameObject>();
 
         private GameObject m_stage;
         private TMP_Text m_cdTxt;
 
         public HallwayPlayer Player { get => m_player; }
-        public Transform PlayerTr { get => m_playerTr; }
         public List<HallwayLight> Light
         {
             get => m_Light;
@@ -56,48 +55,72 @@ namespace VisualNovel
 
         public override void Enter_Level()
         {
-            m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
-            m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
-            m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
-            m_playerTr = m_stage.transform.GetChild(2).GetChild(2).GetComponent<Transform>();
+            if(GameManager.Ins.Novel.LevelController.Prelevel != (int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME)
+            {
+                m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
+                m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
+                m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
 
-            // 얀데레 생성
-            m_yandereObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Character/Yandere");
-            m_yandere = m_yandereObj.GetComponent<HallwayYandere>();
-            m_yandereTr = m_yandereObj.GetComponent<Transform>();
-            m_yandereTr.position = new Vector3(0f, 0f, -0.7f);
-            m_yandereTr.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+                // 플레이어 바디 생성
+                m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
+                m_playerBodyObj.transform.position = new Vector3(0f, 0f, -1.673f);
+                m_playerBodyObj.transform.localScale = new Vector3(1.1273f, 1.1273f, 1.1273f);
 
-            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
-            camera.Change_Position(new Vector3(0f, 1.33f, -1.73f));
-            camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
+                // 얀데레 생성
+                m_yandereObj = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Character/Yandere");
+                m_yandereObj.transform.position = new Vector3(0f, 0f, -0.7f);
+                m_yandereObj.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+                m_yandere = m_yandereObj.GetComponent<HallwayYandere>();
 
-            // 플레이어 바디 생성
-            m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
-            m_playerBodyObj.transform.position   = new Vector3(0f, 0f, -1.673f);
-            m_playerBodyObj.transform.localScale = new Vector3(1.1273f, 1.1273f, 1.1273f);
+                // 컷씬 카메라 설정
+                GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+                GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+                CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
+                camera.Change_Position(new Vector3(0f, 1.33f, -1.73f));
+                camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
 
-            // 지하실 BGM
-            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
+                // 지하실 BGM
+                GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
 
-            // 지하실 다이얼로그 시작 (페이드 인)
-            Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
-            dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
-            dialog.Close_Background();
+                // 지하실 다이얼로그 시작 (페이드 인)
+                Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
+                dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
+                dialog.Close_Background();
+            }
+            else
+            {
+                GameManager.Ins.Set_Pause(false);
+                Play_Level();
+            }
         }
 
-        public override void Play_Level()
+        public override void Play_Level() // 다이얼로그 끝났을 때 호출
         {
-            GameManager.Ins.Novel.Dialog.SetActive(false);
+            // 초기화 ------------------------------------------------------------------------------------
+            m_player.transform.position = new Vector3(0f, 0f, 0f);
+            m_player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            Camera.main.fieldOfView = 60f;
 
-            GameManager.Ins.Resource.Destroy(m_playerBodyObj);
+            m_stage.transform.GetChild(0).gameObject.SetActive(false); // 미니맵 카메라
+            m_stage.transform.GetChild(1).GetChild(0).gameObject.SetActive(false); // 미니맵 UI
+            GameObject CD = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Object/CD");
+            CD.transform.position = new Vector3(0.11f, 0f, 18.8f);
+
+            m_CdCurrentCount = 0;
+            m_cdTxt.text = m_CdCurrentCount.ToString();
+
+            if (m_itemText != null)
+                m_itemText.SetActive(false);
+            // -------------------------------------------------------------------------------------------
+            GameManager.Ins.Novel.Dialog.SetActive(false);
+            if(m_playerBodyObj != null)
+                GameManager.Ins.Resource.Destroy(m_playerBodyObj);
             m_yandereObj.SetActive(false);
 
             Create_CD();
             Create_Lever(m_LeverMaxCount);
 
+            // 카메라 설정
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
             camera.Set_FollowInfo(m_player.transform, m_player.transform, true, true, new Vector3(0.0f, 1.3f, 0.0f), 80.0f, 100.0f, new Vector2(-20f, 20f), true, true, true);
@@ -170,8 +193,8 @@ namespace VisualNovel
             CameraCutscene camera = null;
             GameObject redPanel = null;
 
-            float time = 0f;
-            bool fadeOut = false;
+            //float time = 0f;
+            //bool fadeOut = false;
 
             // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작 (재도전 UI 출력)
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
@@ -183,26 +206,29 @@ namespace VisualNovel
             handObject.transform.localPosition = new Vector3(0f, -0.01f, 9.05f);
             handAnimator = handObject.transform.GetChild(0).GetComponent<Animator>();
 
-            while (fadeOut == false)
+            while (true)//fadeOut == false)
             {
                 if(GameManager.Ins.IsGame == false)
                     yield return null;
 
-                if (redPanel == null)
-                {
+                //if (redPanel == null)
+                //{
                     if (camera != null && Camera.main.fieldOfView <= 25f && handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !handAnimator.IsInTransition(0))
-                        redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Red", GameObject.Find("Canvas").transform);
-                }
-                else
-                {
-                    time += Time.deltaTime;
-                    if (fadeOut == false && time > 1f)
                     {
-                        fadeOut = true;
-                        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
+                        redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Fail", GameObject.Find("Canvas").transform);
+                        redPanel.GetComponent<PanelFail>().Start_PanelFail(handObject);
+                        break;
                     }
-                }
+                //}
+                //else
+                //{
+                    //time += Time.deltaTime;
+                    //if (fadeOut == false && time > 1f)
+                    //{
+                    //    fadeOut = true;
+                    //    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
+                    //}
+                //}
                 yield return null;
             }
 
@@ -221,7 +247,9 @@ namespace VisualNovel
             camera.Change_Rotation(new Vector3(0f, -180f, 25f));
 
             // 얀데레 등장 애니메이션으로 전환
+            m_yandereObj.transform.GetChild(0).gameObject.SetActive(true); // 얀데레 메시 활성화
             m_yandereObj.SetActive(true);
+
             m_yandereObj.transform.GetChild(2).GetComponent<Light>().color = Color.red;
 
             m_yandereObj.transform.position = new Vector3(0f, 0f, 2.8f);
@@ -239,6 +267,11 @@ namespace VisualNovel
 
         private void Create_CD()
         {
+            // 초기화
+            for(int i = 0; i < m_cds.Count; ++i)
+                GameManager.Ins.Resource.Destroy(m_cds[i]);
+            m_cds.Clear();
+
             //List<Vector3> beforePosition = new List<Vector3>();
             //beforePosition.Add(new Vector3(0f, 0f, 0f));
 
@@ -263,11 +296,17 @@ namespace VisualNovel
                 GameObject CD = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Object/CD");
                 CD.GetComponent<HallwayCD>().PositionIndex = index;
                 CD.transform.position = NewPosition;
+                m_cds.Add(CD);
             }
         }
 
         private void Create_Lever(int count, int beforIndex = -1)
         {
+            // 초기화
+            for (int i = 0; i < m_levers.Count; ++i)
+                GameManager.Ins.Resource.Destroy(m_levers[i]);
+            m_levers.Clear();
+
             for (int i = 0; i < count; ++i)
             {
                 int index = -1;
@@ -286,6 +325,7 @@ namespace VisualNovel
                 GameObject level = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Object/Lever");
                 level.GetComponent<HallwayLever>().PositionIndex = index;
                 level.transform.position = NewPosition;
+                m_levers.Add(level);
             }
         }
 
@@ -322,7 +362,7 @@ namespace VisualNovel
                     case 1:
                         // 속도 감소 및 컷씬 재생
                         m_player.MoveSpeed = 200f;
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Appear_Monster(), 1f, false);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Appear_Monster(), 1f, false);
                         break;
 
                     case 2:

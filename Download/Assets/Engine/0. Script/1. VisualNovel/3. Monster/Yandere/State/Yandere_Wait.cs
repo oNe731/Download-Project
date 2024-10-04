@@ -19,6 +19,8 @@ namespace VisualNovel
 
         public override void Enter_State()
         {
+            m_switch = false;
+
             m_animator.SetBool("IsRun", true);
             m_agent.speed = 10f;
 

@@ -31,9 +31,9 @@ public class LevelController
 
         m_levels[(int)m_curlevel].LateUpdate_Level();
     }
-    public void Change_Level(int levelIndex)
+    public void Change_Level(int levelIndex, bool sameLevelUse = false)
     {
-        if (levelIndex == -1 || m_curlevel == levelIndex)
+        if (levelIndex == -1 || m_curlevel == levelIndex && sameLevelUse == false)
             return;
 
         if (m_curlevel != -1)
