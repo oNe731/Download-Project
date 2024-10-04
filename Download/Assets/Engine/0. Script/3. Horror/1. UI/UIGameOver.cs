@@ -11,7 +11,7 @@ public class UIGameOver : MonoBehaviour
 
     private Coroutine m_redCoroutine = null;
     private Coroutine m_blackCoroutine = null;
-    private Coroutine m_retryCoroutine = null;
+    //private Coroutine m_retryCoroutine = null;
 
     public void Start_GameOver()
     {
@@ -71,10 +71,11 @@ public class UIGameOver : MonoBehaviour
 
         m_blackImage.color = targetColor;
         m_Details.SetActive(true);
+        GameManager.Ins.Camera.Set_CursorLock(false);
 
-        if (m_retryCoroutine != null)
-            StopCoroutine(m_retryCoroutine);
-        m_retryCoroutine = StartCoroutine(RetryCoroutine(1f));
+        //if (m_retryCoroutine != null)
+        //    StopCoroutine(m_retryCoroutine);
+        //m_retryCoroutine = StartCoroutine(RetryCoroutine(1f));
         yield break;
     }
 
@@ -91,9 +92,21 @@ public class UIGameOver : MonoBehaviour
         yield break;
     }
 
+    public void Yes_Button()
+    {
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Restart_Game(), 0.5f, false);
+    }
+
     private void Restart_Game()
     {
         Destroy(gameObject);
         GameManager.Ins.Horror.Restart_Game();
+    }
+
+    public void No_Button()
+    {
+        GameManager.Ins.UI.EventUpdate = true;
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
     }
 }
