@@ -79,9 +79,6 @@ namespace VisualNovel
                 camera.Change_Position(new Vector3(0f, 1.33f, -1.73f));
                 camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
 
-                // 지하실 BGM
-                GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
-
                 // 지하실 다이얼로그 시작 (페이드 인)
                 Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
                 dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
@@ -92,6 +89,9 @@ namespace VisualNovel
                 GameManager.Ins.Set_Pause(false);
                 Play_Level();
             }
+
+            // 지하실 BGM
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
         }
 
         public override void Play_Level() // 다이얼로그 끝났을 때 호출
