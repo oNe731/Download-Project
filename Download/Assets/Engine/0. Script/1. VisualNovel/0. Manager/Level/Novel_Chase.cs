@@ -24,8 +24,6 @@ namespace VisualNovel
         private int m_LeverMaxCount = 2;
         private GameObject m_itemText = null;
         private Coroutine m_ItemTextCoroutine = null;
-        //private float m_CdMinDistance = 20.0f;
-        //private float m_CdMaxDistance = 200.0f;
         private List<GameObject> m_cds = new List<GameObject>();
         private List<GameObject> m_levers = new List<GameObject>();
 
@@ -50,7 +48,8 @@ namespace VisualNovel
 
             // 랜덤 포지션 불러오기
             m_positionData = JsonUtility.FromJson<PositionData>(GameManager.Ins.Resource.Load<TextAsset>("4. Data/1. VisualNovel/Position/ItemPositionData").text);
-            for(int i = 0; i < m_positionData.positions.Count; ++i) { m_positionUse.Add(false); }
+            for(int i = 0; i < m_positionData.positions.Count; ++i) 
+                m_positionUse.Add(false);
         }
 
         public override void Enter_Level()
@@ -58,8 +57,8 @@ namespace VisualNovel
             if(GameManager.Ins.Novel.LevelController.Prelevel != (int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME)
             {
                 m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
-                m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
                 m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
+                m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
 
                 // 플레이어 바디 생성
                 m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
@@ -79,7 +78,7 @@ namespace VisualNovel
                 camera.Change_Position(new Vector3(0f, 1.33f, -1.73f));
                 camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
 
-                // 지하실 다이얼로그 시작 (페이드 인)
+                // 지하실 다이얼로그 시작
                 Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
                 dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
                 dialog.Close_Background();
@@ -94,29 +93,31 @@ namespace VisualNovel
             GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_CellarBGM", true, 1f);
         }
 
-        public override void Play_Level() // 다이얼로그 끝났을 때 호출
+        public override void Play_Level() // 다이얼로그 끝났을 때 또는 다시하기할 때 호출
         {
-            // 초기화 ------------------------------------------------------------------------------------
+            // 초기화
             m_player.transform.position = new Vector3(0f, 0f, 0f);
             m_player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             Camera.main.fieldOfView = 60f;
 
-            m_stage.transform.GetChild(0).gameObject.SetActive(false); // 미니맵 카메라
+            m_stage.transform.GetChild(0).gameObject.SetActive(false);             // 미니맵 카메라
             m_stage.transform.GetChild(1).GetChild(0).gameObject.SetActive(false); // 미니맵 UI
             GameObject CD = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Object/CD");
             CD.transform.position = new Vector3(0.11f, 0f, 18.8f);
 
             m_CdCurrentCount = 0;
             m_cdTxt.text = m_CdCurrentCount.ToString();
-
             if (m_itemText != null)
                 m_itemText.SetActive(false);
-            // -------------------------------------------------------------------------------------------
+            //
+
             GameManager.Ins.Novel.Dialog.SetActive(false);
             if(m_playerBodyObj != null)
                 GameManager.Ins.Resource.Destroy(m_playerBodyObj);
             m_yandereObj.SetActive(false);
 
+            for (int i = 0; i < m_positionData.positions.Count; ++i)
+                m_positionUse[i] = false;
             Create_CD();
             Create_Lever(m_LeverMaxCount);
 
