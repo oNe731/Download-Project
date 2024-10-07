@@ -102,42 +102,42 @@ namespace Horror
 
         protected void Update_Gravity()
         {
-            Vector3 slopeOrigin = m_transform.position + (m_transform.forward * 0.2f);
-            Vector3 downOrigin = m_transform.position;
-            downOrigin.y += 0.2f;
+//            Vector3 slopeOrigin = m_transform.position + (m_transform.forward * 0.2f);
+//            Vector3 downOrigin = m_transform.position;
+//            downOrigin.y += 0.2f;
 
-#if UNITY_EDITOR
-            Debug.DrawRay(slopeOrigin, Vector3.down * 0.5f, Color.yellow);
-            Debug.DrawRay(downOrigin, Vector3.down * 0.2f, Color.red);
-#endif
+//#if UNITY_EDITOR
+//            Debug.DrawRay(slopeOrigin, Vector3.down * 0.5f, Color.yellow);
+//            Debug.DrawRay(downOrigin, Vector3.down * 0.2f, Color.red);
+//#endif
 
-            RaycastHit hit;
-            if (Physics.Raycast(slopeOrigin, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Ground")))
-            {
-                if (m_gravityUpdate == false)
-                    return;
+//            RaycastHit hit;
+//            if (Physics.Raycast(slopeOrigin, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Ground")))
+//            {
+//                if (m_gravityUpdate == false)
+//                    return;
 
-                Vector3 slopeDirection = Vector3.Cross(hit.normal, Vector3.Cross(Vector3.up, hit.normal));
-                Vector3 moveDirection = slopeDirection.normalized * (m_player.MoveSpeed * 0.01f) * Time.deltaTime;
-                m_transform.position += new Vector3(0f, moveDirection.y, 0f);
+//                Vector3 slopeDirection = Vector3.Cross(hit.normal, Vector3.Cross(Vector3.up, hit.normal));
+//                Vector3 moveDirection = slopeDirection.normalized * (m_player.MoveSpeed * 0.01f) * Time.deltaTime;
+//                m_transform.position += new Vector3(0f, moveDirection.y, 0f);
 
-                // 중력 리셋
-                m_gravityVelocity.y = 0;
-            }
-            else
-            {
-                if (Physics.Raycast(downOrigin, Vector3.down, out hit, 0.2f, LayerMask.GetMask("Ground")))
-                {
-                    // 중력 리셋
-                    m_gravityVelocity.y = 0;
-                }
-                else
-                {
-                    // 중력 적용
-                    m_gravityVelocity.y += -9.81f * Time.deltaTime;
-                    m_transform.position += m_gravityVelocity * Time.deltaTime;
-                }
-            }
+//                // 중력 리셋
+//                m_gravityVelocity.y = 0;
+//            }
+//            else
+//            {
+//                if (Physics.Raycast(downOrigin, Vector3.down, out hit, 0.2f, LayerMask.GetMask("Ground")))
+//                {
+//                    // 중력 리셋
+//                    m_gravityVelocity.y = 0;
+//                }
+//                else
+//                {
+//                    // 중력 적용
+//                    m_gravityVelocity.y += -9.81f * Time.deltaTime;
+//                    m_transform.position += m_gravityVelocity * Time.deltaTime;
+//                }
+//            }
         }
 
         protected bool Input_Weapon()

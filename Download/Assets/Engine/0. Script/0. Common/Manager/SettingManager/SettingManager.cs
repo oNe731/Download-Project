@@ -44,8 +44,8 @@ public class SettingManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-            Active_Panel(!m_isOpen);
+        //if(Input.GetKeyDown(KeyCode.Escape))
+        //    Active_Panel(!m_isOpen);
     }
 
     public void Active_Panel(bool active)
