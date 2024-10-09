@@ -16,12 +16,18 @@ namespace VisualNovel
         private float m_waitTime = 2f;
         private float m_time;
 
+        private AudioSource m_audioSource;
+
         public int PositionIndex
         {
             get => m_positionIndex;
             set => m_positionIndex = value;
         }
 
+        private void Start()
+        {
+            m_audioSource = GetComponent<AudioSource>();
+        }
 
         private void Update()
         {
@@ -51,6 +57,7 @@ namespace VisualNovel
             if (other.gameObject.CompareTag("Player"))
             {
                 m_rotation = true;
+                m_audioSource.Play();
                 // 파티클 생성
 
             }

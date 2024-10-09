@@ -9,12 +9,14 @@ namespace VisualNovel
     {
         private Animator m_animator;
         private NavMeshAgent m_agent;
+        private AudioSource m_audioSource;
         private bool m_switch = false;
 
         public Yandere_Wait(StateMachine<HallwayYandere> stateMachine) : base(stateMachine)
         {
-            m_animator = m_stateMachine.Owner.GetComponentInChildren<Animator>();
-            m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
+            m_animator    = m_stateMachine.Owner.GetComponentInChildren<Animator>();
+            m_agent       = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
+            m_audioSource = m_stateMachine.Owner.GetComponent<AudioSource>();
         }
 
         public override void Enter_State()
@@ -49,7 +51,14 @@ namespace VisualNovel
 
         private void Continue_Play() // 컷씬 재생 후 게임 재진행
         {
+            // BGM 전환
             GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ChaseBGM", true, 1f);
+
+            // 얀데레 웃음소리
+            GameManager.Ins.Sound.Play_ManagerAudioSource("VisualNovel_YandereSmile", false, 1f);
+
+            m_audioSource.enabled = true;
+            m_audioSource.Play();
 
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
             Novel_Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>();

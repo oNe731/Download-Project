@@ -10,13 +10,17 @@ namespace VisualNovel
         [SerializeField] private float m_lerpSpeed = 5.0f;
 
         private bool m_isLock = true;
-        private Rigidbody m_rigidbody;
+        private Rigidbody   m_rigidbody;
+        private AudioSource m_audioSource;
+
+        private float m_soundTime = 0f;
 
         public float MoveSpeed { set => m_moveSpeed = value; }
 
         private void Awake()
         {
-            m_rigidbody = GetComponent<Rigidbody>();
+            m_rigidbody   = GetComponent<Rigidbody>();
+            m_audioSource = GetComponent<AudioSource>();
         }
 
         public void Update()
@@ -51,6 +55,7 @@ namespace VisualNovel
             }
             else
             {
+                Play_WalkSound();
                 m_rigidbody.isKinematic = false;
                 m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, Velocity, Time.deltaTime * m_lerpSpeed);
             }
@@ -85,6 +90,18 @@ namespace VisualNovel
         public void Stop_Player(bool stop)
         {
             Set_Lock(stop);
+        }
+
+        protected void Play_WalkSound()
+        {
+            m_soundTime += Time.deltaTime;
+            if (m_soundTime >= 0.45f)
+            {
+                m_soundTime = 0f;
+
+                int Index = Random.Range(0, 5);
+                GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "VisualNovel_Player_Steps_" + Index.ToString(), false, 1f);
+            }
         }
     }
 }

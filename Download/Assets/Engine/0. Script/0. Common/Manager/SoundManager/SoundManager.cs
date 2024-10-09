@@ -36,9 +36,10 @@ public class SoundManager : MonoBehaviour
     {
         #region 미연시 게임 사운드
         #region BGM
-        m_bgm.Add("VisualNovel_ShootBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Shoot"));
-        m_bgm.Add("VisualNovel_CellarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
-        m_bgm.Add("VisualNovel_ChaseBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Chase"));
+        m_bgm.Add("VisualNovel_ShootBGM",         GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Shoot"));
+        m_bgm.Add("VisualNovel_CellarBGM",        GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
+        m_bgm.Add("VisualNovel_YandereAppearBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/YandereAppear"));
+        m_bgm.Add("VisualNovel_ChaseBGM",         GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Chase"));
         #endregion
 
         #region Effect
@@ -47,6 +48,15 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("VisualNovel_AttackSuccess", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/AttackSuccess"));
         m_effect.Add("VisualNovel_TimeOver",      GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/TimeOver"));
         m_effect.Add("VisualNovel_DollsExploded", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/DollsExploded"));
+
+        m_effect.Add("VisualNovel_YandereSmile", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/Yandere/Effect/YandereSmile"));
+
+        // 플레이어
+        m_effect.Add("VisualNovel_Player_Steps_0", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps1"));
+        m_effect.Add("VisualNovel_Player_Steps_1", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps2"));
+        m_effect.Add("VisualNovel_Player_Steps_2", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps3"));
+        m_effect.Add("VisualNovel_Player_Steps_3", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps4"));
+        m_effect.Add("VisualNovel_Player_Steps_4", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps5"));
         #endregion
         #endregion
 

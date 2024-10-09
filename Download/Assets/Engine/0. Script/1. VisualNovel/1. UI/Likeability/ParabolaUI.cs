@@ -43,10 +43,13 @@ public class ParabolaUI : MonoBehaviour
     private Vector3       m_startPosition;
     private Coroutine     m_shakeCoroutine = null;
 
+    private AudioSource m_audioSource;
+
     public bool Down { set => m_down = value; }
 
     public void Start()
     {
+        m_audioSource   = GetComponent<AudioSource>();
         m_rectTransform = GetComponent<RectTransform>();
         m_startPosition = m_rectTransform.anchoredPosition;
         m_startRotation = m_rectTransform.rotation;
@@ -134,6 +137,8 @@ public class ParabolaUI : MonoBehaviour
             isAction?.Invoke();
 
         m_down = true;
+        if (m_audioSource != null)
+            m_audioSource.Play();
 
         yield break;
     }

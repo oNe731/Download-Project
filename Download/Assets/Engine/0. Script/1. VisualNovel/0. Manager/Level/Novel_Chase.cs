@@ -216,6 +216,7 @@ namespace VisualNovel
                 //{
                     if (camera != null && Camera.main.fieldOfView <= 25f && handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !handAnimator.IsInTransition(0))
                     {
+                        m_yandere.GetComponent<AudioSource>().enabled = false;
                         redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Fail", GameObject.Find("Canvas").transform);
                         redPanel.GetComponent<PanelFail>().Start_PanelFail(handObject);
                         break;
@@ -238,6 +239,9 @@ namespace VisualNovel
 
         public void Appear_Monster()
         {
+            // 등장 컷씬 사운드
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_YandereAppearBGM", true, 1f);
+
             // 캐릭터 락
             m_player.Set_Lock(true);
 

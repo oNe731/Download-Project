@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace VisualNovel
@@ -17,8 +18,13 @@ namespace VisualNovel
 
         private Quaternion m_initialRotation;
 
+        private bool m_trigger = false;
+        private AudioSource m_audioSource;
+
         private void Start()
         {
+            m_audioSource = GetComponent<AudioSource>();
+
             m_startY = 0.5f + m_height;
             m_initialRotation = transform.rotation;
         }
@@ -36,11 +42,27 @@ namespace VisualNovel
 
         private void OnTriggerEnter(Collider other)
         {
+            if (m_trigger == true)
+                return;
+
             if (other.gameObject.CompareTag("Player"))
             {
+                m_trigger = true;
+
                 GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD(m_positionIndex);
-                Destroy(gameObject);
+                StartCoroutine(Wait_PlaySound());
             }
+        }
+
+        IEnumerator Wait_PlaySound()
+        {
+            Destroy(transform.GetChild(0).gameObject); // 메시 삭제
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
+            yield return new WaitForSeconds(audioSource.clip.length);
+
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmos()
