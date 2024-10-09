@@ -18,4 +18,9 @@ public class Window_Button : MonoBehaviour
     {
         GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_HORROR), 0f, false);
     }
+
+    public void Button_Exit()
+    {
+        GameManager.Ins.End_Game();
+    }
 }
