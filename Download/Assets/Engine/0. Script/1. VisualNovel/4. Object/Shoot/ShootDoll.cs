@@ -43,6 +43,7 @@ namespace VisualNovel
         private int m_blinkCount = 2;
         private SpriteRenderer m_spriteRenderer;
         private CapsuleCollider m_collider;
+        private AudioSource m_audioSource;
         public CapsuleCollider Collider
         {
             get { return m_collider; }
@@ -54,13 +55,17 @@ namespace VisualNovel
         private float m_clearTime = 0f;
         private bool m_over = false;
 
-        Color m_startColor;
-        Coroutine m_blickCoroutine = null;
+        private Color m_startColor;
+        private Coroutine m_blickCoroutine = null;
+
+        private bool m_explode = false;
+        public bool Explode => m_explode;
 
         private void Start()
         {
             m_spriteRenderer = GetComponent<SpriteRenderer>();
             m_collider = GetComponent<CapsuleCollider>();
+            m_audioSource = GetComponent<AudioSource>();
 
             m_startColor = m_spriteRenderer.color;
         }
@@ -119,6 +124,8 @@ namespace VisualNovel
         {
             if (other.gameObject.name == "Ball(Clone)")
             {
+                GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "VisualNovel_AttackSuccess", false, 1f);
+
                 m_hp--;
                 if (m_hp <= 0) // 게임 종료
                 {
@@ -181,7 +188,22 @@ namespace VisualNovel
 
         public void Explode_Doll()
         {
+            m_explode = true;
+
             Create_Particle();
+            StartCoroutine(Wait_PlaySound());
+        }
+
+        IEnumerator Wait_PlaySound()
+        {
+            GetComponent<SpriteRenderer>().enabled = false; // 이미지 비활성화
+            for (int i = 0; i < transform.childCount; i++)  // 자식 삭제
+                Destroy(transform.GetChild(i).gameObject);
+
+            string clipName = "VisualNovel_DollsExploded";
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, clipName, false, 1f);
+            yield return new WaitForSeconds(GameManager.Ins.Sound.Get_EffectAudioClip(clipName).length);
+
             Destroy(gameObject);
         }
 

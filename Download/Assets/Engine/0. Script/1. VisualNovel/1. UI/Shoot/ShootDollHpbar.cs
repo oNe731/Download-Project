@@ -24,7 +24,7 @@ namespace VisualNovel
 
         private void LateUpdate()
         {
-            if (m_Owner == null)
+            if (m_Owner == null || m_ownerDoll == null || m_ownerDoll.Explode == true)
             {
                 Destroy(gameObject);
                 return;

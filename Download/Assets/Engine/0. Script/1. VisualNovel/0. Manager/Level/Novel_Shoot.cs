@@ -102,6 +102,8 @@ namespace VisualNovel
             m_time -= Time.deltaTime;
             if (m_time <= 0.5f)
             {
+                GameManager.Ins.Sound.Play_ManagerAudioSource("VisualNovel_TimeOver", false, 1f);
+
                 int Count = 0;
                 m_countTxt.text = Count.ToString();
 
@@ -109,7 +111,6 @@ namespace VisualNovel
                 m_container.UseBelt = false; // 1) 인형 일시 정지
 
                 m_dollType = DOLLTYPE.DT_FAIL;
-
             }
             else
             {

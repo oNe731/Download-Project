@@ -35,9 +35,19 @@ public class SoundManager : MonoBehaviour
     private void Load_Resource()
     {
         #region 미연시 게임 사운드
+        #region BGM
         m_bgm.Add("VisualNovel_ShootBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Shoot"));
         m_bgm.Add("VisualNovel_CellarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
         m_bgm.Add("VisualNovel_ChaseBGM",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Chase"));
+        #endregion
+
+        #region Effect
+        m_effect.Add("VisualNovel_Charging",      GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/Charging"));
+        m_effect.Add("VisualNovel_Shoot",         GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/Shoot"));
+        m_effect.Add("VisualNovel_AttackSuccess", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/AttackSuccess"));
+        m_effect.Add("VisualNovel_TimeOver",      GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/TimeOver"));
+        m_effect.Add("VisualNovel_DollsExploded", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ShotGame/DollsExploded"));
+        #endregion
         #endregion
 
         #region 서부 게임 사운드
@@ -59,7 +69,7 @@ public class SoundManager : MonoBehaviour
         #endregion
 
         #region 공포 게임 사운드
-
+        #region Effect
         #region 플레이어
         m_effect.Add("Horror_Player_Walk_0", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_0"));
         m_effect.Add("Horror_Player_Walk_1", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Player/Walk/Walk_1"));
@@ -114,7 +124,7 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("FirstHallway", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Etc/FirstHallway/First_Hallway_1"));
         m_effect.Add("DummyHallway", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/3. Horror/Effect/Etc/DummyHallway/Delete_Varigite_Hallway"));
         #endregion
-
+        #endregion
         #endregion
     }
 
@@ -143,6 +153,11 @@ public class SoundManager : MonoBehaviour
         audioSource.pitch  = speed; // 기본1f
         audioSource.volume = volume;
         audioSource.Play();
+    }
+
+    public AudioClip Get_EffectAudioClip(string name)
+    {
+        return m_effect[name];
     }
 
     public void Stop_AudioSource(AudioSource audioSource)

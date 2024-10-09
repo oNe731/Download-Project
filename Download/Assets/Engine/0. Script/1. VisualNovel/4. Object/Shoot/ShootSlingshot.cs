@@ -25,9 +25,12 @@ namespace VisualNovel
         [SerializeField] private float m_shakeAmount = 10.0f; // 세기
 
         private Vector3 m_StartPosition;
+        private AudioSource m_audioSource;
         private SpriteRenderer m_spriteRenderer;
         private Slider m_barSlider;
         private bool m_Up = true;
+
+        private bool m_playCharging = false;
 
         private bool m_use = true;
         public bool Use
@@ -37,6 +40,7 @@ namespace VisualNovel
 
         void Start()
         {
+            m_audioSource = GetComponent<AudioSource>();
             m_spriteRenderer = GetComponent<SpriteRenderer>();
             m_barSlider = m_gauge.GetComponent<Slider>();
 
@@ -63,6 +67,14 @@ namespace VisualNovel
 
             if (Input.GetMouseButtonUp(0))
             {
+                // 사운드
+                if(m_playCharging == true)
+                {
+                    m_playCharging = false;
+                    m_audioSource.Stop();
+                }
+                GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "VisualNovel_Shoot", false, 1f);
+
                 Vector3 NewPosition = Vector3.zero;
 
                 Vector3 mousePosition = Input.mousePosition;
@@ -104,6 +116,12 @@ namespace VisualNovel
             }
             else if (Input.GetMouseButton(0))
             {
+                if (m_playCharging == false)
+                {
+                    m_playCharging = true;
+                    GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "VisualNovel_Charging", false, 1f);
+                }
+
                 // 마우스의 현재 위치를 가져옴
                 Vector3 mousePosition = Input.mousePosition;
                 if (mousePosition.y <= 255f)
@@ -168,6 +186,12 @@ namespace VisualNovel
             m_spriteRenderer.sprite = m_Image[0];
             m_curSpeed = m_minSpeed;
             m_barSlider.value = m_curSpeed;
+
+            if (m_playCharging == true)
+            {
+                m_playCharging = false;
+                m_audioSource.Stop();
+            }
         }
 
         IEnumerator Shake(float ShakeAmount, float ShakeTime)
