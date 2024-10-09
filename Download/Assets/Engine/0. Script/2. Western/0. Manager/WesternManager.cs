@@ -89,12 +89,13 @@ public class WesternManager : StageManager
         Cursor.lockState = CursorLockMode.None;
         GameManager.Ins.UI.EventUpdate = true;
         GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
+
+        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
     }
 
     protected override void In_Game()
     {
         base.In_Game();
-        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
     }
 
     public override void Update_Stage()

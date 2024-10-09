@@ -73,7 +73,12 @@ namespace Western
 
                         GameManager.Ins.Western.IsShoot = false;
                         if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
-                            Create_SpeechBubble(Person.PERSONTYPE.PT_CRIMINAL, m_groups.Get_Criminal().transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
+                        {
+                            GameObject criminal = m_groups.Get_Criminal();
+                            GameManager.Ins.Sound.Play_AudioSource(criminal.GetComponent<AudioSource>(), "Western_Criminal_Caught", false, 1f);
+
+                            Create_SpeechBubble(Person.PERSONTYPE.PT_CRIMINAL, criminal.transform.position, ref m_criminalText, Random.Range(0, m_criminalText.Count));
+                        }
                         else
                             Create_SpeechBubble(Person.PERSONTYPE.PT_CITIZEN, m_groups.Get_Criminal().transform.position, ref m_citizenText, Random.Range(0, m_citizenText.Count));
 

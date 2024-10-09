@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Western_MainPanel : MonoBehaviour
 {
-    public void Button_Play()
+    public void Button_Play(GameObject gameObject)
     {
-        GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western.Western_Main>().Button_Play();
+        if(GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western.Western_Main>().Button_Play() == true)
+        {
+            if (gameObject != null)
+                gameObject.GetComponent<AudioSource>().Play();
+        }
     }
 }

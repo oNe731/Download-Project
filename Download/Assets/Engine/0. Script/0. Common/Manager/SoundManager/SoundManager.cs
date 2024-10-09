@@ -41,15 +41,21 @@ public class SoundManager : MonoBehaviour
         #endregion
 
         #region 서부 게임 사운드
-        m_bgm.Add("Western_MainBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/메인화면 BGM"));
-        m_bgm.Add("Western_WantedBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/수배지 BGM"));
-        m_bgm.Add("Western_TutorialBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 BGM"));
-        m_bgm.Add("Western_TutorialAfterBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/튜토리얼 이후 BGM"));
-        m_bgm.Add("Western_PlayBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli"));
-        m_bgm.Add("Western_BarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira2"));
+        #region BGM
+        m_bgm.Add("Western_MainBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Main"));
+        m_bgm.Add("Western_WantedBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Wanted"));
+        m_bgm.Add("Western_Play1BGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Play1"));
+        m_bgm.Add("Western_BarBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/La Docerola - Quincas Moreira"));
+        m_bgm.Add("Western_Play2BGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/BGM/Silencios de Los Angeles - Cumbia Deli")); //
+        #endregion
 
-        m_effect.Add("Western_Gun_Attacked", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/에임 맞췄을 때"));
-        m_effect.Add("Western_Gun_Shoot", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/총소리"));
+        #region Effect
+        m_effect.Add("Western_Gun_Attacked",    GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/Gun/GunHit"));
+        m_effect.Add("Western_Gun_Shoot",       GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/Gun/GunShoot"));
+        m_effect.Add("Western_Panel_Rotation",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/GameObject/PanelRotation"));
+        m_effect.Add("Western_Criminal_Caught", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/GameObject/CriminalCaught"));
+        m_effect.Add("Western_Clear_Dialogue",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/Clear/ClearDialogue"));
+        #endregion
         #endregion
 
         #region 공포 게임 사운드

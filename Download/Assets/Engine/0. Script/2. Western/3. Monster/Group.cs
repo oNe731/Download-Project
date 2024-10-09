@@ -71,6 +71,14 @@ namespace Western
             for (int i = 0; i < m_person.Length; ++i)
                 m_person[i].SetActive(true);
 
+            // 사운드 재생
+            for (int i = 0; i < m_person.Length; ++i)
+            {
+                AudioSource audioSource = m_person[i].GetComponent<AudioSource>();
+                if(audioSource != null)
+                    GameManager.Ins.Sound.Play_AudioSource(audioSource, "Western_Panel_Rotation", false, 1f);
+            }
+
             bool  isEvent = false;
             float time    = 0f;
             while (m_grouptransform.rotation != m_wakeUpQuaternion)
@@ -101,6 +109,14 @@ namespace Western
 
         private IEnumerator LayDown(bool nextMove)
         {
+            // 사운드 재생
+            for (int i = 0; i < m_person.Length; ++i)
+            {
+                AudioSource audioSource = m_person[i].GetComponent<AudioSource>();
+                if (audioSource != null)
+                    GameManager.Ins.Sound.Play_AudioSource(audioSource, "Western_Panel_Rotation", false, 1f);
+            }
+
             while (m_grouptransform.rotation != m_layDownQuaternion)
             {
                 m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_layDownQuaternion, m_layDownRotationSpeed * Time.deltaTime);

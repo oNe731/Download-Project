@@ -61,7 +61,7 @@ namespace Western
             Proceed_Next();
 
             // BGM º¯°æ
-            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_PlayBGM", true, 1f);
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_Play2BGM", true, 1f);
         }
 
         public override void Update_Level()

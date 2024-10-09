@@ -75,7 +75,7 @@ namespace Western
             // 다이얼로그 시작
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
 
-            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_TutorialBGM", true, 1f);
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
         }
 
         public override void Play_Level() // 튜토리얼 진행 후 Ready Go UI 출력 후 해당 함수 호출
@@ -91,7 +91,7 @@ namespace Western
             Proceed_Next();
 
             // BGM 변경
-            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_TutorialAfterBGM", true, 1f);
+            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_Play1BGM", true, 1f);
         }
 
         public override void Update_Level()
@@ -150,6 +150,9 @@ namespace Western
                         {
                             if (m_targetUI.GetComponent<TargetUI>().Target.GetComponent<Person>().PersonType == Person.PERSONTYPE.PT_CRIMINAL) // 범인일 때
                             {
+                                GameObject criminal = m_groups.Get_Criminal();
+                                GameManager.Ins.Sound.Play_AudioSource(criminal.GetComponent<AudioSource>(), "Western_Criminal_Caught", false, 1f);
+
                                 GameManager.Ins.Western.IsShoot = false;
                                 GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
                                 m_stateType = STATETYPE.TYPE_DIALOGFINISH;

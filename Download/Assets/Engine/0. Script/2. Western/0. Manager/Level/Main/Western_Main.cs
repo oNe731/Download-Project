@@ -69,9 +69,17 @@ namespace Western
             GameManager.Ins.Western.MainPanel.SetActive(false);
         }
 
-        public void Button_Play()
+        public bool Button_Play()
         {
-            m_moveGun = true;
+            if (m_moveGun == false)
+            {
+                m_moveGun = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void Move_Gun()

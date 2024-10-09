@@ -11,6 +11,7 @@ namespace Western
 
         private float m_leveltime = 0f;
         private bool  m_shake   = false;
+        private bool  m_sound   = false;
         private bool  m_fadeOut = false;
 
         private Vector3 m_startScale  = new Vector3(30f, 30f, 30f);
@@ -75,10 +76,17 @@ namespace Western
                     {
                         m_shake = true;
                         GameObject.Find("Canvas").transform.GetChild(1).GetComponent<Panel>().Start_Shake(1000f, 0.2f);
+
+                        m_clearObj.GetComponent<AudioSource>().Play();
                     }
                     else
                     {
-                        if (m_fadeOut == false && m_leveltime >= 2f)
+                        if(m_sound == false && m_leveltime >= 1f)
+                        {
+                            m_sound = true;
+                            GameManager.Ins.Sound.Play_ManagerAudioSource("Western_Clear_Dialogue", false, 1f);
+                        }
+                        else if (m_fadeOut == false && m_leveltime >= 2f)
                         {
                             m_fadeOut = true;
                             m_leveltime = 0f;

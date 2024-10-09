@@ -97,7 +97,8 @@ namespace Western
                         if(m_order != ORDER.OD_FIRST)
                             GameManager.Ins.Western.IsShoot = true;
 
-                        Is_Destroy();
+                        Is_Destroy(true);
+                        //Debug.Log("제거 성공");
                     }
                 }
                 else // 펑
@@ -111,7 +112,8 @@ namespace Western
                     if(m_differentBomb != null)
                         Destroy(m_differentBomb);
 
-                    Is_Destroy();
+                    Is_Destroy(false);
+                    //Debug.Log("시간 오바");
                 }
             }
         }
@@ -206,7 +208,7 @@ namespace Western
             }
         }
 
-        private void Is_Destroy()
+        private void Is_Destroy(bool success)
         {
             if(m_uiKey != null)
                 Destroy(m_uiKey);
@@ -220,6 +222,20 @@ namespace Western
                 if (level.TargetUI != null)
                     Destroy(level.TargetUI);
             }
+
+            if(success == true)
+                Destroy(gameObject);
+            else
+                StartCoroutine(Wait_PlaySound());
+        }
+
+        IEnumerator Wait_PlaySound()
+        {
+            GetComponent<MeshRenderer>().enabled = false; // 메시 비활성화
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
+            yield return new WaitForSeconds(audioSource.clip.length);
 
             Destroy(gameObject);
         }
