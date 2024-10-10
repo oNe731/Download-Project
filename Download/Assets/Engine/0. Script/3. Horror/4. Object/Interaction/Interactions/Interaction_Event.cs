@@ -34,6 +34,20 @@ public class Interaction_Event : Interaction
 
                 CameraFollow camera = (CameraFollow)GameManager.Ins.Camera.Get_CurCamera();
                 camera.Start_Shake(2f, 2f, true);
+
+                Horror_1stage stage = GameManager.Ins.Horror.LevelController.Get_CurrentLevel<Horror_1stage>();
+                if(stage != null)
+                {
+                    GameObject gameObject = stage.Stage.transform.GetChild(0).GetChild(1).GetChild(2).GetChild(2).GetChild(0).gameObject;
+                    if(gameObject != null)
+                    {
+                        OperatingTable operatingTable = gameObject.GetComponent<OperatingTable>();
+                        if(operatingTable != null)
+                        {
+                            operatingTable.Start_Down();
+                        }
+                    }
+                }
                 break;
         }
 

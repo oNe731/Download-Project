@@ -11,7 +11,7 @@ public class Horror_2stage : Horror_Base
         base.Initialize_Level(levelController);
 
         m_levelIndex = (int)HorrorManager.LEVEL.LV_2STAGE;
-        m_playerSpeedAdd = 100;
+        m_playerSpeedAdd = 300;
     }
 
     public override bool Check_Clear(Interaction_Door interaction_Door, ref float[] activeTimes, ref string[] texts)

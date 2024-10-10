@@ -1,6 +1,7 @@
 using Horror;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,16 +35,17 @@ public class UIPopup : MonoBehaviour
         GameManager.Ins.Set_Pause(true); // 게임 일시정지
         if (m_type == TYPE.T_QUESTITEM) // 퀘스트 조합 아이템 (가져가기/ 두고가기)
         {
-            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, -200f);
-            transform.GetChild(0).GetChild(1).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(200f, -200f);
+            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, -213f);
+            transform.GetChild(0).GetChild(1).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(200f, -213f);
             transform.GetChild(0).GetChild(1).gameObject.SetActive(true); // 두고가기 버튼
         }
         else // 노트, 장비, 소모품 아이템, 단서 (가져가기)
         {
-            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -200f);
+            transform.GetChild(0).GetChild(0).gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -213f);
             transform.GetChild(0).GetChild(1).gameObject.SetActive(false); // 두고가기 버튼
         }
         transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = GameManager.Ins.Horror.NoteElementIcon[m_itemInfo.m_imageName + "_1"];
+        transform.GetChild(2).GetComponent<TMP_Text>().text = "<color=#F9FF08>'" + m_itemInfo.m_name + "'</color>" + "을(를) 발견했다.";
 
         gameObject.SetActive(true);
     }
