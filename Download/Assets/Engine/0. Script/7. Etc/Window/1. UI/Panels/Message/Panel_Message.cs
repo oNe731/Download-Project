@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Panel_Message : Panel_Popup
 {
-    // Start is called before the first frame update
+    [SerializeField] private TMP_Text[] m_playerName;
+
     void Start()
     {
-        
+        for(int i = 0; i < m_playerName.Length; ++i)
+            m_playerName[i].text = GameManager.Ins.PlayerName;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
