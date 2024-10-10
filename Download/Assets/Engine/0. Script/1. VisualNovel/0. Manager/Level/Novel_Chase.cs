@@ -109,6 +109,15 @@ namespace VisualNovel
             m_cdTxt.text = m_CdCurrentCount.ToString();
             if (m_itemText != null)
                 m_itemText.SetActive(false);
+
+            // 조명
+            for (int i = 0; i < m_Light.Count; ++i)
+            {
+                m_Light[i].Blink = false;
+                m_Light[i].gameObject.GetComponent<Light>().enabled = true;
+            }
+            // 문 앞 조명 비활성화
+            m_stage.transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Light>().enabled = false;
             //
 
             GameManager.Ins.Novel.Dialog.SetActive(false);
@@ -242,6 +251,11 @@ namespace VisualNovel
             // 등장 컷씬 사운드
             GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_YandereAppearBGM", true, 1f);
 
+            // 문 앞 조명 활성화
+            GameObject light = m_stage.transform.GetChild(2).GetChild(0).GetChild(1).gameObject;
+            light.GetComponent<Light>().enabled = true;
+            light.GetComponent<HallwayLight>().Blink = true;
+
             // 캐릭터 락
             m_player.Set_Lock(true);
 
@@ -252,14 +266,15 @@ namespace VisualNovel
             camera.Change_Rotation(new Vector3(0f, -180f, 25f));
 
             // 얀데레 등장 애니메이션으로 전환
+            m_yandereObj.transform.position = new Vector3(0f, 0f, 2.8f);
+            m_yandereObj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+            m_yandereObj.transform.GetChild(2).GetComponent<Light>().color = Color.red;
+
             m_yandereObj.transform.GetChild(0).gameObject.SetActive(true); // 얀데레 메시 활성화
             m_yandereObj.SetActive(true);
 
-            m_yandereObj.transform.GetChild(2).GetComponent<Light>().color = Color.red;
-
-            m_yandereObj.transform.position = new Vector3(0f, 0f, 2.8f);
-            m_yandereObj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             m_yandere.StateMachine.Change_State((int)HallwayYandere.YandereState.ST_APPEAR);
+            Debug.Log("얀데레 초기화");
 
             // 페이드 인
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
@@ -349,14 +364,10 @@ namespace VisualNovel
             }
             else
             {
-                // 조명 업데이트 Max 464
-                m_Light.Shuffle();
-                int OnCount = (int)(464 / (m_CdMaxCount - 1)) * m_CdCurrentCount;
-                for (int i = 0; i < OnCount; ++i)
-                    m_Light[i].Blink = true;
+                Update_Light();
 
                 // 대사 출력
-                if(m_itemText == null)
+                if (m_itemText == null)
                 {
                     m_itemText = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/UI_ItemText", m_stage.transform.GetChild(1));
                     m_itemText.SetActive(false);
@@ -419,6 +430,15 @@ namespace VisualNovel
 
             m_itemText.GetComponent<ItemText>().Start_ItemText(str);
             yield break;
+        }
+
+        private void Update_Light()
+        {
+            // 조명 업데이트 Max 464
+            m_Light.Shuffle();
+            int OnCount = (int)(464 / (m_CdMaxCount - 1)) * m_CdCurrentCount;
+            for (int i = 0; i < OnCount; ++i)
+                m_Light[i].Blink = true;
         }
 
         //private Vector3 Get_RandomPositionOnNavMesh(List<Vector3> beforePos)
