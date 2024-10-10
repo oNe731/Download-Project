@@ -18,6 +18,8 @@ namespace VisualNovel
             manager.Dialog.SetActive(true);
             manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog1_School")); // 앞 경로 및 뒤 확장자 삭제
 
+            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ScriptBGM", true, 1f);
+
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
         }
 

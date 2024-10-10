@@ -62,6 +62,7 @@ namespace VisualNovel
             camera.Change_Position(new Vector3(0f, 0f, -9f));
             camera.Change_Rotation(new Vector3(0f, 0f, 0f));
 
+            GameManager.Ins.Sound.Stop_AudioSourceBGM();
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
         }
 

@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
     private Dictionary<string, AudioClip> m_bgm = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioClip> m_effect = new Dictionary<string, AudioClip>();
 
-    private float m_bgmSound    = 0.5f;
+    private float m_bgmSound    = 0.2f;
     private float m_effectSound = 0.5f;
 
     public float BgmSound { get => m_bgmSound; set => m_bgmSound = value; }
@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour
     {
         #region 미연시 게임 사운드
         #region BGM
+        m_bgm.Add("VisualNovel_ScriptBGM",        GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Script"));
         m_bgm.Add("VisualNovel_ShootBGM",         GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Shoot"));
         m_bgm.Add("VisualNovel_CellarBGM",        GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
         m_bgm.Add("VisualNovel_YandereAppearBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/YandereAppear"));
@@ -152,6 +153,11 @@ public class SoundManager : MonoBehaviour
     public void Play_AudioSourceBGM(string name, bool loop, float speed)
     {
         Play_AudioSource(Camera.main.GetComponent<AudioSource>(), m_bgm[name], loop, speed, m_bgmSound);
+    }
+
+    public void Stop_AudioSourceBGM()
+    {
+        Camera.main.GetComponent<AudioSource>().Stop();
     }
 
     public void Play_AudioSource(AudioSource audioSource, AudioClip audioClip, bool loop, float speed, float volume)
