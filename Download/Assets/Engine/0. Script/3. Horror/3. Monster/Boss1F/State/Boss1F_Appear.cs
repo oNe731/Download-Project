@@ -24,17 +24,11 @@ public class Boss1F_Appear : Boss1F_Base
         if (Vector3.Distance(m_owner.transform.position, m_targetPosition) < 0.01f)
         {
             m_owner.transform.position = m_targetPosition;
-            Create_HpBar();
-            m_owner.StateMachine.Change_State((int)Boss1F.State.ST_IDLE);
+            m_owner.StateMachine.Change_State((int)Boss1F.State.ST_WAIT);
         }
     }
 
     public override void Exit_State()
     {
-    }
-
-    private void Create_HpBar()
-    {
-
     }
 }

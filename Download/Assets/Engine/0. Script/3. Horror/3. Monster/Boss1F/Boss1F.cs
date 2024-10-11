@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss1F : Monster
 {
-    public enum State { ST_APPEAR, ST_IDLE, ST_DIE, ST_END }
+    public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_SPHERE, ST_DIE, ST_END }
 
     public override void Damage_Monster(float damage)
     {
@@ -23,9 +23,14 @@ public class Boss1F : Monster
         m_stateMachine = new StateMachine<Monster>(gameObject);
 
         List<State<Monster>> states = new List<State<Monster>>();
-        states.Add(new Boss1F_Appear(m_stateMachine)); // 0
-        states.Add(new Boss1F_Idle(m_stateMachine));   // 1
-        states.Add(new Boss1F_Die(m_stateMachine));    // 2
+        states.Add(new Boss1F_Appear(m_stateMachine));   // 0
+        states.Add(new Boss1F_Wait(m_stateMachine));     // 1
+        states.Add(new Boss1F_Idle(m_stateMachine));     // 2
+        states.Add(new Boss1F_Weakness(m_stateMachine)); // 3
+        states.Add(new Boss1F_Recall(m_stateMachine));   // 4
+        states.Add(new Boss1F_Tentacle(m_stateMachine)); // 5
+        states.Add(new Boss1F_Sphere(m_stateMachine));   // 6
+        states.Add(new Boss1F_Die(m_stateMachine));      // 7
 
         m_stateMachine.Initialize_State(states, (int)State.ST_APPEAR);
     }

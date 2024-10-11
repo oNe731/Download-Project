@@ -18,6 +18,9 @@ public class UISlider : MonoBehaviour
 
     private void LateUpdate()
     {
-        m_slider.value = Mathf.Lerp(m_slider.value, m_owerSlider.value - m_errorValue, Time.deltaTime * m_lerpSpeed);
+        if (m_slider.value <= m_owerSlider.value - m_errorValue)
+            m_slider.value = m_owerSlider.value - m_errorValue;
+        else
+            m_slider.value = Mathf.Lerp(m_slider.value, m_owerSlider.value - m_errorValue, Time.deltaTime * m_lerpSpeed);
     }
 }
