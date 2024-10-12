@@ -5,20 +5,8 @@ using UnityEngine.EventSystems;
 
 public class MessageList : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private GameObject m_chat;
-
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        m_chat.SetActive(true);
+        GameManager.Ins.Window.CHATTING.Active_ChildPopup(true);
     }
 }
