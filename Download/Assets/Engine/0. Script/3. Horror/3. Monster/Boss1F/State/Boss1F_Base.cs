@@ -42,33 +42,39 @@ public class Boss1F_Base : State<Monster>
 
             if (angleDifference > 10f)
             {
-                // 현재 회전의 forward 벡터와 목표 방향의 각도를 계산하여 좌우 판별
+                // 좌우 판별
                 Vector3 cross = Vector3.Cross(m_owner.transform.forward, direction);
                 float dot = Vector3.Dot(cross, Vector3.up);
 
-                AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0); // 0은 기본 레이어
+                AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(1); // 2레이어
                 if (dot > 0)
                 {
-                    Debug.Log("오른쪽으로 회전");
                     if (stateInfo.IsName("IsIdle") == true || stateInfo.IsName("IsRight") == true)
                     {
+                        m_animator.speed = 1f;
                         m_animator.SetBool("IsRight", false);
                         m_animator.SetBool("IsLeft", true);
                     }
                 }
                 else if (dot < 0)
                 {
-                    Debug.Log("왼쪽으로 회전");
                     if (stateInfo.IsName("IsIdle") == true || stateInfo.IsName("IsLeft") == true)
                     {
+                        m_animator.speed = 1f;
                         m_animator.SetBool("IsLeft", false);
                         m_animator.SetBool("IsRight", true);
                     }
                 }
-
-                m_owner.transform.rotation = Quaternion.Slerp(m_owner.transform.rotation, targetRotation, Time.deltaTime * 5f);
-                return;
+                m_owner.transform.rotation = Quaternion.Slerp(m_owner.transform.rotation, targetRotation, Time.deltaTime * m_owner.RotationSpeed);
             }
+            else
+            {
+                m_animator.speed = 0f; // 애니메이션 정지
+            }
+        }
+        else
+        {
+            m_animator.speed = 0f; // 애니메이션 정지
         }
     }
 }

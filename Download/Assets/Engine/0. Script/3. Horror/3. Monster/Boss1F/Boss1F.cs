@@ -6,6 +6,9 @@ public class Boss1F : Monster
 {
     public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_SPHERE, ST_DIE, ST_END }
 
+    private float m_rotationSpeed = 3f;
+    public float RotationSpeed { get => m_rotationSpeed; set => m_rotationSpeed = value; }
+
     public override void Damage_Monster(float damage)
     {
         base.Damage_Monster(damage);
