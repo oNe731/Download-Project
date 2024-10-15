@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FileList : MonoBehaviour
+public class FileList : WindowData
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Load_Scene()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update_Data()
     {
-        
+
+    }
+
+    public override void Unload_Scene()
+    {
+
     }
 }

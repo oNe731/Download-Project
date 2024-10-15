@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Panel_Folder : Panel_Popup
 {
+    private List<FileList> m_fileList; // 기본 파일 목록 구조
+
     // 즐겨찾기 버튼
     private GameObject[] m_bookmarkPopups;
     private bool m_bookmarkActive = false;
@@ -20,6 +22,13 @@ public class Panel_Folder : Panel_Popup
     public Panel_Folder() : base()
     {
         m_fileType = FILETYPE.TYPE_FOLDER;
+
+        // 기본 파일 목록 구조 생성
+        //m_fileList = new List<FileList>();
+        //m_fileList.Add(new FileList());
+        //m_fileList.Add(new FileList());
+        //m_fileList.Add(new FileList());
+        //m_fileList.Add(new FileList());
     }
 
     public override void Load_Scene()
@@ -32,6 +41,9 @@ public class Panel_Folder : Panel_Popup
         canvas.GetChild(2).GetChild(1).Find("Button_Folder").GetComponent<Button>().onClick.AddListener(() => Active_Popup(true));
         m_object.transform.GetChild(1).GetChild(0).GetComponent<Button>().onClick.AddListener(() => Putdown_Popup());
         m_object.transform.GetChild(1).GetChild(1).GetComponent<Button>().onClick.AddListener(() => Active_Popup(false));
+        
+        // 기본 폴더 구조 생성
+
     }
 
     public override void Update_Data()
