@@ -7,6 +7,7 @@ public abstract class Monster : Character
     public enum TYPE { TYPE_STRAITJACKER, TYPE_BUG, TYPE_BASICUPPERBODY, TYPE_FASTUPPERBODY, TYPE_END };
 
     protected float m_hp;
+    protected float m_hpMax;
     protected float m_attack;
     protected int m_DieStateIndex;
 
@@ -21,6 +22,7 @@ public abstract class Monster : Character
     protected Coroutine m_colorCorutine = null;
     protected Coroutine m_fadeCorutine = null;
     public float Hp => m_hp;
+    public float HpMax => m_hpMax;
     public float Attack => m_attack;
     public StateMachine<Monster> StateMachine => m_stateMachine;
     public Spawner Spawner => m_spawner;

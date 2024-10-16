@@ -1,22 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss1F : Monster
 {
     public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_SPHERE, ST_DIE, ST_END }
 
+    private int m_pattern = 1;
+    private float m_cumulativeDamage = 0f;
+    private float m_cumulativeMaxDamage = 5f;
     private float m_rotationSpeed = 3f;
+
+    private GameObject m_hpPanel;
+    private Slider m_hpslider;
+
+    public int Pattern { get => m_pattern; }
+    public float CumulativeDamage { get => m_cumulativeDamage; set => m_cumulativeDamage = value; }
+    public float CumulativeMaxDamage { get => m_cumulativeMaxDamage; }
     public float RotationSpeed { get => m_rotationSpeed; set => m_rotationSpeed = value; }
+
+    public GameObject HpPanel => m_hpPanel;
 
     public override void Damage_Monster(float damage)
     {
+        m_cumulativeDamage += damage;
+
         base.Damage_Monster(damage);
+
+        Check_Pattern();
+
+        if(m_hpslider != null)
+            m_hpslider.value = m_hp;
+    }
+
+    private void Check_Pattern()
+    {
+        if (m_hp >= m_hpMax * 0.3f)
+            m_pattern = 1;
+        else
+            m_pattern = 2;
     }
 
     private void Start()
     {
-        m_hp = 10f;
+        m_hpMax = 5f;
+        m_hp = m_hpMax;
+        Create_HpBar();
+
         m_attack = 1f;
         m_DieStateIndex = (int)State.ST_DIE;
         m_effectOffset = new Vector3(0f, -1f, 0f);
@@ -38,6 +69,25 @@ public class Boss1F : Monster
         m_stateMachine.Initialize_State(states, (int)State.ST_APPEAR);
     }
 
+    private void Create_HpBar()
+    {
+        m_hpPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/UI/UI_1FBossHp", GameObject.Find("Canvas").transform.GetChild(1));
+        if (m_hpPanel == null)
+            return;
+
+        for (int i = 1; i < m_hpPanel.transform.childCount; ++i)
+        {
+            Slider uiSlider = m_hpPanel.transform.GetChild(i).GetComponent<Slider>();
+            if (uiSlider != null)
+            {
+                uiSlider.maxValue = m_hpMax;
+                uiSlider.value = m_hp;
+            }
+        }
+
+        m_hpslider = m_hpPanel.transform.GetChild(2).GetComponent<Slider>();
+    }
+
     private void Update()
     {
         if (GameManager.Ins.IsGame == false)
@@ -47,6 +97,11 @@ public class Boss1F : Monster
             return;
 
         m_stateMachine.Update_State();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Ins.Resource.Destroy(m_hpPanel);
     }
 
     private void OnDrawGizmos()

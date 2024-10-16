@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Boss1F_Appear : Boss1F_Base
 {
-    private Vector3 m_targetPosition;
     private float m_speed = 1.5f;
+    private Vector3 m_targetPosition;
 
     public Boss1F_Appear(StateMachine<Monster> stateMachine) : base(stateMachine)
     {

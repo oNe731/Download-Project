@@ -77,4 +77,15 @@ public class Boss1F_Base : State<Monster>
             m_animator.speed = 0f; // 애니메이션 정지
         }
     }
+
+    protected bool Change_Weakness()
+    {
+        if(m_owner.CumulativeDamage >= m_owner.CumulativeMaxDamage)
+        {
+            m_owner.StateMachine.Change_State((int)Boss1F.State.ST_WEAKNESS);
+            return true;
+        }
+
+        return false;
+    }
 }
