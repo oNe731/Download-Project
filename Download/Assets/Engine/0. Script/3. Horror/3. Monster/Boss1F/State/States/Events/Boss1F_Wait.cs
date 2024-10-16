@@ -14,6 +14,7 @@ public class Boss1F_Wait : Boss1F_Base
     public override void Enter_State()
     {
         m_owner.HpPanel.SetActive(true);
+        Debug.Log("2초대기상태");
     }
 
     public override void Update_State()

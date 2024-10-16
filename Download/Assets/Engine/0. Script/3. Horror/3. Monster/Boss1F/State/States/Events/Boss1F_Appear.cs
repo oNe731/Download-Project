@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boss1F_Appear : Boss1F_Base
 {
+    private bool m_isUsed = false;
     private float m_speed = 1.5f;
     private Vector3 m_targetPosition;
 
@@ -13,8 +14,14 @@ public class Boss1F_Appear : Boss1F_Base
 
     public override void Enter_State()
     {
-        m_owner.transform.position = new Vector3(12.18f, 5.173f, 7.75f);
-        m_targetPosition = new Vector3(m_owner.transform.position.x, 3.59f, m_owner.transform.position.z);
+        if(m_isUsed == false)
+        {
+            m_isUsed = true;
+            m_owner.transform.position = new Vector3(12.18f, 5.173f, 7.75f);
+            m_targetPosition = new Vector3(m_owner.transform.position.x, 3.59f, m_owner.transform.position.z);
+        }
+
+        Debug.Log("등장상태");
     }
 
     public override void Update_State()

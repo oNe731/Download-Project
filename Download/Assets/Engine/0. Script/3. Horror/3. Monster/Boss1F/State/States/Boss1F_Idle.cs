@@ -10,11 +10,15 @@ public class Boss1F_Idle : Boss1F_Base
 
     public override void Enter_State()
     {
+        Debug.Log("아이들상태");
     }
 
     public override void Update_State()
     {
-        Look_Player();
+        if (Change_Weakness() == false)
+        {
+            //Look_Player();
+        }
     }
 
     public override void Exit_State()

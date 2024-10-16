@@ -21,6 +21,7 @@ public class Boss1F_Die : Boss1F_Base
         m_animator.SetBool("IsDie", true);
 
         GameManager.Ins.Resource.Destroy(m_owner.transform.GetChild(3).gameObject); // 조명 삭제
+        Debug.Log("죽음상태");
     }
 
     public override void Update_State()
