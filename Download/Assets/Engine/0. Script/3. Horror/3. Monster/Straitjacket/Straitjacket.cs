@@ -6,9 +6,9 @@ public class Straitjacket : Monster
 {
     public enum State { ST_IDLE, ST_WALK, ST_RUN, ST_RUNWAIT, ST_ATTACK, ST_ATTACKWAIT, ST_DIE, ST_END } // 4
 
-    public override void Damage_Monster(float damage)
+    public override bool Damage_Monster(float damage)
     {
-        base.Damage_Monster(damage);
+        return base.Damage_Monster(damage);
     }
 
     private void Start()

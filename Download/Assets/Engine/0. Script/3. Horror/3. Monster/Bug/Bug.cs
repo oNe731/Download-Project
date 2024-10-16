@@ -6,9 +6,9 @@ public class Bug : Monster
 {
     public enum State { ST_IDLE, ST_FLY, ST_CHARGE, ST_ATTACK, ST_RETREAT, ST_CHASE, ST_DIE, ST_END } // 4
 
-    public override void Damage_Monster(float damage)
+    public override bool Damage_Monster(float damage)
     {
-        base.Damage_Monster(damage);
+        return base.Damage_Monster(damage);
     }
 
     private void Start()

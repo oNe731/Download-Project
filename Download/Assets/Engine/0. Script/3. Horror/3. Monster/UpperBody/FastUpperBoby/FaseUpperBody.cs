@@ -6,9 +6,9 @@ public class FaseUpperBody : Monster
 {
     public enum State { ST_IDLE, ST_CHASE, ST_ATTECK, ST_DIE }
 
-    public override void Damage_Monster(float damage)
+    public override bool Damage_Monster(float damage)
     {
-        base.Damage_Monster(damage);
+        return base.Damage_Monster(damage);
     }
 
     private void Start()

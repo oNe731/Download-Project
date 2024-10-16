@@ -28,29 +28,32 @@ public abstract class Monster : Character
     public Spawner Spawner => m_spawner;
     public Animator Animator => m_animator;
 
-    public virtual void Damage_Monster(float damage)
+    public virtual bool Damage_Monster(float damage)
     {
         if (m_stateMachine.CurState == m_DieStateIndex)
-            return;
+            return true;
+
+        // 피 이펙트 생성
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
+        gameObject.transform.position = transform.position + m_effectOffset;
+        gameObject.transform.localScale = transform.localScale;
+
+        if (m_skinnedMeshRenderers == null)
+            m_skinnedMeshRenderers = transform.GetComponentsInChildren<SkinnedMeshRenderer>();
+        if (m_colorCorutine != null)
+            StopCoroutine(m_colorCorutine);
+        m_colorCorutine = StartCoroutine(Change_Color(new Color(1f, 1f, 1f, 1f), new Color(1f, 0f, 0f, 1f), 0.2f));
 
         m_hp -= damage;
         if (m_hp <= 0)
         {
             m_hp = 0;
             m_stateMachine.Change_State(m_DieStateIndex);
+
+            return true;
         }
 
-        // 피 이펙트 생성
-        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Effect/Blood/BloodParticle");
-        gameObject.transform.position   = transform.position + m_effectOffset;
-        gameObject.transform.localScale = transform.localScale;
-
-        if (m_skinnedMeshRenderers == null)
-            m_skinnedMeshRenderers = transform.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-        if (m_colorCorutine != null)
-            StopCoroutine(m_colorCorutine);
-        m_colorCorutine = StartCoroutine(Change_Color(new Color(1f, 1f, 1f, 1f), new Color(1f, 0f, 0f, 1f), 0.2f));
+        return false;
     }
 
     public void Initialize_Monster(Spawner spawner)

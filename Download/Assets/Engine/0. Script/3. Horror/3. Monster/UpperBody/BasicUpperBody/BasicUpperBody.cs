@@ -6,9 +6,9 @@ public class BasicUpperBody : Monster
 {
     public enum State { ST_IDLE, ST_WALK, ST_CHASE, ST_ATTACK, ST_DIE, ST_END }
 
-    public override void Damage_Monster(float damage)
+    public override bool Damage_Monster(float damage)
     {
-        base.Damage_Monster(damage);
+        return base.Damage_Monster(damage);
     }
 
     private void Start()
