@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class Boss1F : Monster
 {
-    public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_SPHERE, ST_HIT, ST_DIE, ST_END }
+    public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_TENTACLES, ST_SPHERE, ST_HIT, ST_DIE, ST_END }
 
     private int m_pattern = 1;
     private float m_cumulativeDamage = 0f;
-    private float m_cumulativeMaxDamage = 5f;
+    private float m_cumulativeMaxDamage = 10f;
     private float m_rotationSpeed = 3f;
 
     private GameObject m_hpPanel;
@@ -24,6 +24,9 @@ public class Boss1F : Monster
 
     public override bool Damage_Monster(float damage)
     {
+        if (m_isInvincible == true)
+            return false;
+
         m_cumulativeDamage += damage;
 
         if(base.Damage_Monster(damage) == false)
@@ -59,15 +62,16 @@ public class Boss1F : Monster
         m_stateMachine = new StateMachine<Monster>(gameObject);
 
         List<State<Monster>> states = new List<State<Monster>>();
-        states.Add(new Boss1F_Appear(m_stateMachine));   // 0
-        states.Add(new Boss1F_Wait(m_stateMachine));     // 1
-        states.Add(new Boss1F_Idle(m_stateMachine));     // 2
-        states.Add(new Boss1F_Weakness(m_stateMachine)); // 3
-        states.Add(new Boss1F_Recall(m_stateMachine));   // 4
-        states.Add(new Boss1F_Tentacle(m_stateMachine)); // 5
-        states.Add(new Boss1F_Sphere(m_stateMachine));   // 6
-        states.Add(new Boss1F_Hit(m_stateMachine));      // 7
-        states.Add(new Boss1F_Die(m_stateMachine));      // 8
+        states.Add(new Boss1F_Appear(m_stateMachine));    // 0
+        states.Add(new Boss1F_Wait(m_stateMachine));      // 1
+        states.Add(new Boss1F_Idle(m_stateMachine));      // 2
+        states.Add(new Boss1F_Weakness(m_stateMachine));  // 3
+        states.Add(new Boss1F_Recall(m_stateMachine));    // 4
+        states.Add(new Boss1F_Tentacle(m_stateMachine));  // 5
+        states.Add(new Boss1F_Tentacles(m_stateMachine)); // 6
+        states.Add(new Boss1F_Sphere(m_stateMachine));    // 7
+        states.Add(new Boss1F_Hit(m_stateMachine));       // 8
+        states.Add(new Boss1F_Die(m_stateMachine));       // 9
 
         m_stateMachine.Initialize_State(states, (int)State.ST_APPEAR);
     }

@@ -88,4 +88,67 @@ public class Boss1F_Base : State<Monster>
 
         return false;
     }
+
+    protected void Change_Patterns()
+    {
+        // Test
+        m_stateMachine.Change_State((int)Boss1F.State.ST_IDLE);
+
+        Boss1F.State preState = (Boss1F.State)m_owner.StateMachine.PreState;
+        if (m_owner.Pattern == 1)
+        {
+            if (preState == Boss1F.State.ST_TENTACLE)
+            {
+                // 40%
+                // 촉수 N번 생성
+
+                // 40%
+                // 오염 물질 발사
+            }
+            else if (preState == Boss1F.State.ST_TENTACLES)
+            {
+                // 20%
+                // 촉수 1개 패턴
+
+                // 40%
+                // 오염 물질 발사
+            }
+            else if(preState == Boss1F.State.ST_SPHERE)
+            {
+                // 20%
+                // 촉수 1개 패턴
+
+                // 40%
+                // 촉수 N번 생성
+            }
+            else 
+            {
+                // 20%
+                // 촉수 1개 패턴
+
+                // 40%
+                // 촉수 N번 생성
+
+                // 40%
+                // 오염 물질 발사
+            }
+        }
+        else if(m_owner.Pattern == 2)
+        {
+            if (preState == Boss1F.State.ST_TENTACLES)
+            {
+                // 오염 물질 발사
+            }
+            else if (preState == Boss1F.State.ST_SPHERE)
+            {
+                // 촉수 N번 샹송
+            }
+            else
+            {
+                // 촉수 N번 샹송
+
+                // 오염 물질 발사
+            }
+        }
+    }
 }

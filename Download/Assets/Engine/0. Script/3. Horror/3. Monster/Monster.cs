@@ -11,6 +11,8 @@ public abstract class Monster : Character
     protected float m_attack;
     protected int m_DieStateIndex;
 
+    protected bool m_isInvincible = false; // 무적 상태
+
     protected Vector3 m_effectOffset = Vector3.zero;
 
     protected StateMachine<Monster> m_stateMachine;
@@ -24,6 +26,7 @@ public abstract class Monster : Character
     public float Hp => m_hp;
     public float HpMax => m_hpMax;
     public float Attack => m_attack;
+    public bool IsInvincible { get => m_isInvincible; set => m_isInvincible = value; }
     public StateMachine<Monster> StateMachine => m_stateMachine;
     public Spawner Spawner => m_spawner;
     public Animator Animator => m_animator;
