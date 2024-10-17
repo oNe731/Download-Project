@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Boss1F : Monster
 {
-    public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_TENTACLES, ST_SPHERE, ST_HIT, ST_DIE, ST_END }
+    public enum State { ST_APPEAR, ST_WAIT, ST_IDLE, ST_WEAKNESS, ST_RECALL, ST_TENTACLE, ST_TENTACLES, ST_SPHERE, ST_REST, ST_HIT, ST_DIE, ST_END }
 
     private int m_pattern = 1;
     private float m_cumulativeDamage = 0f;
@@ -70,8 +70,9 @@ public class Boss1F : Monster
         states.Add(new Boss1F_Tentacle(m_stateMachine));  // 5
         states.Add(new Boss1F_Tentacles(m_stateMachine)); // 6
         states.Add(new Boss1F_Sphere(m_stateMachine));    // 7
-        states.Add(new Boss1F_Hit(m_stateMachine));       // 8
-        states.Add(new Boss1F_Die(m_stateMachine));       // 9
+        states.Add(new Boss1F_Rest(m_stateMachine));      // 8
+        states.Add(new Boss1F_Hit(m_stateMachine));       // 9
+        states.Add(new Boss1F_Die(m_stateMachine));       // 10
 
         m_stateMachine.Initialize_State(states, (int)State.ST_APPEAR);
     }

@@ -5,17 +5,19 @@ using UnityEngine;
 public class StateMachine<T> where T : class
 {
     private GameObject m_owner;
+    private int m_nexState = -1;
     private int m_curState = -1;
     private int m_preState = -1;
-    private int m_nexState = -1;
+    private int m_lasState = -1;
     private List<State<T>> m_states;
 
     private bool m_lock = false;
 
     public GameObject Owner => m_owner;
+    public int NexState => m_nexState;
     public int CurState => m_curState;
     public int PreState => m_preState;
-    public int NexState => m_nexState;
+    public int LasState => m_lasState;
 
     public bool Lock { get => m_lock; set => m_lock = value; }
 
@@ -45,6 +47,7 @@ public class StateMachine<T> where T : class
         if (m_curState != -1)
             m_states[(int)m_curState].Exit_State();
 
+        m_lasState = m_preState;
         m_preState = m_curState;
         m_curState = stateIndex;
 

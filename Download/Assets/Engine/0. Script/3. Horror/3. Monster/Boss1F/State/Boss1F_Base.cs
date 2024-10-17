@@ -91,64 +91,95 @@ public class Boss1F_Base : State<Monster>
 
     protected void Change_Patterns()
     {
-        // Test
-        m_stateMachine.Change_State((int)Boss1F.State.ST_IDLE);
-
-        Boss1F.State preState = (Boss1F.State)m_owner.StateMachine.PreState;
+        Boss1F.State preState = (Boss1F.State)m_owner.StateMachine.LasState;
         if (m_owner.Pattern == 1)
         {
             if (preState == Boss1F.State.ST_TENTACLE)
             {
-                // 40%
-                // ÃË¼ö N¹ø »ý¼º
-
-                // 40%
-                // ¿À¿° ¹°Áú ¹ß»ç
+                float randomValue = Random.Range(0f, 80f);
+                if (randomValue <= 40) // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLES);
+                else // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_SPHERE);
             }
             else if (preState == Boss1F.State.ST_TENTACLES)
             {
-                // 20%
-                // ÃË¼ö 1°³ ÆÐÅÏ
-
-                // 40%
-                // ¿À¿° ¹°Áú ¹ß»ç
+                float randomValue = Random.Range(0f, 60f);
+                if (randomValue <= 20) // 20%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLE);
+                else // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_SPHERE);
             }
             else if(preState == Boss1F.State.ST_SPHERE)
             {
-                // 20%
-                // ÃË¼ö 1°³ ÆÐÅÏ
-
-                // 40%
-                // ÃË¼ö N¹ø »ý¼º
+                float randomValue = Random.Range(0f, 60f);
+                if (randomValue <= 20) // 20%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLE);
+                else // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLES);
             }
             else 
             {
-                // 20%
-                // ÃË¼ö 1°³ ÆÐÅÏ
-
-                // 40%
-                // ÃË¼ö N¹ø »ý¼º
-
-                // 40%
-                // ¿À¿° ¹°Áú ¹ß»ç
+                float randomValue = Random.Range(0f, 100f);
+                if(randomValue <= 20) // 20%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLE);
+                else if(randomValue <= 60) // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLES);
+                else // 40%
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_SPHERE);
             }
         }
         else if(m_owner.Pattern == 2)
         {
             if (preState == Boss1F.State.ST_TENTACLES)
             {
-                // ¿À¿° ¹°Áú ¹ß»ç
+                m_stateMachine.Change_State((int)Boss1F.State.ST_SPHERE);
             }
             else if (preState == Boss1F.State.ST_SPHERE)
             {
-                // ÃË¼ö N¹ø ¼§¼Û
+                m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLES);
             }
             else
             {
-                // ÃË¼ö N¹ø ¼§¼Û
-
-                // ¿À¿° ¹°Áú ¹ß»ç
+                float randomValue = Random.Range(0f, 100f);
+                if(randomValue <= 50)
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_TENTACLES);
+                else
+                    m_stateMachine.Change_State((int)Boss1F.State.ST_SPHERE);
             }
+        }
+    }
+
+    protected bool Change_Recall()
+    {
+        float probability = 0f;
+        if (m_owner.Pattern == 1)
+            probability = 40f;
+        else if (m_owner.Pattern == 2)
+            probability = 65f;
+
+        float randomValue = Random.Range(0f, 100f);
+        if (randomValue <= probability)
+        {
+            m_stateMachine.Change_State((int)Boss1F.State.ST_RECALL);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected void Create_Tentacle(float symptomTime = 1.5f, float idleTime = 1.5f)
+    {
+        int randomIndex = Random.Range(1, 7); // 6°¡Áö
+        GameObject gameObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Monster/Etc/Tentacles/Patterns Variant_" + randomIndex.ToString());
+        if (gameObject != null)
+        {
+            Vector3 playerPosition = GameManager.Ins.Horror.Player.transform.position;
+            gameObject.transform.position = new Vector3(playerPosition.x, 0f, playerPosition.z);
+
+            Tentacles tentacles = gameObject.GetComponent<Tentacles>();
+            if (tentacles != null)
+                tentacles.Start_Tentacles(symptomTime, idleTime);
         }
     }
 }

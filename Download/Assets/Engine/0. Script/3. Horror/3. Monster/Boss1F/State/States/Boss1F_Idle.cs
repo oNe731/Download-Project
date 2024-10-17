@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Boss1F_Idle : Boss1F_Base
 {
+    private float m_time = 0f;
+
     public Boss1F_Idle(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
     }
@@ -18,6 +20,13 @@ public class Boss1F_Idle : Boss1F_Base
         if (Change_Weakness() == false)
         {
             //Look_Player();
+
+            m_time += Time.deltaTime;
+            if(m_time >= 1f)
+            {
+                m_time = 0f;
+                Change_Patterns();
+            }
         }
     }
 
