@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameRouletteCards : MonoBehaviour
 {
-    private int m_count = 10;
     private List<RectTransform> m_rectTransforms = new List<RectTransform>();
     private float m_moveSpeed = 300f;
 

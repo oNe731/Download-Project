@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 660, y: -0.000061035156}
+  m_AnchoredPosition: {x: 800.00006, y: -2.83}
   m_SizeDelta: {x: 307, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2294490794693521975
@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 2249578471709788742}
   - component: {fileID: 3538713108940307932}
   - component: {fileID: 242561475664529591}
+  - component: {fileID: 7105882987325040073}
   m_Layer: 5
   m_Name: Button_1
   m_TagString: Untagged
@@ -627,7 +628,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -28.2, y: -29.07, z: -5.64, w: -28.32}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -685,7 +686,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3538713108940307932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7105882987325040073}
+        m_TargetAssemblyTypeName: GameClickImage, Assembly-CSharp
+        m_MethodName: Button_Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7105882987325040073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330368005247191491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d47c0b883a8ef3408c5585470731f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1490085591873194615
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330, y: -0.000061035156}
+  m_AnchoredPosition: {x: -189.99992, y: -2.83}
   m_SizeDelta: {x: 307, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8532297670474050217
@@ -1919,6 +1944,7 @@ GameObject:
   - component: {fileID: 9215680593069703621}
   - component: {fileID: 7632368979006086008}
   - component: {fileID: 2775635274923236143}
+  - component: {fileID: 6245707670492647690}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1970,7 +1996,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 7.09, y: 0, z: 1.53, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2028,7 +2054,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7632368979006086008}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6245707670492647690}
+        m_TargetAssemblyTypeName: GameClickImage, Assembly-CSharp
+        m_MethodName: Button_Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6245707670492647690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2396429866577693052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d47c0b883a8ef3408c5585470731f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2524652603419136535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,7 +2952,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -660, y: -0.000061035156}
+  m_AnchoredPosition: {x: -520, y: -2.83}
   m_SizeDelta: {x: 307, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1193308484268857877
@@ -3954,6 +4004,7 @@ GameObject:
   - component: {fileID: 6201053520603820975}
   - component: {fileID: 1244093269224082895}
   - component: {fileID: 83559504591871148}
+  - component: {fileID: 7053459643531064429}
   m_Layer: 5
   m_Name: Button_4
   m_TagString: Untagged
@@ -4005,7 +4056,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: -4.37, y: -11.01, z: -7.48, w: -12.24}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4063,7 +4114,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1244093269224082895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7053459643531064429}
+        m_TargetAssemblyTypeName: GameClickImage, Assembly-CSharp
+        m_MethodName: Button_Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7053459643531064429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085991839413710338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d47c0b883a8ef3408c5585470731f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4134023797538428123
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,6 +4150,7 @@ GameObject:
   - component: {fileID: 8229154244147009055}
   - component: {fileID: 2728170658269322350}
   - component: {fileID: 3510390385423328851}
+  - component: {fileID: 2896049897729311993}
   m_Layer: 5
   m_Name: Image_DownLine
   m_TagString: Untagged
@@ -4144,6 +4220,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2896049897729311993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4134023797538428123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971498df810505e408dcab8f2dfd7bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4186103145778887875
 GameObject:
   m_ObjectHideFlags: 0
@@ -4565,7 +4653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 140.00008, y: -2.83}
   m_SizeDelta: {x: 307, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6582093454612220508
@@ -5319,7 +5407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 330, y: -0.000061035156}
+  m_AnchoredPosition: {x: 470.00006, y: -2.83}
   m_SizeDelta: {x: 307, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3824819469308953502
@@ -6216,8 +6304,8 @@ RectTransform:
   - {fileID: 4613897412620039063}
   - {fileID: 1558711432438688007}
   - {fileID: 374390811990753268}
-  - {fileID: 707475547262946153}
   - {fileID: 1034494990757292980}
+  - {fileID: 707475547262946153}
   m_Father: {fileID: 1824903927411350402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6275,6 +6363,7 @@ GameObject:
   - component: {fileID: 1325835338137356586}
   - component: {fileID: 600082400269792635}
   - component: {fileID: 2363381162342709391}
+  - component: {fileID: 1486851809289811336}
   m_Layer: 5
   m_Name: Button_2
   m_TagString: Untagged
@@ -6326,7 +6415,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 0, y: 1.9, z: 11.08, w: -7.31}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6384,7 +6473,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 600082400269792635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1486851809289811336}
+        m_TargetAssemblyTypeName: GameClickImage, Assembly-CSharp
+        m_MethodName: Button_Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1486851809289811336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418598192754725184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d47c0b883a8ef3408c5585470731f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7422302812175805015
 GameObject:
   m_ObjectHideFlags: 0
@@ -7193,6 +7306,7 @@ GameObject:
   - component: {fileID: 1558711432438688007}
   - component: {fileID: 8258652917342081685}
   - component: {fileID: 7920833412441700782}
+  - component: {fileID: 8316369257259750450}
   m_Layer: 5
   m_Name: Image_Background_Main
   m_TagString: Untagged
@@ -7257,6 +7371,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8316369257259750450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8350403814458426777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38203418c7c11ba469dc51cd306591d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sprites:
+  - {fileID: 21300000, guid: f62b6b9566b14354487f42e03538be89, type: 3}
+  - {fileID: 21300000, guid: cf79e62908bbf694a949e0925d1da2c7, type: 3}
+  - {fileID: 21300000, guid: ee95277954fb5bf41ae563656314d699, type: 3}
+  - {fileID: 21300000, guid: f2891e627b9c44c4c8c3cb45bd851328, type: 3}
+  - {fileID: 21300000, guid: 923c6a62ebd3aae4e80d8d7cf7e31f94, type: 3}
 --- !u!1 &8425244446608185072
 GameObject:
   m_ObjectHideFlags: 0
@@ -7419,6 +7551,7 @@ GameObject:
   - component: {fileID: 6994951818211359781}
   - component: {fileID: 5234121559661168213}
   - component: {fileID: 5460544653194795495}
+  - component: {fileID: 5556357739696386027}
   m_Layer: 5
   m_Name: Button_3
   m_TagString: Untagged
@@ -7470,7 +7603,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 7.98, y: 17.38, z: 14.78, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -7528,7 +7661,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5234121559661168213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5556357739696386027}
+        m_TargetAssemblyTypeName: GameClickImage, Assembly-CSharp
+        m_MethodName: Button_Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5556357739696386027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747351756786139608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d47c0b883a8ef3408c5585470731f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8971883117302477366
 GameObject:
   m_ObjectHideFlags: 0
