@@ -6,6 +6,8 @@ public class Bug : Monster
 {
     public enum State { ST_IDLE, ST_FLY, ST_CHARGE, ST_ATTACK, ST_RETREAT, ST_CHASE, ST_DIE, ST_END } // 4
 
+    private bool m_initialize = false;
+
     public override bool Damage_Monster(float damage)
     {
         return base.Damage_Monster(damage);
@@ -13,6 +15,15 @@ public class Bug : Monster
 
     private void Start()
     {
+        Initialize_Bug();
+    }
+
+    public void Initialize_Bug()
+    {
+        if (m_initialize == true)
+            return;
+        m_initialize = true;
+
         m_hp = 4f;
         m_attack = 1f;
         m_DieStateIndex = (int)State.ST_DIE;

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Bug_Fly : Bug_Base
 {
-    float m_time = 0f;
-    float m_ataackTime = 0f;
+    private float m_time = 0f;
+    private float m_ataackTime = 0f;
+
+    public float AtaackTime { set => m_ataackTime = value; }
 
     public Bug_Fly(StateMachine<Monster> stateMachine) : base(stateMachine)
     {
