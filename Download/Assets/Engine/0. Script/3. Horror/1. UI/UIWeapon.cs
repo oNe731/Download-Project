@@ -30,7 +30,7 @@ public class UIWeapon : MonoBehaviour
         m_lightSpr.Add("SlotON", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_SlotON"));
         m_lightSpr.Add("SlotOFF", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/3. Horror/UI/Play/Weapon/WeaponSlot/UI_horror_PlayerWeapon_SlotOFF"));
 
-        GetComponent<RectTransform>().anchoredPosition = new Vector2(530.2f, -343f);
+        GetComponent<RectTransform>().anchoredPosition = new Vector2(565.4f, -380.6f);
 
         gameObject.SetActive(false);
     }
