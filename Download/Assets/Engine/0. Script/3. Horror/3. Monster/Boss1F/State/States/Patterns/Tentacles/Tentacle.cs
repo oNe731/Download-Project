@@ -57,6 +57,7 @@ public class Tentacle : MonoBehaviour
                     float animTime = m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
                     if (animTime >= 1f)
                     {
+                        m_animator.SetBool("IsStay", true);
                         m_collider.enabled = true;
                         m_state = STATE.ST_IDLE;
                     }
@@ -64,12 +65,19 @@ public class Tentacle : MonoBehaviour
                 break;
 
             case STATE.ST_IDLE:
-                m_time += Time.deltaTime;
-                if(m_time >= m_idleTime)
+                if (m_animator.IsInTransition(0) == true)
+                    return;
+                if (m_animator.GetCurrentAnimatorStateInfo(0).IsName("IsStay") == true)
                 {
-                    Down_Tentacle();
-                    m_collider.enabled = false;
-                    m_state = STATE.ST_DOWN;
+                    m_animator.SetBool("IsStay", false);
+
+                    m_time += Time.deltaTime;
+                    if (m_time >= m_idleTime)
+                    {
+                        Down_Tentacle();
+                        m_collider.enabled = false;
+                        m_state = STATE.ST_DOWN;
+                    }
                 }
                 break;
 
