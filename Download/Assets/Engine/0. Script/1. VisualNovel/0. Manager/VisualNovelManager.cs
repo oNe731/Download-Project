@@ -4,9 +4,8 @@ using UnityEngine;
 using VisualNovel;
 public class VisualNovelManager : StageManager
 {
-    public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END }; // 미연시 -> 사격 -> 미연시 -> 추격 => 서부 레벨
-    public enum NPCTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
-
+    public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END }; // 다이얼로그 - 새총 - 다이얼로그 - 추격 => 윈도우 레벨
+    public enum OWNERTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
 
     private GameObject m_dialog;
     private GameObject m_likeabilityPanel;
@@ -23,14 +22,16 @@ public class VisualNovelManager : StageManager
 
     #region Resource
     private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_cutScene = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_standingSpr = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_choiceButtonSpr = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_heartSpr = new Dictionary<string, Sprite>();
 
-    public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; }}
-    public Dictionary<string, Sprite> StandingSpr { get { return m_standingSpr; }}
-    public Dictionary<string, Sprite> ChoiceButtonSpr { get { return m_choiceButtonSpr; }}
-    public Dictionary<string, Sprite> HeartSpr { get { return m_heartSpr; } }
+    public Dictionary<string, Sprite> BackgroundSpr { get => m_backgroundSpr; }
+    public Dictionary<string, Sprite> CutScene { get => m_cutScene; }
+    public Dictionary<string, Sprite> StandingSpr { get => m_standingSpr; }
+    public Dictionary<string, Sprite> ChoiceButtonSpr { get => m_choiceButtonSpr; }
+    public Dictionary<string, Sprite> HeartSpr { get => m_heartSpr; }
     #endregion
 
     public VisualNovelManager() : base()
@@ -49,6 +50,10 @@ public class VisualNovelManager : StageManager
         m_backgroundSpr.Add("BackGround_PlayerHome",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PlayerHome"));
         m_backgroundSpr.Add("BackGround_PinkHome",    GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PinkHome"));
         m_backgroundSpr.Add("BackGround_Cellar",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Cellar"));
+
+        // 컷씬 이미지 할당
+        m_cutScene.Add("UI_VisualNovel_Cut2", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/Cut2"));
+        m_cutScene.Add("UI_VisualNovel_Cut5", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/Cut5"));
 
         // 스탠딩 이미지 할당 
         m_standingSpr.Add("Blue",   GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/Character/Blue/Sprite3"));
@@ -85,8 +90,8 @@ public class VisualNovelManager : StageManager
         m_likeabilityHeartPanel[2] = m_likeabilityPanel.transform.GetChild(0).GetChild(2).GetComponent<NpcLike>();
 
         // 기본 값 초기화
-        m_npcHeart = new int[(int)NPCTYPE.OT_END];
-        for (int i = 0; i < (int)NPCTYPE.OT_END; i++)
+        m_npcHeart = new int[(int)OWNERTYPE.OT_END];
+        for (int i = 0; i < (int)OWNERTYPE.OT_END; i++)
             m_npcHeart[i] = 0;
 
         // 레벨 초기화

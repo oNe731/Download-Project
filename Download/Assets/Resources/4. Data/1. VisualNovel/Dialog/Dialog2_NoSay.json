@@ -1,36 +1,20 @@
 [
   {
-    "dialogEvent": 0,
-    "owner": 1,
-    "nameText": "미나츠",
-    "dialogText": "치... 매정하긴",
-    "backgroundSpr": "",
-    "standingSpr": [ "Blue" ],
-    "portraitSpr": "Blue",
-    "boxSpr": "UI_VisualNovel_Blue_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Blue_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Blue_Ellipse",
-    "nameFont": "VN_Basic_Blue",
-    "dialogFont": "VN_Basic_RBlue",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 1,
+      "dialogText": "치... 매정하긴",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Blue" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 2, // 페이드 아웃
-    "owner": 0,
-    "nameText": "",
-    "dialogText": "",
-    "backgroundSpr": "",
-    "standingSpr": [],
-    "portraitSpr": "",
-    "boxSpr": "",
-    "ellipseSpr": "",
-    "arrawSpr": "",
-    "nameFont": "",
-    "dialogFont": "",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": [ "4. Data/1. VisualNovel/Dialog/Dialog3_Festival" ]
+    "dialogType": 0, // 페이드
+    "dialogSubData": {
+      "fadeType": 1, // 페이드 아웃
+      "path": "4. Data/1. VisualNovel/Dialog/Dialog3_Festival"
+    }
   }
 ]

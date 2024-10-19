@@ -8,7 +8,7 @@ namespace VisualNovel
 {
     public class NpcLike : MonoBehaviour
     {
-        [SerializeField] private VisualNovelManager.NPCTYPE m_npcIndex = VisualNovelManager.NPCTYPE.OT_END;
+        [SerializeField] private VisualNovelManager.OWNERTYPE m_npcIndex = VisualNovelManager.OWNERTYPE.OT_END;
         [SerializeField] private GameObject[] m_heart;
 
         private bool m_update = false;
@@ -26,11 +26,11 @@ namespace VisualNovel
             }
         }
 
-        public void Set_Owner(VisualNovelManager.NPCTYPE index)
+        public void Set_Owner(VisualNovelManager.OWNERTYPE index)
         {
-            if (index == VisualNovelManager.NPCTYPE.OT_END)
+            if (index == VisualNovelManager.OWNERTYPE.OT_END)
                 return;
-            else if (index == VisualNovelManager.NPCTYPE.OT_WHITE)
+            else if (index == VisualNovelManager.OWNERTYPE.OT_WHITE)
             {
                 Active_Heart(false);
                 return;
@@ -53,7 +53,7 @@ namespace VisualNovel
 
         private void Update()
         {
-            if (VisualNovelManager.NPCTYPE.OT_END == m_npcIndex)
+            if (VisualNovelManager.OWNERTYPE.OT_END == m_npcIndex)
                 return;
 
             if (true == m_update)
@@ -73,17 +73,17 @@ namespace VisualNovel
             Sprite spriteOff = null;
             switch (m_npcIndex)
             {
-                case VisualNovelManager.NPCTYPE.OT_BLUE:
+                case VisualNovelManager.OWNERTYPE.OT_BLUE:
                     spriteOn  = manager.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartON"];
                     spriteOff = manager.HeartSpr["UI_VisualNovel_Blue_FriendshipHeartOFF"];
                     break;
 
-                case VisualNovelManager.NPCTYPE.OT_YELLOW:
+                case VisualNovelManager.OWNERTYPE.OT_YELLOW:
                     spriteOn  = manager.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartON"];
                     spriteOff = manager.HeartSpr["UI_VisualNovel_Yellow_FriendshipHeartOFF"];
                     break;
 
-                case VisualNovelManager.NPCTYPE.OT_PINK:
+                case VisualNovelManager.OWNERTYPE.OT_PINK:
                     spriteOn  = manager.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartON"];
                     spriteOff = manager.HeartSpr["UI_VisualNovel_Pink_FriendshipHeartOFF"];
                     break;

@@ -1,121 +1,101 @@
 [
   {
-    "dialogEvent": 1,
-    "owner": 0,
-    "nameText": "",
-    "dialogText": "",
-    "backgroundSpr": "",
-    "standingSpr": [],
-    "portraitSpr": "",
-    "boxSpr": "",
-    "ellipseSpr": "",
-    "arrawSpr": "",
-    "nameFont": "",
-    "dialogFont": "",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 0, // 페이드
+    "dialogSubData": {
+      "fadeType": 0, // 페이드 인
+      "path": ""
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 1,
-    "nameText": "미나츠",
-    "dialogText": "안녕! {{PLAYER_NAME}}, 다 여기 모여있었네.",
-    "backgroundSpr": "BackGround_School",
-    "standingSpr": [ "Blue" ],
-    "portraitSpr": "Blue",
-    "boxSpr": "UI_VisualNovel_Blue_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Blue_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Blue_Ellipse",
-    "nameFont": "VN_Basic_Blue",
-    "dialogFont": "VN_Basic_RBlue",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 1,
+      "dialogText": "안녕! {{PLAYER_NAME}}, 다 여기 모여있었네.",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Blue" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 3,
-    "nameText": "리카",
-    "dialogText": "미나츠선배..! 안녕하세요",
-    "backgroundSpr": "",
-    "standingSpr": [ "Pink" ],
-    "portraitSpr": "Pink",
-    "boxSpr": "UI_VisualNovel_Pink_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Pink_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Pink_Ellipse",
-    "nameFont": "VN_Basic_Pink",
-    "dialogFont": "VN_Basic_RPink",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 3, // 컷씬
+    "dialogSubData": {
+      "cutSceneEvents": [ 5 ], // 이미지 컷씬
+      "eventValues": [
+        {
+          "imageName": "UI_VisualNovel_Cut2"
+        }
+      ]
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 2,
-    "nameText": "사사키",
-    "dialogText": "첫날부터 지각이냐...",
-    "backgroundSpr": "",
-    "standingSpr": [ "Yellow" ],
-    "portraitSpr": "Yellow",
-    "boxSpr": "UI_VisualNovel_Yellow_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Yellow_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Yellow_Ellipse",
-    "nameFont": "VN_Basic_Yellow",
-    "dialogFont": "VN_Basic_RYellow",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 3,
+      "dialogText": "미나츠선배..! 안녕하세요",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Pink" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 1,
-    "nameText": "미나츠",
-    "dialogText": "그만 늦잠 자버렸지 뭐야.",
-    "backgroundSpr": "",
-    "standingSpr": [ "Blue" ],
-    "portraitSpr": "Blue",
-    "boxSpr": "UI_VisualNovel_Blue_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Blue_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Blue_Ellipse",
-    "nameFont": "VN_Basic_Blue",
-    "dialogFont": "VN_Basic_RBlue",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 2,
+      "dialogText": "첫날부터 지각이냐...",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Yellow" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 1,
-    "nameText": "미나츠",
-    "dialogText": "그나저나 너 깨워주지도 않고 갔더라?",
-    "backgroundSpr": "",
-    "standingSpr": [ "Blue" ],
-    "portraitSpr": "Blue",
-    "boxSpr": "UI_VisualNovel_Blue_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Blue_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Blue_Ellipse",
-    "nameFont": "VN_Basic_Blue",
-    "dialogFont": "VN_Basic_RBlue",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 3, // 컷씬
+    "dialogSubData": {
+      "cutSceneEvents": [ 5 ], // 이미지 컷씬
+      "eventValues": [
+        {
+          "imageName": "UI_VisualNovel_Cut5"
+        }
+      ]
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 0,
-    "nameText": "주인공",
-    "dialogText": "",
-    "backgroundSpr": "",
-    "standingSpr": [],
-    "portraitSpr": "White",
-    "boxSpr": "UI_VisualNovel_White_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_White_Ellipse",
-    "arrawSpr": "UI_VisualNovel_White_Ellipse",
-    "nameFont": "VN_Basic_White",
-    "dialogFont": "VN_Basic_RWhite",
-    "choiceEventType": [ 1, 1 ],
-    "choiceText": [ "이번엔 절대 안 깨워 줄 거라고 했잖아.", "미안, 깜빡했어. 다음엔 꼭 같이 가자." ],
-    "choiceDialog": [ "4. Data/1. VisualNovel/Dialog/Dialog2_NoSay", "4. Data/1. VisualNovel/Dialog/Dialog2_YesSay" ]
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 1,
+      "dialogText": "그만 늦잠 자버렸지 뭐야.",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Blue" ],
+      "addLike": false,
+      "choiceData": {}
+    }
+  },
+  {
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 1,
+      "dialogText": "그나저나 너 깨워주지도 않고 갔더라?",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [ "Blue" ],
+      "addLike": false,
+      "choiceData": {}
+    }
+  },
+  {
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 0,
+      "dialogText": "",
+      "backgroundSpr": "BackGround_School",
+      "standingSpr": [],
+      "addLike": false,
+      "choiceData": {
+        "choiceEventType": [ 1, 1 ],
+        "choiceText": [ "이번엔 절대 안 깨워 줄 거라고 했잖아.", "미안, 깜빡했어. 다음엔 꼭 같이 가자." ],
+        "choiceDialog": [ "4. Data/1. VisualNovel/Dialog/Dialog2_NoSay", "4. Data/1. VisualNovel/Dialog/Dialog2_YesSay" ]
+      }
+    }
   }
 ]

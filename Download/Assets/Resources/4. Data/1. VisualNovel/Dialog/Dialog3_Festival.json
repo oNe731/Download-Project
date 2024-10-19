@@ -1,87 +1,48 @@
 [
   {
-    "dialogEvent": 1, // 페이드 인
-    "owner": 0,
-    "nameText": "",
-    "dialogText": "",
-    "backgroundSpr": "",
-    "standingSpr": [],
-    "portraitSpr": "",
-    "boxSpr": "",
-    "ellipseSpr": "",
-    "arrawSpr": "",
-    "nameFont": "",
-    "dialogFont": "",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 0, // 페이드
+    "dialogSubData": {
+      "fadeType": 0, // 페이드 인
+      "path": ""
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 3,
-    "nameText": "리카",
-    "dialogText": "우와... 너무 예뻐요...!",
-    "backgroundSpr": "BackGround_Festival",
-    "standingSpr": [ "Pink" ],
-    "portraitSpr": "Pink",
-    "boxSpr": "UI_VisualNovel_Pink_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Pink_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Pink_Ellipse",
-    "nameFont": "VN_Basic_Pink",
-    "dialogFont": "VN_Basic_RPink",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 3,
+      "dialogText": "우와... 너무 예뻐요...!",
+      "backgroundSpr": "BackGround_Festival",
+      "standingSpr": [ "Pink" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 1,
-    "nameText": "미나츠",
-    "dialogText": "그러게! 오길 잘 한 것 같다.",
-    "backgroundSpr": "",
-    "standingSpr": [ "Blue" ],
-    "portraitSpr": "Blue",
-    "boxSpr": "UI_VisualNovel_Blue_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Blue_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Blue_Ellipse",
-    "nameFont": "VN_Basic_Blue",
-    "dialogFont": "VN_Basic_RBlue",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 1,
+      "dialogText": "그러게! 오길 잘 한 것 같다.",
+      "backgroundSpr": "BackGround_Festival",
+      "standingSpr": [ "Blue" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 0,
-    "owner": 2,
-    "nameText": "사사키",
-    "dialogText": "이렇게 서 있지 말고, 우리 게임이나 하러가자",
-    "backgroundSpr": "",
-    "standingSpr": [ "Yellow" ],
-    "portraitSpr": "Yellow",
-    "boxSpr": "UI_VisualNovel_Yellow_ChatBox",
-    "ellipseSpr": "UI_VisualNovel_Yellow_Ellipse",
-    "arrawSpr": "UI_VisualNovel_Yellow_Ellipse",
-    "nameFont": "VN_Basic_Yellow",
-    "dialogFont": "VN_Basic_RYellow",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 1, // 다이얼로그
+    "dialogSubData": {
+      "owner": 2,
+      "dialogText": "이렇게 서 있지 말고, 우리 게임이나 하러가자",
+      "backgroundSpr": "BackGround_Festival",
+      "standingSpr": [ "Yellow" ],
+      "addLike": false,
+      "choiceData": {}
+    }
   },
   {
-    "dialogEvent": 5, // 새총 게임 시작
-    "owner": 0,
-    "nameText": "",
-    "dialogText": "",
-    "backgroundSpr": "",
-    "standingSpr": [],
-    "portraitSpr": "",
-    "boxSpr": "",
-    "ellipseSpr": "",
-    "arrawSpr": "",
-    "nameFont": "",
-    "dialogFont": "",
-    "choiceEventType": [],
-    "choiceText": [],
-    "choiceDialog": []
+    "dialogType": 2, // 게임 상태 변경
+    "dialogSubData": {
+      "gameType": 0 // 새총 게임 시작
+    }
   }
 ]

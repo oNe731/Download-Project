@@ -6,10 +6,10 @@ namespace VisualNovel
 {
     public class Like : ParabolaUI
     {
-        private VisualNovelManager.NPCTYPE m_npcIndex = VisualNovelManager.NPCTYPE.OT_END;
+        private VisualNovelManager.OWNERTYPE m_npcIndex = VisualNovelManager.OWNERTYPE.OT_END;
         private bool m_effectCreate = false;
 
-        public VisualNovelManager.NPCTYPE NpcIndex { set => m_npcIndex = value; }
+        public VisualNovelManager.OWNERTYPE NpcIndex { set => m_npcIndex = value; }
         public bool EffectCreate { set => m_effectCreate = value; }
 
         private new void Start()
@@ -29,15 +29,15 @@ namespace VisualNovel
                 string name = "";
                 switch (m_npcIndex)
                 {
-                    case VisualNovelManager.NPCTYPE.OT_BLUE:
+                    case VisualNovelManager.OWNERTYPE.OT_BLUE:
                         name = "UI_LikeParticle_B";
                         break;
 
-                    case VisualNovelManager.NPCTYPE.OT_PINK:
+                    case VisualNovelManager.OWNERTYPE.OT_PINK:
                         name = "UI_LikeParticle_P";
                         break;
 
-                    case VisualNovelManager.NPCTYPE.OT_YELLOW:
+                    case VisualNovelManager.OWNERTYPE.OT_YELLOW:
                         name = "UI_LikeParticle_Y";
                         break;
                 }
