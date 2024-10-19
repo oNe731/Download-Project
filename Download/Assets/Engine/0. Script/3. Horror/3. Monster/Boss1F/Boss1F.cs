@@ -49,7 +49,7 @@ public class Boss1F : Monster
 
     private void Start()
     {
-        m_hpMax = 50f;
+        m_hpMax = 40f;
         m_hp = m_hpMax;
         Create_HpBar();
 

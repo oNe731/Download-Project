@@ -14,7 +14,7 @@ namespace Horror
         [SerializeField] private UIBlood m_blood;
 
         private float m_hp = 0f;
-        private float m_hpMax = 20f;
+        private float m_hpMax = 50f;
         private float m_stamina = 0f;
         private float m_staminaMax = 10f;
 
