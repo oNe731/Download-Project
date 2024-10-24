@@ -43,7 +43,6 @@ public class GameRouletteText : MonoBehaviour
         }
         else if (m_state == STATE.ST_BACKGROUND)
         {
-            // 검은색 50으로 서서히 깔림
             m_blackImage.color = Color.Lerp(m_blackImage.color, m_targetColor, Time.deltaTime * m_fadeSpeed);
             if (Mathf.Approximately(m_blackImage.color.a, 0.5f))
             {

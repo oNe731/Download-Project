@@ -8,7 +8,6 @@ public class GameRoulette : MonoBehaviour
 
     private float m_time = 0f;
     private float m_rotationTiem = 2f;
-
     private float m_rotationSpeed = 500f;
 
     private RectTransform m_rectTransform;

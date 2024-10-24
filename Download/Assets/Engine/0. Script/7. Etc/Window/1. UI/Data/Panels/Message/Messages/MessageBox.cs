@@ -14,7 +14,7 @@ public class MessageBox : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        GameManager.Ins.Window.CHATTING.Set_ChattingsData(m_chattings);
         GameManager.Ins.Window.CHATTING.Active_ChildPopup(true);
+        GameManager.Ins.Window.CHATTING.Set_ChattingsData(m_chattings);
     }
 }

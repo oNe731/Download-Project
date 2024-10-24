@@ -9,10 +9,12 @@ public abstract class Panel_Popup : WindowData
     protected IconSlot m_slot = null;
     protected List<Panel_Popup> m_childPopup;
     protected int m_index;
+    protected bool m_InputPopupButton = true;
 
     public WindowManager.FILETYPE FileType => m_fileType;
     public bool Select => m_select;
     public IconSlot Slot { set => m_slot = value; }
+    public bool InputPopupButton { set => m_InputPopupButton = value; }
 
     public Panel_Popup() : base()
     {
@@ -35,6 +37,8 @@ public abstract class Panel_Popup : WindowData
         }
         else
         {
+            if (m_InputPopupButton == false) // 닫기 비활성화
+                return;
             m_select = false;
 
             GameManager.Ins.Window.Taskbar.Remove_TaskbarSlot(this);
@@ -69,7 +73,7 @@ public abstract class Panel_Popup : WindowData
 
     public void Putdown_Popup()
     {
-        if (m_object == null || m_slot == null)
+        if (m_object == null || m_slot == null || m_InputPopupButton == false)
             return;
 
         m_select = !m_select;

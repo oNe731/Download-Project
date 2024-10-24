@@ -9,13 +9,13 @@ public class GameRedLine : MonoBehaviour
 
     private void Start()
     {
-        // 왼쪽에서 오른쪽으로 반복
         for (int i = 0; i < transform.childCount; ++i)
             m_rectTransforms.Add(transform.GetChild(i).GetComponent<RectTransform>());
     }
 
     private void Update()
     {
+        // 왼쪽 -> 오른쪽 반복
         for (int i = 0; i < m_rectTransforms.Count; ++i)
         {
             Vector2 currentPosition = m_rectTransforms[i].anchoredPosition;
