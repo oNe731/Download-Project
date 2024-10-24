@@ -15,8 +15,8 @@ namespace Horror
         protected bool m_conversion = false;
         protected string m_triggerName = "";
 
-        private bool m_gravityUpdate = false;
-        private Vector3 m_gravityVelocity;
+        //private bool m_gravityUpdate = false;
+        //private Vector3 m_gravityVelocity;
 
         protected Transform m_transform;
         protected Transform m_rotationTransform;
@@ -84,13 +84,13 @@ namespace Horror
 
             if (velocity == Vector3.zero)
             {
-                m_gravityUpdate = false;
+                //m_gravityUpdate = false;
 
                 m_rigidbody.isKinematic = true;
             }
             else
             {
-                m_gravityUpdate = true;
+                //m_gravityUpdate = true;
 
                 m_rigidbody.isKinematic = false;
                 m_rigidbody.velocity = Vector3.Lerp(m_rigidbody.velocity, velocity, Time.deltaTime * m_player.LerpSpeed);

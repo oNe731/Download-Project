@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Panel_RecycleBin : Panel_Popup
 {
-    // Start is called before the first frame update
-    void Start()
+    public Panel_RecycleBin() : base()
     {
-        
+        m_fileType = WindowManager.FILETYPE.TYPE_TRASHBIN;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Active_Event(bool active)
     {
-        
+    }
+
+    public override void Load_Scene()
+    {
+    }
+
+    public override void Update_Data()
+    {
+    }
+
+    public override void Unload_Scene()
+    {
+
     }
 }

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Panel_Popup : WindowData
+public abstract class Panel_Popup : WindowData
 {
-    protected FILETYPE m_fileType = FILETYPE.TYPE_END;
+    protected WindowManager.FILETYPE m_fileType = WindowManager.FILETYPE.TYPE_END;
     protected bool m_select = false;
     protected IconSlot m_slot = null;
     protected List<Panel_Popup> m_childPopup;
     protected int m_index;
 
-    public FILETYPE FileType => m_fileType;
+    public WindowManager.FILETYPE FileType => m_fileType;
     public bool Select => m_select;
     public IconSlot Slot { set => m_slot = value; }
 
@@ -30,7 +30,7 @@ public class Panel_Popup : WindowData
             if(m_slot == null)
                 GameManager.Ins.Window.Taskbar.Add_TaskbarSlot(this);
             else
-                m_slot.Set_Select(m_select);
+                m_slot.Set_SelectColor(m_select);
             GameManager.Ins.Window.Sort_PopupIndex(m_fileType);
         }
         else
@@ -44,7 +44,10 @@ public class Panel_Popup : WindowData
         }
 
         m_object.SetActive(m_select);
+        Active_Event(active);
     }
+
+    protected abstract void Active_Event(bool active);
 
     public void Active_ChildPopup(bool active)
     {
@@ -70,7 +73,7 @@ public class Panel_Popup : WindowData
             return;
 
         m_select = !m_select;
-        m_slot.Set_Select(m_select);
+        m_slot.Set_SelectColor(m_select);
         m_object.SetActive(m_select);
 
         Fold_Child();

@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Panel_Memo : Panel_Popup
 {
-    // Start is called before the first frame update
-    void Start()
+    public Panel_Memo() : base()
     {
-        
+        m_fileType = WindowManager.FILETYPE.TYPE_MEMO;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Active_Event(bool active)
     {
-        
+    }
+
+    public override void Load_Scene()
+    {
+    }
+
+    public override void Update_Data()
+    {
+    }
+
+    public override void Unload_Scene()
+    {
+
     }
 }

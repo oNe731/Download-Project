@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler
 {
     [SerializeField] private Transform m_parent;
+
     private Vector2 m_offset;
     private RectTransform m_rectTransform;
 
@@ -21,10 +22,10 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Sort_Popup();
+
         // 오프셋 계산
         RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rectTransform, eventData.position, eventData.pressEventCamera, out m_offset);
-
-        Sort_Popup();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -35,7 +36,7 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
             m_rectTransform.localPosition = localPointerPosition - m_offset;
     }
 
-    private void Sort_Popup()
+    private void Sort_Popup() // 레이어 정렬
     {
         Panel_Popup panel = GameManager.Ins.Window.Get_Popup(m_parent.gameObject);
         if (panel != null)

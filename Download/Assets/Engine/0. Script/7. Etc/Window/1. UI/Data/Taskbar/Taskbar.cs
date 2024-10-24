@@ -9,7 +9,7 @@ public class Taskbar : WindowData
 
     public Taskbar() : base()
     {
-        // 아이콘 슬롯 생성
+        // 아이콘 슬롯 초기 생성
         for (int i = 0; i < m_slotCount; ++i)
             m_slots.Add(new IconSlot());
     }
@@ -56,7 +56,7 @@ public class Taskbar : WindowData
         return false;
     }
 
-    public void Remove_TaskbarSlot  (Panel_Popup panel)
+    public void Remove_TaskbarSlot(Panel_Popup panel)
     {
         for (int i = 0; i < m_slots.Count; ++i)
         {
