@@ -21,6 +21,7 @@ public class WindowManager : StageManager
 
     private WindowButton m_windowButton = new WindowButton();
 
+    private string m_statusText;
     private Dictionary<string, Sprite> m_fileIcon = new Dictionary<string, Sprite>();
 
     #region Property
@@ -38,6 +39,7 @@ public class WindowManager : StageManager
 
     public WindowButton WindowButton => m_windowButton;
 
+    public string StatusText { get => m_statusText; set => m_statusText = value; }
     public Dictionary<string, Sprite> FileIcon => m_fileIcon;
     #endregion
 
