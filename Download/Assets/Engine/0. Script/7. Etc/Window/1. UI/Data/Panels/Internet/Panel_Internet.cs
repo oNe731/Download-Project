@@ -9,7 +9,6 @@ public class Panel_Internet : Panel_Popup
     public enum TYPE { TYPE_NONE, TYPE_GAMESITE, TYPE_END }
     public enum EVENT { EVENT_ERROR, EVENT_END }
 
-    private TYPE m_internetType = TYPE.TYPE_NONE;
     private Transform m_siteTransform;
     private TMP_InputField m_siteText;
 
@@ -30,10 +29,13 @@ public class Panel_Internet : Panel_Popup
     {
         if(active == true)
         {
-            // 기본 인터넷 창 상태 설정
-            m_InputPopupButton = true;
-            m_internetType = TYPE.TYPE_NONE;
-            Set_InternetData("https://www.internet.com/", m_internetType);
+            switch(m_activeType)
+            {
+                case (int)TYPE.TYPE_NONE: // 기본 창 상태
+                    m_InputPopupButton = true;
+                    Set_InternetData("https://www.internet.com/", m_activeType);
+                    break;
+            }
         }
     }
 
@@ -61,7 +63,7 @@ public class Panel_Internet : Panel_Popup
     {
     }
 
-    public void Set_InternetData(string siteText, TYPE type) // 창 열기 전 정보 셋팅
+    public void Set_InternetData(string siteText, int activeType) // 창 열기 전 정보 셋팅
     {
         // 자식 삭제
         int childCount = m_siteTransform.childCount;
@@ -72,10 +74,10 @@ public class Panel_Internet : Panel_Popup
         m_siteText.text = siteText;
 
         // 패널 생성
-        m_internetType = type;
-        switch (m_internetType)
+        m_activeType = activeType;
+        switch (m_activeType)
         {
-            case TYPE.TYPE_GAMESITE:
+            case (int)TYPE.TYPE_GAMESITE:
                 m_InputPopupButton = false;
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page1", m_siteTransform);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page2", m_siteTransform);

@@ -5,16 +5,21 @@ using UnityEngine.EventSystems;
 
 public class MessageBox : MonoBehaviour, IPointerClickHandler
 {
-    private List<ChattingData> m_chattings;
+    private MessageList m_owner;
 
-    public void Set_ChattingsData(List<ChattingData> chattings)
+    public void Set_Owner(MessageList owner)
     {
-        m_chattings = chattings;
+        m_owner = owner;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (m_owner == null)
+            return;
+
+        m_owner.Set_Click(true);
+
+        GameManager.Ins.Window.CHATTING.Set_ChattingsData(m_owner.Chattings);
         GameManager.Ins.Window.CHATTING.Active_ChildPopup(true);
-        GameManager.Ins.Window.CHATTING.Set_ChattingsData(m_chattings);
     }
 }

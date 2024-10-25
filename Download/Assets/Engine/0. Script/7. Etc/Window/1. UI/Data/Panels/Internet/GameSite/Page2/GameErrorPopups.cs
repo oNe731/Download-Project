@@ -80,7 +80,7 @@ public class GameErrorPopups : MonoBehaviour
                 {
                     m_time = 0f;
 
-                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(0, 1, WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.FOLDER.Active_Popup(true));
+                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(0, 1, WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.FOLDER.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_GAMEICON));
                     Destroy(gameObject);
 
                     m_state = STATE.ST_END;

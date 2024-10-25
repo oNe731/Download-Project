@@ -6,10 +6,12 @@ public abstract class Panel_Popup : WindowData
 {
     protected WindowManager.FILETYPE m_fileType = WindowManager.FILETYPE.TYPE_END;
     protected bool m_select = false;
+    protected bool m_InputPopupButton = true;
+
+    protected int m_activeType = -1;
     protected IconSlot m_slot = null;
     protected List<Panel_Popup> m_childPopup;
-    protected int m_index;
-    protected bool m_InputPopupButton = true;
+
 
     public WindowManager.FILETYPE FileType => m_fileType;
     public bool Select => m_select;
@@ -20,13 +22,14 @@ public abstract class Panel_Popup : WindowData
     {
     }
 
-    public void Active_Popup(bool active)
+    public void Active_Popup(bool active, int activeType = -1)
     {
         if (m_object == null)
             return;
 
         if (active == true)
         {
+            m_activeType = activeType;
             m_select = true;
 
             if(m_slot == null)

@@ -6,8 +6,11 @@ public class WindowManager : StageManager
     public enum FILETYPE
     {
         TYPE_FOLDER, TYPE_CHATTING, TYPE_MESSAGE, TYPE_INTERNET, TYPE_MEMO, TYPE_PICTURE, TYPE_VIDEO, TYPE_TRASHBIN,
+        
         TYPE_NOVEL, TYPE_WESTERN, TYPE_HORROR,
+
         TYPE_ZIP,
+        TYPE_BLACKOUT, TYPE_BLOBFISH, TYPE_GATEGUADIAN, TYPE_MAGICALGIRLS, TYPE_NEGATIVENARRATIVE, TYPE_RESCUEUNION, TYPE_THET,
 
         TYPE_END
     }
@@ -110,15 +113,28 @@ public class WindowManager : StageManager
 
             case FILETYPE.TYPE_NOVEL:
                 return m_fileIcon["Icon_VisualNovel"];
-
             case FILETYPE.TYPE_WESTERN:
                 return m_fileIcon["Icon_Western"];
-
             case FILETYPE.TYPE_HORROR:
                 return m_fileIcon["Icon_Horror"];
 
             case FILETYPE.TYPE_ZIP:
                 return m_fileIcon["Icon_Zip"];
+
+            case FILETYPE.TYPE_BLACKOUT:
+                return m_fileIcon["Icon_Blackout"];
+            case FILETYPE.TYPE_BLOBFISH:
+                return m_fileIcon["Icon_Blobfish"];
+            case FILETYPE.TYPE_GATEGUADIAN:
+                return m_fileIcon["Icon_GateGuadian"];
+            case FILETYPE.TYPE_MAGICALGIRLS:
+                return m_fileIcon["Icon_MagicalGirls"];
+            case FILETYPE.TYPE_NEGATIVENARRATIVE:
+                return m_fileIcon["Icon_NegativeNarrative"];
+            case FILETYPE.TYPE_RESCUEUNION:
+                return m_fileIcon["Icon_RescueUnion"];
+            case FILETYPE.TYPE_THET:
+                return m_fileIcon["Icon_Thet"];
         }
 
         return null;
@@ -141,9 +157,9 @@ public class WindowManager : StageManager
         {
             m_isVisit = true;
 
-            m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷");
-            m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더");
-            m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지", () => MESSAGE.Active_Popup(true));
+            m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷",  () => INTERNET.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더", () => FOLDER.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => MESSAGE.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장");
             m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE,  "사진");
             m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
