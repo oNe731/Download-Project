@@ -6,7 +6,7 @@ using UnityEngine;
 public class ContactList : WindowData
 {
     private List<ContactData> m_contact;
-    private bool m_isClick = false;
+    //private bool m_isClick = false;
 
     public List<ContactData> Contact => m_contact;
 

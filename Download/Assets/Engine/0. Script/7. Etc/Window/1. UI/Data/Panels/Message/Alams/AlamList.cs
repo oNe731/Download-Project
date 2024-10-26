@@ -5,7 +5,7 @@ using UnityEngine;
 public class AlamList : WindowData
 {
     private List<AlamData> m_alams;
-    private bool m_isClick = false;
+    //private bool m_isClick = false;
 
     public List<AlamData> Alams => m_alams;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class CallList : WindowData
 {
     private List<CallData> m_calls;
-    private bool m_isClick = false;
+    //private bool m_isClick = false;
 
     public List<CallData> Call => m_calls;
 

@@ -26,6 +26,7 @@ public class StatusMessage : MonoBehaviour
     {
         m_isInput = true;
         m_boxImage.color = new Color(0f, 0f, 0f, 0.2f);
+        //m_statusText.ActivateInputField(); // 입력 시작 시 포커스 설정
     }
 
     private void Input_Changed(string text)
