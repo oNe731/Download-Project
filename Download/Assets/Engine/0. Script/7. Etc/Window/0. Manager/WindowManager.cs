@@ -168,6 +168,8 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "»ﬁ¡ˆ≈Î");
 
             MESSAGE.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
+            MESSAGE.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
+            MESSAGE.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
         }
         else
         {

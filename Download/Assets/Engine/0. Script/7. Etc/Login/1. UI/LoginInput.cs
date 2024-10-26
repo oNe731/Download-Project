@@ -12,6 +12,14 @@ public class LoginInput : MonoBehaviour
         m_nameInput = transform.GetChild(2).GetComponent<TMP_InputField>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            Button_InputName();
+        }
+    }
+
     public void Button_InputName()
     {
         GameManager.Ins.PlayerName = m_nameInput.text;
