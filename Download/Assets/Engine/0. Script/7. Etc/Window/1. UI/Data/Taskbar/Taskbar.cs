@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Taskbar : WindowData
 {
-    private int m_slotCount = 23;
+    private int m_slotCount = 30;
     private List<IconSlot> m_slots = new List<IconSlot>();
 
     public Taskbar() : base()

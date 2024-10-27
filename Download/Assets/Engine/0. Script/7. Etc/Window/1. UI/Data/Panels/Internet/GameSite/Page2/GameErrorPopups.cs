@@ -80,9 +80,12 @@ public class GameErrorPopups : MonoBehaviour
                 {
                     m_time = 0f;
 
-                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(0, 1, WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.FOLDER.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_GAMEICON));
-                    Destroy(gameObject);
+                    // ZIP 파일 생성
+                    //GameManager.Ins.Window.FileIconSlots.Add_FileIcon(0, 1, WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.FOLDER.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_ZIP));
+                    GameManager.Ins.Window.FileIconSlots.Add_NewFileIcon(WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.FOLDER.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_ZIP));
+                    GameManager.Ins.Window.Set_WindowFileChildFile("4. Data/0. Window/Folders/Folders_Games", GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"), WindowManager.FILETYPE.TYPE_ZIP, "Zip");
 
+                    Destroy(gameObject);
                     m_state = STATE.ST_END;
                 }
                 break;

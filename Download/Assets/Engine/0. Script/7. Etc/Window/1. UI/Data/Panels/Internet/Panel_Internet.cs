@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class Panel_Internet : Panel_Popup
 {
     public enum TYPE { TYPE_NONE, TYPE_GAMESITE, TYPE_END }
-    public enum EVENT { EVENT_ERROR, EVENT_END }
+    public enum EVENT { EVENT_GAMESITE, EVENT_ERROR, EVENT_END }
 
     private Transform m_siteTransform;
     private TMP_InputField m_siteText;
+    private ScrollRect m_scrollRect;
 
     private List<bool> m_eventBool;
 
@@ -29,7 +30,8 @@ public class Panel_Internet : Panel_Popup
     {
         if(active == true)
         {
-            switch(m_activeType)
+            m_scrollRect.verticalNormalizedPosition = 1f;
+            switch (m_activeType)
             {
                 case (int)TYPE.TYPE_NONE: // 기본 창 상태
                     m_InputPopupButton = true;
@@ -52,6 +54,7 @@ public class Panel_Internet : Panel_Popup
         #region 기본 셋팅
         m_siteTransform = m_object.transform.GetChild(3).GetChild(0).GetChild(0);
         m_siteText = m_object.transform.GetChild(2).GetChild(3).GetComponent<TMP_InputField>();
+        m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
         #endregion
     }
 
@@ -78,7 +81,7 @@ public class Panel_Internet : Panel_Popup
         switch (m_activeType)
         {
             case (int)TYPE.TYPE_GAMESITE:
-                m_InputPopupButton = false;
+                Start_Event(EVENT.EVENT_GAMESITE);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page1", m_siteTransform);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page2", m_siteTransform);
                 break;
@@ -93,6 +96,10 @@ public class Panel_Internet : Panel_Popup
         m_eventBool[(int)type] = true;
         switch (type)
         {
+            case EVENT.EVENT_GAMESITE:
+                m_InputPopupButton = false;
+                break;
+
             case EVENT.EVENT_ERROR:
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/ErrorPopup_Panel", GameObject.Find("Canvas").transform.GetChild(3));
                 break;

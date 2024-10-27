@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class WindowManager : StageManager
         TYPE_ZIP,
         TYPE_BLACKOUT, TYPE_BLOBFISH, TYPE_GATEGUADIAN, TYPE_MAGICALGIRLS, TYPE_NEGATIVENARRATIVE, TYPE_RESCUEUNION, TYPE_THET,
 
+        TYPE_TXT,
+
         TYPE_END
     }
 
@@ -22,6 +25,8 @@ public class WindowManager : StageManager
     private WindowButton m_windowButton = new WindowButton();
 
     private string m_statusText;
+    private string m_backgroundPath = "C:\\Users\\user\\Desktop";
+    private Dictionary<string, WindowFile> m_fileData = new Dictionary<string, WindowFile>(); // 파일 데이터
     private Dictionary<string, Sprite> m_fileIcon = new Dictionary<string, Sprite>();
 
     #region Property
@@ -40,6 +45,8 @@ public class WindowManager : StageManager
     public WindowButton WindowButton => m_windowButton;
 
     public string StatusText { get => m_statusText; set => m_statusText = value; }
+    public string BackgroundPath { get => m_backgroundPath; }
+    public Dictionary<string, WindowFile> FileData => m_fileData;
     public Dictionary<string, Sprite> FileIcon => m_fileIcon;
     #endregion
 
@@ -82,6 +89,8 @@ public class WindowManager : StageManager
         m_fileIcon.Add("Icon_NegativeNarrative", GameManager.Ins.Resource.Load<Sprite>(basicPath + "EtcGameIcon/UI_Window_ZIP_NegativeNarrative"));
         m_fileIcon.Add("Icon_RescueUnion",       GameManager.Ins.Resource.Load<Sprite>(basicPath + "EtcGameIcon/UI_Window_ZIP_RescueUnion"));
         m_fileIcon.Add("Icon_Thet",              GameManager.Ins.Resource.Load<Sprite>(basicPath + "EtcGameIcon/UI_Window_ZIP_Thet"));
+
+        m_fileIcon.Add("Icon_TxtFifle", GameManager.Ins.Resource.Load<Sprite>(basicPath + "WindowIcon/UI_Window_Icon_txtFifle"));
     }
 
     public Sprite Get_FileSprite(FILETYPE type, int index = 0)
@@ -137,6 +146,9 @@ public class WindowManager : StageManager
                 return m_fileIcon["Icon_RescueUnion"];
             case FILETYPE.TYPE_THET:
                 return m_fileIcon["Icon_Thet"];
+
+            case FILETYPE.TYPE_TXT:
+                return m_fileIcon["Icon_TxtFifle"];
         }
 
         return null;
@@ -159,10 +171,11 @@ public class WindowManager : StageManager
         {
             m_isVisit = true;
 
+            // 배경화면 아이콘 생성 // 파일 인덱스 아이디 부여
             m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷",  () => INTERNET.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더", () => FOLDER.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => MESSAGE.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장");
+            m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => MEMO.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE,  "사진");
             m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
             m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통");
@@ -198,6 +211,7 @@ public class WindowManager : StageManager
         base.Exit_Stage();
 
         m_taskbar.Unload_Scene();
+        m_fileIconSlots.Unload_Scene();
         for (int i = 0; i < m_popups.Count; ++i)
             m_popups[i].Unload_Scene();
     }
@@ -220,5 +234,41 @@ public class WindowManager : StageManager
         }
 
         return null;
+    }
+
+
+    // --- 
+    public string Get_FullFilePath(string originPath, string fileName)
+    {
+        return originPath + "\\" + fileName;
+    }
+
+    public bool Check_File(string filePath)
+    {
+        WindowFile file;
+        return GameManager.Ins.Window.FileData.TryGetValue(filePath, out file);
+    }
+
+
+    public WindowFile Get_WindowFile(string filePath, WindowFileData fileData, Action action = null)
+    {
+        WindowFile file;
+        if (GameManager.Ins.Window.FileData.TryGetValue(filePath, out file) == false)
+        {
+            file = new WindowFile(filePath, fileData, action);
+            GameManager.Ins.Window.FileData.Add(filePath, file);
+        }
+
+        return file;
+    }
+
+    public void Set_WindowFileChildFile(string jsonPath, string filePath, FILETYPE type, string name)
+    {
+        List<FoldersData> jsonData = GameManager.Ins.Load_JsonData<FoldersData>(jsonPath);
+        WindowFile file = Get_WindowFile(filePath, new WindowFileData(type, name));
+
+        WindowFileData data = file.FileData;
+        data.childFolders = jsonData[0].childFolders;
+        file.Set_FileData(data);
     }
 }

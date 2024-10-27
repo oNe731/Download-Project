@@ -69,6 +69,9 @@ public class ChatInput : MonoBehaviour
 
     public void Button_Send() // 메세지 전송 버튼
     {
+        if (m_callCoroutine != null)
+            return;
+
         #region 메시지 추가
         Chatting chatting = new Chatting();
         chatting.type = ChattingData.COMMUNICANTSTYPE.CT_RECEIVER;

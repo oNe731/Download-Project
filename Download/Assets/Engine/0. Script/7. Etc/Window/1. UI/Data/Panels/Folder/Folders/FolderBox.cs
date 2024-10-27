@@ -10,16 +10,16 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
     public enum BOXIMAGE { BI_NONE, BT_BASIC, BT_DESTROY, BI_END }
 
     private Image m_clickImage;
-    private Folder m_folderData;
+    private WindowFile m_fileData;
 
-    public Folder FolderData => m_folderData;
+    public WindowFile FileData => m_fileData;
 
-    public void Set_FolderBox(Folder folder)
+    public void Set_FolderBox(WindowFile file)
     {
-        m_folderData = folder;
+        m_fileData = file;
 
-        transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Ins.Window.Get_FileSprite(m_folderData.fileType);
-        transform.GetChild(1).GetComponent<TMP_Text>().text = m_folderData.fileName;
+        transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Ins.Window.Get_FileSprite(m_fileData.FileData.fileType);
+        transform.GetChild(1).GetComponent<TMP_Text>().text = m_fileData.FileData.fileName;
 
         m_clickImage = transform.GetChild(2).GetComponent<Image>();
     }
@@ -46,6 +46,9 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("폴더 클릭");
+        if (m_fileData == null || m_fileData.Action == null)
+            return;
+
+        m_fileData.Action();
     }
 }
