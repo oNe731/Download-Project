@@ -14,11 +14,15 @@ public class Panel_Folder : Panel_Popup
     private TMP_InputField m_pathText;
     private ScrollRect m_scrollRect;
     private FileInput m_fileInput;
+    private FolderBox m_folderBox;
+    private Transform m_favoriteTransform;
 
     private string m_path;
     private List<bool> m_eventBool;
 
     private Transform m_folderTransform;
+    public FolderBox SelectFolderBox => m_folderBox;
+    public Transform FavoriteTransform => m_favoriteTransform;
     public Transform FolderTransform => m_folderTransform;
 
     public Panel_Folder() : base()
@@ -35,6 +39,7 @@ public class Panel_Folder : Panel_Popup
         if(active == true)
         {
             m_scrollRect.verticalNormalizedPosition = 1f;
+            m_favoriteTransform.gameObject.SetActive(false);
             switch (m_activeType)
             {
                 case (int)TYPE.TYPE_NONE:
@@ -104,6 +109,7 @@ public class Panel_Folder : Panel_Popup
 
         #region 기본 셋팅
         m_folderTransform = m_object.transform.GetChild(3).GetChild(0).GetChild(0);
+        m_favoriteTransform = m_object.transform.GetChild(2).GetChild(0).GetChild(1);
         m_pathText = m_object.transform.GetChild(2).GetChild(2).GetChild(1).GetComponent<TMP_InputField>();
         m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
         m_fileInput = m_object.transform.GetChild(4).GetComponent<FileInput>();
@@ -241,4 +247,16 @@ public class Panel_Folder : Panel_Popup
         }
     }
     #endregion
+
+    public void Set_SelectBox(FolderBox box)
+    {
+        if (box == null || m_folderBox == box)
+            return;
+
+        if(m_folderBox != null)
+            m_folderBox.Set_ClickImage(FolderBox.BOXIMAGE.BI_NONE);
+
+        m_folderBox = box;
+        m_folderBox.Set_ClickImage(FolderBox.BOXIMAGE.BT_BASIC);
+    }
 }

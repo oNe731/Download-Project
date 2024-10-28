@@ -26,11 +26,13 @@ public class WindowFile
     private string m_filePath;
     private WindowFileData m_fileData;
     private Action m_action;
+    private bool m_favorite = false;
 
     public int FileIndex { get => m_fileIndex; }
     public string FilePath { get => m_filePath; }
     public WindowFileData FileData { get => m_fileData; }
     public Action Action { get => m_action; }
+    public bool Favorite { get => m_favorite; set => m_favorite = value; }
 
     public WindowFile(string filePath, WindowFileData windowFileData, Action action = null)
     {

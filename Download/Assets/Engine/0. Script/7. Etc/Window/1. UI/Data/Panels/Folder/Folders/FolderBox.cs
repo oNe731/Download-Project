@@ -12,6 +12,9 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
     private Image m_clickImage;
     private WindowFile m_fileData;
 
+    private float m_lastClickTime = 0f;
+    private const float m_doubleClickThreshold = 1f; // 더블 클릭을 인정할 시간 간격 (초 단위)
+
     public WindowFile FileData => m_fileData;
 
     public void Set_FolderBox(WindowFile file)
@@ -22,6 +25,7 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
         transform.GetChild(1).GetComponent<TMP_Text>().text = m_fileData.FileData.fileName;
 
         m_clickImage = transform.GetChild(2).GetComponent<Image>();
+        Set_Favorite();
     }
 
     public void Set_ClickImage(BOXIMAGE type)
@@ -29,6 +33,7 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
         switch(type)
         {
             case BOXIMAGE.BI_NONE:
+                m_lastClickTime = 0f;
                 m_clickImage.gameObject.SetActive(false);
                 break;
 
@@ -46,9 +51,26 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        GameManager.Ins.Window.FOLDER.Set_SelectBox(this);
+
         if (m_fileData == null || m_fileData.Action == null)
             return;
 
-        m_fileData.Action();
+        float currentTime = Time.time;
+        if (currentTime - m_lastClickTime <= m_doubleClickThreshold)
+        {
+            // 1초 내에 두 번 클릭되었을 때 액션 호출
+            m_fileData.Action();
+            m_lastClickTime = 0f; // 타임스탬프 초기화
+        }
+        else
+        {
+            m_lastClickTime = currentTime;
+        }
+    }
+
+    public void Set_Favorite()
+    {
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(m_fileData.Favorite);
     }
 }
