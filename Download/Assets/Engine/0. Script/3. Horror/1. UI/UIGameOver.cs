@@ -16,7 +16,7 @@ public class UIGameOver : MonoBehaviour
     public void Start_GameOver()
     {
         m_redImage.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0f);
-        m_blackImage.color = new Color(Color.black.r, Color.black.g, Color.black.b, 0f);
+        m_blackImage.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0f);
         m_Details.SetActive(false);
 
         if (m_redCoroutine != null)
@@ -43,7 +43,7 @@ public class UIGameOver : MonoBehaviour
                 black = true;
                 if (m_blackCoroutine != null)
                     StopCoroutine(m_blackCoroutine);
-                m_blackCoroutine = StartCoroutine(BlackFadeCoroutine(0f, 1f, 1f));
+                m_blackCoroutine = StartCoroutine(BlackFadeCoroutine(0f, 1f, 1.5f));
             }
 
             yield return null;
