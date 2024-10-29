@@ -72,6 +72,7 @@ public abstract class Panel_Popup : WindowData
         }
 
         m_object.SetActive(m_select);
+        Active_Event(active);
     }
 
     public void Putdown_Popup()

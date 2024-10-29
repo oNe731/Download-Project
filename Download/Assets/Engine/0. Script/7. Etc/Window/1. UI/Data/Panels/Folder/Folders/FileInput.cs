@@ -25,7 +25,7 @@ public class FileInput : MonoBehaviour
         WindowManager WI = GameManager.Ins.Window;
 
         // 파일 추가
-        if(WI.FileIconSlots.Add_NewFileIcon(WindowManager.FILETYPE.TYPE_TXT, m_nameField.text, () => GameManager.Ins.Window.MEMO.Active_Popup(true)) == true)
+        if(WI.FileIconSlots.Add_NewFileIcon(WindowManager.FILETYPE.TYPE_TXT, m_nameField.text) == true)
         {
             WindowFile file = WI.Get_WindowFile(WI.Get_FullFilePath(WI.BackgroundPath, m_nameField.text), new WindowFileData(WindowManager.FILETYPE.TYPE_TXT, m_nameField.text));
             file.Set_FileAction(() => GameManager.Ins.Window.MEMO.Active_Popup(true, file.FileIndex));
