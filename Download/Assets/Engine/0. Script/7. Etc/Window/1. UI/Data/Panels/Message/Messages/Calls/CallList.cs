@@ -24,8 +24,8 @@ public class CallList : WindowData
     {
         m_calls = call;
 
-        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/ChatingApp/ChatingApp_CallList", GameManager.Ins.Window.MESSAGE.MessageTransform);
-        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.MESSAGE.MessageTransform.childCount - 2);
+        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Message/Messages/Messages_CallList", GameManager.Ins.Window.Message.MessageTransform);
+        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.Message.MessageTransform.childCount - 2);
         m_object.GetComponent<CallBox>().Set_Owner(this);
 
         #region 기본 셋팅

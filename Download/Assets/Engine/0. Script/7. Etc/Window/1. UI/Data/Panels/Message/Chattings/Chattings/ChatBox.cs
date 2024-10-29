@@ -15,7 +15,7 @@ public class ChatBox : MonoBehaviour
         m_chatting = chatting;
         if (m_chatting.type == ChattingData.COMMUNICANTSTYPE.CT_SENDER)
         {
-            //* // 프로필 이미지 0
+            //* 프로필 이미지 0
 
             transform.GetChild(1).GetComponent<TMP_Text>().text = senderName; // 이름 텍스트
 
@@ -55,11 +55,11 @@ public class ChatBox : MonoBehaviour
         switch (m_chatting.clickType)
         {
             case CLICKTYPE.CT_GAMESITE: // 게임 사이트 클릭 이벤트
-                GameManager.Ins.Window.MESSAGE.Active_Popup(false);
-                GameManager.Ins.Window.CHATTING.Active_Popup(false);
+                GameManager.Ins.Window.Message.Active_Popup(false);
+                GameManager.Ins.Window.Chatting.Active_Popup(false);
 
-                GameManager.Ins.Window.INTERNET.Set_InternetData(m_chatting.text, (int)Panel_Internet.TYPE.TYPE_GAMESITE);
-                GameManager.Ins.Window.INTERNET.Active_Popup(true);
+                GameManager.Ins.Window.Internet.Set_InternetData(m_chatting.text, (int)Panel_Internet.TYPE.TYPE_GAMESITE);
+                GameManager.Ins.Window.Internet.Active_Popup(true);
                 break;
         }
     }

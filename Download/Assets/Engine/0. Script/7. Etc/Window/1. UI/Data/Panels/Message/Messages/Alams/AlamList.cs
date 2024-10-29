@@ -23,8 +23,8 @@ public class AlamList : WindowData
     {
         m_alams = alams;
 
-        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/ChatingApp/ChatingApp_AlamList", GameManager.Ins.Window.MESSAGE.MessageTransform);
-        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.MESSAGE.MessageTransform.childCount - 2);
+        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Message/Messages/Messages_AlamList", GameManager.Ins.Window.Message.MessageTransform);
+        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.Message.MessageTransform.childCount - 2);
         m_object.GetComponent<AlamBox>().Set_Owner(this);
 
         #region 기본 셋팅

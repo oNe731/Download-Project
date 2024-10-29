@@ -23,8 +23,8 @@ public class MessageList : WindowData
     {
         m_chattings = chattings;
 
-        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/ChatingApp/ChatingApp_MessageList", GameManager.Ins.Window.MESSAGE.MessageTransform);
-        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.MESSAGE.MessageTransform.childCount - 2);
+        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Message/Messages/Messages_MessageList", GameManager.Ins.Window.Message.MessageTransform);
+        m_object.transform.SetSiblingIndex(GameManager.Ins.Window.Message.MessageTransform.childCount - 2);
         m_object.GetComponent<MessageBox>().Set_Owner(this);
 
         #region 기본 셋팅
@@ -32,19 +32,8 @@ public class MessageList : WindowData
         m_object.transform.GetChild(2).GetComponent<TMP_Text>().text = m_chattings[0].senderName; // 발신자 이름 텍스트
         m_object.transform.GetChild(3).GetComponent<TMP_Text>().text = m_chattings[0].chattings[m_chattings[0].chattings.Count - 1].text; // 마지막 텍스트
         m_object.transform.GetChild(4).GetComponent<TMP_Text>().text = m_chattings[0].chattings[m_chattings[0].chattings.Count - 1].time; // 마지막 텍스트 시간
-        //m_object.transform.GetChild(5).GetChild(0).GetComponent<TMP_Text>().text = m_chattings[0].chattings.Count.ToString(); // 전체 텍스트 개수
         Set_Click(m_isClick);
         #endregion
-    }
-
-    public override void Update_Data()
-    {
-
-    }
-
-    public override void Unload_Scene()
-    {
-
     }
 
     public void Set_Click(bool click)

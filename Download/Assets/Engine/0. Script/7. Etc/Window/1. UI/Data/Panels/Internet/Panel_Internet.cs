@@ -41,7 +41,7 @@ public class Panel_Internet : Panel_Popup
     public override void Load_Scene()
     {
         Transform canvas = GameObject.Find("Canvas").transform;
-        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Panels/Panel_Internet", canvas.GetChild(3));
+        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/Panel_Internet", canvas.GetChild(3));
         m_object.SetActive(m_select);
 
         // 버튼 이벤트 추가

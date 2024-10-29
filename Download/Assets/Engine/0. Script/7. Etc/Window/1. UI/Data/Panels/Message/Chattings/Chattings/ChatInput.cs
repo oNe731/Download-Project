@@ -84,7 +84,7 @@ public class ChatInput : MonoBehaviour
         chatting.time = $"{amPm} {hour}:{currentTime.Minute.ToString("00")}"; // 분 2자리로 출력
 
         chatting.fontColor = new List<float> { 0f, 0f, 0f, 1f };
-        GameManager.Ins.Window.CHATTING.Add_ChattingData("", chatting);
+        GameManager.Ins.Window.Chatting.Add_ChattingData("", chatting);
         #endregion
 
         // 초기화
@@ -97,6 +97,6 @@ public class ChatInput : MonoBehaviour
     private IEnumerator Move_ScrollBottom()
     {
         yield return new WaitForSeconds(0.1f);
-        GameManager.Ins.Window.CHATTING.ScrollRect.verticalNormalizedPosition = 0f;
+        GameManager.Ins.Window.Chatting.ScrollRect.verticalNormalizedPosition = 0f;
     }
 }

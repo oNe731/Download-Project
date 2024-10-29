@@ -24,7 +24,7 @@ public class WindowManager : StageManager
     private List<Panel_Popup> m_popups = new List<Panel_Popup>();
     private WindowButton m_windowButton = new WindowButton();
 
-    private string m_statusText; // 상태 메시지
+    private string m_statusText = "한줄로 당신의 상태를 전해보세요!"; // 상태 메시지
     private string m_backgroundPath = "C:\\Users\\user\\Desktop"; // 배경화면 경로
     private Dictionary<string, WindowFile> m_fileData = new Dictionary<string, WindowFile>(); // 파일 데이터
     private Dictionary<string, Sprite> m_fileIcon = new Dictionary<string, Sprite>();         // 파일 이미지
@@ -185,8 +185,8 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통");
 
             Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
-            //MESSAGE.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
-            //MESSAGE.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
+            //Message.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
+            //Message.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
         }
         else
         {

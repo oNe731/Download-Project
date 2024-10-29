@@ -19,7 +19,7 @@ public class MessageBox : MonoBehaviour, IPointerClickHandler
 
         m_owner.Set_Click(true);
 
-        GameManager.Ins.Window.CHATTING.Set_ChattingsData(m_owner);
-        GameManager.Ins.Window.CHATTING.Active_ChildPopup(true);
+        GameManager.Ins.Window.Chatting.Set_ChattingsData(m_owner);
+        GameManager.Ins.Window.Chatting.Active_ChildPopup(true);
     }
 }

@@ -63,6 +63,6 @@ public class Panel_Memo : Panel_Popup
 
     public void Button_Save() // 저장 버튼
     {
-        GameManager.Ins.Window.FOLDER.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_SAVE);
+        GameManager.Ins.Window.Folder.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_SAVE);
     }
 }
