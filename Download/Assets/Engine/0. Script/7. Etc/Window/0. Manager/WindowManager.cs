@@ -6,8 +6,9 @@ public class WindowManager : StageManager
 {
     public enum FILETYPE
     {
+        TYPE_FILEDELETE, 
         TYPE_FOLDER, TYPE_CHATTING, TYPE_MESSAGE, TYPE_INTERNET, TYPE_MEMO, TYPE_PICTURE, TYPE_VIDEO, TYPE_TRASHBIN,
-        
+
         TYPE_NOVEL, TYPE_WESTERN, TYPE_HORROR,
 
         TYPE_ZIP,
@@ -18,42 +19,45 @@ public class WindowManager : StageManager
         TYPE_END
     }
 
-    private Taskbar m_taskbar = new Taskbar();
-    private FileIconSlots m_fileIconSlots = new FileIconSlots();
+    private Taskbar           m_taskbar = new Taskbar();
+    private FileIconSlots     m_fileIconSlots = new FileIconSlots();
     private List<Panel_Popup> m_popups = new List<Panel_Popup>();
-
     private WindowButton m_windowButton = new WindowButton();
 
-    private string m_statusText;
-    private string m_backgroundPath = "C:\\Users\\user\\Desktop";
+    private string m_statusText; // 상태 메시지
+    private string m_backgroundPath = "C:\\Users\\user\\Desktop"; // 배경화면 경로
     private Dictionary<string, WindowFile> m_fileData = new Dictionary<string, WindowFile>(); // 파일 데이터
-    private Dictionary<string, Sprite> m_fileIcon = new Dictionary<string, Sprite>();
+    private Dictionary<string, Sprite> m_fileIcon = new Dictionary<string, Sprite>();         // 파일 이미지
 
     #region Property
     public Taskbar Taskbar => m_taskbar;
     public FileIconSlots FileIconSlots => m_fileIconSlots;
-
-    public Panel_Folder     FOLDER => (Panel_Folder)m_popups[(int)FILETYPE.TYPE_FOLDER];
-    public Panel_Chatting   CHATTING => (Panel_Chatting)m_popups[(int)FILETYPE.TYPE_CHATTING];
-    public Panel_Message    MESSAGE => (Panel_Message)m_popups[(int)FILETYPE.TYPE_MESSAGE];
-    public Panel_Internet   INTERNET => (Panel_Internet)m_popups[(int)FILETYPE.TYPE_INTERNET];
-    public Panel_Memo       MEMO => (Panel_Memo)m_popups[(int)FILETYPE.TYPE_MEMO];
-    public Panel_Picture    PICTURE => (Panel_Picture)m_popups[(int)FILETYPE.TYPE_PICTURE];
-    public Panel_Video      VIDEO => (Panel_Video)m_popups[(int)FILETYPE.TYPE_VIDEO];
-    public Panel_RecycleBin RECYCLEBIN => (Panel_RecycleBin)m_popups[(int)FILETYPE.TYPE_TRASHBIN];
-
     public WindowButton WindowButton => m_windowButton;
+
+    // 패널
+    public Panel_FileDelete FolderDelete => (Panel_FileDelete)m_popups[(int)FILETYPE.TYPE_FILEDELETE];
+
+    public Panel_Folder     Folder => (Panel_Folder)m_popups[(int)FILETYPE.TYPE_FOLDER];
+    public Panel_Chatting   Chatting => (Panel_Chatting)m_popups[(int)FILETYPE.TYPE_CHATTING];
+    public Panel_Message    Message => (Panel_Message)m_popups[(int)FILETYPE.TYPE_MESSAGE];
+    public Panel_Internet   Internet => (Panel_Internet)m_popups[(int)FILETYPE.TYPE_INTERNET];
+    public Panel_Memo       Memo => (Panel_Memo)m_popups[(int)FILETYPE.TYPE_MEMO];
+    public Panel_Picture    Picture => (Panel_Picture)m_popups[(int)FILETYPE.TYPE_PICTURE];
+    public Panel_Video      Video => (Panel_Video)m_popups[(int)FILETYPE.TYPE_VIDEO];
+    public Panel_RecycleBin Recyclebin => (Panel_RecycleBin)m_popups[(int)FILETYPE.TYPE_TRASHBIN];
 
     public string StatusText { get => m_statusText; set => m_statusText = value; }
     public string BackgroundPath { get => m_backgroundPath; }
     public Dictionary<string, WindowFile> FileData => m_fileData;
-    public Dictionary<string, Sprite> FileIcon => m_fileIcon;
     #endregion
 
     public WindowManager() : base()
     {
         m_stageLevel = STAGE.LEVEL_WINDOW;
         m_sceneName  = "Window";
+
+        // 패널 정보 생성
+        m_popups.Add(new Panel_FileDelete());
 
         m_popups.Add(new Panel_Folder());
         m_popups.Add(new Panel_Chatting());
@@ -90,7 +94,7 @@ public class WindowManager : StageManager
         m_fileIcon.Add("Icon_RescueUnion",       GameManager.Ins.Resource.Load<Sprite>(basicPath + "EtcGameIcon/UI_Window_ZIP_RescueUnion"));
         m_fileIcon.Add("Icon_Thet",              GameManager.Ins.Resource.Load<Sprite>(basicPath + "EtcGameIcon/UI_Window_ZIP_Thet"));
 
-        m_fileIcon.Add("Icon_TxtFifle", GameManager.Ins.Resource.Load<Sprite>(basicPath + "WindowIcon/UI_Window_Icon_txtFifle"));
+        m_fileIcon.Add("Icon_TxtFifle",          GameManager.Ins.Resource.Load<Sprite>(basicPath + "WindowIcon/UI_Window_Icon_txtFifle"));
     }
 
     public Sprite Get_FileSprite(FILETYPE type, int index = 0)
@@ -161,32 +165,32 @@ public class WindowManager : StageManager
 
     protected override void Load_Scene()
     {
-        // 하단바, 파일아이콘, 팝업 불러오기
+        // 하단바, 배경아이콘, 팝업 정보 불러오기
         m_taskbar.Load_Scene();
         m_fileIconSlots.Load_Scene();
         for (int i = 0; i < m_popups.Count; ++i)
             m_popups[i].Load_Scene();
 
-        if(m_isVisit == false) // 첫 방문이라면
+        // 첫 방문이라면 배경화면 아이콘 추가
+        if (m_isVisit == false) 
         {
             m_isVisit = true;
 
-            // 배경화면 아이콘 생성 // 파일 인덱스 아이디 부여
-            m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷",  () => INTERNET.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더", () => FOLDER.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => MESSAGE.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => MEMO.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷",  () => Internet.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더", () => Folder.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => Message.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => Memo.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE,  "사진");
             m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
             m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통");
 
-            MESSAGE.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
+            Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
             //MESSAGE.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
             //MESSAGE.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
         }
         else
         {
-            // 이전 씬이 뭐였는가에 따른 처리
+            // 이전 씬에 따른 처리
             //*
         }
 
@@ -216,16 +220,8 @@ public class WindowManager : StageManager
             m_popups[i].Unload_Scene();
     }
 
-    public void Sort_PopupIndex(FILETYPE filetype)
-    {
-        for (int i = 0; i < m_popups.Count; ++i)
-        {
-            if(m_popups[i].FileType == filetype)
-                m_popups[i].Object.transform.SetAsLastSibling();
-        }
-    }
-
-    public Panel_Popup Get_Popup(GameObject gameObject)
+    #region
+    public Panel_Popup Get_Popup(GameObject gameObject) // 팝업 반환
     {
         for (int i = 0; i < m_popups.Count; ++i)
         {
@@ -236,21 +232,27 @@ public class WindowManager : StageManager
         return null;
     }
 
-
-    // --- 
-    public string Get_FullFilePath(string originPath, string fileName)
+    public void Sort_PopupIndex(FILETYPE filetype) // 레이어 정렬
+    {
+        for (int i = 0; i < m_popups.Count; ++i)
+        {
+            if(m_popups[i].FileType == filetype)
+                m_popups[i].Object.transform.SetAsLastSibling();
+        }
+    }
+ 
+    public string Get_FullFilePath(string originPath, string fileName) // 파일 경로 반환
     {
         return originPath + "\\" + fileName;
     }
 
-    public bool Check_File(string filePath)
+    public bool Check_File(string filePath) // 파일 존재 여부 반환
     {
         WindowFile file;
         return GameManager.Ins.Window.FileData.TryGetValue(filePath, out file);
     }
 
-
-    public WindowFile Get_WindowFile(string filePath, WindowFileData fileData, Action action = null)
+    public WindowFile Get_WindowFile(string filePath, WindowFileData fileData, Action action = null) // 파일 생성 또는 반환
     {
         WindowFile file;
         if (GameManager.Ins.Window.FileData.TryGetValue(filePath, out file) == false)
@@ -262,13 +264,17 @@ public class WindowManager : StageManager
         return file;
     }
 
-    public void Set_WindowFileChildFile(string jsonPath, string filePath, FILETYPE type, string name)
+    public void Set_WindowFileChildFile(string filePath, FILETYPE type, string name, string jsonPath) // Json 정보로 자식 파일 설정
     {
-        List<FoldersData> jsonData = GameManager.Ins.Load_JsonData<FoldersData>(jsonPath);
         WindowFile file = Get_WindowFile(filePath, new WindowFileData(type, name));
+        List<FoldersData> jsonData = GameManager.Ins.Load_JsonData<FoldersData>(jsonPath);
 
         WindowFileData data = file.FileData;
-        data.childFolders = jsonData[0].childFolders;
+        FolderData folderData = new FolderData();
+        folderData.childFolders = jsonData[0].childFolders;
+        data.windowSubData = folderData;
+
         file.Set_FileData(data);
     }
+    #endregion
 }

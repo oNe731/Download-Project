@@ -6,16 +6,14 @@ using UnityEngine.UI;
 
 public class Panel_Internet : Panel_Popup
 {
-    public enum TYPE { TYPE_NONE, TYPE_GAMESITE, TYPE_END }
-    public enum EVENT { EVENT_GAMESITE, EVENT_ERROR, EVENT_END }
+    public enum TYPE { TYPE_NONE, TYPE_GAMESITE, TYPE_END } // 기본 상태, 게임 불법 사이트
+    public enum EVENT { EVENT_GAMESITE, EVENT_ERROR, EVENT_END } // 게임 사이트, 에러 상태
 
-    private Transform m_siteTransform;
-    private TMP_InputField m_siteText;
-    private ScrollRect m_scrollRect;
+    private Transform m_siteTransform; // 사이트 패널 트랜스폼
+    private ScrollRect m_scrollRect;   // 사이트 스크롤
+    private TMP_InputField m_siteText; // 사이트 경로
 
-    private List<bool> m_eventBool;
-
-    public Transform SiteTransform => m_siteTransform;
+    private List<bool> m_eventBool; // 이벤트 여부
 
     public Panel_Internet() : base()
     {
@@ -30,11 +28,10 @@ public class Panel_Internet : Panel_Popup
     {
         if(active == true)
         {
-            m_scrollRect.verticalNormalizedPosition = 1f;
+            m_scrollRect.verticalNormalizedPosition = 1f; // 스크롤 초기화
             switch (m_activeType)
             {
                 case (int)TYPE.TYPE_NONE: // 기본 창 상태
-                    m_InputPopupButton = true;
                     Set_InternetData("https://www.internet.com/", m_activeType);
                     break;
             }
@@ -53,8 +50,8 @@ public class Panel_Internet : Panel_Popup
 
         #region 기본 셋팅
         m_siteTransform = m_object.transform.GetChild(3).GetChild(0).GetChild(0);
-        m_siteText = m_object.transform.GetChild(2).GetChild(3).GetComponent<TMP_InputField>();
         m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
+        m_siteText = m_object.transform.GetChild(2).GetChild(3).GetComponent<TMP_InputField>();
         #endregion
     }
 
@@ -66,7 +63,8 @@ public class Panel_Internet : Panel_Popup
     {
     }
 
-    public void Set_InternetData(string siteText, int activeType) // 창 열기 전 정보 셋팅
+    #region
+    public void Set_InternetData(string siteText, int activeType) // 인터넷 정보 설정
     {
         // 자식 삭제
         int childCount = m_siteTransform.childCount;
@@ -75,11 +73,17 @@ public class Panel_Internet : Panel_Popup
 
         // 주소 입력
         m_siteText.text = siteText;
+        m_siteText.enabled = false;
 
         // 패널 생성
         m_activeType = activeType;
         switch (m_activeType)
         {
+            case (int)TYPE.TYPE_NONE:
+                m_InputPopupButton = true;
+                GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/None/Panel_Page1", m_siteTransform);
+                break;
+
             case (int)TYPE.TYPE_GAMESITE:
                 Start_Event(EVENT.EVENT_GAMESITE);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page1", m_siteTransform);
@@ -96,13 +100,14 @@ public class Panel_Internet : Panel_Popup
         m_eventBool[(int)type] = true;
         switch (type)
         {
-            case EVENT.EVENT_GAMESITE:
+            case EVENT.EVENT_GAMESITE: // 창 기본 버튼 비활성화
                 m_InputPopupButton = false;
                 break;
 
-            case EVENT.EVENT_ERROR:
-                GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/ErrorPopup_Panel", GameObject.Find("Canvas").transform.GetChild(3));
+            case EVENT.EVENT_ERROR: // 에러창 생성
+                GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/Error/ErrorPopup_Panel", GameObject.Find("Canvas").transform.GetChild(3));
                 break;
         }
     }
+    #endregion
 }

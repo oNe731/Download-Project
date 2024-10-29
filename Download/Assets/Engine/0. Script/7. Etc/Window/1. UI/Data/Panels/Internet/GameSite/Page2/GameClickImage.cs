@@ -35,7 +35,7 @@ public class GameClickImage : MonoBehaviour
 
     public void Button_Click()
     {
-        GameManager.Ins.Window.INTERNET.Start_Event(Panel_Internet.EVENT.EVENT_ERROR);
+        GameManager.Ins.Window.Internet.Start_Event(Panel_Internet.EVENT.EVENT_ERROR);
 
         m_active = !m_active;
         transform.GetChild(0).gameObject.SetActive(m_active);
