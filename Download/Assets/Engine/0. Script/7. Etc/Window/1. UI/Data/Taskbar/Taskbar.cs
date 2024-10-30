@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Taskbar : WindowData
 {
@@ -19,6 +20,9 @@ public class Taskbar : WindowData
         // 하단바 할당
         Transform canvas = GameObject.Find("Canvas").transform;
         m_object = canvas.GetChild(1).gameObject;
+
+        // 버튼 이벤트 등록
+        m_object.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => Button_Exit());
 
         // 아이콘 슬롯 생성
         for (int i = 0; i < m_slotCount; ++i)
@@ -91,5 +95,10 @@ public class Taskbar : WindowData
                 }
             }
         }
+    }
+
+    private void Button_Exit()
+    {
+        GameManager.Ins.End_Game();
     }
 }

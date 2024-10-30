@@ -14,6 +14,7 @@ public class Panel_Folder : Panel_Popup
     private List<FoldersData> m_foldersData;
     private List<bool> m_eventBool;
 
+    private FolderButton m_folderButton;   // 폴더 버튼
     private TMP_InputField m_pathText;     // 폴더 경로
     private ScrollRect m_scrollRect;       // 폴더 스크롤
     private FileInput m_fileInput;         // 저장 패널 스크립트
@@ -23,6 +24,7 @@ public class Panel_Folder : Panel_Popup
     private RectTransform m_lastInterval;  // 폴더 패널 하단 여백 렉트트랜스폼
 
     public string Path => m_path;
+    public FolderButton FolderButton => m_folderButton;
 
     public FolderBox SelectFolderBox => m_folderBox; 
     public Transform FavoriteTransform => m_favoriteTransform;
@@ -116,6 +118,7 @@ public class Panel_Folder : Panel_Popup
         m_folderTransform = m_object.transform.GetChild(3).GetChild(0).GetChild(0);
         m_favoriteTransform = m_object.transform.GetChild(2).GetChild(0).GetChild(1);
         m_lastInterval = m_folderTransform.GetChild(m_folderTransform.childCount - 1).GetComponent<RectTransform>();
+        m_folderButton = m_object.transform.GetComponent<FolderButton>();
         m_pathText = m_object.transform.GetChild(2).GetChild(2).GetChild(1).GetComponent<TMP_InputField>();
         m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
         m_fileInput = m_object.transform.GetChild(4).GetComponent<FileInput>();
