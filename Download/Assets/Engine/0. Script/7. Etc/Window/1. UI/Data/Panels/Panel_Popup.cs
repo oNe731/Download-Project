@@ -6,7 +6,8 @@ public abstract class Panel_Popup : WindowData
 {
     protected WindowManager.FILETYPE m_fileType = WindowManager.FILETYPE.TYPE_END;
     protected bool m_select = false;
-    protected bool m_InputPopupButton = true;
+    protected bool m_inputPopupButton = true;
+    protected bool m_isButtonClick = true;
 
     protected int m_activeType = -1;
     protected IconSlot m_slot = null;
@@ -16,7 +17,8 @@ public abstract class Panel_Popup : WindowData
     public WindowManager.FILETYPE FileType => m_fileType;
     public bool Select => m_select;
     public IconSlot Slot { set => m_slot = value; }
-    public bool InputPopupButton { set => m_InputPopupButton = value; }
+    public bool InputPopupButton { set => m_inputPopupButton = value; }
+    public bool IsButtonClick { get => m_isButtonClick; set => m_isButtonClick = value; }
 
     public Panel_Popup() : base()
     {
@@ -40,7 +42,7 @@ public abstract class Panel_Popup : WindowData
         }
         else
         {
-            if (m_InputPopupButton == false) // 닫기 비활성화
+            if (m_inputPopupButton == false) // 닫기 비활성화
                 return;
             m_select = false;
 
@@ -77,7 +79,7 @@ public abstract class Panel_Popup : WindowData
 
     public void Putdown_Popup()
     {
-        if (m_object == null || m_slot == null || m_InputPopupButton == false)
+        if (m_object == null || m_slot == null || m_inputPopupButton == false)
             return;
 
         m_select = !m_select;

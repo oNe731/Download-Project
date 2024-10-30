@@ -80,7 +80,7 @@ public class Panel_Internet : Panel_Popup
         switch (m_activeType)
         {
             case (int)TYPE.TYPE_NONE:
-                m_InputPopupButton = true;
+                m_inputPopupButton = true;
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/None/Panel_Page1", m_siteTransform);
                 break;
 
@@ -101,7 +101,7 @@ public class Panel_Internet : Panel_Popup
         switch (type)
         {
             case EVENT.EVENT_GAMESITE: // 창 기본 버튼 비활성화
-                m_InputPopupButton = false;
+                m_inputPopupButton = false;
                 break;
 
             case EVENT.EVENT_ERROR: // 에러창 생성

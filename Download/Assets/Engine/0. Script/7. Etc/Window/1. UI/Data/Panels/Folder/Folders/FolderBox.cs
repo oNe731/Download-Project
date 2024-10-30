@@ -51,7 +51,7 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (GameManager.Ins.Window.Folder.IsFolderClick == false)
+        if (GameManager.Ins.Window.Folder.IsButtonClick == false)
             return;
 
         GameManager.Ins.Window.Folder.Set_SelectBox(this);

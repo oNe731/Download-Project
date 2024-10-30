@@ -38,7 +38,7 @@ public class Panel_Memo : Panel_Popup
     public override void Load_Scene()
     {
         Transform canvas = GameObject.Find("Canvas").transform;
-        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Panels/Panel_Memo", canvas.GetChild(3));
+        m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Memo/Panel_Memo", canvas.GetChild(3));
         m_object.SetActive(m_select);
 
         // 버튼 이벤트 추가
@@ -63,6 +63,6 @@ public class Panel_Memo : Panel_Popup
 
     public void Button_Save() // 저장 버튼
     {
-        GameManager.Ins.Window.Folder.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_SAVE);
+        GameManager.Ins.Window.Folder.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_FILESAVE);
     }
 }
