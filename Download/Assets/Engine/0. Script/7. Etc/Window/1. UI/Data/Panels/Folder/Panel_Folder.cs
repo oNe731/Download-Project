@@ -47,38 +47,51 @@ public class Panel_Folder : Panel_Popup
             m_favoriteTransform.gameObject.SetActive(false);
             Reset_SelectBox();
 
-            switch (m_activeType)
+            if(m_activeType < 100)
             {
-                case (int)TYPE.TYPE_NONE: // 기본 배경 파일 읽기
-                    Set_WindowBackgroundData();
-                    break;
+                switch (m_activeType)
+                {
+                    case (int)TYPE.TYPE_NONE: // 기본 배경 파일 읽기
+                        Set_WindowBackgroundData();
+                        break;
 
-                case (int)TYPE.TYPE_GAMEZIP: // zip 파일 자식 파일 읽기
-                    m_isButtonClick = false;
-                    m_pathText.enabled = false;
+                    case (int)TYPE.TYPE_GAMEZIP: // zip 파일 자식 파일 읽기
+                        m_isButtonClick = false;
+                        m_pathText.enabled = false;
 
-                    WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"), new WindowFileData(WindowManager.FILETYPE.TYPE_ZIP, "Zip"));
-                    FolderData folderData = (FolderData)file.FileData.windowSubData;
-                    List<FoldersData> foldersDatas = new List<FoldersData>();
-                    foldersDatas.Add(new FoldersData(folderData.childFolders));
-                    Set_FolderData("C:\\Users\\user\\Desktop\\Zip", foldersDatas);
+                        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"), new WindowFileData(WindowManager.FILETYPE.TYPE_ZIP, "Zip"));
+                        FolderData folderData = (FolderData)file.FileData.windowSubData;
+                        List<FoldersData> foldersDatas = new List<FoldersData>();
+                        foldersDatas.Add(new FoldersData(folderData.childFolders));
+                        Set_FolderData("C:\\Users\\user\\Desktop\\Zip", foldersDatas);
 
-                    // 삭제 이벤트 실행
-                    if (m_eventBool[(int)EVENT.EVENT_GAMEZIP] == false)
-                        Start_Event(EVENT.EVENT_GAMEZIP);
-                    break;
+                        // 삭제 이벤트 실행
+                        if (m_eventBool[(int)EVENT.EVENT_GAMEZIP] == false)
+                            Start_Event(EVENT.EVENT_GAMEZIP);
+                        break;
 
-                case (int)TYPE.TYPE_FILESAVE:
-                    Set_WindowBackgroundData();                                               // 배경 파일 읽기
-                    m_fileInput.gameObject.SetActive(true);                                   // 저장 인풋 패널 활성화
-                    m_lastInterval.sizeDelta = new Vector2(m_lastInterval.sizeDelta.x, 170f); // 간격 수정
+                    case (int)TYPE.TYPE_FILESAVE:
+                        Set_WindowBackgroundData();                                               // 배경 파일 읽기
+                        m_fileInput.gameObject.SetActive(true);                                   // 저장 인풋 패널 활성화
+                        m_lastInterval.sizeDelta = new Vector2(m_lastInterval.sizeDelta.x, 170f); // 간격 수정
 
-                    // 인풋 초기화
-                    m_fileInput.NameField.text = "";
-                    m_fileInput.PathField.text = GameManager.Ins.Window.BackgroundPath;
-                    m_fileInput.PathField.enabled = false;
-                    break;
+                        // 인풋 초기화
+                        m_fileInput.NameField.text = "";
+                        m_fileInput.PathField.text = GameManager.Ins.Window.BackgroundPath;
+                        m_fileInput.PathField.enabled = false;
+                        break;
+                }
             }
+            else
+            {
+                // 파일 인덱스로 찾아와서 자식 읽기
+                WindowFile file = GameManager.Ins.Window.Get_WindowFile(m_activeType);
+                FolderData folderData = (FolderData)file.FileData.windowSubData;
+                List<FoldersData> foldersDatas = new List<FoldersData>();
+                foldersDatas.Add(new FoldersData(folderData.childFolders));
+                Set_FolderData(file.FilePath, foldersDatas);
+            }
+
         }
         else
         {
@@ -260,6 +273,41 @@ public class Panel_Folder : Panel_Popup
             if (folderbox != null)
                 folderbox.Set_FolderBox(file);
         }
+    }
+    #endregion
+
+    #region 삭제
+    public void Remove_SelectData() // 선택한 파일 데이터 삭제
+    {
+        if (m_folderBox == null)
+            return;
+
+        WindowFile fileData = m_folderBox.FileData;
+        WindowManager WM = GameManager.Ins.Window;
+
+        // 경로에 따른 삭제
+        if (m_path == WM.BackgroundPath) // 바탕화면일 시
+        {
+            // 바탕화면 아이콘 삭제
+            WM.FileIconSlots.Remove_FileIcon(fileData.FilePath);
+        }
+        else // 바탕화면이 아닐 시
+        {
+            // 현재 경로인 부모 폴더 자식 리스트에서 삭제
+            WindowFile parentfile = WM.Get_WindowFile(m_path, new WindowFileData());
+            parentfile.Remove_ChildFile(fileData.FileData);
+        }
+
+        // 폴더에서 삭제 및 딕셔너리에서 해당 키값 삭제
+        GameManager.Ins.Resource.Destroy(m_folderBox.gameObject);
+        WM.FileData.Remove(fileData.FilePath);
+
+        // 휴지통으로 경로 변경 후 재추가
+        string trashbinPath = WM.BackgroundPath + "\\" + "휴지통";
+        WM.Get_WindowFile(WM.Get_FullFilePath(trashbinPath, fileData.FileData.fileName), fileData.FileData);
+        // 휴지통 자식으로 등록
+        WindowFile trashbinFile = WM.Get_WindowFile(trashbinPath, new WindowFileData());
+        trashbinFile.Add_ChildFile(fileData.FileData);
     }
     #endregion
 

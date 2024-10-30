@@ -35,7 +35,7 @@ public class WindowManager : StageManager
     public WindowButton WindowButton => m_windowButton;
 
     // 패널
-    public Panel_FileDelete FolderDelete => (Panel_FileDelete)m_popups[(int)FILETYPE.TYPE_FILEDELETE];
+    public Panel_FolderDelete FolderDelete => (Panel_FolderDelete)m_popups[(int)FILETYPE.TYPE_FILEDELETE];
 
     public Panel_Folder     Folder => (Panel_Folder)m_popups[(int)FILETYPE.TYPE_FOLDER];
     public Panel_Chatting   Chatting => (Panel_Chatting)m_popups[(int)FILETYPE.TYPE_CHATTING];
@@ -57,7 +57,7 @@ public class WindowManager : StageManager
         m_sceneName  = "Window";
 
         // 패널 정보 생성
-        m_popups.Add(new Panel_FileDelete());
+        m_popups.Add(new Panel_FolderDelete());
 
         m_popups.Add(new Panel_Folder());
         m_popups.Add(new Panel_Chatting());
@@ -183,6 +183,12 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE,  "사진");
             m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
             m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통");
+            WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "휴지통", new WindowFileData());
+            WindowFileData data = trashbinFile.FileData;
+            FolderData folderdata = new FolderData();
+            folderdata.childFolders = new List<WindowFileData>();
+            data.windowSubData = folderdata;
+            trashbinFile.Set_FileData(data);
 
             Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
             //Message.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
@@ -252,16 +258,29 @@ public class WindowManager : StageManager
         return GameManager.Ins.Window.FileData.TryGetValue(filePath, out file);
     }
 
-    public WindowFile Get_WindowFile(string filePath, WindowFileData fileData, Action action = null) // 파일 생성 또는 반환
+    public WindowFile Get_WindowFile(string filePath, WindowFileData fileData) // 파일 생성 또는 반환
     {
         WindowFile file;
         if (GameManager.Ins.Window.FileData.TryGetValue(filePath, out file) == false)
         {
-            file = new WindowFile(filePath, fileData, action);
+            file = new WindowFile(filePath, fileData);
             GameManager.Ins.Window.FileData.Add(filePath, file);
         }
 
         return file;
+    }
+ 
+    public WindowFile Get_WindowFile(int fileIndex)
+    {
+        foreach (var file in m_fileData)
+        {
+            if (file.Value.FileIndex == fileIndex)
+            {
+                return file.Value;
+            }
+        }
+
+        return null;
     }
 
     public void Set_WindowFileChildFile(string filePath, FILETYPE type, string name, string jsonPath) // Json 정보로 자식 파일 설정
@@ -275,6 +294,23 @@ public class WindowManager : StageManager
         data.windowSubData = folderData;
 
         file.Set_FileData(data);
+    }
+
+    public string Get_FileName(string folderPath, string fileName) // 중복 파일 검사
+    {
+        string name = fileName;
+
+        int fileCount = 1;
+        string fullPath = Get_FullFilePath(folderPath, name);
+        while (Check_File(fullPath) == true) // 파일 이름 중복일 시
+        {
+            fileCount++;
+
+            name = $"{fileName} ({fileCount})"; // fileName (2), fileName (3) ...
+            fullPath = Get_FullFilePath(folderPath, name);
+        }
+
+        return name;
     }
     #endregion
 }

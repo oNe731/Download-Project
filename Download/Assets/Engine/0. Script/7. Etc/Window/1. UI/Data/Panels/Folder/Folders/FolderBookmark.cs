@@ -19,10 +19,10 @@ public class FolderBookmark : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (m_filedata == null || m_filedata.Action == null)
+        if (m_filedata == null || m_filedata.FileData.fileAction == null)
             return;
 
         GameManager.Ins.Window.Folder.FolderButton.Active_Favorite();
-        m_filedata.Action();
+        m_filedata.FileData.fileAction();
     }
 }

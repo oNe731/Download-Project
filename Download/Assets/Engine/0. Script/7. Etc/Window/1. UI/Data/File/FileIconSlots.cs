@@ -73,7 +73,7 @@ public class FileIconSlots : WindowData
             return;
 
         // 생성 또는 할당
-        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, fileName), new WindowFileData(fileType, fileName), action);
+        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, fileName), new WindowFileData(fileType, fileName, action));
 
         m_files[rowIndex][columnIndex].Add_FileIcon(file);
     }
@@ -128,5 +128,30 @@ public class FileIconSlots : WindowData
         }
 
         return windowFileData;
+    }
+
+    public void Remove_FileIcon(string path)
+    {
+        int RowIndex = 0;
+        int ColumnIndex = 0;
+        for (int i = 0; i < m_slotCount; ++i)
+        {
+            FileIconSlot slot = m_files[RowIndex][ColumnIndex];
+            if (slot.Empty == false)
+            {
+                if(slot.File.FilePath == path)
+                {
+                    slot.Remove_FileIcon();
+                    return;
+                }
+            }
+
+            RowIndex++;
+            if (RowIndex >= 6)
+            {
+                ColumnIndex++;
+                RowIndex = 0;
+            }
+        }
     }
 }

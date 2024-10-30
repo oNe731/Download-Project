@@ -56,14 +56,14 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
 
         GameManager.Ins.Window.Folder.Set_SelectBox(this);
 
-        if (m_fileData == null || m_fileData.Action == null)
+        if (m_fileData == null || m_fileData.FileData.fileAction == null)
             return;
 
         float currentTime = Time.time;
         if (currentTime - m_lastClickTime <= m_doubleClickThreshold)
         {
             // 1초 내에 두 번 클릭되었을 때 액션 호출
-            m_fileData.Action();
+            m_fileData.FileData.fileAction();
             m_lastClickTime = 0f; // 타임스탬프 초기화
         }
         else

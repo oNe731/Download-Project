@@ -46,9 +46,17 @@ public class FileIconSlot : WindowData
 
     public void OnPointerClick()
     {
-        if (m_file.Action == null)
+        if (m_file.FileData.fileAction == null)
             return;
 
-        m_file.Action();
+        m_file.FileData.fileAction();
+    }
+
+    public void Remove_FileIcon()
+    {
+        m_empty = true;
+        m_file = null;
+
+        m_object.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

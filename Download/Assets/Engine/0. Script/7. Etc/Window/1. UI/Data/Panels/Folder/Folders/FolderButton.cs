@@ -87,60 +87,47 @@ public class FolderButton : MonoBehaviour
 
         Panel_Folder folder = WM.Folder;
 
-        #region 파일 이름 결정 : 현재 경로 + 이름 경로 파일 존재 여부 검사
-        string fileName = "새 폴더";
-        int fileCount = 1;
-        string fullPath = WM.Get_FullFilePath(folder.Path, fileName);
-        while (WM.Check_File(fullPath) == true) // 파일 이름 중복일 시
-        {
-            fileCount++;
-
-            fileName = $"새 폴더 ({fileCount})"; // 새 폴더 (2), 새 폴더 (3) ...
-            fullPath = WM.Get_FullFilePath(folder.Path, fileName);
-        }
-        #endregion
-
-        #region 파일 구조체 생성
         WindowFileData windowFileData = new WindowFileData();
         windowFileData.fileType = WindowManager.FILETYPE.TYPE_FOLDER;
-        windowFileData.fileName = fileName;
-        #endregion
+        windowFileData.fileName = WM.Get_FileName(folder.Path, "새 폴더");
+        FolderData data = new FolderData();
+        data.childFolders = new List<WindowFileData>();
+        windowFileData.windowSubData = data;
 
-        #region 생성
-        if (folder.Path == WM.BackgroundPath) // 현재 경로가 바탕화면일 시
+        // 경로에 따른 생성
+        if (folder.Path == WM.BackgroundPath) // 바탕화면일 시
         {
-            // 바탕화면 아이콘 추가
+            // 바탕화면 아이콘 추가 + 파일 생성
             WM.FileIconSlots.Add_FileIcon(windowFileData.fileType, windowFileData.fileName);
-
         }
-        else
+        else // 바탕화면이 아닐 시
         {
-            // 현재 경로 상의 부모 폴더에 자식 리스트에 추가
+            // 현재 경로인 부모 폴더 자식 리스트에 추가
             WindowFile parentfile = WM.Get_WindowFile(folder.Path, windowFileData);
             parentfile.Add_ChildFile(windowFileData);
         }
-        // 폴더에 파일 추가
-        folder.Create_File(folder.Path, windowFileData);
-        // 해당 파일 액션 추가
-        WindowFile file = WM.Get_WindowFile(fullPath, windowFileData);
-        file.Set_FileAction(() => WM.Folder.Active_Popup(true));
-        #endregion
 
-        // 폴더 클릭 시 이름 변경가능
-        //*
+        // 폴더에 파일 추가 // + 아닐 시 파일 생성
+        folder.Create_File(folder.Path, windowFileData);
+
+        // 해당 파일 데이터, 액션 추가
+        WindowFile file = WM.Get_WindowFile(WM.Get_FullFilePath(folder.Path, windowFileData.fileName), windowFileData);
+        file.Set_FileData(windowFileData);
+        file.Set_FileAction(() => WM.Folder.Active_Popup(true, file.FileIndex));
     }
 
-    public void Delete_Folder() 
+    public void Delete_Folder() // 폴더(파일) 삭제하기
     {
-        // 폴더(파일) 삭제하기
+        
         WindowManager WM = GameManager.Ins.Window;
         if (WM.Folder.IsButtonClick == false || WM.Folder.SelectFolderBox == null)
             return;
 
-        // 삭제할 수 있는 파일인지 검사
-        //*
+        WindowFile file = WM.Folder.SelectFolderBox.FileData;
+        if (file.FileData.fileType == WindowManager.FILETYPE.TYPE_TRASHBIN) // 삭제 가능 여부
+            return;
 
-        GameManager.Ins.Window.FolderDelete.Set_FileDelete(WM.Folder.SelectFolderBox.FileData);
+        GameManager.Ins.Window.FolderDelete.Set_FileDelete(file);
         GameManager.Ins.Window.FolderDelete.Active_ChildPopup(true);
     }
     #endregion

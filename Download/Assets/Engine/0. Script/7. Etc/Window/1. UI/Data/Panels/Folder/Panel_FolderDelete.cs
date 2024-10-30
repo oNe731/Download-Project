@@ -6,12 +6,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Panel_FileDelete : Panel_Popup
+public class Panel_FolderDelete : Panel_Popup
 {
     private RectTransform m_rectTransform;
     private TMP_Text m_text;
 
-    public Panel_FileDelete() : base()
+    public Panel_FolderDelete() : base()
     {
         m_fileType = WindowManager.FILETYPE.TYPE_FILEDELETE;
     }
@@ -20,6 +20,7 @@ public class Panel_FileDelete : Panel_Popup
     {
         if(active == true)
         {
+            // 초기화
             m_rectTransform.anchoredPosition = new Vector2(0f, 0f);
         }
     }
@@ -28,9 +29,8 @@ public class Panel_FileDelete : Panel_Popup
     {
         Transform canvas = GameObject.Find("Canvas").transform;
         m_object = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Folder/Panel_FolderDelete", canvas.GetChild(3));
-        //m_object.SetActive(m_select);
         m_select = false; // 기본 비활성화
-        m_object.SetActive(false);
+        m_object.SetActive(false); //m_object.SetActive(m_select);
 
         // 버튼 이벤트 추가
         m_object.transform.GetChild(1).GetChild(1).GetComponent<Button>().onClick.AddListener(() => Active_Popup(false));
@@ -61,12 +61,8 @@ public class Panel_FileDelete : Panel_Popup
 
     private void Button_Confirm() // 확인(삭제)
     {
-        //* 파일 삭제 및 휴지통으로 이동
-        // 
-
-
-        //* 딕셔너리에서 해당 키값 삭제 및 경로 변경 후 재추가
-        //
+        Active_Popup(false);
+        GameManager.Ins.Window.Folder.Remove_SelectData();
     }
 
     private void Button_Cancel() // 취소
