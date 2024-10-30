@@ -58,13 +58,14 @@ public abstract class Panel_Popup : WindowData
 
     protected abstract void Active_Event(bool active);
 
-    public void Active_ChildPopup(bool active)
+    public void Active_ChildPopup(bool active, int activeType = -1)
     {
         if (m_object == null)
             return;
 
         if (active == true)
         {
+            m_activeType = activeType;
             m_select = true;
             GameManager.Ins.Window.Sort_PopupIndex(m_fileType);
         }

@@ -304,7 +304,9 @@ public class Panel_Folder : Panel_Popup
 
         // 휴지통으로 경로 변경 후 재추가
         string trashbinPath = WM.BackgroundPath + "\\" + "휴지통";
-        WM.Get_WindowFile(WM.Get_FullFilePath(trashbinPath, fileData.FileData.fileName), fileData.FileData);
+        WindowFile newPathFile = WM.Get_WindowFile(WM.Get_FullFilePath(trashbinPath, fileData.FileData.fileName), fileData.FileData);
+        newPathFile.Set_PrevfilePath(fileData.FilePath);
+
         // 휴지통 자식으로 등록
         WindowFile trashbinFile = WM.Get_WindowFile(trashbinPath, new WindowFileData());
         trashbinFile.Add_ChildFile(fileData.FileData);

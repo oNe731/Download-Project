@@ -9,16 +9,18 @@ public struct WindowFileData
     public WindowManager.FILETYPE fileType;
     public string fileName;
     public Action fileAction;
+    public string fileprevfilePath; // 이전 파일 경로
 
     [JsonConverter(typeof(WindowFileDataSubDataConverter))]
     public WindowFileDataSubData windowSubData;
 
-    public WindowFileData(WindowManager.FILETYPE type, string name, Action action = null, WindowFileDataSubData subData = null)
+    public WindowFileData(WindowManager.FILETYPE type, string name, Action action = null, WindowFileDataSubData subData = null, string prevfilePath = "")
     {
         fileType = type;
         fileName = name;
         fileAction = action;
         windowSubData = subData;
+        fileprevfilePath = prevfilePath;
     }
 }
 
@@ -76,6 +78,7 @@ public class WindowFile
     private string m_filePath; // 파일 경로
     private bool m_favorite = false; // 즐겨찾기 여부
 
+
     private WindowFileData m_fileData; // 파일 데이터
 
     #region 프로퍼티
@@ -123,5 +126,10 @@ public class WindowFile
         {
             folderData.childFolders.RemoveAt(index);
         }
+    }
+
+    public void Set_PrevfilePath(string prevfilePath)
+    {
+        m_fileData.fileprevfilePath = prevfilePath;
     }
 }

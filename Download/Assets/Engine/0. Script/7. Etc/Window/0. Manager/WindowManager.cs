@@ -6,7 +6,7 @@ public class WindowManager : StageManager
 {
     public enum FILETYPE
     {
-        TYPE_FILEDELETE, 
+        TYPE_FILEDELETE, TYPE_TRASHSUB,
         TYPE_FOLDER, TYPE_CHATTING, TYPE_MESSAGE, TYPE_INTERNET, TYPE_MEMO, TYPE_PICTURE, TYPE_VIDEO, TYPE_TRASHBIN,
 
         TYPE_NOVEL, TYPE_WESTERN, TYPE_HORROR,
@@ -36,6 +36,7 @@ public class WindowManager : StageManager
 
     // 패널
     public Panel_FolderDelete FolderDelete => (Panel_FolderDelete)m_popups[(int)FILETYPE.TYPE_FILEDELETE];
+    public Panel_RecycleBinSub RecyclebinSub => (Panel_RecycleBinSub)m_popups[(int)FILETYPE.TYPE_TRASHSUB];
 
     public Panel_Folder     Folder => (Panel_Folder)m_popups[(int)FILETYPE.TYPE_FOLDER];
     public Panel_Chatting   Chatting => (Panel_Chatting)m_popups[(int)FILETYPE.TYPE_CHATTING];
@@ -58,6 +59,7 @@ public class WindowManager : StageManager
 
         // 패널 정보 생성
         m_popups.Add(new Panel_FolderDelete());
+        m_popups.Add(new Panel_RecycleBinSub());
 
         m_popups.Add(new Panel_Folder());
         m_popups.Add(new Panel_Chatting());
@@ -182,7 +184,7 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => Memo.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE,  "사진");
             m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
-            m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통");
+            m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통",  () => Recyclebin.Active_Popup(true, 0));
             WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "휴지통", new WindowFileData());
             WindowFileData data = trashbinFile.FileData;
             FolderData folderdata = new FolderData();
