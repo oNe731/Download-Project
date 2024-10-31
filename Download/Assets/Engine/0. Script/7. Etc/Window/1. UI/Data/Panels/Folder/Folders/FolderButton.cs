@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class FolderButton : MonoBehaviour
 {
-    #region 키보드 입력 (잘라내기/ 붙여넣기)
+    /*#region 키보드 입력 (잘라내기/ 복사하기/ 붙여넣기)
     public void Update()
     {
         WindowManager WM = GameManager.Ins.Window;
         if (WM.Folder.IsButtonClick == false || WM.Folder.SelectFolderBox == null)
             return;
 
-        // 컨트롤 C/ V 텓스트 잘라내기 붙여넣기 구현 폴더 잘라내기 붙여넣기는 할수있으면 하기 // 내문서1, 2 이렇게 생김
-        if(Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.X)) // 파일 잘라내기
         {
 
         }
-        else if (Input.GetKeyDown(KeyCode.C))
+        if(Input.GetKeyDown(KeyCode.C)) // 파일 복사하기 ... 파일이름 (1)
+        {
+
+        }
+        else if (Input.GetKeyDown(KeyCode.V)) // 파일 붙여넣기
         {
 
         }
     }
-    #endregion
+    #endregion*/
 
     #region 즐겨찾기
     public void Active_Favorite() // 즐겨찾기 비/활성화 버튼
     {
         WindowManager WM = GameManager.Ins.Window;
+        WM.Folder.DropDownPanel.SetActive(false);
         if (WM.Folder.IsButtonClick == false)
             return;
 
@@ -40,6 +44,7 @@ public class FolderButton : MonoBehaviour
     public void Favorite_Folder() // 파일 즐겨찾기
     {
         WindowManager WM = GameManager.Ins.Window;
+        WM.Folder.DropDownPanel.SetActive(false);
         if (WM.Folder.IsButtonClick == false || WM.Folder.SelectFolderBox == null)
             return;
 
@@ -82,6 +87,7 @@ public class FolderButton : MonoBehaviour
     public void Create_Folder() // 현재 경로에 폴더 생성하기
     {
         WindowManager WM = GameManager.Ins.Window;
+        WM.Folder.DropDownPanel.SetActive(false);
         if (WM.Folder.IsButtonClick == false)
             return;
 
@@ -120,6 +126,7 @@ public class FolderButton : MonoBehaviour
     {
         
         WindowManager WM = GameManager.Ins.Window;
+        WM.Folder.DropDownPanel.SetActive(false);
         if (WM.Folder.IsButtonClick == false || WM.Folder.SelectFolderBox == null)
             return;
 
@@ -151,9 +158,5 @@ public class FolderButton : MonoBehaviour
 
         WM.Folder.Folder_Again();
     }
-    #endregion
-
-    #region 주소
-
     #endregion
 }

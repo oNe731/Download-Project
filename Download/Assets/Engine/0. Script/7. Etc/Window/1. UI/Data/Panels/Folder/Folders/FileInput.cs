@@ -34,10 +34,15 @@ public class FileInput : MonoBehaviour
             WM.Memo.Memos.Add(file.FileIndex, WM.Memo.InputField.text);
             m_nameField.text = "";
         }
+
+        WM.Folder.Active_Popup(false);
     }
 
     public void Button_Cancel()
     {
-        GameManager.Ins.Window.Folder.Object.transform.GetChild(4).gameObject.SetActive(false);
+        WindowManager WM = GameManager.Ins.Window;
+        WM.Folder.Object.transform.GetChild(4).gameObject.SetActive(false);
+
+        WM.Folder.Active_Popup(false);
     }
 }

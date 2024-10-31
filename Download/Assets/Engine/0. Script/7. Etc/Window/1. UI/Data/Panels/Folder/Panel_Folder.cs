@@ -29,9 +29,15 @@ public class Panel_Folder : Panel_Popup
     private Image m_beforeButton;
     private Image m_nextButton;
     private Sprite[] m_pathButton;
+    private GameObject m_dropDownPanel;
 
     public string Path => m_path;
     public FolderButton FolderButton => m_folderButton;
+
+    public bool IsButtonActive { get => m_isButtonActive; set => m_isButtonActive = value; }
+    public Stack<int> PreviousFileIndex => m_previousFileIndex;
+    public Stack<int> NextFileIndex => m_nextFileIndex;
+    public GameObject DropDownPanel => m_dropDownPanel;
 
     public FolderBox SelectFolderBox => m_folderBox; 
     public Transform FavoriteTransform => m_favoriteTransform;
@@ -57,8 +63,9 @@ public class Panel_Folder : Panel_Popup
             m_scrollRect.verticalNormalizedPosition = 1f;
             m_favoriteTransform.gameObject.SetActive(false);
             Reset_SelectBox();
+            Update_Buttons();
 
-            if(m_activeType < 100)
+            if (m_activeType < 100)
             {
                 switch (m_activeType)
                 {
@@ -96,7 +103,7 @@ public class Panel_Folder : Panel_Popup
             }
             else
             {
-                // 클릭으로 열었을 때 다시하기 인데스 초기화
+                // 클릭으로 열었을 때 다시하기 인덱스 초기화
                 if(m_isButtonActive == false)
                 {
                     if (m_nextFileIndex.Count > 0)
@@ -121,11 +128,6 @@ public class Panel_Folder : Panel_Popup
         }
         else
         {
-            m_prevActiveType = -1;
-            m_activeType = -1;
-            m_previousFileIndex.Clear();
-            m_nextFileIndex.Clear();
-
             switch (m_activeType)
             {
                 case (int)TYPE.TYPE_GAMEZIP:
@@ -142,6 +144,11 @@ public class Panel_Folder : Panel_Popup
                     m_lastInterval.sizeDelta = new Vector2(m_lastInterval.sizeDelta.x, 1.62f); // 간격 수정
                     break;
             }
+
+            m_prevActiveType = -1;
+            m_activeType = -1;
+            m_previousFileIndex.Clear();
+            m_nextFileIndex.Clear();
         }
     }
 
@@ -170,6 +177,7 @@ public class Panel_Folder : Panel_Popup
 
         m_beforeButton = m_object.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>();
         m_nextButton   = m_object.transform.GetChild(2).GetChild(1).GetChild(2).GetComponent<Image>();
+        m_dropDownPanel = m_object.transform.GetChild(5).gameObject;
 
         if (m_foldersData != null)
             Set_FolderData(m_path, m_foldersData);
@@ -250,7 +258,19 @@ public class Panel_Folder : Panel_Popup
     private void Set_FolderPath(string path) // 폴더 경로 설정
     {
         m_path = path;
-        m_pathText.text = m_path;
+        m_pathText.text = Set_PathFormat(m_path);
+    }
+
+    public string Set_PathFormat(string path)
+    {
+        string formattedPath = path.Replace("\\", " > ");
+        return formattedPath;
+    }
+
+    public string Set_RestorPathFormat(string path)
+    {
+        string[] parts = path.Split(new[] { " > " }, System.StringSplitOptions.None); // '>' 기호를 기준으로 분할
+        return string.Join("\\", parts);
     }
 
     private void Remove_FolderData() // 폴더 데이터 삭제
@@ -372,6 +392,7 @@ public class Panel_Folder : Panel_Popup
     #region 뒤로가기/ 앞으로가기
     public void Folder_Back() // 뒤로가기
     {
+        m_dropDownPanel.SetActive(false);
         if (m_previousFileIndex.Count == 0)
             return;
 
@@ -389,6 +410,7 @@ public class Panel_Folder : Panel_Popup
 
     public void Folder_Again() // 앞으로가기
     {
+        m_dropDownPanel.SetActive(false);
         if (m_nextFileIndex.Count == 0)
             return;
 
@@ -403,7 +425,7 @@ public class Panel_Folder : Panel_Popup
         Update_Buttons();
     }
 
-    private void Update_Buttons()
+    public void Update_Buttons()
     {
         m_beforeButton.sprite = m_previousFileIndex.Count > 0 ? m_pathButton[0] : m_pathButton[1];
         m_nextButton.sprite   = m_nextFileIndex.Count > 0 ? m_pathButton[0] : m_pathButton[1];
