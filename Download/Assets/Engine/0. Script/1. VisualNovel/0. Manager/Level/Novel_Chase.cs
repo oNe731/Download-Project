@@ -19,7 +19,7 @@ namespace VisualNovel
         private HallwayYandere m_yandere;
         private HallwayPlayer m_player;
 
-        private int m_CdMaxCount = 5;
+        private int m_CdMaxCount = 3;
         private int m_CdCurrentCount = 0;
         private int m_LeverMaxCount = 2;
         private GameObject m_itemText = null;
@@ -28,7 +28,7 @@ namespace VisualNovel
         private List<GameObject> m_levers = new List<GameObject>();
 
         private GameObject m_stage;
-        private TMP_Text m_cdTxt;
+        private GameObject m_key;
 
         public HallwayPlayer Player { get => m_player; }
         public List<HallwayLight> Light
@@ -58,7 +58,7 @@ namespace VisualNovel
             {
                 m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
                 m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
-                m_cdTxt = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TMP_Text>();
+                m_key = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).gameObject;
 
                 // 플레이어 바디 생성
                 m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
@@ -106,7 +106,9 @@ namespace VisualNovel
             CD.transform.position = new Vector3(0.11f, 0f, 18.8f);
 
             m_CdCurrentCount = 0;
-            m_cdTxt.text = m_CdCurrentCount.ToString();
+
+            for (int i = 0; i < m_key.transform.childCount; ++i)
+                m_key.transform.GetChild(i).gameObject.SetActive(false);
             if (m_itemText != null)
                 m_itemText.SetActive(false);
 
@@ -166,7 +168,7 @@ namespace VisualNovel
         {
         }
 
-        private void Clear_ChaseGame()
+        private void Clear_ChaseGame() // 비상구에 충돌 시 호출
         {
             // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환
             GameManager.Ins.StartCoroutine(Clear_Game());
@@ -355,46 +357,34 @@ namespace VisualNovel
                 m_positionUse[positionIndex] = false;
 
             m_CdCurrentCount++;
-            m_cdTxt.text = m_CdCurrentCount.ToString(); // UI 업데이트
+            for (int i = 0; i < m_CdCurrentCount; ++i)
+                m_key.transform.GetChild(i).gameObject.SetActive(true);
 
-            if (m_CdCurrentCount >= m_CdMaxCount)
+            Update_Light();
+
+            // 대사 출력
+            if (m_itemText == null)
             {
-                // 추격 게임 종료 및 컷씬 재생
-                Clear_ChaseGame();
-            }
-            else
-            {
-                Update_Light();
-
-                // 대사 출력
-                if (m_itemText == null)
-                {
-                    m_itemText = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/UI_ItemText", m_stage.transform.GetChild(1));
-                    m_itemText.SetActive(false);
-                }
-
-                switch(m_CdCurrentCount)
-                {
-                    case 1:
-                        // 속도 감소 및 컷씬 재생
-                        m_player.MoveSpeed = 200f;
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Appear_Monster(), 1f, false);
-                        break;
-
-                    case 2:
-                        Change_Text("나에게서 멀어지려하지마...");
-                        break;
-
-                    case 3:
-                        Change_Text("이제 그만 돌아와요!");
-                        break;
-
-                    case 4:
-                        Change_Text("제 말을 들어줘요...");
-                        break;
-                }
+                m_itemText = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/UI_ItemText", m_stage.transform.GetChild(1));
+                m_itemText.SetActive(false);
             }
 
+            switch (m_CdCurrentCount)
+            {
+                case 1:
+                    // 속도 감소 및 컷씬 재생
+                    m_player.MoveSpeed = 200f;
+                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Appear_Monster(), 1f, false);
+                    break;
+
+                case 2:
+                    Change_Text("나에게서 멀어지려하지마...");
+                    break;
+
+                case 3:
+                    Change_Text("이제 그만 돌아와요!");
+                    break;
+            }
         }
 
         public void Use_Lever(int positionIndex)
@@ -436,7 +426,7 @@ namespace VisualNovel
         {
             // 조명 업데이트 Max 464
             m_Light.Shuffle();
-            int OnCount = (int)(464 / (m_CdMaxCount - 1)) * m_CdCurrentCount;
+            int OnCount = (int)(464 / (m_CdMaxCount)) * m_CdCurrentCount;
             for (int i = 0; i < OnCount; ++i)
                 m_Light[i].Blink = true;
         }
