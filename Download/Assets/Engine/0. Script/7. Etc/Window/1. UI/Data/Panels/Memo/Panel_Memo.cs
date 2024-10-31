@@ -48,7 +48,6 @@ public class Panel_Memo : Panel_Popup
 
         #region 기본 셋팅
         m_inputField = m_object.transform.GetChild(3).GetComponent<TMP_InputField>();
-
         #endregion
     }
 
@@ -58,7 +57,6 @@ public class Panel_Memo : Panel_Popup
 
     public override void Unload_Scene()
     {
-
     }
 
     public void Button_Save() // 저장 버튼

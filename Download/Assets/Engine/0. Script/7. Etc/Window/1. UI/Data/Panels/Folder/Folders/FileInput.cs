@@ -22,15 +22,16 @@ public class FileInput : MonoBehaviour
         if (m_nameField.text == "")
             return;
 
-        WindowManager WI = GameManager.Ins.Window;
+        WindowManager WM = GameManager.Ins.Window;
+        string fileName = WM.Get_FileName(WM.BackgroundPath, m_nameField.text);
 
         // 파일 추가
-        if(WI.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_TXT, m_nameField.text) == true)
+        if (WM.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_TXT, fileName) == true)
         {
-            WindowFile file = WI.Get_WindowFile(WI.Get_FullFilePath(WI.BackgroundPath, m_nameField.text), new WindowFileData(WindowManager.FILETYPE.TYPE_TXT, m_nameField.text));
+            WindowFile file = WM.Get_WindowFile(WM.Get_FullFilePath(WM.BackgroundPath, fileName), new WindowFileData(WindowManager.FILETYPE.TYPE_TXT, fileName));
             file.Set_FileAction(() => GameManager.Ins.Window.Memo.Active_Popup(true, file.FileIndex));
 
-            WI.Memo.Memos.Add(file.FileIndex, WI.Memo.InputField.text);
+            WM.Memo.Memos.Add(file.FileIndex, WM.Memo.InputField.text);
             m_nameField.text = "";
         }
     }

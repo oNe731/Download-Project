@@ -23,6 +23,13 @@ public class Panel_Folder : Panel_Popup
     private Transform m_favoriteTransform; // 즐겨찾기 패널 트랜스폼
     private RectTransform m_lastInterval;  // 폴더 패널 하단 여백 렉트트랜스폼
 
+    private bool m_isButtonActive = false;
+    private Stack<int> m_previousFileIndex = new Stack<int>();  // 뒤로 가기 경로 스택
+    private Stack<int> m_nextFileIndex     = new Stack<int>();  // 앞으로 가기 경로 스택
+    private Image m_beforeButton;
+    private Image m_nextButton;
+    private Sprite[] m_pathButton;
+
     public string Path => m_path;
     public FolderButton FolderButton => m_folderButton;
 
@@ -36,6 +43,10 @@ public class Panel_Folder : Panel_Popup
         m_eventBool = new List<bool>();
         for (int i = 0; i < (int)EVENT.EVENT_END; ++i)
             m_eventBool.Add(false);
+
+        m_pathButton = new Sprite[2];
+        m_pathButton[0] = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Original form (Document)/Documents Moving Navigator/UI_Window_OriginalForm_Gobutton_ON");
+        m_pathButton[1] = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Original form (Document)/Documents Moving Navigator/UI_Window_OriginalForm_Gobutton_OFF");
     }
 
     protected override void Active_Event(bool active)
@@ -53,6 +64,7 @@ public class Panel_Folder : Panel_Popup
                 {
                     case (int)TYPE.TYPE_NONE: // 기본 배경 파일 읽기
                         Set_WindowBackgroundData();
+                        Update_Buttons();
                         break;
 
                     case (int)TYPE.TYPE_GAMEZIP: // zip 파일 자식 파일 읽기
@@ -84,6 +96,20 @@ public class Panel_Folder : Panel_Popup
             }
             else
             {
+                // 클릭으로 열었을 때 다시하기 인데스 초기화
+                if(m_isButtonActive == false)
+                {
+                    if (m_nextFileIndex.Count > 0)
+                        m_nextFileIndex.Clear();
+                }
+
+                // 현재 폴더를 이전 경로에 추가
+                if (m_prevActiveType != -1)
+                {
+                    m_previousFileIndex.Push(m_prevActiveType);
+                    Update_Buttons();
+                }
+
                 // 파일 인덱스로 찾아와서 자식 읽기
                 WindowFile file = GameManager.Ins.Window.Get_WindowFile(m_activeType);
                 FolderData folderData = (FolderData)file.FileData.windowSubData;
@@ -95,6 +121,11 @@ public class Panel_Folder : Panel_Popup
         }
         else
         {
+            m_prevActiveType = -1;
+            m_activeType = -1;
+            m_previousFileIndex.Clear();
+            m_nextFileIndex.Clear();
+
             switch (m_activeType)
             {
                 case (int)TYPE.TYPE_GAMEZIP:
@@ -136,6 +167,9 @@ public class Panel_Folder : Panel_Popup
         m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
         m_fileInput = m_object.transform.GetChild(4).GetComponent<FileInput>();
         m_fileInput.Start_FileInput();
+
+        m_beforeButton = m_object.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>();
+        m_nextButton   = m_object.transform.GetChild(2).GetChild(1).GetChild(2).GetComponent<Image>();
 
         if (m_foldersData != null)
             Set_FolderData(m_path, m_foldersData);
@@ -332,6 +366,47 @@ public class Panel_Folder : Panel_Popup
 
         m_folderBox.Set_ClickImage(FolderBox.BOXIMAGE.BI_NONE);
         m_folderBox = null;
+    }
+    #endregion
+
+    #region 뒤로가기/ 앞으로가기
+    public void Folder_Back() // 뒤로가기
+    {
+        if (m_previousFileIndex.Count == 0)
+            return;
+
+        m_nextFileIndex.Push(m_activeType);
+        m_activeType = m_previousFileIndex.Pop();
+
+        m_isButtonActive = true;
+        Active_Popup(true, m_activeType);
+        m_isButtonActive = false;
+        if (m_previousFileIndex.Count > 0)
+            m_previousFileIndex.Pop();
+
+        Update_Buttons();
+    }
+
+    public void Folder_Again() // 앞으로가기
+    {
+        if (m_nextFileIndex.Count == 0)
+            return;
+
+        m_previousFileIndex.Push(m_activeType);
+        m_activeType = m_nextFileIndex.Pop();
+
+        m_isButtonActive = true;
+        Active_Popup(true, m_activeType);
+        m_isButtonActive = false;
+        m_previousFileIndex.Pop();
+
+        Update_Buttons();
+    }
+
+    private void Update_Buttons()
+    {
+        m_beforeButton.sprite = m_previousFileIndex.Count > 0 ? m_pathButton[0] : m_pathButton[1];
+        m_nextButton.sprite   = m_nextFileIndex.Count > 0 ? m_pathButton[0] : m_pathButton[1];
     }
     #endregion
     #endregion

@@ -124,7 +124,8 @@ public class FolderButton : MonoBehaviour
             return;
 
         WindowFile file = WM.Folder.SelectFolderBox.FileData;
-        if (file.FileData.fileType == WindowManager.FILETYPE.TYPE_TRASHBIN) // 삭제 가능 여부
+        if (file.FileData.fileType == WindowManager.FILETYPE.TYPE_TRASHBIN || 
+            file.FileData.fileType == WindowManager.FILETYPE.TYPE_NOVEL || file.FileData.fileType == WindowManager.FILETYPE.TYPE_WESTERN || file.FileData.fileType == WindowManager.FILETYPE.TYPE_HORROR) // 삭제 가능 여부
             return;
 
         GameManager.Ins.Window.FolderDelete.Set_FileDelete(file);
@@ -139,7 +140,7 @@ public class FolderButton : MonoBehaviour
         if (WM.Folder.IsButtonClick == false)
             return;
 
-
+        WM.Folder.Folder_Back();
     }
 
     public void Button_Again() // 앞으로가기
@@ -148,7 +149,7 @@ public class FolderButton : MonoBehaviour
         if (WM.Folder.IsButtonClick == false)
             return;
 
-
+        WM.Folder.Folder_Again();
     }
     #endregion
 

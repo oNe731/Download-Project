@@ -10,6 +10,8 @@ public abstract class Panel_Popup : WindowData
     protected bool m_isButtonClick = true;
 
     protected int m_activeType = -1;
+    protected int m_prevActiveType = -1;
+
     protected IconSlot m_slot = null;
     protected List<Panel_Popup> m_childPopup;
 
@@ -31,6 +33,7 @@ public abstract class Panel_Popup : WindowData
 
         if (active == true)
         {
+            m_prevActiveType = m_activeType;
             m_activeType = activeType;
             m_select = true;
 
