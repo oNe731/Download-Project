@@ -16,7 +16,10 @@ public class LoginInput : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (GameManager.Ins.IsGame == false)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             Button_InputName();
         }

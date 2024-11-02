@@ -20,6 +20,9 @@ public class LoadingBar : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Ins.IsGame == false)
+            return;
+
         m_gage.anchoredPosition += new Vector2(m_moveSpeed * Time.deltaTime, 0f);
 
         if (m_gage.anchoredPosition.x >= m_position)

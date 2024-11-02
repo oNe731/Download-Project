@@ -19,6 +19,9 @@ public class LoadingText : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Ins.IsGame == false)
+            return;
+
         m_time += Time.deltaTime;
         if (m_time > 0.3f)
         {

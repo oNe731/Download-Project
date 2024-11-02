@@ -22,7 +22,7 @@ public class LoadingManager : StageManager
     {
         Cursor.lockState = CursorLockMode.None;
         GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
     }
 
     public override void Update_Stage()
