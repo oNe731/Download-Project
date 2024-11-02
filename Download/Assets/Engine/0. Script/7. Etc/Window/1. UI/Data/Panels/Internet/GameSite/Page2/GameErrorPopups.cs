@@ -82,7 +82,7 @@ public class GameErrorPopups : MonoBehaviour
 
                     // ZIP 파일 생성
                     GameManager.Ins.Window.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_ZIP, "Zip", () => GameManager.Ins.Window.Folder.Active_Popup(true, (int)Panel_Folder.TYPE.TYPE_GAMEZIP));
-                    GameManager.Ins.Window.Set_WindowFileChildFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"), WindowManager.FILETYPE.TYPE_ZIP, "Zip", "4. Data/0. Window/Folders/Folders_Games");
+                    GameManager.Ins.Window.Set_WindowFileChildFile(GameManager.Ins.Window.BackgroundPath, "Zip", "4. Data/0. Window/Folders/Folders_Games");
 
                     Destroy(gameObject);
                     m_state = STATE.ST_END;

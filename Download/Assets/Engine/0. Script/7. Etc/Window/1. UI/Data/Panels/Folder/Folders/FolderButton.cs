@@ -104,12 +104,12 @@ public class FolderButton : MonoBehaviour
         if (folder.Path == WM.BackgroundPath) // 바탕화면일 시
         {
             // 바탕화면 아이콘 추가 + 파일 생성
-            WM.FileIconSlots.Add_FileIcon(windowFileData.fileType, windowFileData.fileName);
+            WM.FileIconSlots.Add_FileIcon(windowFileData.fileType, windowFileData.fileName, windowFileData.fileAction, windowFileData.windowSubData, windowFileData.fileprevfilePath);
         }
         else // 바탕화면이 아닐 시
         {
             // 현재 경로인 부모 폴더 자식 리스트에 추가
-            WindowFile parentfile = WM.Get_WindowFile(folder.Path, windowFileData);
+            WindowFile parentfile = WM.Get_WindowFile(folder.Path);
             parentfile.Add_ChildFile(windowFileData);
         }
 
@@ -117,7 +117,7 @@ public class FolderButton : MonoBehaviour
         folder.Create_File(folder.Path, windowFileData);
 
         // 해당 파일 데이터, 액션 추가
-        WindowFile file = WM.Get_WindowFile(WM.Get_FullFilePath(folder.Path, windowFileData.fileName), windowFileData);
+        WindowFile file = WM.Get_WindowFile(WM.Get_FullFilePath(folder.Path, windowFileData.fileName));
         file.Set_FileData(windowFileData);
         file.Set_FileAction(() => WM.Folder.Active_Popup(true, file.FileIndex));
     }

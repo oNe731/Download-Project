@@ -38,6 +38,10 @@ public class WindowFileDataSubDataConverter : JsonConverter
         {
             return jsonObject.ToObject<FolderData>();
         }
+        else if (jsonObject["imageSize"] != null)
+        {
+            return jsonObject.ToObject<ImageData>();
+        }
         else
         {
             return jsonObject.ToObject<None>();
@@ -66,6 +70,15 @@ public struct None : WindowFileDataSubData
 public struct FolderData : WindowFileDataSubData
 {
     public List<WindowFileData> childFolders;
+}
+
+[Serializable]
+public struct ImageData : WindowFileDataSubData // 사용하는 사진 실제 윈도우 속성 값
+{
+    public string fileName;
+    public string fileType;
+    public string imageSize;
+    public string diskSize;
 }
 #endregion
 #endregion

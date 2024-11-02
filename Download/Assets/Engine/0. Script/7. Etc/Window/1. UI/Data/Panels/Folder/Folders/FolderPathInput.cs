@@ -164,7 +164,7 @@ public class FolderPathInput : MonoBehaviour
         }
         else // 존재할 시 해당 폴더로 위치 이동 및 액션 실행
         {
-            WindowFile windowFile = WM.Get_WindowFile(path, new WindowFileData());
+            WindowFile windowFile = WM.Get_WindowFile(path);
             if(windowFile.FilePath != WM.Folder.Path) // 현재 폴더와 같은 경로일 때 재 실행 방지
                 windowFile.FileData.fileAction();
             else // 초기화

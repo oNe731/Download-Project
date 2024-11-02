@@ -115,7 +115,7 @@ public class Panel_RecycleBin : Panel_Popup
             return;
 
         WindowManager WM = GameManager.Ins.Window;
-        WindowFile parentfile = WM.Get_WindowFile(WM.BackgroundPath + "\\" + "휴지통", new WindowFileData());
+        WindowFile parentfile = WM.Get_WindowFile(WM.BackgroundPath + "\\" + "휴지통");
         for (int i = 0; i < m_folderBoxs.Count; ++i)
         {
             WindowFile windowFile = m_folderBoxs[i].FileData;
@@ -135,7 +135,7 @@ public class Panel_RecycleBin : Panel_Popup
             return;
 
         WindowManager WM = GameManager.Ins.Window;
-        WindowFile trashBinFile = WM.Get_WindowFile(WM.BackgroundPath + "\\" + "휴지통", new WindowFileData());
+        WindowFile trashBinFile = WM.Get_WindowFile(WM.BackgroundPath + "\\" + "휴지통");
         for (int i = 0; i < m_folderBoxs.Count; ++i)
         {
             WindowFile windowFile = m_folderBoxs[i].FileData;
@@ -153,12 +153,12 @@ public class Panel_RecycleBin : Panel_Popup
             if (prevDirectoryPath == WM.BackgroundPath) // 바탕화면일 시
             {
                 // 바탕화면 아이콘 추가 + 파일 생성
-                WM.FileIconSlots.Add_FileIcon(windowFile.FileData.fileType, windowFile.FileData.fileName, windowFile.FileData.fileAction);
+                WM.FileIconSlots.Add_FileIcon(windowFile.FileData.fileType, windowFile.FileData.fileName, windowFile.FileData.fileAction, windowFile.FileData.windowSubData, windowFile.FileData.fileprevfilePath);
             }
             else // 바탕화면이 아닐 시
             {
                 // 현재 경로인 부모 폴더 자식 리스트에 추가
-                WindowFile prevParentfile = WM.Get_WindowFile(prevDirectoryPath, new WindowFileData());
+                WindowFile prevParentfile = WM.Get_WindowFile(prevDirectoryPath);
                 prevParentfile.Add_ChildFile(windowFile.FileData);
 
                 // 파일 생성
@@ -179,7 +179,7 @@ public class Panel_RecycleBin : Panel_Popup
         // 패널 생성
         WindowManager WM = GameManager.Ins.Window;
         string trashBinPath = WM.BackgroundPath + "\\" + "휴지통";
-        Create_FileList(trashBinPath, WM.Get_WindowFile(trashBinPath, new WindowFileData()));
+        Create_FileList(trashBinPath, WM.Get_WindowFile(trashBinPath));
     }
 
     private void Create_FileList(string path, WindowFile trashbinFile) // 휴지통 데이터에 따른 파일 생성
@@ -195,7 +195,7 @@ public class Panel_RecycleBin : Panel_Popup
         GameObject obj = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Recycle/Recycles/Recycles_FileList", m_recycleBinTransform);
         if (obj != null)
         {
-            WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(path, windowFileData.fileName), windowFileData);
+            WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(path, windowFileData.fileName));
 
             obj.transform.SetSiblingIndex(m_recycleBinTransform.childCount - 2);
             RecycleBinBox folderbox = obj.GetComponent<RecycleBinBox>();

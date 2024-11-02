@@ -67,18 +67,18 @@ public class FileIconSlots : WindowData
         }
     }
 
-    public void Add_FileIcon(int rowIndex, int columnIndex, WindowManager.FILETYPE fileType, string fileName, Action action = null) // 위치 지정 아이콘 추가
+    public void Add_FileIcon(int rowIndex, int columnIndex, WindowManager.FILETYPE fileType, string fileName, Action action = null, WindowFileDataSubData subData = null, string prevfilePath = "") // 위치 지정 아이콘 추가
     {
         if (m_files[rowIndex][columnIndex].Empty == false)
             return;
 
         // 생성 또는 할당
-        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, fileName), new WindowFileData(fileType, fileName, action));
+        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, fileName), new WindowFileData(fileType, fileName, action, subData, prevfilePath));
 
         m_files[rowIndex][columnIndex].Add_FileIcon(file);
     }
-
-    public bool Add_FileIcon(WindowManager.FILETYPE fileType, string fileName, Action action = null) // 위치 미지정 아이콘 추가
+    
+    public bool Add_FileIcon(WindowManager.FILETYPE fileType, string fileName, Action action = null, WindowFileDataSubData subData = null, string prevfilePath = "") // 위치 미지정 아이콘 추가
     {
         // 경로 중복 검사
         string path = GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, fileName);
@@ -92,7 +92,7 @@ public class FileIconSlots : WindowData
             FileIconSlot slot = m_files[RowIndex][ColumnIndex];
             if (slot.Empty == true)
             {
-                Add_FileIcon(RowIndex, ColumnIndex, fileType, fileName, action);
+                Add_FileIcon(RowIndex, ColumnIndex, fileType, fileName, action, subData, prevfilePath);
                 return true;
             }
 

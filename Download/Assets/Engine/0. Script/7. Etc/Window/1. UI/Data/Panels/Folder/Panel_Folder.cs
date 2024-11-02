@@ -62,6 +62,7 @@ public class Panel_Folder : Panel_Popup
             // 폴더 창 초기화
             m_scrollRect.verticalNormalizedPosition = 1f;
             m_favoriteTransform.gameObject.SetActive(false);
+            m_dropDownPanel.SetActive(false);
             Reset_SelectBox();
             Update_Buttons();
 
@@ -78,7 +79,7 @@ public class Panel_Folder : Panel_Popup
                         m_isButtonClick = false;
                         m_pathText.enabled = false;
 
-                        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"), new WindowFileData(WindowManager.FILETYPE.TYPE_ZIP, "Zip"));
+                        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"));
                         FolderData folderData = (FolderData)file.FileData.windowSubData;
                         List<FoldersData> foldersDatas = new List<FoldersData>();
                         foldersDatas.Add(new FoldersData(folderData.childFolders));
@@ -208,6 +209,8 @@ public class Panel_Folder : Panel_Popup
             yield return new WaitForSeconds(1.0f);
 
             m_scrollRect.verticalNormalizedPosition = 1f;
+            float sensitiv = m_scrollRect.scrollSensitivity;
+            m_scrollRect.scrollSensitivity = 0f;
             m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = false;
 
             int currentIndex = 0;
@@ -233,6 +236,7 @@ public class Panel_Folder : Panel_Popup
 
                         // 항목 삭제
                         m_foldersData[0].childFolders.RemoveAt(currentIndex - 1);
+                        GameManager.Ins.Window.FileData.Remove(folderBox.FileData.FilePath);
                         GameManager.Ins.Resource.Destroy(folderBox.gameObject);
                         yield return new WaitForSeconds(0.3f);
                     }
@@ -248,6 +252,7 @@ public class Panel_Folder : Panel_Popup
             }
 
             m_inputPopupButton = true;
+            m_scrollRect.scrollSensitivity = sensitiv;
             m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = true;
             break;
         }
@@ -348,7 +353,7 @@ public class Panel_Folder : Panel_Popup
         else // 바탕화면이 아닐 시
         {
             // 현재 경로인 부모 폴더 자식 리스트에서 삭제
-            WindowFile parentfile = WM.Get_WindowFile(m_path, new WindowFileData());
+            WindowFile parentfile = WM.Get_WindowFile(m_path);
             parentfile.Remove_ChildFile(fileData.FileData);
         }
 
@@ -362,7 +367,7 @@ public class Panel_Folder : Panel_Popup
         newPathFile.Set_PrevfilePath(fileData.FilePath);
 
         // 휴지통 자식으로 등록
-        WindowFile trashbinFile = WM.Get_WindowFile(trashbinPath, new WindowFileData());
+        WindowFile trashbinFile = WM.Get_WindowFile(trashbinPath);
         trashbinFile.Add_ChildFile(fileData.FileData);
     }
     #endregion

@@ -18,6 +18,7 @@ public abstract class Panel_Popup : WindowData
 
     public WindowManager.FILETYPE FileType => m_fileType;
     public bool Select => m_select;
+    public int ActiveType => m_activeType;
     public IconSlot Slot { set => m_slot = value; }
     public bool InputPopupButton { set => m_inputPopupButton = value; }
     public bool IsButtonClick { get => m_isButtonClick; set => m_isButtonClick = value; }
