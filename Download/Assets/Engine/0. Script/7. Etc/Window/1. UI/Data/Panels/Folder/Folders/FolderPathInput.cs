@@ -141,18 +141,34 @@ public class FolderPathInput : MonoBehaviour
         WindowManager WM = GameManager.Ins.Window;
         WM.Folder.FavoriteTransform.gameObject.SetActive(false);
         if (WM.Folder.IsButtonClick == false)
+        {
+            m_dropDownPanel.SetActive(false);
             return;
+        }
 
         string path = WM.Folder.Set_RestorPathFormat(m_pathText.text);
-        if (WM.Check_File(path) == false) // 존재하지 않을 시 이전 경로로 입력값 초기화
+        if (path == WM.Folder.Path) // 현재 폴더와 같은 경로일 때 재 실행 방지
+        {
+            m_dropDownPanel.SetActive(false);
+            return;
+        }
+
+        // 이동
+        if (path == WM.BackgroundPath) // 배경화면일 시
+        {
+            WM.Folder.Active_Popup(true, 0);
+        }
+        else if (WM.Check_File(path) == false) // 존재하지 않을 시 이전 경로로 입력값 초기화
         {
             m_pathText.text = WM.Folder.Set_PathFormat(WM.Folder.Path);
         }
         else // 존재할 시 해당 폴더로 위치 이동 및 액션 실행
         {
             WindowFile windowFile = WM.Get_WindowFile(path, new WindowFileData());
-            if(windowFile.FilePath != path)
+            if(windowFile.FilePath != WM.Folder.Path) // 현재 폴더와 같은 경로일 때 재 실행 방지
                 windowFile.FileData.fileAction();
+            else // 초기화
+                m_pathText.text = WM.Folder.Set_PathFormat(WM.Folder.Path);
         }
         m_dropDownPanel.SetActive(false);
     }

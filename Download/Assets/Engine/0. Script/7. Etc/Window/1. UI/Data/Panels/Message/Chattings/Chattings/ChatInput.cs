@@ -17,6 +17,14 @@ public class ChatInput : MonoBehaviour
         m_inputField.onSelect.AddListener(Input_Start);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            Button_Send();
+        }
+    }
+
     private void Input_Start(string text)
     {
         //m_inputField.ActivateInputField(); // 입력 시작 시 포커스 설정
@@ -69,7 +77,7 @@ public class ChatInput : MonoBehaviour
 
     public void Button_Send() // 메세지 전송 버튼
     {
-        if (m_callCoroutine != null)
+        if (m_callCoroutine != null || m_inputField.text == "")
             return;
 
         #region 메시지 추가

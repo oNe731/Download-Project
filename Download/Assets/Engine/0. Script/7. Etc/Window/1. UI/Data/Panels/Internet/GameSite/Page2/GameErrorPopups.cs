@@ -14,8 +14,8 @@ public class GameErrorPopups : MonoBehaviour
     private int m_activeCount = 0;
 
     private float m_delay = 0.45f; // 처음 딜레이
-    private float m_minDelay = 0.05f; // 최소 딜레이
-    private float m_accelerationRate = 0.8f; // 가속도, 딜레이가 줄어드는 비율
+    private float m_minDelay = 0.02f; // 최소 딜레이
+    private float m_accelerationRate = 0.7f; // 가속도, 딜레이가 줄어드는 비율
 
     private void Start()
     {

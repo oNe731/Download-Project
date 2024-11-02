@@ -2960,7 +2960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3052,7 +3052,6 @@ GameObject:
   - component: {fileID: 4901033832015970034}
   - component: {fileID: 3808790100904147844}
   - component: {fileID: 7489554163593675766}
-  - component: {fileID: 9217957659627827589}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -3100,7 +3099,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 40
   m_Viewport: {fileID: 2037179815354017579}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 8318930913871755594}
@@ -3123,11 +3122,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b287dc96bcc6442b012696493876aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!222 &9217957659627827589
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132421187841295915}
-  m_CullTransparentMesh: 1
