@@ -12,6 +12,7 @@ namespace VisualNovel
 
         private GameObject m_minimapIcon;
         private GameObject m_stopLight;
+        private Animator m_animator;
         private NavMeshAgent m_agent;
 
         public Yandere_Stop(StateMachine<HallwayYandere> stateMachine, GameObject minimapIcon, GameObject stopLight) : base(stateMachine)
@@ -19,6 +20,7 @@ namespace VisualNovel
             m_minimapIcon = minimapIcon;
             m_stopLight = stopLight;
 
+            m_animator = m_stateMachine.Owner.GetComponentInChildren<Animator>();
             m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
         }
 
@@ -31,6 +33,8 @@ namespace VisualNovel
 
             if (m_agent.gameObject.activeSelf == true)
                 m_agent.destination = m_agent.transform.position;
+
+            m_animator.speed = 0f;
 
             // 파티클 생성
         }
@@ -46,8 +50,8 @@ namespace VisualNovel
         {
             m_minimapIcon.SetActive(false);
             m_stopLight.SetActive(false);
+
+            m_animator.speed = 1f;
         }
     }
 }
-
-
