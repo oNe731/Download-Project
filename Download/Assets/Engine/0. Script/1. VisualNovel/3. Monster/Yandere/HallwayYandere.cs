@@ -71,6 +71,9 @@ namespace VisualNovel
 
         private void OnDrawGizmos()
         {
+            if (m_stateMachine == null)
+                return;
+
 #if UNITY_EDITOR
             m_stateMachine.OnDrawGizmos();
 #endif
