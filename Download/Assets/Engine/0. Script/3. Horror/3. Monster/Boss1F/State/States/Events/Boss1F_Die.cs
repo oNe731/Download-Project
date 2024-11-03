@@ -77,6 +77,7 @@ public class Boss1F_Die : Boss1F_Base
                 {
                     value = -1f;
                     Delete_Monster();
+                    break;
                 }
 
                 m_materials[i].SetFloat("_Split_Value", value);
@@ -88,6 +89,7 @@ public class Boss1F_Die : Boss1F_Base
     {
         m_destroy = true;
 
+        Debug.Log("Å° »ý¼º");
         GameObject item = GameManager.Ins.Resource.LoadCreate("5. Prefab/3. Horror/Object/Item/Research_1FKey");
         if (item != null)
             item.transform.position = new Vector3(12.314f, 0.5f, 7.82f);

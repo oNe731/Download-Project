@@ -13,7 +13,7 @@ public class Straitjacket : Monster
 
     private void Start()
     {
-        m_hp = 5f;
+        m_hp = 4f;
         m_attack = 1f;
         m_DieStateIndex = (int)State.ST_DIE;
 
