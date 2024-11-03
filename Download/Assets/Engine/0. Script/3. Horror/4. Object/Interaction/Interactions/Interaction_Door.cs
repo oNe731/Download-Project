@@ -102,7 +102,7 @@ public class Interaction_Door : Interaction
                 StartCoroutine(Move_TwoMove());
                 break;
             case OPENTYPE.OT_ANIMATION:
-                Open_Animation();
+                StartCoroutine(Open_Animation());
                 break;
         }
     }
@@ -194,24 +194,47 @@ public class Interaction_Door : Interaction
         yield break;
     }
 
-    private void Open_Animation() // 열리는 문 애니메이션 재생
+    private IEnumerator Open_Animation() // 열리는 문 애니메이션 재생
     {
-        GameManager.Ins.Set_Pause(true); // 일시정지
+        Animator[] animators = transform.GetComponentsInChildren<Animator>();
+        if (animators != null)
+        {
+            foreach (Animator animator in animators)
+                animator.SetTrigger("IsOpen");
 
-        GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Fadeln_Animation(), 1f, false);
-    }
+            int count = transform.GetChild(1).childCount;
+            bool isPlay = true;
+            while (isPlay)
+            {
+                foreach (Animator animator in animators)
+                {
+                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                    {
+                        isPlay = false;
+                        break;
+                    }
+                }
 
-    private void Fadeln_Animation()
-    {
-        Destroy(gameObject);
+                yield return null;
+            }
 
-        GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Play_Level());
-    }
+            // Bounds 수정 (커튼 기준)
+            for (int i = 0; i < count; ++i)
+            {
+                SkinnedMeshRenderer SMR = transform.GetChild(1).GetChild(i).GetChild(1).GetComponent<SkinnedMeshRenderer>();
+                if (SMR != null)
+                {
+                    Bounds bounds = SMR.bounds;
+                    bounds.center = new Vector3(bounds.center.x, 0.021f, bounds.center.z);
+                    SMR.bounds = bounds;
+                }
+            }
 
-    private void Play_Level()
-    {
-        GameManager.Ins.Set_Pause(false); // 일시정지 해제
+            transform.GetChild(2).GetChild(0).gameObject.SetActive(false); // 첫 번째 콜라이더 비활성화
+            transform.GetChild(2).GetChild(1).gameObject.SetActive(true);  // 두 번째 콜라이더 활성화
+            this.enabled = false; // 스크립트 비활성화
+        }
+
+        yield break;
     }
 }
