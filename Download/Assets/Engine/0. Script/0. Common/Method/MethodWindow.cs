@@ -12,7 +12,7 @@ public class MethodWindow : MonoBehaviour
     private void Update()
     {
         m_time += Time.deltaTime;
-        if (m_time < 1f)
+        if (m_time < 1.5f)
             return;
 
         if (GameManager.Ins.Get_AnyKeyDown())
