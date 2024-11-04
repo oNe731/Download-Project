@@ -227,7 +227,7 @@ namespace VisualNovel
                     if (!string.IsNullOrEmpty(standingSpr[0]))
                     {
                         m_standingObj[0].SetActive(true);
-                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
                         m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[0]];
                     }
 
@@ -239,14 +239,14 @@ namespace VisualNovel
                     if (!string.IsNullOrEmpty(standingSpr[0]))
                     {
                         m_standingObj[0].SetActive(true);
-                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
                         m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[0]];
                     }
 
                     if (!string.IsNullOrEmpty(standingSpr[1]))
                     {
                         m_standingObj[1].SetActive(true);
-                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
+                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -147f, 0.0f);
                         m_standingImg[1].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[1]];
                     }
                     m_standingObj[2].SetActive(false);
@@ -256,21 +256,21 @@ namespace VisualNovel
                     if (!string.IsNullOrEmpty(standingSpr[0]))
                     {
                         m_standingObj[0].SetActive(true);
-                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -460.0f, 0.0f);
+                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
                         m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[0]];
                     }
 
                     if (!string.IsNullOrEmpty(standingSpr[1]))
                     {
                         m_standingObj[1].SetActive(true);
-                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -460.0f, 0.0f);
+                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -147f, 0.0f);
                         m_standingImg[1].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[1]];
                     }
 
                     if (!string.IsNullOrEmpty(standingSpr[2]))
                     {
                         m_standingObj[2].SetActive(true);
-                        m_standingObj[2].transform.localPosition = new Vector3(500.0f, -460.0f, 0.0f);
+                        m_standingObj[2].transform.localPosition = new Vector3(500.0f, -147f, 0.0f);
                         m_standingImg[2].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[2]];
                     }
                     break;
