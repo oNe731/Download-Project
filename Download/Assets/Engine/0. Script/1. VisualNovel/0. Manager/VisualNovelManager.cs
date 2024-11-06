@@ -69,6 +69,10 @@ public class VisualNovelManager : StageManager
         m_backgroundSpr.Add("DA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_DA01"));
         m_backgroundSpr.Add("DA09", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_DA09"));
 
+        m_backgroundSpr.Add("AyakaEye", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/STMInats01_STHINA01"));
+        m_backgroundSpr.Add("TSAyaka01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/TSAyaka01"));
+        m_backgroundSpr.Add("BackGround_BandRoomAyaka", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/BackGround_BandRoom_Ayaka"));
+
         // 스탠딩 이미지 할당 
         m_standingSpr.Add("KI00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI00"));
         m_standingSpr.Add("KI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI01"));

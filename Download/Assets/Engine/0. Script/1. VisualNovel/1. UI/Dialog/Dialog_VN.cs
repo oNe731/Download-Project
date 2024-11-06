@@ -11,7 +11,7 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
-        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_END }
+        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_END }
         private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
 
         [Header("GameObject")]
@@ -26,6 +26,7 @@ namespace VisualNovel
 
         private Image   m_backgroundImg;
         private Image[] m_standingImg;
+        private bool m_isFade = false;
 
         private List<bool>       m_slectBool;
         private int              m_choiceIndex = 0;
@@ -73,7 +74,7 @@ namespace VisualNovel
         private void Update_Dialogs(bool IsPonter = true)
         {
             // 커서가 UI에 존재할 시 업데이트 방지
-            if (IsPonter && EventSystem.current.IsPointerOverGameObject())
+            if (IsPonter && EventSystem.current.IsPointerOverGameObject() || m_isFade == true)
                 return;
 
             if (m_isTyping)
@@ -143,6 +144,8 @@ namespace VisualNovel
 
         private void Update_FadeIn() // 다이얼로그, 추격
         {
+            m_isFade = false;
+
             // 다음 다이얼로그 타입에 따른 처리
             if (m_dialogs[m_dialogIndex + 1].dialogType == DialogData_VN.DIALOG_TYPE.DT_CUTSCENE)
             {
@@ -177,6 +180,10 @@ namespace VisualNovel
 
         private void Update_FadeOutIn()
         {
+            if (m_isFade == true)
+                return;
+
+            m_isFade = true;
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
         }
         #endregion
@@ -744,6 +751,14 @@ namespace VisualNovel
                     m_dialogTxt.text += m_dialogTxt.text;
                     m_eventCoroutines = StartCoroutine(Update_ScrollText(dialogText));
                     break;
+
+                case (int)EVENTTYPE.ET_AYAKAEYE:
+                    m_eventCoroutines = StartCoroutine(Update_Background(data.backgroundSpr, "AyakaEye"));
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKHAND:
+                    m_eventCoroutines = StartCoroutine(Update_Background(data.backgroundSpr, "TSAyaka01"));
+                    break;
             }
         }
 
@@ -774,6 +789,14 @@ namespace VisualNovel
                     break;
 
                 case (int)EVENTTYPE.ET_SCROLLTEXT:
+                    StopCoroutine(m_eventCoroutines);
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKAEYE:
+                    StopCoroutine(m_eventCoroutines);
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKHAND:
                     StopCoroutine(m_eventCoroutines);
                     break;
             }
@@ -822,6 +845,18 @@ namespace VisualNovel
                     yield return null;
                 }
             }
+        }
+
+        private IEnumerator Update_Background(string backgroundSpr, string changeImg)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[changeImg];
+            yield return new WaitForSeconds(0.1f);
+
+            if (!string.IsNullOrEmpty(backgroundSpr))
+                m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[backgroundSpr];
+            yield break;
         }
         #endregion
 
