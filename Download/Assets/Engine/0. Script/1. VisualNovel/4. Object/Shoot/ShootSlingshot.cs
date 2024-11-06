@@ -51,7 +51,7 @@ namespace VisualNovel
         private void Update()
         {
             VisualNovelManager manager = GameManager.Ins.Novel;
-            if (GameManager.Ins.IsGame == false || !manager.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStart || manager.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop)
+            if (GameManager.Ins.IsGame == false || !manager.LevelController.Get_CurrentLevel<Novel_Day3Shoot>().ShootGameStart || manager.LevelController.Get_CurrentLevel<Novel_Day3Shoot>().ShootGameStop)
                 return;
 
             if (m_use)

@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Text.RegularExpressions;
 
 namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
+        private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
+
         [Header("GameObject")]
         [SerializeField] private GameObject m_darkPanelObj;
         [SerializeField] private GameObject m_backgroundObj;
@@ -18,12 +21,17 @@ namespace VisualNovel
         [SerializeField] private TMP_Text m_nameTxt;
         [SerializeField] private TMP_Text m_dialogTxt;
         [SerializeField] private NpcLike m_heartScr;
+        [SerializeField] private TMP_Text m_skipTxt;
 
         private Image   m_backgroundImg;
         private Image[] m_standingImg;
 
+        private List<bool>       m_slectBool;
         private int              m_choiceIndex = 0;
         private List<GameObject> m_choice_Button = new List<GameObject>();
+
+        private SKIPTYPE m_skipType = SKIPTYPE.ST_NONE;
+        private Coroutine m_dialogSkip = null;
 
         private bool m_cutScene = false;
         public bool CutScene { set => m_cutScene = value; }
@@ -41,19 +49,20 @@ namespace VisualNovel
 
         private void Update()
         {
-            /*if(Input.GetKeyDown(KeyCode.F1))
-            {
-                m_dialogIndex = m_dialogs.Count - 1;
-                m_isTyping    = false;
-                Update_Dialog();
-            }*/
-
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
                 Update_Dialogs();
 
             // 버튼 업데이트
             if (0 < m_choice_Button.Count)
                 Update_Button();
+
+            /*All Skip
+            if(Input.GetKeyDown(KeyCode.F1))
+            {
+                m_dialogIndex = m_dialogs.Count - 1;
+                m_isTyping    = false;
+                Update_Dialog();
+            }*/
         }
 
         private void Update_Dialogs(bool IsPonter = true)
@@ -120,6 +129,10 @@ namespace VisualNovel
                 case FadeData.FADETYPE.FT_OUTIN:
                     Update_FadeOutIn();
                     break;
+
+                case FadeData.FADETYPE.FT_NONE:
+                    Start_Dialog(fadeData.pathIndex);
+                    break;
             }
         }
 
@@ -146,10 +159,10 @@ namespace VisualNovel
 
         private void Update_FadeOut(FadeData fadeData)
         {
-            if (string.IsNullOrEmpty(fadeData.path))
+            if (fadeData.pathIndex < 0)
                 GameManager.Ins.UI.Start_FadeOut(1f, Color.black);
             else
-                GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(fadeData.path)), 0f, false);
+                GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Start_Dialog(fadeData.pathIndex), 0f, false);
         }
 
         private void Update_FadeInOut(FadeData fadeData)
@@ -164,7 +177,7 @@ namespace VisualNovel
         #endregion
 
         #region Dialog
-        private void Update_DialogBasic(VisualNovelManager.OWNERTYPE ownerType)
+        private void Update_DialogBasic(VisualNovelManager.OWNERTYPE ownerType, string name)
         {
             // 다이얼로그 박스 활성화
             m_dialogBoxObj.SetActive(true);
@@ -173,23 +186,13 @@ namespace VisualNovel
             m_heartScr.Set_Owner(ownerType);
 
             // 다이얼로그 오너 이름 업데이트
-            switch (ownerType)
+            if(ownerType == VisualNovelManager.OWNERTYPE.OT_WHITE)
             {
-                case VisualNovelManager.OWNERTYPE.OT_WHITE:
-                    m_nameTxt.text = GameManager.Ins.PlayerName;
-                    break;
-
-                case VisualNovelManager.OWNERTYPE.OT_BLUE:
-                    m_nameTxt.text = "미나츠";
-                    break;
-
-                case VisualNovelManager.OWNERTYPE.OT_YELLOW:
-                    m_nameTxt.text = "히나";
-                    break;
-
-                case VisualNovelManager.OWNERTYPE.OT_PINK:
-                    m_nameTxt.text = "아야카";
-                    break;
+                m_nameTxt.text = GameManager.Ins.PlayerName;
+            }
+            else
+            {
+                m_nameTxt.text = name;
             }
         }
 
@@ -198,7 +201,7 @@ namespace VisualNovel
             DialogData dialogData = (DialogData)m_dialogs[dialogIndex].dialogSubData;
 
             // 기본 정보 업데이트
-            Update_DialogBasic(dialogData.owner);
+            Update_DialogBasic(dialogData.owner, dialogData.dialogName);
 
             // 리소스 업데이트 : 배경, 스탠딩
             if (!string.IsNullOrEmpty(dialogData.backgroundSpr))
@@ -239,7 +242,7 @@ namespace VisualNovel
                     if (!string.IsNullOrEmpty(standingSpr[0]))
                     {
                         m_standingObj[0].SetActive(true);
-                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
+                        m_standingObj[0].transform.localPosition = new Vector3(-300.0f, -147f, 0.0f);
                         m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[0]];
                     }
 
@@ -256,21 +259,21 @@ namespace VisualNovel
                     if (!string.IsNullOrEmpty(standingSpr[0]))
                     {
                         m_standingObj[0].SetActive(true);
-                        m_standingObj[0].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
+                        m_standingObj[0].transform.localPosition = new Vector3(-555.0f, -147f, 0.0f);
                         m_standingImg[0].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[0]];
                     }
 
                     if (!string.IsNullOrEmpty(standingSpr[1]))
                     {
                         m_standingObj[1].SetActive(true);
-                        m_standingObj[1].transform.localPosition = new Vector3(300.0f, -147f, 0.0f);
+                        m_standingObj[1].transform.localPosition = new Vector3(0.0f, -147f, 0.0f);
                         m_standingImg[1].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[1]];
                     }
 
                     if (!string.IsNullOrEmpty(standingSpr[2]))
                     {
                         m_standingObj[2].SetActive(true);
-                        m_standingObj[2].transform.localPosition = new Vector3(500.0f, -147f, 0.0f);
+                        m_standingObj[2].transform.localPosition = new Vector3(555.0f, -147f, 0.0f);
                         m_standingImg[2].sprite = GameManager.Ins.Novel.StandingSpr[standingSpr[2]];
                     }
                     break;
@@ -284,15 +287,20 @@ namespace VisualNovel
             m_darkPanelObj.SetActive(true);
 
             // 선택지 버튼 생성
+            float startHeight;
+            if (choiceData.choiceText.Count == 3)
+                startHeight = 250f;
+            else
+                startHeight = 150f;
             for (int i = 0; i < choiceData.choiceText.Count; ++i)
             {
-                int ButtonIndex = i + 1; // 버튼 고유 인덱스
+                int ButtonIndex = i; // 버튼 고유 인덱스
 
                 GameObject Clone = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Button_Choice_VN");
                 if (Clone != null)
                 {
                     Clone.transform.SetParent(gameObject.transform);
-                    Clone.transform.localPosition = new Vector3(0f, (130 + (i * -130)), 0f); // 130 / 0 / -130
+                    Clone.transform.localPosition = new Vector3(0f, (startHeight + (i * -130)), 0f);
                     Clone.transform.localScale    = new Vector3(1f, 1f, 1f);
 
                     ButtonChoice_VN ButtonChoice = Clone.GetComponent<ButtonChoice_VN>();
@@ -316,6 +324,8 @@ namespace VisualNovel
             // 기본 선택 상태 설정
             m_choiceIndex = 0;
             m_choice_Button[m_choiceIndex].GetComponent<Image>().sprite = GameManager.Ins.Novel.ChoiceButtonSpr["UI_VisualNovel_White_ButtonON"];
+
+            Reset_Skip();
         }
 
         private void Update_Button()
@@ -349,16 +359,25 @@ namespace VisualNovel
 
         private void Click_Button(int index)
         {
+            if(m_slectBool != null)
+            {
+                if (m_slectBool[index] == true)
+                    return;
+
+                m_slectBool[index] = true;
+            }
+
             DialogData dialogData = (DialogData)m_dialogs[m_dialogIndex - 1].dialogSubData;
             ChoiceData choiceData = dialogData.choiceData;
-            switch (choiceData.choiceEventType[index - 1])
+            switch (choiceData.choiceEventType[index])
             {
                 case ChoiceData.CHOICETYPE.CT_CLOSE: // 다이얼로그 종료
                     Close_Dialog();
                     break;
 
                 case ChoiceData.CHOICETYPE.CT_DIALOG: // 다이얼로그 재시작
-                    Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(choiceData.choiceDialog[index - 1]));
+                    //Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(choiceData.choiceDialog[index - 1]));
+                    Start_Dialog(choiceData.choiceDialog[index]);
                     break;
             }
         }
@@ -392,15 +411,15 @@ namespace VisualNovel
             switch (gameState.gameType)
             {
                 case GameState.GAMETYPE.GT_STARTSHOOT:
-                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME);
+                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3SHOOTGAME);
                     break;
 
                 case GameState.GAMETYPE.GT_STARTCHASE:
-                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME);
+                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3CHASEGAME);
                     break;
 
                 case GameState.GAMETYPE.GT_PLAYCHASE:
-                    action = () => GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Play_Level();
+                    action = () => GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>().Play_Level();
                     break;
             }
 
@@ -447,7 +466,7 @@ namespace VisualNovel
                         break;
 
                     case VisualNovel.CutScene.CUTSCENETYPE.CT_IMAGE:
-                        Update_Image((ImageValue)dialogData.eventValues[i]);
+                        //Update_Image((ImageValue)dialogData.eventValues[i]);
                         break;
                 }
             }
@@ -488,13 +507,13 @@ namespace VisualNovel
                     // 업데이트 여부 확인
                     if (!string.IsNullOrEmpty(animationValue.animatroTriger))
                     {
-                        Novel_Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>();
+                        Novel_Day3Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>();
                         novel_Chase.YandereAnimator.SetTrigger(animationValue.animatroTriger);
                     }
                     break;
             }
 
-            Update_DialogBasic(animationValue.owner);
+            Update_DialogBasic(animationValue.owner, animationValue.dialogName);
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
             m_dialogTextCoroutine = StartCoroutine(Type_CutText(animationValue));
@@ -540,7 +559,7 @@ namespace VisualNovel
             switch (activeValue.objectType)
             {
                 case ActiveValue.OBJECT_TYPE.OJ_SAW:
-                    GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Yandere.gameObject.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(activeValue.active);
+                    GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>().Yandere.gameObject.transform.GetChild(0).transform.GetChild(2).gameObject.SetActive(activeValue.active);
                     break;
             }
 
@@ -558,8 +577,8 @@ namespace VisualNovel
             m_dialogBoxObj.SetActive(false);
 
             // 컷씬 이미지 변경
-            if (!string.IsNullOrEmpty(iamgeValue.imageName))
-                m_backgroundImg.sprite = GameManager.Ins.Novel.CutScene[iamgeValue.imageName];
+            //if (!string.IsNullOrEmpty(iamgeValue.imageName))
+            //    m_backgroundImg.sprite = GameManager.Ins.Novel.CutScene[iamgeValue.imageName];
 
             m_cutScene = false;
             m_dialogIndex++;
@@ -604,7 +623,56 @@ namespace VisualNovel
         #endregion
 
 
-        IEnumerator Type_CutText(AnimationValue animationValue)
+        #region Skip
+        public void Button_Skip()
+        {
+            m_skipType++;
+            if (m_skipType > SKIPTYPE.ST_SPEED2)
+                m_skipType = SKIPTYPE.ST_NONE;
+
+            switch (m_skipType)
+            {
+                case SKIPTYPE.ST_NONE:
+                    Reset_Skip();
+                    break;
+                case SKIPTYPE.ST_SPEED1:
+                    m_skipTxt.text = "Skipx1";
+                    if (m_dialogSkip != null)
+                        StopCoroutine(m_dialogSkip);
+                    m_dialogSkip = StartCoroutine(DialogSkip(0.2f));
+                    break;
+                case SKIPTYPE.ST_SPEED2:
+                    m_skipTxt.text = "Skipx2";
+                    if (m_dialogSkip != null)
+                        StopCoroutine(m_dialogSkip);
+                    m_dialogSkip = StartCoroutine(DialogSkip(0.1f));
+                    break;
+            }
+        }
+
+        public void Reset_Skip()
+        {
+            m_skipType = SKIPTYPE.ST_NONE;
+
+            m_skipTxt.text = "Skip";
+            if (m_dialogSkip != null)
+                StopCoroutine(m_dialogSkip);
+        }
+
+        private IEnumerator DialogSkip(float speed)
+        {
+            while (m_dialogIndex < m_dialogs.Count)
+            {
+                Update_Dialogs();
+                yield return new WaitForSeconds(speed);
+            }
+
+            yield break;
+        }
+        #endregion
+
+
+        private IEnumerator Type_CutText(AnimationValue animationValue)
         {
             // 플레이어 이름이 사용될 시 입력 받은 이름으로 변경
             string dialogText = animationValue.dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
@@ -666,6 +734,193 @@ namespace VisualNovel
             Update_Dialogs(false);
         }
 
+        public void Start_Dialog(int sheetIndex)
+        {
+            Novel_Level level = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Level>();
+            if (level == null)
+                return;
+
+            List<ExcelData> sheetList = level.Get_DialogData(sheetIndex);
+            List<DialogData_VN> dialogs = new List<DialogData_VN>();
+            for (int i = 0; i < sheetList.Count; ++i)
+            {
+                DialogData_VN data = new DialogData_VN();
+                data.dialogType = (DialogData_VN.DIALOG_TYPE)sheetList[i].dialogType;
+
+                switch (data.dialogType)
+                {
+                    case DialogData_VN.DIALOG_TYPE.DT_FADE:
+                        FadeData fadeData = new FadeData();
+                        fadeData.fadeType = (FadeData.FADETYPE)sheetList[i].fadeType;
+                        fadeData.pathIndex = sheetList[i].pathIndex;
+
+                        data.dialogSubData = fadeData;
+                        break;
+
+                    case DialogData_VN.DIALOG_TYPE.DT_DIALOG:
+                        DialogData dialogData = new DialogData();
+                        dialogData.owner = (VisualNovelManager.OWNERTYPE)sheetList[i].owner;
+                        dialogData.dialogName = sheetList[i].dialogName;
+                        dialogData.dialogText = sheetList[i].dialogText;
+                        dialogData.backgroundSpr = sheetList[i].backgroundSpr;
+                        dialogData.standingSpr = ExtractTextsInCurlyBrackets(sheetList[i].standingSpr);
+                        dialogData.addLike = sheetList[i].addLike;
+
+                        ChoiceData choiceData = new ChoiceData();
+                        choiceData.choiceLoop = sheetList[i].choiceLoop;
+                        choiceData.choiceEventType = ExtractValuesInCurlyBrackets<ChoiceData.CHOICETYPE>(sheetList[i].choiceEventType);
+                        choiceData.choiceText = ExtractTextsInCurlyBrackets(sheetList[i].choiceText);
+                        choiceData.choiceDialog = ExtractIntegers(sheetList[i].choiceDialog);
+                        choiceData.pathIndex = sheetList[i].pathIndex;
+                        dialogData.choiceData = choiceData;
+
+                        data.dialogSubData = dialogData;
+                        break;
+
+                    case DialogData_VN.DIALOG_TYPE.DT_GAMESTATE:
+                        GameState gameState = new GameState();
+                        gameState.gameType = (GameState.GAMETYPE)sheetList[i].gameType;
+                        data.dialogSubData = gameState;
+                        break;
+
+                    case DialogData_VN.DIALOG_TYPE.DT_CUTSCENE:
+                        CutScene cutScene = new CutScene();
+                        cutScene.cutSceneEvents = ExtractValuesInCurlyBrackets<CutScene.CUTSCENETYPE>(sheetList[i].cutSceneEvents);
+
+                        cutScene.eventValues = new List<CutSceneValue>();
+                        for (int j = 0; j < cutScene.cutSceneEvents.Count; ++j)
+                        {
+                            CutSceneValue cutSceneValue;
+                            switch (cutScene.cutSceneEvents[j])
+                            {
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_BLINK:
+                                    BasicValue basicValue = new BasicValue();
+                                    basicValue.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_CAMERA:
+                                    //CameraValue cameraValue = new CameraValue();
+                                    //cameraValue.nextIndex;
+                                    //cameraValue.usePosition;
+                                    //cameraValue.targetPosition;
+                                    //cameraValue.positionSpeed;
+                                    //cameraValue.useRotation;
+                                    //cameraValue.targetRotation;
+                                    //cameraValue.rotationSpeed;
+                                    BasicValue basicValue4 = new BasicValue();
+                                    basicValue4.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue4;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_ANIMATION:
+                                    //AnimationValue animationValue = new AnimationValue();
+                                    //animationValue.nextIndex;
+                                    //animationValue.owner;
+                                    //animationValue.dialogName;
+                                    //animationValue.dialogText;
+                                    //animationValue.animatroTriger;
+                                    BasicValue basicValue5 = new BasicValue();
+                                    basicValue5.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue5;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_LIKEPANEL:
+                                    BasicValue basicValue1 = new BasicValue();
+                                    basicValue1.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue1;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_ACTIVE:
+                                    //ActiveValue activeValue = new ActiveValue();
+                                    //activeValue.nextIndex;
+                                    //activeValue.objectType;
+                                    //activeValue.active;
+                                    BasicValue basicValue6 = new BasicValue();
+                                    basicValue6.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue6;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_IMAGE:
+                                    ImageValue imageValue = new ImageValue();
+                                    imageValue.imageName = sheetList[i].imageName;
+                                    cutSceneValue = imageValue;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_SHAKE:
+                                    BasicValue basicValue2 = new BasicValue();
+                                    basicValue2.nextIndex = sheetList[i].nextIndex;
+                                    cutSceneValue = basicValue2;
+                                    cutScene.eventValues.Add(cutSceneValue);
+                                    break;
+                            }
+                        }
+                        data.dialogSubData = cutScene;
+                        break;
+                }
+                dialogs.Add(data);
+            }
+
+            Start_Dialog(dialogs);
+        }
+
+        public static List<int> ExtractIntegers(string input)
+        {
+            List<int> result = new List<int>();
+            Regex regex = new Regex(@"\{(.*?)\}");
+            MatchCollection matches = regex.Matches(input);
+
+            foreach (Match match in matches)
+            {
+                if (int.TryParse(match.Groups[1].Value, out int number))
+                {
+                    result.Add(number);
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> ExtractValuesInCurlyBrackets<T>(string input) where T : struct, Enum
+        {
+            List<T> result = new List<T>();
+
+            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
+            foreach (Match match in matches)
+            {
+                string value = match.Groups[1].Value;
+
+                // Attempt to parse the string value into the enum type T
+                if (Enum.TryParse(typeof(T), value, out var enumValue))
+                {
+                    result.Add((T)enumValue); // Add the parsed enum value to the list
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> ExtractTextsInCurlyBrackets(string input)
+        {
+            List<string> result = new List<string>();
+
+            // Regular expression to capture content inside {}
+            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
+
+            foreach (Match match in matches)
+            {
+                result.Add(match.Groups[1].Value); // Add the content inside {} to the list
+            }
+
+            return result;
+        }
+
         private void Close_Dialog()
         {
             gameObject.SetActive(false);
@@ -697,6 +952,36 @@ namespace VisualNovel
             // 선택지 생성
             if (dialogData.choiceData.choiceText != null)
             {
+                if(dialogData.choiceData.choiceLoop == true)
+                {
+                    if (m_slectBool == null)
+                    {
+                        m_slectBool = new List<bool>();
+                        for (int i = 0; i < dialogData.choiceData.choiceText.Count; ++i)
+                            m_slectBool.Add(false);
+                    }
+                    else
+                    {
+                        // 한번씩 다 클릭했는가?
+                        bool allClick = true;
+                        for (int i = 0; i < m_slectBool.Count; ++i)
+                        {
+                            if (m_slectBool[i] == false)
+                            {
+                                allClick = false;
+                                break;
+                            }
+                        }
+
+                        if(allClick == true)
+                        {
+                            m_slectBool = null;
+                            Start_Dialog(dialogData.choiceData.pathIndex);
+                            yield break;
+                        }
+                    }
+                }
+
                 if (0 < dialogData.choiceData.choiceText.Count)
                     Create_ChoiceButton(dialogData.choiceData);
             }

@@ -25,7 +25,7 @@ public class PanelFail : MonoBehaviour
         Destroy(gameObject);
 
         // 추격 게임방법 설명 UI에서 다시 시작
-        GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_CHASEGAME, true);
+        GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3CHASEGAME, true);
     }
 
     public void Button_No()

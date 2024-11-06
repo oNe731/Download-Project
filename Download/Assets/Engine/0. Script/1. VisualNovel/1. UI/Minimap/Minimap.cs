@@ -11,7 +11,7 @@ namespace VisualNovel
 
         private void Start()
         {
-            m_PlayerTr = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Player.transform;
+            m_PlayerTr = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>().Player.transform;
         }
 
         private void LateUpdate()

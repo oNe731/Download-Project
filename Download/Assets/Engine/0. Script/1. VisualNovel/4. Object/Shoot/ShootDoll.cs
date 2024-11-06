@@ -97,7 +97,7 @@ namespace VisualNovel
                     else if (!m_over && m_clearTime > 4.5) // 4) 1.5초 뒤 페이드 아웃으로 전환
                     {
                         m_over = true;
-                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_NOVELEND), 0.5f, false);
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3AFTER), 0.5f, false);
                     }
                 }
             }
@@ -130,8 +130,8 @@ namespace VisualNovel
                 if (m_hp <= 0) // 게임 종료
                 {
                     VisualNovelManager manager = GameManager.Ins.Novel;
-                    manager.LevelController.Get_CurrentLevel<Novel_Shoot>().ShootGameStop = true;
-                    manager.LevelController.Get_CurrentLevel<Novel_Shoot>().DollType = m_dollType;
+                    manager.LevelController.Get_CurrentLevel<Novel_Day3Shoot>().ShootGameStop = true;
+                    manager.LevelController.Get_CurrentLevel<Novel_Day3Shoot>().DollType = m_dollType;
                     m_belt.UseBelt = false; // 1) 인형 일시 정지
                     m_clear = true;
                 }

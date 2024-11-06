@@ -69,10 +69,10 @@ namespace VisualNovel
     [Serializable]
     public struct FadeData : DialogSubData
     {
-        public enum FADETYPE { FT_IN, FT_OUT, FT_INOUT, FT_OUTIN, FT_END }
+        public enum FADETYPE { FT_IN, FT_OUT, FT_INOUT, FT_OUTIN, FT_NONE, FT_END }
 
         public FADETYPE fadeType;
-        public string path;
+        public int pathIndex;
     }
 #endregion
 
@@ -81,6 +81,7 @@ namespace VisualNovel
     public struct DialogData : DialogSubData
     {
         public VisualNovelManager.OWNERTYPE owner; // 오너 타입
+        public string dialogName;                  // 이름
         public string dialogText;                  // 대사
 
         public string backgroundSpr;     // 배경
@@ -101,9 +102,11 @@ namespace VisualNovel
             CT_END
         };
 
+        public bool choiceLoop;
         public List<CHOICETYPE> choiceEventType;
         public List<string> choiceText;
-        public List<string> choiceDialog;
+        public List<int> choiceDialog;
+        public int pathIndex;
     }
 #endregion
 
@@ -204,6 +207,7 @@ namespace VisualNovel
         public bool nextIndex;
 
         public VisualNovelManager.OWNERTYPE owner; // 오너 타입
+        public string dialogName;                  // 이름
         public string dialogText;                  // 대사
         public string animatroTriger;              // 애니메이션 트리거 이름
     }

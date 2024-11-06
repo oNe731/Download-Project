@@ -17,7 +17,7 @@ namespace VisualNovel
         {
             m_agent = m_stateMachine.Owner.GetComponent<NavMeshAgent>();
             m_ownerTr = m_stateMachine.Owner.GetComponent<Transform>();
-            m_playerTr = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Player.transform;
+            m_playerTr = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>().Player.transform;
         }
 
         public override void Enter_State()

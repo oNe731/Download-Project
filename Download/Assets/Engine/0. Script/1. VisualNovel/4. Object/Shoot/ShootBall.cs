@@ -67,7 +67,7 @@ namespace VisualNovel
         private void LateUpdate()
         {
             // 게임 종료 시 존재하는 공 삭제
-            if (GameManager.Ins.Novel.LevelController.Get_Level<Novel_Shoot>((int)VisualNovelManager.LEVELSTATE.LS_SHOOTGAME).ShootGameOver)
+            if (GameManager.Ins.Novel.LevelController.Get_Level<Novel_Day3Shoot>((int)VisualNovelManager.LEVELSTATE.LS_DAY3SHOOTGAME).ShootGameOver)
             {
                 Destroy(m_targetUI);
                 Destroy(gameObject);

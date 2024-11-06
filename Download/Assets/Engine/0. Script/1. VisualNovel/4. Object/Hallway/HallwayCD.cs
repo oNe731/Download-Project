@@ -49,7 +49,7 @@ namespace VisualNovel
             {
                 m_trigger = true;
 
-                GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>().Get_CD(m_positionIndex);
+                GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>().Get_CD(m_positionIndex);
                 StartCoroutine(Wait_PlaySound());
             }
         }

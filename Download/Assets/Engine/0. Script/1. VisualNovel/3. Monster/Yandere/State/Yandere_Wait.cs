@@ -61,7 +61,7 @@ namespace VisualNovel
             m_audioSource.Play();
 
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
-            Novel_Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Chase>();
+            Novel_Day3Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>();
             novel_Chase.Stage.transform.GetChild(0).gameObject.SetActive(true); // 미니맵 카메라
             novel_Chase.Stage.transform.GetChild(1).GetChild(0).gameObject.SetActive(true); // 미니맵 UI
             novel_Chase.ItemText.GetComponent<ItemText>().Start_ItemText("후후후...");

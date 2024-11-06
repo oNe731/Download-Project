@@ -4,7 +4,7 @@ using UnityEngine;
 using VisualNovel;
 public class VisualNovelManager : StageManager
 {
-    public enum LEVELSTATE { LS_NOVELBEGIN, LS_SHOOTGAME, LS_NOVELEND, LS_CHASEGAME, LS_END }; // 다이얼로그 - 새총 - 다이얼로그 - 추격 => 윈도우 레벨
+    public enum LEVELSTATE { LS_DAY1, LS_DAY2, LS_DAY3BEFORE, LS_DAY3SHOOTGAME, LS_DAY3AFTER, LS_DAY3CHASEGAME, LS_END }; // 다이얼로그 - 새총 - 다이얼로그 - 추격 => 윈도우 레벨
     public enum OWNERTYPE { OT_WHITE, OT_BLUE, OT_YELLOW, OT_PINK, OT_END };
 
     private GameObject m_dialog;
@@ -22,13 +22,11 @@ public class VisualNovelManager : StageManager
 
     #region Resource
     private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
-    private Dictionary<string, Sprite> m_cutScene = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_standingSpr = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_choiceButtonSpr = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> m_heartSpr = new Dictionary<string, Sprite>();
 
     public Dictionary<string, Sprite> BackgroundSpr { get => m_backgroundSpr; }
-    public Dictionary<string, Sprite> CutScene { get => m_cutScene; }
     public Dictionary<string, Sprite> StandingSpr { get => m_standingSpr; }
     public Dictionary<string, Sprite> ChoiceButtonSpr { get => m_choiceButtonSpr; }
     public Dictionary<string, Sprite> HeartSpr { get => m_heartSpr; }
@@ -43,46 +41,58 @@ public class VisualNovelManager : StageManager
     protected override void Load_Resource()
     {
         // 배경 이미지 할당
-        m_backgroundSpr.Add("BackGround_SchoolWay",   GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));
-        m_backgroundSpr.Add("BackGround_School",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_School"));
-        m_backgroundSpr.Add("BackGround_NightMarket", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_NightMarket"));
-        m_backgroundSpr.Add("BackGround_Festival",    GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Festival"));
-        m_backgroundSpr.Add("BackGround_PlayerHome",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PlayerHome"));
-        m_backgroundSpr.Add("BackGround_PinkHome",    GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PinkHome"));
-        m_backgroundSpr.Add("BackGround_Cellar",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Cellar"));
+        m_backgroundSpr.Add("BackGround_SchoolGate",    GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));   // 학교 교문
+        m_backgroundSpr.Add("BackGround_SchoolClass",   GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_SchoolWay"));   // 교실
+        m_backgroundSpr.Add("BackGround_SchoolHallway", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_School"));      // 교실 복도
+        m_backgroundSpr.Add("BackGround_BandRoom",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_NightMarket")); // 동아리실
+        m_backgroundSpr.Add("BackGround_Roadside",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Festival"));    // 길가1
+        m_backgroundSpr.Add("BackGround_Festival",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PlayerHome"));  // 길가2(축제)
+        m_backgroundSpr.Add("BackGround_Living",        GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_PinkHome"));    // 아야카의 집(거실)
+        m_backgroundSpr.Add("BackGround_Bathroom",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Cellar"));      // 아야ㅏ의 집(화장실)
 
         // 컷씬 이미지 할당
-        m_cutScene.Add("UI_VisualNovel_Cut2", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C02"));
-        m_cutScene.Add("UI_VisualNovel_Cut5", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C05"));
-        m_cutScene.Add("UI_VisualNovel_CutMI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_MI01"));
-        m_cutScene.Add("UI_VisualNovel_CutM102", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_MI02"));
-        m_cutScene.Add("UI_VisualNovel_CutSA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA01"));
-        m_cutScene.Add("UI_VisualNovel_CutSA02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("C01",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C02"));
+        m_backgroundSpr.Add("C02",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C05"));
+        m_backgroundSpr.Add("C03",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C05"));
+        m_backgroundSpr.Add("C04",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("C05",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("C06",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("MI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_MI01"));
+        m_backgroundSpr.Add("MI02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_MI02"));
+        m_backgroundSpr.Add("MI03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("SA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA01"));
+        m_backgroundSpr.Add("SA02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("SA03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("KI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("KI02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("KI03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("DA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
+        m_backgroundSpr.Add("DA09", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_SA02"));
 
         // 스탠딩 이미지 할당 
-        m_standingSpr.Add("Pink", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI00"));
-        m_standingSpr.Add("Pink01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI01"));
-        m_standingSpr.Add("Pink02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI02"));
-        m_standingSpr.Add("Pink03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI03"));
-        m_standingSpr.Add("Pink04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI04"));
-        m_standingSpr.Add("Pink05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI05"));
-        m_standingSpr.Add("Pink06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI06"));
+        m_standingSpr.Add("KI00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI00"));
+        m_standingSpr.Add("KI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI01"));
+        m_standingSpr.Add("KI02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI02"));
+        m_standingSpr.Add("KI03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI03"));
+        m_standingSpr.Add("KI04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI04"));
+        m_standingSpr.Add("KI05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI05"));
+        m_standingSpr.Add("KI06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI06"));
 
-        m_standingSpr.Add("Blue",   GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI00"));
-        m_standingSpr.Add("Blue01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI01"));
-        m_standingSpr.Add("Blue02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI02"));
-        m_standingSpr.Add("Blue03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI03"));
-        m_standingSpr.Add("Blue04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI04"));
-        m_standingSpr.Add("Blue05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI05"));
-        m_standingSpr.Add("Blue06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI06"));
+        m_standingSpr.Add("MI00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI00"));
+        m_standingSpr.Add("MI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI01"));
+        m_standingSpr.Add("MI02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI02"));
+        m_standingSpr.Add("MI03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI03"));
+        m_standingSpr.Add("MI04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI04"));
+        m_standingSpr.Add("MI05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI05"));
+        m_standingSpr.Add("MI06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI06"));
 
-        m_standingSpr.Add("Yellow", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA00"));
-        m_standingSpr.Add("Yellow01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA01"));
-        m_standingSpr.Add("Yellow02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA02"));
-        m_standingSpr.Add("Yellow03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA03"));
-        m_standingSpr.Add("Yellow04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA04"));
-        m_standingSpr.Add("Yellow05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA05"));
-        m_standingSpr.Add("Yellow06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA06"));
+        m_standingSpr.Add("SA00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA00"));
+        m_standingSpr.Add("SA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA01"));
+        m_standingSpr.Add("SA02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA02"));
+        m_standingSpr.Add("SA03", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA03"));
+        m_standingSpr.Add("SA04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA04"));
+        m_standingSpr.Add("SA05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA05"));
+        m_standingSpr.Add("SA06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA06"));
 
         // 버튼 이미지 할당
         m_choiceButtonSpr.Add("UI_VisualNovel_White_ButtonOFF", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Button/UI_VisualNovel_ChooseButton_OFF"));
@@ -122,10 +132,12 @@ public class VisualNovelManager : StageManager
         m_levelController = new LevelController();
         List<Level> levels = new List<Level>
         {
-            new Novel_Begin(),
-            new Novel_Shoot(),
-            new Novel_End(),
-            new Novel_Chase()
+            new Novel_Day1(),
+            new Novel_Day2(),
+            new Novel_Day3Before(),
+            new Novel_Day3Shoot(),
+            new Novel_Day3After(),
+            new Novel_Day3Chase(),
         };
         for (int i = 0; i < levels.Count; ++i)
             levels[i].Initialize_Level(m_levelController);
@@ -166,8 +178,8 @@ public class VisualNovelManager : StageManager
             return;
         switch(LevelController.Curlevel)
         {
-            case (int)LEVELSTATE.LS_CHASEGAME:
-                Novel_Chase chase = LevelController.Get_CurrentLevel<Novel_Chase>();
+            case (int)LEVELSTATE.LS_DAY3CHASEGAME:
+                Novel_Day3Chase chase = LevelController.Get_CurrentLevel<Novel_Day3Chase>();
                 if (chase == null) return;
                 chase.Player.Stop_Player(pause);
                 chase.Yandere.Stop_Yandere(pause);
@@ -178,7 +190,7 @@ public class VisualNovelManager : StageManager
 
     public void Active_Popup()
     {
-        if (m_likeabilityPanel == null || m_levelController.Curlevel == (int)LEVELSTATE.LS_CHASEGAME)
+        if (m_likeabilityPanel == null || m_levelController.Curlevel == (int)LEVELSTATE.LS_DAY3CHASEGAME)
             return;
 
         // 호감도창 비/ 활성화

@@ -75,7 +75,7 @@ namespace VisualNovel
 
         private void Finish_Count()
         {
-            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Shoot>().Play_Level();
+            GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Shoot>().Play_Level();
             Destroy(gameObject);
         }
     }
