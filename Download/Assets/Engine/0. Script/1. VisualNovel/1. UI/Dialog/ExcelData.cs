@@ -14,7 +14,7 @@ public class ExcelData
     public string dialogText;
     public string backgroundSpr;
     public string standingSpr;
-    public bool addLike;
+    public int addLike;
     public bool choiceLoop;
     public string choiceEventType;
     public string choiceText;

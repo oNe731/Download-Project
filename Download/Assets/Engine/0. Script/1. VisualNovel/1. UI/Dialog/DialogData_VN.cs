@@ -88,7 +88,8 @@ namespace VisualNovel
         public List<string> standingSpr; // 스탠딩
 
         // 기타 옵션
-        public bool addLike;          // 호감도 증가
+        public int eventIndex;
+        public int addLike;           // 호감도 증가
         public ChoiceData choiceData; // 선택지 버튼
     }
 
@@ -114,7 +115,7 @@ namespace VisualNovel
     [Serializable]
     public struct GameState : DialogSubData
     {
-        public enum GAMETYPE { GT_STARTSHOOT, GT_STARTCHASE, GT_PLAYCHASE, GT_END }
+        public enum GAMETYPE { GT_DAY1, GT_DAY2, GT_STARTSHOOT, GT_STARTCHASE, GT_PLAYCHASE, GT_END }
 
         public GAMETYPE gameType;
     }

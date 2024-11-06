@@ -11,6 +11,7 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
+        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_END }
         private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
 
         [Header("GameObject")]
@@ -32,6 +33,8 @@ namespace VisualNovel
 
         private SKIPTYPE m_skipType = SKIPTYPE.ST_NONE;
         private Coroutine m_dialogSkip = null;
+
+        private int m_eventIndex = -1;
 
         private bool m_cutScene = false;
         public bool CutScene { set => m_cutScene = value; }
@@ -207,6 +210,9 @@ namespace VisualNovel
             if (!string.IsNullOrEmpty(dialogData.backgroundSpr))
                 m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[dialogData.backgroundSpr];
             Update_Standing(dialogData.standingSpr);
+
+            // 이벤트 실행
+            Start_Event(dialogData.eventIndex);
 
             // 타이핑 업데이트
             if (m_dialogTextCoroutine != null)
@@ -410,6 +416,10 @@ namespace VisualNovel
             Action action = null;
             switch (gameState.gameType)
             {
+                case GameState.GAMETYPE.GT_DAY2:
+                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY2);
+                    break;
+
                 case GameState.GAMETYPE.GT_STARTSHOOT:
                     action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3SHOOTGAME);
                     break;
@@ -663,7 +673,7 @@ namespace VisualNovel
         {
             while (m_dialogIndex < m_dialogs.Count)
             {
-                Update_Dialogs();
+                Update_Dialogs(false);
                 yield return new WaitForSeconds(speed);
             }
 
@@ -671,6 +681,34 @@ namespace VisualNovel
         }
         #endregion
 
+        #region
+        private void Start_Event(int eventIndex)
+        {
+            End_Event();
+            switch (eventIndex)
+            {
+                case (int)EVENTTYPE.ET_DIALOGTEXT:
+                    m_eventIndex = eventIndex;
+                    m_dialogTxt.rectTransform.anchoredPosition = new Vector2(0f, 61f);
+                    break;
+            }
+        }
+
+        private void End_Event()
+        {
+            if (m_eventIndex == -1)
+                return;
+
+            switch (m_eventIndex)
+            {
+                case (int)EVENTTYPE.ET_DIALOGTEXT:
+                    m_dialogTxt.rectTransform.anchoredPosition = new Vector2(0f, -33f);
+                    break;
+            }
+
+            m_eventIndex = -1;
+        }
+        #endregion
 
         private IEnumerator Type_CutText(AnimationValue animationValue)
         {
@@ -764,6 +802,7 @@ namespace VisualNovel
                         dialogData.dialogText = sheetList[i].dialogText;
                         dialogData.backgroundSpr = sheetList[i].backgroundSpr;
                         dialogData.standingSpr = ExtractTextsInCurlyBrackets(sheetList[i].standingSpr);
+                        dialogData.eventIndex = sheetList[i].pathIndex;
                         dialogData.addLike = sheetList[i].addLike;
 
                         ChoiceData choiceData = new ChoiceData();
@@ -987,9 +1026,9 @@ namespace VisualNovel
             }
 
             // 호감도 증가
-            if (dialogData.addLike == true)
+            if (dialogData.addLike != 0)
             {
-                GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner]++;
+                GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] += dialogData.addLike;
                 m_heartScr.Set_Owner(dialogData.owner);
             }
 
