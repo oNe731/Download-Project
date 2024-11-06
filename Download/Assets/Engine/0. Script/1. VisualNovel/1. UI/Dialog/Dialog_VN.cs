@@ -11,7 +11,7 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
-        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_END }
+        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_END }
         private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
 
         [Header("GameObject")]
@@ -34,7 +34,9 @@ namespace VisualNovel
         private SKIPTYPE m_skipType = SKIPTYPE.ST_NONE;
         private Coroutine m_dialogSkip = null;
 
-        private int m_eventIndex = -1;
+        private int m_eventBeforeIndex = -1;
+        private Coroutine m_eventCoroutines = null;
+        private bool m_standingUpdate = true;
 
         private bool m_cutScene = false;
         public bool CutScene { set => m_cutScene = value; }
@@ -209,15 +211,16 @@ namespace VisualNovel
             // 리소스 업데이트 : 배경, 스탠딩
             if (!string.IsNullOrEmpty(dialogData.backgroundSpr))
                 m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[dialogData.backgroundSpr];
-            Update_Standing(dialogData.standingSpr);
-
-            // 이벤트 실행
-            Start_Event(dialogData.eventIndex);
+            if(m_standingUpdate == true)
+                Update_Standing(dialogData.standingSpr);
 
             // 타이핑 업데이트
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
             m_dialogTextCoroutine = StartCoroutine(Type_Text(dialogData, nextUpdate));
+
+            // 이벤트 실행
+            Start_Event(dialogData);
 
             m_dialogIndex++;
         }
@@ -418,6 +421,10 @@ namespace VisualNovel
             {
                 case GameState.GAMETYPE.GT_DAY2:
                     action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY2);
+                    break;
+
+                case GameState.GAMETYPE.GT_DAY3:
+                    action = () => GameManager.Ins.Novel.LevelController.Change_Level((int)VisualNovelManager.LEVELSTATE.LS_DAY3BEFORE);
                     break;
 
                 case GameState.GAMETYPE.GT_STARTSHOOT:
@@ -681,32 +688,140 @@ namespace VisualNovel
         }
         #endregion
 
-        #region
-        private void Start_Event(int eventIndex)
+        #region Event
+        private void Start_Event(DialogData data)
         {
-            End_Event();
-            switch (eventIndex)
+            if (m_eventBeforeIndex == data.eventIndex)
+                return;
+
+            End_Event(data.eventIndex);
+
+            m_eventBeforeIndex = data.eventIndex;
+            switch (data.eventIndex)
             {
                 case (int)EVENTTYPE.ET_DIALOGTEXT:
-                    m_eventIndex = eventIndex;
                     m_dialogTxt.rectTransform.anchoredPosition = new Vector2(0f, 61f);
+                    break;
+
+                case (int)EVENTTYPE.ET_BIGMINATS:
+                    Transform child = transform.GetChild(2);
+                    child.SetSiblingIndex(5);
+                    RectTransform rt = child.GetChild(0).GetComponent<RectTransform>();
+                    rt.anchoredPosition = new Vector2(0f, -1387f);
+                    rt.localScale = new Vector3(2.239582f, 2.239582f, 2.239582f);
+                    m_standingUpdate = false;
+                    break;
+
+                case (int)EVENTTYPE.ET_SWEATMINATS:
+                    GameObject effect = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Effect/Panel_Sweat", m_standingObj[0].transform);
+                    effect.transform.SetSiblingIndex(1);
+                    for(int i = 0; i < effect.transform.childCount; ++i)
+                    {
+                        Animator am = effect.transform.GetChild(i).GetComponent<Animator>();
+                        if(am != null)
+                        {
+                            float randomStartTime = UnityEngine.Random.Range(0f, am.GetCurrentAnimatorStateInfo(0).length);
+                            am.Play(am.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, randomStartTime);
+                        }
+                    }
+                    break;
+
+                case (int)EVENTTYPE.ET_SCALEMINATS:
+                    m_eventCoroutines = StartCoroutine(Update_ScaleMinats());
+                    break;
+
+                case (int)EVENTTYPE.ET_HINALIKEONE:
+                    GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_YELLOW] += 1;
+                    break;
+
+                case (int)EVENTTYPE.ET_SCROLLTEXT:
+                    if (m_dialogTextCoroutine != null)
+                        StopCoroutine(m_dialogTextCoroutine);
+                    m_isTyping = false;
+
+                    string dialogText = data.dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
+                    m_dialogTxt.text = dialogText;
+                    m_dialogTxt.text += m_dialogTxt.text;
+                    m_eventCoroutines = StartCoroutine(Update_ScrollText(dialogText));
                     break;
             }
         }
 
-        private void End_Event()
+        private void End_Event(int currentIndex)
         {
-            if (m_eventIndex == -1)
+            if (m_eventBeforeIndex == -1)
                 return;
 
-            switch (m_eventIndex)
+            switch (m_eventBeforeIndex)
             {
                 case (int)EVENTTYPE.ET_DIALOGTEXT:
                     m_dialogTxt.rectTransform.anchoredPosition = new Vector2(0f, -33f);
                     break;
+
+                case (int)EVENTTYPE.ET_BIGMINATS:
+                    Transform child = transform.GetChild(5);
+                    child.SetSiblingIndex(2);
+                    RectTransform rt = child.GetChild(0).GetComponent<RectTransform>();
+                    rt.anchoredPosition = new Vector2(0f, -147f);
+                    rt.localScale = new Vector3(0.61121f, 0.61121f, 0.61121f);
+                    m_standingUpdate = true;
+                    break;
+
+                case (int)EVENTTYPE.ET_SCALEMINATS:
+                    GameManager.Ins.Resource.Destroy(m_standingObj[0].transform.GetChild(0).gameObject);
+                    StopCoroutine(m_eventCoroutines);
+                    m_standingObj[0].transform.localScale = new Vector3(0.61121f, 0.61121f, 0.61121f);
+                    break;
+
+                case (int)EVENTTYPE.ET_SCROLLTEXT:
+                    StopCoroutine(m_eventCoroutines);
+                    break;
             }
 
-            m_eventIndex = -1;
+            m_eventBeforeIndex = -1;
+        }
+
+        private IEnumerator Update_ScaleMinats()
+        {
+            Transform objTransform = m_standingObj[0].transform;
+
+            float scaleDuration = 1f;  // 크기 변화에 걸리는 시간
+            Vector3 originalScale = objTransform.localScale;  // 현재 스케일 저장
+            Vector3 targetScale = originalScale * 1.2f;  // 1.5배 확장한 스케일
+
+            while (true)
+            {
+                // 확장
+                for (float t = 0; t < scaleDuration; t += Time.deltaTime)
+                {
+                    objTransform.localScale = Vector3.Lerp(originalScale, targetScale, t / scaleDuration);
+                    yield return null;
+                }
+
+                // 축소
+                for (float t = 0; t < scaleDuration; t += Time.deltaTime)
+                {
+                    objTransform.localScale = Vector3.Lerp(targetScale, originalScale, t / scaleDuration);
+                    yield return null;
+                }
+            }
+        }
+
+        private IEnumerator Update_ScrollText(string text)
+        {
+            int maxCount = text.Length * 10 - UnityEngine.Random.Range(0, 100);
+            while (true)
+            {
+                m_dialogTxt.text += text;
+                yield return new WaitForSeconds(0.2f);
+
+                if (m_dialogTxt.text.Length > maxCount)
+                {
+                    m_dialogTxt.text = m_dialogTxt.text.Substring(m_dialogTxt.text.Length - maxCount);
+                    maxCount = text.Length * 10 - UnityEngine.Random.Range(0, 100);
+                    yield return null;
+                }
+            }
         }
         #endregion
 
@@ -1029,6 +1144,8 @@ namespace VisualNovel
             if (dialogData.addLike != 0)
             {
                 GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] += dialogData.addLike;
+                if (GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] < 0)
+                    GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] = 0;
                 m_heartScr.Set_Owner(dialogData.owner);
             }
 

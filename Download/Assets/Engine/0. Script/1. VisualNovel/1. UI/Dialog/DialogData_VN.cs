@@ -115,7 +115,7 @@ namespace VisualNovel
     [Serializable]
     public struct GameState : DialogSubData
     {
-        public enum GAMETYPE { GT_DAY1, GT_DAY2, GT_STARTSHOOT, GT_STARTCHASE, GT_PLAYCHASE, GT_END }
+        public enum GAMETYPE { GT_DAY1, GT_DAY2, GT_DAY3, GT_STARTSHOOT, GT_STARTCHASE, GT_PLAYCHASE, GT_END }
 
         public GAMETYPE gameType;
     }

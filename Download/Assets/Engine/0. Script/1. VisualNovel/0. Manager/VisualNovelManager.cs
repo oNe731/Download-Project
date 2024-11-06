@@ -77,7 +77,17 @@ public class VisualNovelManager : StageManager
         m_standingSpr.Add("KI04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI04"));
         m_standingSpr.Add("KI05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI05"));
         m_standingSpr.Add("KI06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI06"));
+        m_standingSpr.Add("KI07", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI07"));
+        m_standingSpr.Add("KI08", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI08"));
+        m_standingSpr.Add("KI09", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI09"));
+        m_standingSpr.Add("KI10", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI10"));
 
+        m_standingSpr.Add("KIE601", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA01"));
+        m_standingSpr.Add("KIE602", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA02"));
+        m_standingSpr.Add("KIE603", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA03"));
+        m_standingSpr.Add("KIE604", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA04"));
+        m_standingSpr.Add("KIE605", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA05"));
+        //
         m_standingSpr.Add("MI00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI00"));
         m_standingSpr.Add("MI01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI01"));
         m_standingSpr.Add("MI02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI02"));
@@ -86,6 +96,12 @@ public class VisualNovelManager : StageManager
         m_standingSpr.Add("MI05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI05"));
         m_standingSpr.Add("MI06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/MI06"));
 
+        m_standingSpr.Add("MIE301", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/Effect/Event3/SYMInats01"));
+        m_standingSpr.Add("MIE302", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/Effect/Event3/SYMInats02"));
+        m_standingSpr.Add("MIE303", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/Effect/Event3/SYMInats03"));
+        m_standingSpr.Add("MIE304", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/Effect/Event3/SYMInats04"));
+        m_standingSpr.Add("MIE305", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/MI/Effect/Event3/SYMInats05"));
+        //
         m_standingSpr.Add("SA00", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA00"));
         m_standingSpr.Add("SA01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA01"));
         m_standingSpr.Add("SA02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA02"));
@@ -93,6 +109,7 @@ public class VisualNovelManager : StageManager
         m_standingSpr.Add("SA04", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA04"));
         m_standingSpr.Add("SA05", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA05"));
         m_standingSpr.Add("SA06", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA06"));
+        m_standingSpr.Add("SA07", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/SA/SA07"));
 
         // 버튼 이미지 할당
         m_choiceButtonSpr.Add("UI_VisualNovel_White_ButtonOFF", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Button/UI_VisualNovel_ChooseButton_OFF"));
