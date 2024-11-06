@@ -11,7 +11,7 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
-        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_END }
+        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_AYAKSHADOW, ET_END }
         private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
 
         [Header("GameObject")]
@@ -26,7 +26,7 @@ namespace VisualNovel
 
         private Image   m_backgroundImg;
         private Image[] m_standingImg;
-        private bool m_isFade = false;
+        private bool m_isEvent = false;
 
         private List<bool>       m_slectBool;
         private int              m_choiceIndex = 0;
@@ -74,7 +74,7 @@ namespace VisualNovel
         private void Update_Dialogs(bool IsPonter = true)
         {
             // 커서가 UI에 존재할 시 업데이트 방지
-            if (IsPonter && EventSystem.current.IsPointerOverGameObject() || m_isFade == true)
+            if (IsPonter && EventSystem.current.IsPointerOverGameObject() || m_isEvent == true)
                 return;
 
             if (m_isTyping)
@@ -144,7 +144,7 @@ namespace VisualNovel
 
         private void Update_FadeIn() // 다이얼로그, 추격
         {
-            m_isFade = false;
+            m_isEvent = false;
 
             // 다음 다이얼로그 타입에 따른 처리
             if (m_dialogs[m_dialogIndex + 1].dialogType == DialogData_VN.DIALOG_TYPE.DT_CUTSCENE)
@@ -180,10 +180,10 @@ namespace VisualNovel
 
         private void Update_FadeOutIn()
         {
-            if (m_isFade == true)
+            if (m_isEvent == true)
                 return;
 
-            m_isFade = true;
+            m_isEvent = true;
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
         }
         #endregion
@@ -759,6 +759,10 @@ namespace VisualNovel
                 case (int)EVENTTYPE.ET_AYAKHAND:
                     m_eventCoroutines = StartCoroutine(Update_Background(data.backgroundSpr, "TSAyaka01"));
                     break;
+
+                case (int)EVENTTYPE.ET_AYAKSHADOW:
+                    m_eventCoroutines = StartCoroutine(Update_AlphaBackground("BackGround_BandRoomAyaka"));
+                    break;
             }
         }
 
@@ -784,20 +788,30 @@ namespace VisualNovel
 
                 case (int)EVENTTYPE.ET_SCALEMINATS:
                     GameManager.Ins.Resource.Destroy(m_standingObj[0].transform.GetChild(0).gameObject);
-                    StopCoroutine(m_eventCoroutines);
+                    if (m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
                     m_standingObj[0].transform.localScale = new Vector3(0.61121f, 0.61121f, 0.61121f);
                     break;
 
                 case (int)EVENTTYPE.ET_SCROLLTEXT:
-                    StopCoroutine(m_eventCoroutines);
+                    if (m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
                     break;
 
                 case (int)EVENTTYPE.ET_AYAKAEYE:
-                    StopCoroutine(m_eventCoroutines);
+                    if (m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
                     break;
 
                 case (int)EVENTTYPE.ET_AYAKHAND:
-                    StopCoroutine(m_eventCoroutines);
+                    if (m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKSHADOW:
+                    if(m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
+                    GameManager.Ins.Resource.Destroy(m_backgroundImg.gameObject.transform.GetChild(0).gameObject);
                     break;
             }
 
@@ -856,6 +870,38 @@ namespace VisualNovel
 
             if (!string.IsNullOrEmpty(backgroundSpr))
                 m_backgroundImg.sprite = GameManager.Ins.Novel.BackgroundSpr[backgroundSpr];
+            yield break;
+        }
+
+        private IEnumerator Update_AlphaBackground(string name)
+        {
+            m_isEvent = true;
+
+            GameObject bg = GameManager.Ins.Resource.Create(m_backgroundImg.gameObject, m_backgroundImg.gameObject.transform);
+            Image bgImage = bg.GetComponent<Image>();
+            bgImage.sprite = GameManager.Ins.Novel.BackgroundSpr[name];
+            bgImage.raycastTarget = false;
+
+            Color color = bgImage.color;
+            color.a = 0;
+            bgImage.color = color;
+
+            float duration = 0.6f;
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                if (m_skipType != SKIPTYPE.ST_NONE)
+                    break;
+
+                elapsedTime += Time.deltaTime;
+                color.a = Mathf.Lerp(0, 1, elapsedTime / duration);
+                bgImage.color = color;
+                yield return null;
+            }
+
+            color.a = 1;
+            bgImage.color = color;
+            m_isEvent = false;
             yield break;
         }
         #endregion
