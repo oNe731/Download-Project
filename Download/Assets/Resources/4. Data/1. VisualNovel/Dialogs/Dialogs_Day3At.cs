@@ -13,9 +13,4 @@ public class Dialogs_Day3At : ScriptableObject
 	public List<ExcelData> S04_1_Festival;
 	public List<ExcelData> S05_2_Home;
 	public List<ExcelData> S06_3_Restroom;
-	public List<ExcelData> S07_4_Ayaka;
-	public List<ExcelData> S08_41_Minatsu;
-	public List<ExcelData> S09_42_Hina;
-	public List<ExcelData> S10_43_Ayaka;
-	public List<ExcelData> S11_4_Ayaka2;
 }
