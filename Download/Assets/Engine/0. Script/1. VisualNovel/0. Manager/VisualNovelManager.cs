@@ -86,6 +86,7 @@ public class VisualNovelManager : StageManager
         m_standingSpr.Add("KI09", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI09"));
         m_standingSpr.Add("KI10", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI10"));
         m_standingSpr.Add("KI11", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI11"));
+        m_standingSpr.Add("KI04_1", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/KI04_1"));
 
         m_standingSpr.Add("KIE601", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA01"));
         m_standingSpr.Add("KIE602", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/Character/KI/Effect/Event6/SYAYAKA02"));

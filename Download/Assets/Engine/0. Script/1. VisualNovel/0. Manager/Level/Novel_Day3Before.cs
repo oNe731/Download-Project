@@ -48,7 +48,29 @@ namespace VisualNovel
 
         public override List<ExcelData> Get_DialogData(int sheetIndex)
         {
-            return null;
+            List<ExcelData> sheetList = null;
+            switch (sheetIndex)
+            {
+                case 0:
+                    sheetList = m_dialogAsset.S00_1_Road;
+                    break;
+                case 1:
+                    sheetList = m_dialogAsset.S01_2_SchoolAfter;
+                    break;
+                case 2:
+                    sheetList = m_dialogAsset.S02_21_Dango;
+                    break;
+                case 3:
+                    sheetList = m_dialogAsset.S03_22_Yakitori;
+                    break;
+                case 4:
+                    sheetList = m_dialogAsset.S04_23_Puding;
+                    break;
+                case 5:
+                    sheetList = m_dialogAsset.S05_2_SchoolAfter2;
+                    break;
+            }
+            return sheetList;
         }
     }
 }

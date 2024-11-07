@@ -11,7 +11,11 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
-        private enum EVENTTYPE { ET_NONE, ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_AYAKSHADOW, ET_END }
+        private enum EVENTTYPE { 
+            ET_NONE, 
+            ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_AYAKSHADOW,
+            ET_MINATSULIKEONE, ET_AYAKALIKEONE, ET_AYAKAPATTERN,
+            ET_END }
         private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
 
         [Header("GameObject")]
@@ -88,6 +92,7 @@ namespace VisualNovel
                     switch (m_dialogs[m_dialogIndex].dialogType)
                     {
                         case DialogData_VN.DIALOG_TYPE.DT_FADE:
+                            End_Event();
                             Update_Fade();
                             break;
 
@@ -100,6 +105,7 @@ namespace VisualNovel
                             break;
 
                         case DialogData_VN.DIALOG_TYPE.DT_CUTSCENE:
+                            End_Event();
                             Update_CutScene();
                             break;
                     }
@@ -421,6 +427,10 @@ namespace VisualNovel
         #region GameState
         private void Update_GameState()
         {
+            if (m_isEvent == true)
+                return;
+
+            m_isEvent = true;
             GameState gameState = (GameState)m_dialogs[m_dialogIndex].dialogSubData;
 
             Action action = null;
@@ -447,7 +457,14 @@ namespace VisualNovel
                     break;
             }
 
-            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, action, 0.5f, false);
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Change_State(action), 0.5f, false);
+        }
+
+        private void Change_State(Action action)
+        {
+            m_isEvent = false;
+            End_Event();
+            action();
         }
         #endregion
 
@@ -701,7 +718,7 @@ namespace VisualNovel
             if (m_eventBeforeIndex == data.eventIndex)
                 return;
 
-            End_Event(data.eventIndex);
+            End_Event();
 
             m_eventBeforeIndex = data.eventIndex;
             switch (data.eventIndex)
@@ -763,10 +780,22 @@ namespace VisualNovel
                 case (int)EVENTTYPE.ET_AYAKSHADOW:
                     m_eventCoroutines = StartCoroutine(Update_AlphaBackground("BackGround_BandRoomAyaka"));
                     break;
+
+                case (int)EVENTTYPE.ET_MINATSULIKEONE:
+                    GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_BLUE] += 1;
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKALIKEONE:
+                    GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_PINK] += 1;
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKAPATTERN:
+                    m_eventCoroutines = StartCoroutine(Update_AyakaPattern());
+                    break;
             }
         }
 
-        private void End_Event(int currentIndex)
+        private void End_Event()
         {
             if (m_eventBeforeIndex == -1)
                 return;
@@ -812,6 +841,12 @@ namespace VisualNovel
                     if(m_eventCoroutines != null)
                         StopCoroutine(m_eventCoroutines);
                     GameManager.Ins.Resource.Destroy(m_backgroundImg.gameObject.transform.GetChild(0).gameObject);
+                    break;
+
+                case (int)EVENTTYPE.ET_AYAKAPATTERN:
+                    if (m_eventCoroutines != null)
+                        StopCoroutine(m_eventCoroutines);
+                    GameManager.Ins.Resource.Destroy(m_standingObj[2].transform.GetChild(0).gameObject);
                     break;
             }
 
@@ -901,6 +936,40 @@ namespace VisualNovel
 
             color.a = 1;
             bgImage.color = color;
+            m_isEvent = false;
+            yield break;
+        }
+
+        private IEnumerator Update_AyakaPattern()
+        {
+            m_isEvent = true;
+
+            GameObject so = GameManager.Ins.Resource.Create(m_standingObj[2], m_standingObj[2].transform);
+            so.transform.localPosition = new Vector3(0f, 0f, 0f);
+            so.transform.localScale = new Vector3(1f, 1f, 1f);
+            Image soImage = so.GetComponent<Image>();
+            soImage.sprite = GameManager.Ins.Novel.StandingSpr["KI04_1"];
+            soImage.raycastTarget = false;
+
+            Color color = soImage.color;
+            color.a = 0;
+            soImage.color = color;
+
+            float duration = 0.6f;
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                if (m_skipType != SKIPTYPE.ST_NONE)
+                    break;
+
+                elapsedTime += Time.deltaTime;
+                color.a = Mathf.Lerp(0, 1, elapsedTime / duration);
+                soImage.color = color;
+                yield return null;
+            }
+
+            color.a = 1;
+            soImage.color = color;
             m_isEvent = false;
             yield break;
         }
