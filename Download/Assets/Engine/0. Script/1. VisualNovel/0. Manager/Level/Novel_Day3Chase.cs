@@ -10,37 +10,35 @@ namespace VisualNovel
 {
     public class Novel_Day3Chase : Novel_Level
     {
-        private GameObject m_yandereObj;
-        private GameObject m_playerBodyObj;
-        private List<HallwayLight> m_Light = new List<HallwayLight>(); // 464
-        private List<bool>   m_positionUse = new List<bool>();
-        private PositionData m_positionData;
-
-        private HallwayYandere m_yandere;
-        private HallwayPlayer m_player;
-
-        private int m_CdMaxCount = 3;
-        private int m_CdCurrentCount = 0;
-        private int m_LeverMaxCount = 2;
-        private GameObject m_itemText = null;
-        private Coroutine m_ItemTextCoroutine = null;
-        private List<GameObject> m_cds = new List<GameObject>();
-        private List<GameObject> m_levers = new List<GameObject>();
+        private Dialogs_Day3Chase m_dialogAsset;
 
         private GameObject m_stage;
         private GameObject m_key;
 
-        public HallwayPlayer Player { get => m_player; }
-        public List<HallwayLight> Light
-        {
-            get => m_Light;
-            set => m_Light = value;
-        }
-        public GameObject ItemText => m_itemText;
+        private GameObject m_playerBodyObj;
+        private GameObject m_yandereObj;
+        private HallwayYandere m_yandere;
+        private HallwayPlayer  m_player;
 
+        private List<HallwayLight> m_Light = new List<HallwayLight>(); // 464
+        private List<bool>   m_positionUse = new List<bool>();
+        private PositionData m_positionData;
+
+        private int m_CdMaxCount = 3;
+        private int m_CdCurrentCount = 0;
+        private int m_LeverMaxCount = 2;
+        private List<GameObject> m_cds = new List<GameObject>();
+        private List<GameObject> m_levers = new List<GameObject>();
+
+        private GameObject m_itemText = null;
+        private Coroutine m_ItemTextCoroutine = null;
+
+        public GameObject Stage { get => m_stage; }
+        public HallwayPlayer Player { get => m_player; }
         public HallwayYandere Yandere { get => m_yandere; }
         public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
-        public GameObject Stage { get => m_stage; }
+        public List<HallwayLight> Light { get => m_Light; set => m_Light = value; }
+        public GameObject ItemText => m_itemText;
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -79,10 +77,11 @@ namespace VisualNovel
                 camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
 
                 // 지하실 다이얼로그 시작
+                m_dialogAsset = GameManager.Ins.Resource.Load<ScriptableObject>("4. Data/1. VisualNovel/Dialogs/Dialogs_Day3Chase") as Dialogs_Day3Chase;
+
                 Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();
                 dialog.Reset_Skip();
-                dialog.Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>("4. Data/1. VisualNovel/Dialog/Dialog5_Cellar"));
-                dialog.Close_Background();
+                dialog.Start_Dialog(0);
             }
             else
             {
@@ -163,6 +162,7 @@ namespace VisualNovel
 
         public override void Exit_Level()
         {
+            m_dialogAsset = null;
         }
 
         public override void OnDrawGizmos()
@@ -434,7 +434,26 @@ namespace VisualNovel
 
         public override List<ExcelData> Get_DialogData(int sheetIndex)
         {
-            return null;
+            List<ExcelData> sheetList = null;
+            switch (sheetIndex)
+            {
+                case 0:
+                    sheetList = m_dialogAsset.S00_1_AyakaHome;
+                    break;
+                case 1:
+                    sheetList = m_dialogAsset.S01_11_Minatsu;
+                    break;
+                case 2:
+                    sheetList = m_dialogAsset.S02_12_Hina;
+                    break;
+                case 3:
+                    sheetList = m_dialogAsset.S03_13_Ayaka;
+                    break;
+                case 4:
+                    sheetList = m_dialogAsset.S04_1_AyakaHome2;
+                    break;
+            }
+            return sheetList;
         }
 
         //private Vector3 Get_RandomPositionOnNavMesh(List<Vector3> beforePos)

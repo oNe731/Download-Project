@@ -11,6 +11,7 @@ namespace VisualNovel
 {
     public class Dialog_VN : Dialog<DialogData_VN>
     {
+        // 다이얼로그 이벤트
         private enum EVENTTYPE { 
             ET_NONE, 
             ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_AYAKSHADOW,
@@ -217,14 +218,7 @@ namespace VisualNovel
             m_heartScr.Set_Owner(ownerType);
 
             // 다이얼로그 오너 이름 업데이트
-            if(ownerType == VisualNovelManager.OWNERTYPE.OT_WHITE)
-            {
-                m_nameTxt.text = GameManager.Ins.PlayerName;
-            }
-            else
-            {
-                m_nameTxt.text = name;
-            }
+            m_nameTxt.text = name.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
         }
 
         private void Update_Dialog(int dialogIndex, bool nextUpdate = false)
@@ -411,7 +405,6 @@ namespace VisualNovel
                     break;
 
                 case ChoiceData.CHOICETYPE.CT_DIALOG: // 다이얼로그 재시작
-                    //Start_Dialog(GameManager.Ins.Load_JsonData<DialogData_VN>(choiceData.choiceDialog[index - 1]));
                     Start_Dialog(choiceData.choiceDialog[index]);
                     break;
             }
@@ -519,8 +512,16 @@ namespace VisualNovel
                         Update_Active((ActiveValue)dialogData.eventValues[i]);
                         break;
 
-                    case VisualNovel.CutScene.CUTSCENETYPE.CT_IMAGE:
-                        //Update_Image((ImageValue)dialogData.eventValues[i]);
+                    case VisualNovel.CutScene.CUTSCENETYPE.CT_LIKEDIALOG:
+                        Update_LikeDialog();
+                        break;
+
+                    case VisualNovel.CutScene.CUTSCENETYPE.CT_CLOSEBACK:
+                        Update_CloseBackground();
+                        break;
+
+                    case VisualNovel.CutScene.CUTSCENETYPE.CT_YANWALK:
+                        Update_YandereWalk((AnimationValue)dialogData.eventValues[i]);
                         break;
                 }
             }
@@ -528,6 +529,7 @@ namespace VisualNovel
 
         private void Update_Blink(BasicValue basicValue) // 인 아웃 // 인 아웃 // 인
         {
+            m_backgroundObj.SetActive(false);
             m_dialogBoxObj.SetActive(false);
 
             GameManager.Ins.UI.Start_FadeIn(3.5f, Color.black,
@@ -555,19 +557,14 @@ namespace VisualNovel
 
         private void Update_Animation(AnimationValue animationValue)
         {
-            switch (animationValue.owner)
+            // 업데이트 여부 확인
+            if (!string.IsNullOrEmpty(animationValue.animatroTriger))
             {
-                case VisualNovelManager.OWNERTYPE.OT_PINK:
-                    // 업데이트 여부 확인
-                    if (!string.IsNullOrEmpty(animationValue.animatroTriger))
-                    {
-                        Novel_Day3Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>();
-                        novel_Chase.YandereAnimator.SetTrigger(animationValue.animatroTriger);
-                    }
-                    break;
+                Novel_Day3Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>();
+                novel_Chase.YandereAnimator.SetTrigger(animationValue.animatroTriger);
             }
 
-            Update_DialogBasic(animationValue.owner, animationValue.dialogName);
+            Update_DialogBasic(VisualNovelManager.OWNERTYPE.OT_PINK, animationValue.dialogName);
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
             m_dialogTextCoroutine = StartCoroutine(Type_CutText(animationValue));
@@ -620,22 +617,68 @@ namespace VisualNovel
             Finish_CutScene(activeValue.nextIndex);
         }
 
-        private void Update_Image(ImageValue iamgeValue)
+        private void Update_LikeDialog()
         {
-            // 스탠딩 비활성화
-            m_standingObj[0].SetActive(false);
-            m_standingObj[1].SetActive(false);
-            m_standingObj[2].SetActive(false);
+            int ayakaHeart   = GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_PINK];
+            int minatsuHeart = GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_BLUE];
+            int hinaHeart    = GameManager.Ins.Novel.NpcHeart[(int)VisualNovelManager.OWNERTYPE.OT_YELLOW];
 
-            // 이미지 박스
-            m_dialogBoxObj.SetActive(false);
-
-            // 컷씬 이미지 변경
-            //if (!string.IsNullOrEmpty(iamgeValue.imageName))
-            //    m_backgroundImg.sprite = GameManager.Ins.Novel.CutScene[iamgeValue.imageName];
-
+            // 아야카가 최대 호감도일 때
+            if (ayakaHeart >= minatsuHeart && ayakaHeart >= hinaHeart)
+            {
+                Start_Dialog(3);
+            }
+            // 미나츠가 최대 호감도일 때
+            else if (minatsuHeart > ayakaHeart && minatsuHeart >= hinaHeart)
+            {
+                Start_Dialog(1);
+            }
+            // 히나가 최대 호감도일 때
+            else if (hinaHeart > ayakaHeart && hinaHeart > minatsuHeart)
+            {
+                Start_Dialog(2);
+            }
+            // 동률일 때
+            else
+            {
+                Start_Dialog(3);
+            }
             m_cutScene = false;
+        }
+
+        private void Update_CloseBackground()
+        {
+            m_cutScene = false;
+            m_backgroundObj.SetActive(false);
+
             m_dialogIndex++;
+            Update_Dialogs();
+        }
+
+        private void Update_YandereWalk(AnimationValue animationValue)
+        {
+            Update_Animation(animationValue);
+
+            Novel_Day3Chase novel_Chase = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<Novel_Day3Chase>();
+            Transform yandereTransform = novel_Chase.Yandere.transform;
+            StartCoroutine(Move_Forward(yandereTransform, 0.15f, 1f));
+        }
+
+        private IEnumerator Move_Forward(Transform character, float distance, float duration)
+        {
+            Vector3 startPosition = character.position;
+            Vector3 targetPosition = startPosition + character.forward * distance;
+
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                character.position = Vector3.MoveTowards(character.position, targetPosition, (distance / duration) * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            character.position = targetPosition;
+            m_cutScene = false;
         }
 
         private void Finish_CutScene(bool nextIndex)
@@ -674,8 +717,37 @@ namespace VisualNovel
             Finish_CutScene(nextIndex);
             yield break;
         }
-        #endregion
 
+        private IEnumerator Type_CutText(AnimationValue animationValue)
+        {
+            // 플레이어 이름이 사용될 시 입력 받은 이름으로 변경
+            string dialogText = animationValue.dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
+
+            m_isTyping = true;
+            m_cancelTyping = false;
+
+            m_dialogTxt.text = "";
+            foreach (char letter in dialogText.ToCharArray())
+            {
+                if (m_cancelTyping)
+                {
+                    m_dialogTxt.text = dialogText;
+                    break;
+                }
+
+                m_dialogTxt.text += letter;
+                yield return new WaitForSeconds(m_typeSpeed);
+            }
+
+            m_isTyping = false;
+
+            // 자동 업데이트
+            if (animationValue.nextIndex == true)
+                Update_Dialogs();
+
+            yield break;
+        }
+        #endregion
 
         #region Skip
         public void Button_Skip()
@@ -693,13 +765,13 @@ namespace VisualNovel
                     m_skipTxt.text = "Skipx1";
                     if (m_dialogSkip != null)
                         StopCoroutine(m_dialogSkip);
-                    m_dialogSkip = StartCoroutine(DialogSkip(0.2f));
+                    m_dialogSkip = StartCoroutine(Dialog_Skip(0.2f));
                     break;
                 case SKIPTYPE.ST_SPEED2:
                     m_skipTxt.text = "Skipx2";
                     if (m_dialogSkip != null)
                         StopCoroutine(m_dialogSkip);
-                    m_dialogSkip = StartCoroutine(DialogSkip(0.1f));
+                    m_dialogSkip = StartCoroutine(Dialog_Skip(0.1f));
                     break;
             }
         }
@@ -713,7 +785,7 @@ namespace VisualNovel
                 StopCoroutine(m_dialogSkip);
         }
 
-        private IEnumerator DialogSkip(float speed)
+        private IEnumerator Dialog_Skip(float speed)
         {
             while (m_dialogIndex < m_dialogs.Count)
             {
@@ -1085,42 +1157,6 @@ namespace VisualNovel
         }
         #endregion
 
-        private IEnumerator Type_CutText(AnimationValue animationValue)
-        {
-            // 플레이어 이름이 사용될 시 입력 받은 이름으로 변경
-            string dialogText = animationValue.dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
-
-            m_isTyping = true;
-            m_cancelTyping = false;
-
-            m_dialogTxt.text = "";
-            foreach (char letter in dialogText.ToCharArray())
-            {
-                if (m_cancelTyping)
-                {
-                    m_dialogTxt.text = dialogText;
-                    break;
-                }
-
-                m_dialogTxt.text += letter;
-                yield return new WaitForSeconds(m_typeSpeed);
-            }
-
-            m_isTyping = false;
-
-            // 자동 업데이트
-            if (animationValue.nextIndex == true)
-                Update_Dialogs();
-
-            yield break;
-        }
-
-        public void Close_Background()
-        {
-            m_backgroundObj.SetActive(false);
-        }
-
-
         #region Common
         public void Start_Dialog(List<DialogData_VN> dialogs = null)
         {
@@ -1178,15 +1214,15 @@ namespace VisualNovel
                         dialogData.dialogName = sheetList[i].dialogName;
                         dialogData.dialogText = sheetList[i].dialogText;
                         dialogData.backgroundSpr = sheetList[i].backgroundSpr;
-                        dialogData.standingSpr = ExtractTextsInCurlyBrackets(sheetList[i].standingSpr);
+                        dialogData.standingSpr = Get_StringList(sheetList[i].standingSpr);
                         dialogData.eventIndex = sheetList[i].pathIndex;
                         dialogData.addLike = sheetList[i].addLike;
 
                         ChoiceData choiceData = new ChoiceData();
                         choiceData.choiceLoop = sheetList[i].choiceLoop;
-                        choiceData.choiceEventType = ExtractValuesInCurlyBrackets<ChoiceData.CHOICETYPE>(sheetList[i].choiceEventType);
-                        choiceData.choiceText = ExtractTextsInCurlyBrackets(sheetList[i].choiceText);
-                        choiceData.choiceDialog = ExtractIntegers(sheetList[i].choiceDialog);
+                        choiceData.choiceEventType = Get_EnumList<ChoiceData.CHOICETYPE>(sheetList[i].choiceEventType);
+                        choiceData.choiceText = Get_StringList(sheetList[i].choiceText);
+                        choiceData.choiceDialog = Get_IntList(sheetList[i].choiceDialog);
                         choiceData.pathIndex = sheetList[i].pathIndex;
                         dialogData.choiceData = choiceData;
 
@@ -1201,7 +1237,7 @@ namespace VisualNovel
 
                     case DialogData_VN.DIALOG_TYPE.DT_CUTSCENE:
                         CutScene cutScene = new CutScene();
-                        cutScene.cutSceneEvents = ExtractValuesInCurlyBrackets<CutScene.CUTSCENETYPE>(sheetList[i].cutSceneEvents);
+                        cutScene.cutSceneEvents = Get_EnumList<CutScene.CUTSCENETYPE>(sheetList[i].cutSceneEvents);
 
                         cutScene.eventValues = new List<CutSceneValue>();
                         for (int j = 0; j < cutScene.cutSceneEvents.Count; ++j)
@@ -1217,31 +1253,24 @@ namespace VisualNovel
                                     break;
 
                                 case VisualNovel.CutScene.CUTSCENETYPE.CT_CAMERA:
-                                    //CameraValue cameraValue = new CameraValue();
-                                    //cameraValue.nextIndex;
-                                    //cameraValue.usePosition;
-                                    //cameraValue.targetPosition;
-                                    //cameraValue.positionSpeed;
-                                    //cameraValue.useRotation;
-                                    //cameraValue.targetRotation;
-                                    //cameraValue.rotationSpeed;
-                                    BasicValue basicValue4 = new BasicValue();
-                                    basicValue4.nextIndex = sheetList[i].nextIndex;
-                                    cutSceneValue = basicValue4;
-                                    cutScene.eventValues.Add(cutSceneValue);
+                                    CameraValue cameraValue = new CameraValue();
+                                    cameraValue.nextIndex = sheetList[i].nextIndex;
+                                    cameraValue.usePosition = sheetList[i].usePosition;
+                                    cameraValue.targetPosition = Get_Vector(sheetList[i].targetPosition);
+                                    cameraValue.positionSpeed = sheetList[i].positionSpeed;
+                                    cameraValue.useRotation = sheetList[i].useRotation;
+                                    cameraValue.targetRotation = Get_Vector(sheetList[i].targetRotation);
+                                    cameraValue.rotationSpeed = sheetList[i].rotationSpeed;
+                                    cutScene.eventValues.Add(cameraValue);
                                     break;
 
                                 case VisualNovel.CutScene.CUTSCENETYPE.CT_ANIMATION:
-                                    //AnimationValue animationValue = new AnimationValue();
-                                    //animationValue.nextIndex;
-                                    //animationValue.owner;
-                                    //animationValue.dialogName;
-                                    //animationValue.dialogText;
-                                    //animationValue.animatroTriger;
-                                    BasicValue basicValue5 = new BasicValue();
-                                    basicValue5.nextIndex = sheetList[i].nextIndex;
-                                    cutSceneValue = basicValue5;
-                                    cutScene.eventValues.Add(cutSceneValue);
+                                    AnimationValue animationValue = new AnimationValue();
+                                    animationValue.nextIndex = sheetList[i].nextIndex;
+                                    animationValue.dialogName = sheetList[i].dialogName;
+                                    animationValue.dialogText = sheetList[i].dialogText;
+                                    animationValue.animatroTriger = sheetList[i].animatroTriger;
+                                    cutScene.eventValues.Add(animationValue);
                                     break;
 
                                 case VisualNovel.CutScene.CUTSCENETYPE.CT_LIKEPANEL:
@@ -1252,28 +1281,20 @@ namespace VisualNovel
                                     break;
 
                                 case VisualNovel.CutScene.CUTSCENETYPE.CT_ACTIVE:
-                                    //ActiveValue activeValue = new ActiveValue();
-                                    //activeValue.nextIndex;
-                                    //activeValue.objectType;
-                                    //activeValue.active;
-                                    BasicValue basicValue6 = new BasicValue();
-                                    basicValue6.nextIndex = sheetList[i].nextIndex;
-                                    cutSceneValue = basicValue6;
-                                    cutScene.eventValues.Add(cutSceneValue);
+                                    ActiveValue activeValue = new ActiveValue();
+                                    activeValue.nextIndex = sheetList[i].nextIndex;
+                                    activeValue.objectType = (ActiveValue.OBJECT_TYPE)sheetList[i].objectType;
+                                    activeValue.active = sheetList[i].active;
+                                    cutScene.eventValues.Add(activeValue);
                                     break;
 
-                                case VisualNovel.CutScene.CUTSCENETYPE.CT_IMAGE:
-                                    ImageValue imageValue = new ImageValue();
-                                    imageValue.imageName = sheetList[i].imageName;
-                                    cutSceneValue = imageValue;
-                                    cutScene.eventValues.Add(cutSceneValue);
-                                    break;
-
-                                case VisualNovel.CutScene.CUTSCENETYPE.CT_SHAKE:
-                                    BasicValue basicValue2 = new BasicValue();
-                                    basicValue2.nextIndex = sheetList[i].nextIndex;
-                                    cutSceneValue = basicValue2;
-                                    cutScene.eventValues.Add(cutSceneValue);
+                                case VisualNovel.CutScene.CUTSCENETYPE.CT_YANWALK:
+                                    AnimationValue animationValue2 = new AnimationValue();
+                                    animationValue2.nextIndex = sheetList[i].nextIndex;
+                                    animationValue2.dialogName = sheetList[i].dialogName;
+                                    animationValue2.dialogText = sheetList[i].dialogText;
+                                    animationValue2.animatroTriger = sheetList[i].animatroTriger;
+                                    cutScene.eventValues.Add(animationValue2);
                                     break;
                             }
                         }
@@ -1284,57 +1305,6 @@ namespace VisualNovel
             }
 
             Start_Dialog(dialogs);
-        }
-
-        public static List<int> ExtractIntegers(string input)
-        {
-            List<int> result = new List<int>();
-            Regex regex = new Regex(@"\{(.*?)\}");
-            MatchCollection matches = regex.Matches(input);
-
-            foreach (Match match in matches)
-            {
-                if (int.TryParse(match.Groups[1].Value, out int number))
-                {
-                    result.Add(number);
-                }
-            }
-
-            return result;
-        }
-
-        public List<T> ExtractValuesInCurlyBrackets<T>(string input) where T : struct, Enum
-        {
-            List<T> result = new List<T>();
-
-            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
-            foreach (Match match in matches)
-            {
-                string value = match.Groups[1].Value;
-
-                // Attempt to parse the string value into the enum type T
-                if (Enum.TryParse(typeof(T), value, out var enumValue))
-                {
-                    result.Add((T)enumValue); // Add the parsed enum value to the list
-                }
-            }
-
-            return result;
-        }
-
-        public List<string> ExtractTextsInCurlyBrackets(string input)
-        {
-            List<string> result = new List<string>();
-
-            // Regular expression to capture content inside {}
-            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
-
-            foreach (Match match in matches)
-            {
-                result.Add(match.Groups[1].Value); // Add the content inside {} to the list
-            }
-
-            return result;
         }
 
         private void Close_Dialog()
@@ -1418,6 +1388,70 @@ namespace VisualNovel
             yield break;
         }
         #endregion
+
+        public static List<int> Get_IntList(string input)
+        {
+            List<int> result = new List<int>();
+            Regex regex = new Regex(@"\{(.*?)\}");
+            MatchCollection matches = regex.Matches(input);
+
+            foreach (Match match in matches)
+            {
+                if (int.TryParse(match.Groups[1].Value, out int number))
+                {
+                    result.Add(number);
+                }
+            }
+
+            return result;
+        }
+
+        public Vector3 Get_Vector(string vectorString)
+        {
+            string[] values = vectorString.Replace("(", "").Replace(")", "").Split(',');
+
+            if (values.Length == 3 &&
+                float.TryParse(values[0], out float x) &&
+                float.TryParse(values[1], out float y) &&
+                float.TryParse(values[2], out float z))
+            {
+                return new Vector3(x, y, z);
+            }
+            else
+            {
+                return Vector3.zero;
+            }
+        }
+
+        public List<T> Get_EnumList<T>(string input) where T : struct, Enum
+        {
+            List<T> result = new List<T>();
+
+            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
+            foreach (Match match in matches)
+            {
+                string value = match.Groups[1].Value;
+                if (Enum.TryParse(typeof(T), value, out var enumValue))
+                {
+                    result.Add((T)enumValue);
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> Get_StringList(string input)
+        {
+            List<string> result = new List<string>();
+
+            MatchCollection matches = Regex.Matches(input, @"\{(.*?)\}");
+            foreach (Match match in matches)
+            {
+                result.Add(match.Groups[1].Value);
+            }
+
+            return result;
+        }
     }
 }
 

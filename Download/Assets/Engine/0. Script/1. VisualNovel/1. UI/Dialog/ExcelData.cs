@@ -19,17 +19,19 @@ public class ExcelData
     public string choiceEventType;
     public string choiceText;
     public string choiceDialog;
-
-    public string cutSceneEvents;
-    public string imageName;
-
     public int gameType;
 
+    // -----
+    public string cutSceneEvents;
     public bool nextIndex;
-    //public bool usePosition;
-    //public Vector3 targetPosition;
-    //public float positionSpeed;
-    //public bool useRotation;
-    //public Vector3 targetRotation;
-    //public float rotationSpeed;
+    public bool usePosition;
+    public string targetPosition;
+    public float positionSpeed;
+    public bool useRotation;
+    public string targetRotation;
+    public float rotationSpeed;
+    public string animatroTriger;
+    public int objectType;
+    public bool active;
+    public string imageName;
 }

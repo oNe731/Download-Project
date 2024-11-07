@@ -49,6 +49,7 @@ public class VisualNovelManager : StageManager
         m_backgroundSpr.Add("BackGround_Festival",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Festival"));      // 길가2(축제)
         m_backgroundSpr.Add("BackGround_Living",        GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Living"));        // 아야카의 집(거실)
         m_backgroundSpr.Add("BackGround_Bathroom",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Bathroom"));      // 아야ㅏ의 집(화장실)
+        m_backgroundSpr.Add("BackGround_Dark",          GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/BackGround/BackGround_Dark"));
 
         // 컷씬 이미지 할당
         m_backgroundSpr.Add("C01",  GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/ChatScript/CutScene/CUT_C01"));

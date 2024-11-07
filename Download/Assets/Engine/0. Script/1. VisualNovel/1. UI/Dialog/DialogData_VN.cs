@@ -127,8 +127,11 @@ namespace VisualNovel
     {
         public enum CUTSCENETYPE
         {
-            // 깜빡거림, 카메라조작, 애니메이션변경, 패널이벤트, 활성화변경, 이미지컷씬, 카메라 쉐이킹
-            CT_BLINK, CT_CAMERA, CT_ANIMATION, CT_LIKEPANEL, CT_ACTIVE, CT_IMAGE, CT_SHAKE,
+            // 깜빡거림, 카메라조작, 애니메이션변경, 패널이벤트, 활성화변경
+            CT_BLINK, CT_CAMERA, CT_ANIMATION, CT_LIKEPANEL, CT_ACTIVE,
+
+            // 호감도 처리, 배경닫기, 얀레데 앞으로 걷기
+            CT_LIKEDIALOG, CT_CLOSEBACK, CT_YANWALK,
             CT_END
         };
 
@@ -155,8 +158,6 @@ namespace VisualNovel
                 return jsonObject.ToObject<AnimationValue>();
             else if (jsonObject["active"] != null)
                 return jsonObject.ToObject<ActiveValue>();
-            else if (jsonObject["imageName"] != null)
-                return jsonObject.ToObject<ImageValue>();
             else if (jsonObject["nextIndex"] != null)
                 return jsonObject.ToObject<BasicValue>();
 
@@ -207,7 +208,6 @@ namespace VisualNovel
     {
         public bool nextIndex;
 
-        public VisualNovelManager.OWNERTYPE owner; // 오너 타입
         public string dialogName;                  // 이름
         public string dialogText;                  // 대사
         public string animatroTriger;              // 애니메이션 트리거 이름
@@ -225,12 +225,6 @@ namespace VisualNovel
         public bool nextIndex;
         public OBJECT_TYPE objectType;
         public bool active;
-    }
-
-    [Serializable]
-    public struct ImageValue : CutSceneValue
-    {
-        public string imageName;
     }
 #endregion
 #endregion
