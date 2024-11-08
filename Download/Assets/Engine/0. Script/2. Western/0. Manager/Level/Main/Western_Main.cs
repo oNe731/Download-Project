@@ -115,14 +115,17 @@ namespace Western
                     {
                         case 0: // 醚磊惫 积己
                             bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(-438f, 125f, 0f);
-                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1.3f, 1.3f, 1f);
                             bulletMark.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_1");
+                            GameManager.Ins.Sound.Play_ManagerAudioSource("Western_Gun_Shoot", false, 1f);
                             break;
 
                         case 1: // 醚磊惫 积己
                             bulletMark.GetComponent<RectTransform>().anchoredPosition     = new Vector3(174.9f, -29.4f, 0f);
-                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1f, 1f, 1f);
+                            bulletMark.GetComponent<RectTransform>().transform.localScale = new Vector3(1.4f, 1.4f, 1f);
                             bulletMark.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Main/BulletMark/Wanted_BulletMark_2");
+                            GameManager.Ins.Sound.Play_ManagerAudioSource("Western_Gun_Shoot", false, 1f);
+
                             break;
                     }
                     m_shootCount++;

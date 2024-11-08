@@ -4,15 +4,15 @@ using UnityEngine.Rendering.Universal;
 public class CameraWalk : CameraBase
 {
     private bool m_isMove = false;
-    private float m_moveSpeed = 2f;
-    private float m_heightSpeed = 0.2f;
+    private float m_moveSpeed = 3f;
+    private float m_heightSpeed = 0.12f;
 
     private Vector3 m_targetPosition;
 
     private bool m_isHeightUp = true;
     private float m_height = 0f;
     private float m_heightBase  = 0f;
-    private float m_heightRange = 0.03f;
+    private float m_heightRange = 0.02f;
 
 
     public bool IsMove => m_isMove;
@@ -40,7 +40,7 @@ public class CameraWalk : CameraBase
                     return;
                 }
 
-                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_targetPosition, Time.deltaTime);
+                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_targetPosition, m_moveSpeed * Time.deltaTime);
             }
             else
             {

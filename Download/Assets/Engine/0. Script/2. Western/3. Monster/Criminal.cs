@@ -43,6 +43,13 @@ namespace Western
                     // 손이 다 올라오면 HP가 깎인다.
                     m_attack = false;
                     GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Attacked_Player();
+
+                    // 하얀색 화면으로 번쩍 효과 적용 (등장은 한번에 사라지는건 서서히 빠르게)
+                    GameManager.Ins.UI.Start_FadeIn(0.3f, Color.white);
+
+                    // 연기 이펙트 생성
+                    GameObject smoke = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Effect_GunSmoke");
+                    smoke.transform.position = new Vector3(transform.position.x - 0.218f, transform.position.y - 0.0929f, transform.position.z - 0.018f);
                 }
             }
         }
