@@ -55,7 +55,7 @@ namespace VisualNovel
             if(GameManager.Ins.Novel.LevelController.Prelevel != (int)VisualNovelManager.LEVELSTATE.LS_DAY3CHASEGAME)
             {
                 m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
-                m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
+                m_player = m_stage.transform.GetChild(2).GetChild(1).GetComponent<HallwayPlayer>();
                 m_key = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>();
 
                 // 플레이어 바디 생성
@@ -77,6 +77,7 @@ namespace VisualNovel
                 camera.Change_Rotation(new Vector3(63.23f, 0f, 0f));
 
                 // 지하실 다이얼로그 시작
+                GameManager.Ins.Novel.LikeabilityPanel.SetActive(false);
                 m_dialogAsset = GameManager.Ins.Resource.Load<ScriptableObject>("4. Data/1. VisualNovel/Dialogs/Dialogs_Day3Chase") as Dialogs_Day3Chase;
 
                 Dialog_VN dialog = GameManager.Ins.Novel.Dialog.GetComponent<Dialog_VN>();

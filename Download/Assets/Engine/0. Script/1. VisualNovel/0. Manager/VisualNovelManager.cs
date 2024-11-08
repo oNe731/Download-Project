@@ -216,9 +216,12 @@ public class VisualNovelManager : StageManager
     }
 
 
-    public void Active_Popup()
+    public void Active_Popup(bool chase = false)
     {
-        if (m_likeabilityPanel == null || m_levelController.Curlevel == (int)LEVELSTATE.LS_DAY3CHASEGAME)
+        if (m_likeabilityPanel == null)
+            return;
+
+        if (chase == false && m_levelController.Curlevel == (int)LEVELSTATE.LS_DAY3CHASEGAME)
             return;
 
         // 호감도창 비/ 활성화

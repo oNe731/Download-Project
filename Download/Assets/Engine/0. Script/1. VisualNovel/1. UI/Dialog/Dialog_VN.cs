@@ -581,7 +581,7 @@ namespace VisualNovel
                 time += Time.deltaTime;
                 if (time >= 0.5f)
                 {
-                    GameManager.Ins.Novel.LikeabilityPanel.SetActive(true);
+                    GameManager.Ins.Novel.Active_Popup(true);
                     break;
                 }
 
@@ -752,6 +752,9 @@ namespace VisualNovel
         #region Skip
         public void Button_Skip()
         {
+            if (0 < m_choice_Button.Count)
+                return;
+
             m_skipType++;
             if (m_skipType > SKIPTYPE.ST_SPEED2)
                 m_skipType = SKIPTYPE.ST_NONE;
@@ -800,7 +803,7 @@ namespace VisualNovel
         #region Event
         private void Start_Event(DialogData data)
         {
-            if (m_eventBeforeIndex == data.eventIndex)
+            if (m_eventBeforeIndex == data.eventIndex || data.choiceData.choiceText != null && data.choiceData.choiceText.Count > 0)
                 return;
 
             End_Event();
@@ -851,6 +854,7 @@ namespace VisualNovel
                     string dialogText = data.dialogText.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
                     m_dialogTxt.text = dialogText;
                     m_dialogTxt.text += m_dialogTxt.text;
+                    m_dialogTxt.color = Color.red;
                     m_eventCoroutines = StartCoroutine(Update_ScrollText(dialogText));
                     break;
 
@@ -930,6 +934,7 @@ namespace VisualNovel
                 case (int)EVENTTYPE.ET_SCROLLTEXT:
                     if (m_eventCoroutines != null)
                         StopCoroutine(m_eventCoroutines);
+                    m_dialogTxt.color = Color.white;
                     break;
 
                 case (int)EVENTTYPE.ET_AYAKAEYE:
@@ -1336,7 +1341,7 @@ namespace VisualNovel
             m_isTyping = false;
 
             // 선택지 생성
-            if (dialogData.choiceData.choiceText != null)
+            if (dialogData.choiceData.choiceText != null && dialogData.choiceData.choiceText.Count > 0)
             {
                 if(dialogData.choiceData.choiceLoop == true)
                 {
@@ -1368,8 +1373,7 @@ namespace VisualNovel
                     }
                 }
 
-                if (0 < dialogData.choiceData.choiceText.Count)
-                    Create_ChoiceButton(dialogData.choiceData);
+                Create_ChoiceButton(dialogData.choiceData);
             }
 
             // 호감도 증가
