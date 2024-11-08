@@ -39,8 +39,14 @@ public class WesternManager : StageManager
     protected override void Load_Resource()
     {
         // 배경 이미지 할당
-        m_backgroundSpr.Add("Background_01", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_01"));
-        m_backgroundSpr.Add("Background_02", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/Background_02"));
+        m_backgroundSpr.Add("CUT_1A", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_1A"));
+        m_backgroundSpr.Add("CUT_1B", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_1B"));
+        m_backgroundSpr.Add("CUT_1C", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_1C"));
+        m_backgroundSpr.Add("CUT_1D", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_1D"));
+        m_backgroundSpr.Add("CUT_2A", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2A"));
+        m_backgroundSpr.Add("CUT_2B", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2B"));
+        m_backgroundSpr.Add("CUT_2C", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2C"));
+        m_backgroundSpr.Add("CUT_3D", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_3D"));
     }
 
     public override void Enter_Stage()
