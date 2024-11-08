@@ -5,7 +5,10 @@ using UnityEngine;
 using Western;
 public class WesternManager : StageManager
 {
-    public enum LEVELSTATE { LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2, LS_IntroLv3, LS_MainLv3, LS_PlayLv3, LS_ClearLv3, LS_END };
+    public enum LEVELSTATE { 
+        LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, 
+        LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2, 
+        LS_END };
 
 
     private bool m_isShoot = false;
@@ -84,11 +87,6 @@ public class WesternManager : StageManager
             new Western_MainLv2(),
             new Western_PlayLv2(),
             new Western_ClearLv2(),
-
-            new Western_IntroLv3(),
-            new Western_MainLv3(),
-            new Western_PlayLv3(),
-            new Western_ClearLv3(),
         };
         for(int i = 0; i < levels.Count; ++i)
             levels[i].Initialize_Level(m_levelController);

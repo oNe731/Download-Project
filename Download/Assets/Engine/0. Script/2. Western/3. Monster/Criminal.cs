@@ -18,9 +18,7 @@ namespace Western
             m_personType = PERSONTYPE.PT_CRIMINAL;
 
             // 랜덤 조합 요소 배치
-            if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
-                Combine_Round3();
-            else if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
+            if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
                 Combine_Round2();
             else
                 Combine_Round1();
@@ -67,7 +65,7 @@ namespace Western
                 if (childAnimator != null) { childAnimator.SetBool("isAttack", true); }
             }
 
-            if (m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv1 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
+            if (m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv1 || m_roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
             {
                 // 1라운드 바닥에서 손이 올라온다.
                 GameObject element = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/PersonElement", gameObject.transform); // -0.4 -> 0
@@ -112,11 +110,6 @@ namespace Western
         public void Combine_Round2()
         {
             Combine_Round1();
-        }
-
-        public void Combine_Round3()
-        {
-
         }
     }
 }

@@ -29,10 +29,6 @@ namespace Western
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
                     m_currentIndex = 0;
                     break;
-
-                case (int)WesternManager.LEVELSTATE.LS_PlayLv3:
-                    m_currentIndex = 0;
-                    break;
             }
         }
 
@@ -109,9 +105,6 @@ namespace Western
 
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
                     break;
-
-                case (int)WesternManager.LEVELSTATE.LS_PlayLv3:
-                    break;
             }
 
             return false;
@@ -145,12 +138,14 @@ namespace Western
 
                 case (int)WesternManager.LEVELSTATE.LS_PlayLv2:
                     break;
-
-                case (int)WesternManager.LEVELSTATE.LS_PlayLv3:
-                    break;
             }
 
             return false;
+        }
+    
+        public Group Get_CurrentGroup()
+        {
+            return m_groups[m_currentIndex];
         }
     }
 }

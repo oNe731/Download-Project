@@ -12,7 +12,7 @@ namespace Western
         {
             DET_NONE, // 0
             DET_FADEIN, DET_FADEOUT, DET_FADEINOUT, DET_FADEOUTIN, // 1 2 3 4
-            DET_WAIT, // 5
+            DET_WAIT, DET_BOMB, DET_TUTORIAL, // 5 6 7
 
             DET_END
         }

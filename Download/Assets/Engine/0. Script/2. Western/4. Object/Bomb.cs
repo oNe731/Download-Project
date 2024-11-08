@@ -6,8 +6,10 @@ namespace Western
 {
     public class Bomb : MonoBehaviour
     {
+        public enum TYPE { TP_TUTORIAL, TP_PLAY, TP_END }
         public enum ORDER { OD_FIRST, OD_SECOND, OD_END };
 
+        private TYPE m_type = TYPE.TP_PLAY;
         private ORDER m_order = ORDER.OD_END;
         private KeyCode m_keyType = KeyCode.None;
 
@@ -33,6 +35,7 @@ namespace Western
         private GameObject m_differentBomb = null;
         public Vector3 TargetPosition { set => m_targetPosition = value; }
         public float TimerMax { set => m_timerMax = value; }
+        public TYPE BombType { set => m_type = value; }
         public GameObject DifferentBomb { set => m_differentBomb = value; }
         public ORDER Order { set => m_order = value; }
         public KeyCode KeyType => m_keyType;
@@ -43,114 +46,6 @@ namespace Western
 
             m_startPosition = transform.position;
             Initialize_Bomb();
-        }
-
-        private void Update()
-        {
-            if (GameManager.Ins.IsGame == false)
-            {
-                m_rigidbody.isKinematic = true;
-                return;
-            }
-            else
-            {
-                m_rigidbody.isKinematic = false;
-            }
-
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            if (m_uiTime != null)
-            {
-                m_timer -= Time.deltaTime;
-                m_time.Update_Time(m_timerMax, m_timer);
-
-                if (m_timer > 0f)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                        RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit))
-                        {
-                            if (hit.collider.gameObject == gameObject)
-                            {
-                                Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
-                                if (level == null)
-                                    return;
-
-                                Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
-                                if (level.TargetUI == null)
-                                    level.TargetUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/TargetUI", position, Quaternion.identity);
-                                else
-                                    level.TargetUI.transform.position = position;
-
-                                level.TargetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
-                            }
-                        }
-                    }
-                    else if (Input.GetKeyDown(m_keyType))
-                    {
-                        Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
-                        if (level == null || level.TargetUI == null)
-                            return;
-
-                        if(m_order != ORDER.OD_FIRST)
-                            GameManager.Ins.Western.IsShoot = true;
-
-                        Is_Destroy(true);
-                        //Debug.Log("Á¦°Å ¼º°ø");
-                    }
-                }
-                else // Æã
-                {
-                    Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
-                    if (level == null)
-                        return;
-                    level.Fail_Group();
-
-                    // ´Ù¸¥ ÆøÆÇÀº »èÁ¦
-                    if(m_differentBomb != null)
-                        Destroy(m_differentBomb);
-
-                    Is_Destroy(false);
-                    //Debug.Log("½Ã°£ ¿À¹Ù");
-                }
-            }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                if(m_bounceCount < m_maxBounceCount) // ¹Ù´Ú¿¡ ´êÀ¸¸é À§·Î Æ¨±â´Â Èû Àû¿ë
-                {
-                    if(m_bounceCount == 0) // UI »ý¼º
-                    {
-                        if (m_uiKey != null)
-                            Destroy(m_uiKey);
-
-                        m_uiKey = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Key", GameObject.Find("Canvas").transform);
-                        m_uiKey.GetComponent<KeyUI>().Owner = gameObject;
-                        m_uiKey.GetComponent<KeyUI>().KeyType = m_keyType;
-
-                        if (m_uiTime != null)
-                            Destroy(m_uiTime);
-
-                        m_uiTime = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Time", GameObject.Find("Canvas").transform);
-                        m_time = m_uiTime.GetComponent<TimeUI>();
-                        m_time.Owner = gameObject;
-                    }
-
-                    m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x, m_bounceForce, m_rigidbody.velocity.z);
-                    m_bounceForce       *= m_bounceDampening;
-                    m_bounceCount++;
-                }
-                else // ÃÖ´ë Æ¨±æ È½¼ö¿¡ µµ´ÞÇÏ¸é ¸ØÃã
-                {
-                    m_rigidbody.velocity = Vector3.zero;
-                    m_rigidbody.isKinematic = true;
-                }
-            }
         }
 
         private void Initialize_Bomb()
@@ -207,6 +102,158 @@ namespace Western
                     break;
             }
         }
+
+
+        private void Update()
+        {
+            if (GameManager.Ins.IsGame == false)
+            {
+                m_rigidbody.isKinematic = true;
+                return;
+            }
+            else
+            {
+                m_rigidbody.isKinematic = false;
+            }
+
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            if (m_uiTime != null)
+            {
+                m_timer -= Time.deltaTime;
+                m_time.Update_Time(m_timerMax, m_timer);
+
+                if (m_type == TYPE.TP_PLAY)
+                    Update_Play();
+                else if (m_type == TYPE.TP_TUTORIAL)
+                    Update_Tutorial();
+            }
+        }
+
+        private void Update_Play()
+        {
+            if (m_timer > 0f)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Click_Bomb();
+                }
+                else if (Input.GetKeyDown(m_keyType))
+                {
+                    Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
+                    if (level == null || level.TargetUI == null)
+                        return;
+
+                    if (m_order != ORDER.OD_FIRST)
+                        GameManager.Ins.Western.IsShoot = true;
+
+                    Is_Destroy(true);
+                    //Debug.Log("Á¦°Å ¼º°ø");
+                }
+            }
+            else // Æã
+            {
+                Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
+                if (level == null)
+                    return;
+                level.Fail_Group();
+
+                // ´Ù¸¥ ÆøÆÇÀº »èÁ¦
+                if (m_differentBomb != null)
+                    Destroy(m_differentBomb);
+
+                Is_Destroy(false);
+                //Debug.Log("½Ã°£ ¿À¹Ù");
+            }
+        }
+
+        private void Update_Tutorial()
+        {
+            if (m_timer > 0f)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Click_Bomb();
+                }
+                // ÆøÅº ¸ÂÃèÀ» ½Ã
+                else if (Input.GetKeyDown(m_keyType))
+                {
+                    Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
+                    if (level == null || level.TargetUI == null)
+                        return;
+
+                    // ¼º°ø ´ÙÀÌ¾ó·Î±× Ãâ·Â
+                    GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_BombSuccess"));
+                    Is_Destroy(true);
+                }
+            }
+            // ÆøÅº ¸ø ¸ÂÃèÀ» ½Ã
+            else
+            {
+                // ½ÇÆÐ ´ÙÀÌ¾ó·Î±× Ãâ·Â
+                GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_BombFail"));
+                Is_Destroy(false);
+            }
+        }
+
+        private void Click_Bomb()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    Western_Play level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
+                    if (level == null)
+                        return;
+
+                    Vector3 position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.001f);
+                    if (level.TargetUI == null)
+                        level.TargetUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/TargetUI", position, Quaternion.identity);
+                    else
+                        level.TargetUI.transform.position = position;
+
+                    level.TargetUI.GetComponent<TargetUI>().Target = hit.collider.gameObject;
+                }
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                if(m_bounceCount < m_maxBounceCount) // ¹Ù´Ú¿¡ ´êÀ¸¸é À§·Î Æ¨±â´Â Èû Àû¿ë
+                {
+                    if(m_bounceCount == 0) // UI »ý¼º
+                    {
+                        if (m_uiKey != null)
+                            Destroy(m_uiKey);
+
+                        m_uiKey = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Key", GameObject.Find("Canvas").transform);
+                        m_uiKey.GetComponent<KeyUI>().Owner = gameObject;
+                        m_uiKey.GetComponent<KeyUI>().KeyType = m_keyType;
+
+                        if (m_uiTime != null)
+                            Destroy(m_uiTime);
+
+                        m_uiTime = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Time", GameObject.Find("Canvas").transform);
+                        m_time = m_uiTime.GetComponent<TimeUI>();
+                        m_time.Owner = gameObject;
+                    }
+
+                    m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x, m_bounceForce, m_rigidbody.velocity.z);
+                    m_bounceForce       *= m_bounceDampening;
+                    m_bounceCount++;
+                }
+                else // ÃÖ´ë Æ¨±æ È½¼ö¿¡ µµ´ÞÇÏ¸é ¸ØÃã
+                {
+                    m_rigidbody.velocity = Vector3.zero;
+                    m_rigidbody.isKinematic = true;
+                }
+            }
+        }
+
 
         private void Is_Destroy(bool success)
         {

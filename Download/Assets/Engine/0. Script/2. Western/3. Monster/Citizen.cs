@@ -16,9 +16,7 @@ namespace Western
             m_personType = PERSONTYPE.PT_CITIZEN;
 
             // 랜덤 조합 요소 배치
-            if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
-                Combine_Round3();
-            else if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
+            if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
                 Combine_Round2();
             else
                 Combine_Round1();
@@ -85,11 +83,6 @@ namespace Western
 
 
         public void Combine_Round2()
-        {
-
-        }
-
-        public void Combine_Round3()
         {
 
         }

@@ -7,13 +7,16 @@ namespace Western
 {
     public class Western_PlayLv1 : Western_Play
     {
-        enum STATETYPE { TYPE_DIALOGSTART, TYPE_TUTORIALPLAY, TYPE_DIALOGFINISH, TYPE_GAMESTART, TYPE_END };
+        enum STATETYPE { TYPE_DIALOGSTART, TYPE_TUTORIALPERSON, TYPE_DIALOGFINISH, TYPE_GAMESTART, TYPE_END };
 
         private STATETYPE m_stateType = STATETYPE.TYPE_END;
+
         private List<GameObject> m_tutorialTarget = new List<GameObject>();
         private bool m_isTutorial = true;
         private int m_tutorialIndex = -1;
+
         private Bar m_bar = null;
+
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -128,11 +131,11 @@ namespace Western
             {
                 if (GameManager.Ins.Western.DialogPlay.LastIndex == true)
                 {
-                    m_stateType = STATETYPE.TYPE_TUTORIALPLAY;
+                    m_stateType = STATETYPE.TYPE_TUTORIALPERSON;
                     m_groups.WakeUp_Next(ref m_eventIndex, false, 0.4f);
                 }
             }
-            else if (m_stateType == STATETYPE.TYPE_TUTORIALPLAY)
+            else if (m_stateType == STATETYPE.TYPE_TUTORIALPERSON) // 범인 튜토리얼
             {
                 if (GameManager.Ins.Western.IsShoot == true)
                 {
@@ -156,7 +159,7 @@ namespace Western
 
                                 GameManager.Ins.Western.IsShoot = false;
                                 GameManager.Ins.Western.DialogPlay.GetComponent<Dialog_PlayWT>().Start_Dialog(false, GameManager.Ins.Load_JsonData<DialogData_PlayWT>("4. Data/2. Western/Dialog/Play/Round1/Dialog1_Tutorial_Criminal"));
-                                m_stateType = STATETYPE.TYPE_DIALOGFINISH;
+                                m_stateType = STATETYPE.TYPE_END; // 폭탄에서 튜토리얼 진행
                             }
                             else
                             {
@@ -217,6 +220,11 @@ namespace Western
 
             // 바 이벤트 발생
             m_bar.Start_Event();
+        }
+
+        public void Change_FinishDialog()
+        {
+            m_stateType = STATETYPE.TYPE_DIALOGFINISH;
         }
     }
 }

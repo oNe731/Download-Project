@@ -85,6 +85,19 @@ namespace Western
                             else
                                 StartCoroutine(Update_WaitUpdate());
                             break;
+
+                        case DialogData_PlayWT.DIALOGEVENT_TYPE.DET_BOMB:
+                            Update_Bomb();
+                            break;
+
+                        case DialogData_PlayWT.DIALOGEVENT_TYPE.DET_TUTORIAL:
+                            Western_PlayLv1 level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>();
+                            if (level != null)
+                            {
+                                level.Change_FinishDialog();
+                                StartCoroutine(Update_WaitClose());
+                            }
+                            break;
                     }
                 }
                 else // 다이얼로그 종료
@@ -146,6 +159,33 @@ namespace Western
         private void Update_FadeOutIn()
         {
             GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Update_FadeIn(), 0.5f, false);
+        }
+
+        private void Update_Bomb()
+        {
+            // 폭탄 생성
+            Western_Play play = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>();
+            if (play == null)
+                return;
+            Transform groupTr = play.Groups.Get_CurrentGroup().transform;
+            if (groupTr == null)
+                return;
+
+            GameObject Bomb = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/Bomb", Vector3.zero, Quaternion.identity);
+            int dir = Random.Range(0, 2); // 0, 1
+            if (dir == 0) // 왼쪽에 생성
+                Bomb.transform.localPosition = groupTr.position + new Vector3(-3f, 0.8f, -0.1f);
+            else if (dir == 1) // 오른쪽에 생성
+                Bomb.transform.localPosition = groupTr.position + new Vector3(3f, 0.8f, -0.1f);
+
+            Bomb script = Bomb.GetComponent<Bomb>();
+            script.BombType = Western.Bomb.TYPE.TP_TUTORIAL;
+            script.TargetPosition = groupTr.position;
+            script.TimerMax = 4f;
+
+            // 다이얼로그 업데이트
+            m_dialogIndex++;
+            Update_Dialog();
         }
 
         IEnumerator Update_WaitClose()

@@ -61,9 +61,7 @@ namespace Western
 
             // 해당하는 애니메이션 컨트롤러 추가
             int level; //m_meshRenderer.materials[0].SetTexture("_BaseMap", ameManager.Instance.Resource.Load<Texture2D>(""));
-            if (roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv3)
-                level = 3;
-            else if(roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
+            if(roundIndex == (int)WesternManager.LEVELSTATE.LS_PlayLv2)
                 level = 2;
             else
                 level = 1;

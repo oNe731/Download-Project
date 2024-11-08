@@ -11,10 +11,28 @@
   {
     "dialogEvent": 5, // DET_WAIT
     "dialogTalk": 1, // DTT_SHACK
-    "dialogText": "아 참, 시간 안에 범인을 쏘지 못하면 반격할 기회를 주게 되니 조심하게.\n그럼 행운을 빈다네! 놈들을 싹 쓸어버리자고.",
+    "dialogText": "그리고, 종종 녀석들이 이런 비겁한 수를 쓸 때가 있는데...\n터지기 전에 침착하게 제거하면 된다고.",
     "profileSpr": "",
     "fontColor": [],
-    "closeType": 1, // DET_MOVE
-    "eventInfo": "2.0"
+    "closeType": 0, // DCT_NONE
+    "eventInfo": "1"
+  },
+  {
+    "dialogEvent": 6, // DET_BOMB
+    "dialogTalk": 0,
+    "dialogText": "",
+    "profileSpr": "",
+    "fontColor": [],
+    "closeType": 0, // DCT_NONE
+    "eventInfo": ""
+  },
+  {
+    "dialogEvent": 0, // DET_NONE
+    "dialogTalk": 1, // DTT_SHACK
+    "dialogText": "똑같이 '클릭으로 조준'하고 폭탄에 적혀있는 문자에 해당되는 키를 누르면 '발사'!",
+    "profileSpr": "",
+    "fontColor": [],
+    "closeType": 0, // DCT_NONE
+    "eventInfo": ""
   }
 ]
