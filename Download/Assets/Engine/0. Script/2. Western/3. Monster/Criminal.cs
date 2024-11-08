@@ -48,8 +48,8 @@ namespace Western
                     GameManager.Ins.UI.Start_FadeIn(0.3f, Color.white);
 
                     // 연기 이펙트 생성
-                    GameObject smoke = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Effect_GunSmoke");
-                    smoke.transform.position = new Vector3(transform.position.x - 0.218f, transform.position.y - 0.0929f, transform.position.z - 0.018f);
+                    GameObject smoke = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Effect_GunSmoke"); // 스케일 0.1
+                    smoke.transform.position = new Vector3(transform.position.x - 0.518f, transform.position.y - 0.3729f, transform.position.z - 0.018f);
                 }
             }
         }

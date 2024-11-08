@@ -21,7 +21,7 @@ namespace Western
                 if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f) // 애니메이션 종료일 시
                 {
                     m_time += Time.deltaTime;
-                    if (m_time > 0.2f) { Destroy(gameObject); }
+                    if (m_time > 0.1f) { Destroy(gameObject); }
                 }
             }
         }

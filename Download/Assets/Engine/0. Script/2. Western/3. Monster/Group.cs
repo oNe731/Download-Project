@@ -150,7 +150,7 @@ namespace Western
 
             m_timer = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Timer", Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
             RectTransform timerTransform = m_timer.GetComponent<RectTransform>();
-            timerTransform.anchoredPosition = new Vector2(0f, 250f);
+            timerTransform.anchoredPosition = new Vector2(0f, 281f);
 
             Timer timer = m_timer.GetComponent<Timer>();
             timer.Start_Timer(timerSpeed);
