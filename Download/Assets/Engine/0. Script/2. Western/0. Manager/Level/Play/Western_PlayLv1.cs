@@ -64,6 +64,7 @@ namespace Western
             m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/1Stage");
             m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
             m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
+            GameManager.Ins.Western.Operation.SetActive(true);
 
             // 카메라 설정
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);

@@ -13,11 +13,12 @@ public class WesternManager : StageManager
 
     private Dialog_IntroWT m_dialogIntro;
     private Dialog_PlayWT  m_dialogPlay;
-    private GameObject m_MainPanel;
-    private GameObject m_playButton;
+    private GameObject  m_MainPanel;
+    private GameObject  m_playButton;
     private HeartUI     m_heartUI;
     private StatusBarUI m_statusBarUI;
     private Gun         m_gun;
+    private GameObject  m_operation;
 
     public bool IsShoot { get => m_isShoot; set => m_isShoot = value; }
     public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; } }
@@ -28,6 +29,7 @@ public class WesternManager : StageManager
     public HeartUI HeartUI => m_heartUI;
     public StatusBarUI StatusBarUI => m_statusBarUI;
     public Gun Gun => m_gun;
+    public GameObject Operation => m_operation;
 
 
     public WesternManager() : base()
@@ -65,6 +67,7 @@ public class WesternManager : StageManager
         m_heartUI     = canvas.transform.GetChild(0).GetChild(1).GetComponent<HeartUI>();
         m_statusBarUI = canvas.transform.GetChild(0).GetChild(0).GetComponent<StatusBarUI>();
         m_gun         = canvas.transform.GetChild(0).GetChild(3).GetComponent<Gun>();
+        m_operation   = canvas.transform.GetChild(0).GetChild(4).gameObject;
 
         // 기본 값 초기화
 
