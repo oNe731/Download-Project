@@ -220,6 +220,9 @@ namespace Western
 
             // 바 이벤트 발생
             m_bar.Start_Event();
+
+            // 설명 UI 비활성화
+            GameManager.Ins.Western.Operation.SetActive(false);
         }
 
         public void Change_FinishDialog()
