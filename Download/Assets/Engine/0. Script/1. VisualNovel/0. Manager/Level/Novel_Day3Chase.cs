@@ -13,7 +13,7 @@ namespace VisualNovel
         private Dialogs_Day3Chase m_dialogAsset;
 
         private GameObject m_stage;
-        private GameObject m_key;
+        private Image m_key;
 
         private GameObject m_playerBodyObj;
         private GameObject m_yandereObj;
@@ -24,7 +24,7 @@ namespace VisualNovel
         private List<bool>   m_positionUse = new List<bool>();
         private PositionData m_positionData;
 
-        private int m_CdMaxCount = 3;
+        private int m_CdMaxCount = 5;
         private int m_CdCurrentCount = 0;
         private int m_LeverMaxCount = 2;
         private List<GameObject> m_cds = new List<GameObject>();
@@ -56,7 +56,7 @@ namespace VisualNovel
             {
                 m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
                 m_player = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayPlayer>();
-                m_key = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).gameObject;
+                m_key = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>();
 
                 // 플레이어 바디 생성
                 m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
@@ -107,8 +107,7 @@ namespace VisualNovel
 
             m_CdCurrentCount = 0;
 
-            for (int i = 0; i < m_key.transform.childCount; ++i)
-                m_key.transform.GetChild(i).gameObject.SetActive(false);
+            m_key.fillAmount = 0f;
             if (m_itemText != null)
                 m_itemText.SetActive(false);
 
@@ -358,8 +357,7 @@ namespace VisualNovel
                 m_positionUse[positionIndex] = false;
 
             m_CdCurrentCount++;
-            for (int i = 0; i < m_CdCurrentCount; ++i)
-                m_key.transform.GetChild(i).gameObject.SetActive(true);
+            m_key.fillAmount = (float)m_CdCurrentCount / m_CdMaxCount;
 
             Update_Light();
 

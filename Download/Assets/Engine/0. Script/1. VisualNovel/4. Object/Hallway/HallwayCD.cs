@@ -16,7 +16,7 @@ namespace VisualNovel
         private float m_height = 0.2f;
         private float m_startY = 0f;
 
-        private Quaternion m_initialRotation;
+        //private Quaternion m_initialRotation;
 
         private bool m_trigger = false;
         private AudioSource m_audioSource;
@@ -26,7 +26,7 @@ namespace VisualNovel
             m_audioSource = GetComponent<AudioSource>();
 
             m_startY = 0.5f + m_height;
-            m_initialRotation = transform.rotation;
+            //m_initialRotation = transform.rotation;
         }
 
         private void Update()
@@ -36,7 +36,7 @@ namespace VisualNovel
 
             Vector3 directionToCamera = Camera.main.transform.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(directionToCamera);
-            transform.rotation = lookRotation * m_initialRotation;
+            transform.rotation = lookRotation;// * m_initialRotation;
         }
 
 
@@ -57,6 +57,7 @@ namespace VisualNovel
         IEnumerator Wait_PlaySound()
         {
             Destroy(transform.GetChild(0).gameObject); // 메시 삭제
+            Destroy(transform.GetChild(1).gameObject); // UI 삭제
 
             AudioSource audioSource = GetComponent<AudioSource>();
             audioSource.Play();
