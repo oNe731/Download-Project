@@ -23,13 +23,13 @@ namespace Western
                         Button_Start();
                         break;
 
-                    case Type.Type_Exit:
-                        Button_Exit();
-                        break;
+                    //case Type.Type_Exit:
+                    //    Button_Exit();
+                    //    break;
                 }
             }
-            if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
-                Update_Input();
+            //if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            //    Update_Input();
         }
 
         public void Button_Start()
@@ -37,10 +37,10 @@ namespace Western
             Update_Index(Type.Type_Start);
         }
 
-        public void Button_Exit()
-        {
-            Update_Index(Type.Type_Exit);
-        }
+        //public void Button_Exit()
+        //{
+        //    Update_Index(Type.Type_Exit);
+        //}
 
         public void Update_Index(Type type)
         {
@@ -83,13 +83,13 @@ namespace Western
             }
         }
 
-        public void Update_Input()
-        {
-            if (m_currentType == Type.Type_Start)
-                m_currentType = Type.Type_Exit;
-            else if (m_currentType == Type.Type_Exit)
-                m_currentType = Type.Type_Start;
-            Update_Position(m_currentType);
-        }
+        //public void Update_Input()
+        //{
+        //    if (m_currentType == Type.Type_Start)
+        //        m_currentType = Type.Type_Exit;
+        //    else if (m_currentType == Type.Type_Exit)
+        //        m_currentType = Type.Type_Start;
+        //    Update_Position(m_currentType);
+        //}
     }
 }

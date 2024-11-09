@@ -6,34 +6,20 @@ using Western;
 public class WesternManager : StageManager
 {
     public enum LEVELSTATE { 
-        LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1, 
-        LS_IntroLv2, LS_MainLv2, LS_PlayLv2, LS_ClearLv2, 
+        LS_IntroLv1, LS_MainLv1, LS_PlayLv1, LS_ClearLv1,
+        LS_IntroLv2, LS_PlayLv2,
         LS_END };
 
 
     private bool m_isShoot = false;
     private Dictionary<string, Sprite> m_backgroundSpr = new Dictionary<string, Sprite>();
-
     private Dialog_IntroWT m_dialogIntro;
-    private Dialog_PlayWT  m_dialogPlay;
-    private GameObject  m_MainPanel;
-    private GameObject  m_playButton;
-    private HeartUI     m_heartUI;
-    private StatusBarUI m_statusBarUI;
-    private Gun         m_gun;
-    private GameObject  m_operation;
+    private GameObject m_stage;
 
     public bool IsShoot { get => m_isShoot; set => m_isShoot = value; }
     public Dictionary<string, Sprite> BackgroundSpr { get { return m_backgroundSpr; } }
     public Dialog_IntroWT DialogIntro => m_dialogIntro;
-    public Dialog_PlayWT DialogPlay => m_dialogPlay;
-    public GameObject MainPanel => m_MainPanel;
-    public GameObject PlayButton => m_playButton;
-    public HeartUI HeartUI => m_heartUI;
-    public StatusBarUI StatusBarUI => m_statusBarUI;
-    public Gun Gun => m_gun;
-    public GameObject Operation => m_operation;
-
+    public GameObject Stage { get => m_stage; set => m_stage = value; }
 
     public WesternManager() : base()
     {
@@ -51,7 +37,8 @@ public class WesternManager : StageManager
         m_backgroundSpr.Add("CUT_2A", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2A"));
         m_backgroundSpr.Add("CUT_2B", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2B"));
         m_backgroundSpr.Add("CUT_2C", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2C"));
-        m_backgroundSpr.Add("CUT_3D", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_3D"));
+        m_backgroundSpr.Add("CUT_2D", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_2D"));
+        m_backgroundSpr.Add("CUT_NONE", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/ChatScript/IntroChatScript/Background/CUT_NONE"));
     }
 
     public override void Enter_Stage()
@@ -63,14 +50,7 @@ public class WesternManager : StageManager
     {
         // 변수 할당
         GameObject canvas = GameObject.Find("Canvas");
-        m_dialogIntro = canvas.transform.GetChild(3).gameObject.GetComponent<Dialog_IntroWT>();
-        m_dialogPlay  = canvas.transform.GetChild(2).gameObject.GetComponent<Dialog_PlayWT>();
-        m_MainPanel   = canvas.transform.GetChild(1).gameObject;
-        m_playButton  = canvas.transform.GetChild(1).GetChild(6).gameObject;
-        m_heartUI     = canvas.transform.GetChild(0).GetChild(1).GetComponent<HeartUI>();
-        m_statusBarUI = canvas.transform.GetChild(0).GetChild(0).GetComponent<StatusBarUI>();
-        m_gun         = canvas.transform.GetChild(0).GetChild(3).GetComponent<Gun>();
-        m_operation   = canvas.transform.GetChild(0).GetChild(4).gameObject;
+        m_dialogIntro = canvas.transform.GetChild(0).gameObject.GetComponent<Dialog_IntroWT>();
 
         // 기본 값 초기화
 
@@ -84,9 +64,7 @@ public class WesternManager : StageManager
             new Western_ClearLv1(),
 
             new Western_IntroLv2(),
-            new Western_MainLv2(),
             new Western_PlayLv2(),
-            new Western_ClearLv2(),
         };
         for(int i = 0; i < levels.Count; ++i)
             levels[i].Initialize_Level(m_levelController);

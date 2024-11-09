@@ -75,7 +75,7 @@ namespace Western
 
             // ½ÇÆÐ
             isCount = false;
-            GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_Play>().Fail_Group();
+            GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>().Fail_Group();
 
             Destroy(gameObject);
             yield break;
