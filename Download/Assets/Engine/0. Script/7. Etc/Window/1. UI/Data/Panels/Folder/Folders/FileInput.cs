@@ -23,9 +23,13 @@ public class FileInput : MonoBehaviour
             return;
 
         WindowManager WM = GameManager.Ins.Window;
-        string fileName = WM.Get_FileName(WM.BackgroundPath, m_nameField.text);
+
+        // 바탕화면에 생성할 공간이 되는지 검사
+        if (WM.Get_BackgroundFileCount() == false)
+            return;
 
         // 파일 추가
+        string fileName = WM.Get_FileName(WM.BackgroundPath, m_nameField.text);
         if (WM.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_TXT, fileName) == true)
         {
             WindowFile file = WM.Get_WindowFile(WM.Get_FullFilePath(WM.BackgroundPath, fileName));

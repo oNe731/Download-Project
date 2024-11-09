@@ -184,8 +184,17 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "≥ª ∆˙¥ı", () => Folder.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "∏ﬁΩ√¡ˆ",  () => Message.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "∏ﬁ∏¿Â",  () => Memo.Active_Popup(true, 0));
+            #region »ﬁ¡ˆ≈Î
+            m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_TRASHBIN, "»ﬁ¡ˆ≈Î", () => Recyclebin.Active_Popup(true, 0));
+            WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "»ﬁ¡ˆ≈Î");
+            WindowFileData data = trashbinFile.FileData;
+            FolderData folderdata = new FolderData();
+            folderdata.childFolders = new List<WindowFileData>();
+            data.windowSubData = folderdata;
+            trashbinFile.Set_FileData(data);
+            #endregion
             #region ªÁ¡¯
-            m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE, "ªÁ¡¯");
+            m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_PICTURE, "ªÁ¡¯");
             WindowFile wallpaperFile = Get_WindowFile(m_backgroundPath + "\\" + "ªÁ¡¯");
             WindowFileData wallpaperData = wallpaperFile.FileData;
             ImageData Imagedata = new ImageData();
@@ -197,19 +206,15 @@ public class WindowManager : StageManager
             wallpaperFile.Set_FileData(wallpaperData);
             wallpaperFile.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile.FileIndex));
             #endregion
-            #region »ﬁ¡ˆ≈Î
-            m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_TRASHBIN, "»ﬁ¡ˆ≈Î",  () => Recyclebin.Active_Popup(true, 0));
-            WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "»ﬁ¡ˆ≈Î");
-            WindowFileData data = trashbinFile.FileData;
-            FolderData folderdata = new FolderData();
-            folderdata.childFolders = new List<WindowFileData>();
-            data.windowSubData = folderdata;
-            trashbinFile.Set_FileData(data);
-            #endregion
 
             Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
             //Message.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
             //Message.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
+
+
+            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(1, 3, WindowManager.FILETYPE.TYPE_NOVEL, "ø¿Ωœø¿Ωœ πÍµÂ∫Œ", () => GameManager.Ins.Window.WindowButton.Button_VisualNovel());
+            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(3, 7, WindowManager.FILETYPE.TYPE_WESTERN, "THE LEGEND COWBOY", () => GameManager.Ins.Window.WindowButton.Button_Western());
+            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(2, 10, WindowManager.FILETYPE.TYPE_HORROR, "THE HOSPITAL", () => GameManager.Ins.Window.WindowButton.Button_Horror());
         }
         else
         {
@@ -346,6 +351,15 @@ public class WindowManager : StageManager
     {
         int lastSlashIndex = path.LastIndexOf('\\');
         return lastSlashIndex >= 0 ? path.Substring(0, lastSlashIndex) : path;
+    }
+
+    public bool Get_BackgroundFileCount()
+    {
+        int count = m_fileIconSlots.Get_WindowFileCount();
+        if (count < 18)
+            return true;
+        else
+            return false;
     }
     #endregion
 }

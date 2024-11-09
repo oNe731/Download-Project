@@ -103,6 +103,10 @@ public class FolderButton : MonoBehaviour
         // 경로에 따른 생성
         if (folder.Path == WM.BackgroundPath) // 바탕화면일 시
         {
+            // 바탕화면에 생성할 공간이 되는지 검사
+            if (GameManager.Ins.Window.Get_BackgroundFileCount() == false)
+                return;
+
             // 바탕화면 아이콘 추가 + 파일 생성
             WM.FileIconSlots.Add_FileIcon(windowFileData.fileType, windowFileData.fileName, windowFileData.fileAction, windowFileData.windowSubData, windowFileData.fileprevfilePath);
         }
