@@ -185,11 +185,11 @@ public class WindowManager : StageManager
             m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => Message.Active_Popup(true, 0));
             m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => Memo.Active_Popup(true, 0));
             #region 사진
-            m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE, "Wallpaper");
-            WindowFile wallpaperFile = Get_WindowFile(m_backgroundPath + "\\" + "Wallpaper");
+            m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_PICTURE, "사진");
+            WindowFile wallpaperFile = Get_WindowFile(m_backgroundPath + "\\" + "사진");
             WindowFileData wallpaperData = wallpaperFile.FileData;
             ImageData Imagedata = new ImageData();
-            Imagedata.fileName = "Wallpaper";
+            Imagedata.fileName = "사진";
             Imagedata.fileType  = "PNG (.png)";
             Imagedata.imageSize = "2.38MB (2,505,547 바이트)";
             Imagedata.diskSize  = "2.39MB (2,506,752 바이트)";
@@ -197,9 +197,8 @@ public class WindowManager : StageManager
             wallpaperFile.Set_FileData(wallpaperData);
             wallpaperFile.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile.FileIndex));
             #endregion
-            m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_VIDEO,    "비디오");
             #region 휴지통
-            m_fileIconSlots.Add_FileIcon(5, 1, FILETYPE.TYPE_TRASHBIN, "휴지통",  () => Recyclebin.Active_Popup(true, 0));
+            m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_TRASHBIN, "휴지통",  () => Recyclebin.Active_Popup(true, 0));
             WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "휴지통");
             WindowFileData data = trashbinFile.FileData;
             FolderData folderdata = new FolderData();
@@ -211,32 +210,6 @@ public class WindowManager : StageManager
             Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
             //Message.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
             //Message.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
-
-            #region 사진
-            m_fileIconSlots.Add_FileIcon(FILETYPE.TYPE_PICTURE, "Wallpaper2");
-            WindowFile wallpaperFile2 = Get_WindowFile(m_backgroundPath + "\\" + "Wallpaper2");
-            WindowFileData wallpaperData2 = wallpaperFile2.FileData;
-            ImageData Imagedata2 = new ImageData();
-            Imagedata2.fileName = "Wallpaper";
-            Imagedata2.fileType = "PNG (.png)";
-            Imagedata2.imageSize = "2.38MB (2,505,547 바이트)";
-            Imagedata2.diskSize = "2.39MB (2,506,752 바이트)";
-            wallpaperData2.windowSubData = Imagedata2;
-            wallpaperFile2.Set_FileData(wallpaperData2);
-            wallpaperFile2.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile2.FileIndex));
-
-            m_fileIconSlots.Add_FileIcon(FILETYPE.TYPE_PICTURE, "Wallpaper3");
-            WindowFile wallpaperFile3 = Get_WindowFile(m_backgroundPath + "\\" + "Wallpaper3");
-            WindowFileData wallpaperData3 = wallpaperFile3.FileData;
-            ImageData Imagedata3 = new ImageData();
-            Imagedata3.fileName = "Wallpaper";
-            Imagedata3.fileType = "PNG (.png)";
-            Imagedata3.imageSize = "2.38MB (2,505,547 바이트)";
-            Imagedata3.diskSize = "2.39MB (2,506,752 바이트)";
-            wallpaperData3.windowSubData = Imagedata3;
-            wallpaperFile3.Set_FileData(wallpaperData3);
-            wallpaperFile3.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile3.FileIndex));
-            #endregion
         }
         else
         {

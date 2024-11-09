@@ -16,7 +16,7 @@ namespace VisualNovel
             ET_NONE, 
             ET_DIALOGTEXT, ET_BIGMINATS, ET_SWEATMINATS, ET_SCALEMINATS, ET_HINALIKEONE, ET_SCROLLTEXT, ET_AYAKAEYE, ET_AYAKHAND, ET_AYAKSHADOW,
             ET_MINATSULIKEONE, ET_AYAKALIKEONE, ET_AYAKAPATTERN, ET_VERTICAL, ET_VERTICALS,
-            ET_BIGAYAKA, ET_UPDATE,
+            ET_BIGAYAKA, ET_UPDATE, ET_LIKEPANELOFF,
             ET_END
         }
 
@@ -37,6 +37,7 @@ namespace VisualNovel
 
         private bool m_isEvent = false;
         private bool m_standingUpdate = true;
+        private bool m_likeUpdate = true;
 
         // 선택지
         private int              m_choiceIndex = 0;
@@ -215,7 +216,8 @@ namespace VisualNovel
             m_dialogBoxObj.SetActive(true);
 
             // 호감도 업데이트
-            m_heartScr.Set_Owner(ownerType);
+            if (m_likeUpdate == true)
+                m_heartScr.Set_Owner(ownerType);
 
             // 다이얼로그 오너 이름 업데이트
             m_nameTxt.text = name.Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
@@ -901,6 +903,11 @@ namespace VisualNovel
                 case (int)EVENTTYPE.ET_UPDATE:
                     m_eventCoroutines = StartCoroutine(Update_UpdateDialog());
                     break;
+
+                case (int)EVENTTYPE.ET_LIKEPANELOFF:
+                    m_likeUpdate = false;
+                    m_heartScr.Active_Heart(false);
+                    break;
             }
         }
 
@@ -984,6 +991,10 @@ namespace VisualNovel
                 case (int)EVENTTYPE.ET_UPDATE:
                     if (m_eventCoroutines != null)
                         StopCoroutine(m_eventCoroutines);
+                    break;
+
+                case (int)EVENTTYPE.ET_LIKEPANELOFF:
+                    m_likeUpdate = true;
                     break;
             }
 
@@ -1382,7 +1393,8 @@ namespace VisualNovel
                 GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] += dialogData.addLike;
                 if (GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] < 0)
                     GameManager.Ins.Novel.NpcHeart[(int)dialogData.owner] = 0;
-                m_heartScr.Set_Owner(dialogData.owner);
+                if (m_likeUpdate == true)
+                    m_heartScr.Set_Owner(dialogData.owner);
             }
 
             // 자동 업데이트

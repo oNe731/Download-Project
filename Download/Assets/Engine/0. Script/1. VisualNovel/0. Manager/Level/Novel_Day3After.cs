@@ -21,19 +21,19 @@ namespace VisualNovel
             manager.Dialog.SetActive(true);
             switch (m_levelController.Get_Level<Novel_Day3Shoot>((int)VisualNovelManager.LEVELSTATE.LS_DAY3SHOOTGAME).DollType)
             {
-                case DOLLTYPE.DT_BIRD:
+                case DOLLTYPE.DT_FAIL:
                     manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(0);
                     break;
 
-                case DOLLTYPE.DT_SHEEP:
-                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(2);
-                    break;
-
-                case DOLLTYPE.DT_CAT:
+                case DOLLTYPE.DT_BIRD:
                     manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(1);
                     break;
 
-                case DOLLTYPE.DT_FAIL:
+                case DOLLTYPE.DT_CAT:
+                    manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(2);
+                    break;
+
+                case DOLLTYPE.DT_SHEEP:
                     manager.Dialog.GetComponent<Dialog_VN>().Start_Dialog(3);
                     break;
             }
@@ -67,25 +67,28 @@ namespace VisualNovel
             switch (sheetIndex)
             {
                 case 0:
-                    sheetList = m_dialogAsset.S00_11_Bird;
+                    sheetList = m_dialogAsset.S00_11_Fail;
                     break;
                 case 1:
-                    sheetList = m_dialogAsset.S01_12_Cat;
+                    sheetList = m_dialogAsset.S01_12_Bird;
                     break;
                 case 2:
-                    sheetList = m_dialogAsset.S02_13_Sheep;
+                    sheetList = m_dialogAsset.S02_13_Cat;
                     break;
                 case 3:
-                    sheetList = m_dialogAsset.S03_1_After;
+                    sheetList = m_dialogAsset.S03_14_Sheep;
                     break;
                 case 4:
-                    sheetList = m_dialogAsset.S04_1_Festival;
+                    sheetList = m_dialogAsset.S04_1_After;
                     break;
                 case 5:
-                    sheetList = m_dialogAsset.S05_2_Home;
+                    sheetList = m_dialogAsset.S05_1_Festival;
                     break;
                 case 6:
-                    sheetList = m_dialogAsset.S06_3_Restroom;
+                    sheetList = m_dialogAsset.S06_2_Home;
+                    break;
+                case 7:
+                    sheetList = m_dialogAsset.S07_3_Restroom;
                     break;
             }
             return sheetList;

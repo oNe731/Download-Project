@@ -29,7 +29,6 @@ public class SettingManager : MonoBehaviour
     private void Start()
     {
         // 리소스 할당
-        m_headerSprite.Add("Header_Window",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Option/Header/UI_Window_WindowHeader"));
         m_headerSprite.Add("Header_VisualNovel", GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Option/Header/UI_Window_VisualNovelHeader"));
         m_headerSprite.Add("Header_Western",     GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Option/Header/UI_Window_WesternHeader"));
         m_headerSprite.Add("Header_Horror",      GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/0. Window/Window Option/Header/UI_Window_HorrorHeader"));
@@ -66,6 +65,9 @@ public class SettingManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Ins.CurStage.StageLevel == StageManager.STAGE.LEVEL_LOADING || GameManager.Ins.CurStage.StageLevel == StageManager.STAGE.LEVEL_LOGIN || GameManager.Ins.CurStage.StageLevel == StageManager.STAGE.LEVEL_WINDOW)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
             Active_Panel(!m_isOpen);
     }
@@ -86,20 +88,20 @@ public class SettingManager : MonoBehaviour
             // 레벨별로 각 세팅 활성화
             switch(GameManager.Ins.CurStage.StageLevel)
             {
-                case StageManager.STAGE.LEVEL_LOADING:
-                    m_header.sprite = m_headerSprite["Header_Window"];
-                    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
-                    break;
+                //case StageManager.STAGE.LEVEL_LOADING:
+                //    m_header.sprite = m_headerSprite["Header_Window"];
+                //    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
+                //    break;
 
-                case StageManager.STAGE.LEVEL_LOGIN:
-                    m_header.sprite = m_headerSprite["Header_Window"];
-                    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
-                    break;
+                //case StageManager.STAGE.LEVEL_LOGIN:
+                //    m_header.sprite = m_headerSprite["Header_Window"];
+                //    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
+                //    break;
 
-                case StageManager.STAGE.LEVEL_WINDOW:
-                    m_header.sprite = m_headerSprite["Header_Window"];
-                    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
-                    break;
+                //case StageManager.STAGE.LEVEL_WINDOW:
+                //    m_header.sprite = m_headerSprite["Header_Window"];
+                //    m_panel.transform.GetChild(2).gameObject.SetActive(false); // 공포 패널
+                //    break;
 
                 case StageManager.STAGE.LEVEL_VISUALNOVEL:
                     m_header.sprite = m_headerSprite["Header_VisualNovel"];

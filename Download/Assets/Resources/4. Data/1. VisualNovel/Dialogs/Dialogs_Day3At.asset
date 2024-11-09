@@ -2,17 +2,548 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16d63c02caae6a40b0402dcf70fae55, type: 3}
+  m_Script: {fileID: 11500000, guid: 30c5d825e6b7bc349bd016cd958889a1, type: 3}
   m_Name: Dialogs_Day3At
   m_EditorClassIdentifier: 
-  S00_11_Bird:
+  S00_11_Fail:
+  - dialogType: 0
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: 
+    dialogText: 
+    backgroundSpr: 
+    standingSpr: 
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uC815\uB9D0...... \uBD80\uB044\uB7FD\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uC544\uBB34\uAC83\uB3C4 \uBABB \uBF51\uC740 \uAC70 \uC815\uB9D0
+      \uC2E4\uD654\uC778\uAC00.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uB098\uB294 \uBA4B\uCA4D\uC740 \uC5BC\uAD74\uB85C \uB4A4\uB97C
+      \uB3CC\uC544\uBD24\uACE0,)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uC608\uC0C1\uB300\uB85C \uBAA8\uB450\uAC00 \uC6C3\uC74C\uC744
+      \uCC38\uACE0 \uC788\uC5C8\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "\u2026... \uAE30\uB300\uD558\uC9C0 \uB9D0\uB77C\uACE0 \uD588\uC5C8\uC796\uC544?"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uB0B4 \uB9D0\uC744 \uB05D\uC73C\uB85C, \uBBF8\uB098\uCE20\uB294
+      \uCC9C\uCC9C\uD788 \uC6C3\uAE30 \uC2DC\uC791\uD588\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI01}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 1
+    dialogName: "\uBBF8\uB098\uCE20"
+    dialogText: "\uC544, {{PLAYER_NAME}}."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI01}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 1
+    dialogName: "\uBBF8\uB098\uCE20"
+    dialogText: "\uB0B4\uAC00 \uB110 \uACFC\uB300 \uD3C9\uAC00 \uD588\uB124."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI01}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 1
+    dialogName: "\uBBF8\uB098\uCE20"
+    dialogText: "\uADF8\uB798\uB3C4 \uB108\uBB34 \uC18D\uC0C1\uD574 \uD558\uC9C0
+      \uB9C8."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI01}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uC548 \uC18D\uC0C1\uD558\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uADF8\uB7F0 \uB098\uB97C \uBCF4\uBA70 \uC544\uC57C\uCE74\uC640
+      \uD788\uB098\uB294 \uD55C \uB9C8\uB514\uC529 \uAC70\uB4E4\uC5C8\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA01}{MI00}{KI04}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 2
+    dialogName: "\uD788\uB098"
+    dialogText: "\uACFC\uB300\uD3C9\uAC00 \uC218\uC900\uC774 \uC544\uB2C8\uB77C,
+      \uADF8\uB0E5 \uC544\uC8FC~ \uD615\uD3B8 \uC5C6\uC5C8\uC5B4."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA01}{MI00}{KI04}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 2
+    dialogName: "\uD788\uB098"
+    dialogText: "\uC5ED\uC2DC \uC190\uC73C\uB85C \uD558\uB294 \uAC74 \uB2E4 \uBABB\uD55C\uB2E4\uACE0
+      \uD558\uB294 \uAC70, \uADF8\uAC83\uB9CC\uC740 \uAC70\uC9D3\uB9D0\uC774 \uC544\uB2C8\uB124."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA01}{MI00}{KI04}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 3
+    dialogName: "\uC544\uC57C\uCE74"
+    dialogText: "{{PLAYER_NAME}} \uB2D8\u2026.... \uADF8, \uADF8\uB798\uB3C4 \uC0C8\uCD1D
+      \uC3D8\uB294 \uBAA8\uC2B5\uC740 \uBA4B\uC788\uC5C8\uC5B4\uC694."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 3
+    dialogName: "\uC544\uC57C\uCE74"
+    dialogText: "\uC9D1\uC911\uD574\uC11C \uD558\uB294 \uBAA8\uC2B5\uC774\u2026...."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\uD2B9\uD788 \uC544\uC57C\uCE74\uB294 \uC5B4\uB5A4 \uB9D0\uC744
+      \uD574\uC57C \uD560\uC9C0 \uBAA8\uB978\uB2E4\uB294 \uB4EF \uB300\uB2F5\uD588\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "(\u2026.... \uADF8\uAC8C \uB354 \uC0C1\uCC98\uB2E4.)"
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 1
+    fadeType: 0
+    pathIndex: 0
+    owner: 0
+    dialogName: '{{PLAYER_NAME}}'
+    dialogText: "\uB2E4\uC74C\uC5D0\uB294 \uC81C\uB300\uB85C \uBCF4\uC5EC\uC904 \uAC70\uB77C\uACE0."
+    backgroundSpr: BackGround_Festival
+    standingSpr: '{SA00}{MI00}{KI00}'
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  - dialogType: 0
+    fadeType: 4
+    pathIndex: 4
+    owner: 0
+    dialogName: 
+    dialogText: 
+    backgroundSpr: 
+    standingSpr: 
+    addLike: 0
+    choiceLoop: 0
+    choiceEventType: 
+    choiceText: 
+    choiceDialog: 
+    gameType: 0
+    cutSceneEvents: 
+    nextIndex: 0
+    usePosition: 0
+    targetPosition: 
+    positionSpeed: 0
+    useRotation: 0
+    targetRotation: 
+    rotationSpeed: 0
+    animatroTriger: 
+    objectType: 0
+    active: 0
+    imageName: 
+  S01_12_Bird:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0
@@ -100,7 +631,7 @@ MonoBehaviour:
     dialogText: "\uC544, \uB098 \uC8FC\uB294 \uAC70\uC57C?"
     backgroundSpr: BackGround_Festival
     standingSpr: '{MI01}'
-    addLike: 0
+    addLike: 1
     choiceLoop: 0
     choiceEventType: 
     choiceText: 
@@ -333,7 +864,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 4
-    pathIndex: 3
+    pathIndex: 4
     owner: 0
     dialogName: 
     dialogText: 
@@ -357,7 +888,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S01_12_Cat:
+  S02_13_Cat:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0
@@ -472,7 +1003,7 @@ MonoBehaviour:
     dialogText: "\uC5B4\uCA4C\uB77C\uACE0?"
     backgroundSpr: BackGround_Festival
     standingSpr: '{SA00}'
-    addLike: 0
+    addLike: 1
     choiceLoop: 0
     choiceEventType: 
     choiceText: 
@@ -704,7 +1235,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 4
-    pathIndex: 3
+    pathIndex: 4
     owner: 0
     dialogName: 
     dialogText: 
@@ -728,7 +1259,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S02_13_Sheep:
+  S03_14_Sheep:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0
@@ -870,7 +1401,7 @@ MonoBehaviour:
     dialogText: "\uC815, \uC815\uB9D0\uC694\u2026...?"
     backgroundSpr: BackGround_Festival
     standingSpr: '{KI05}'
-    addLike: 0
+    addLike: 1
     choiceLoop: 0
     choiceEventType: 
     choiceText: 
@@ -1129,7 +1660,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 4
-    pathIndex: 3
+    pathIndex: 4
     owner: 0
     dialogName: 
     dialogText: 
@@ -1153,33 +1684,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S03_1_After:
-  - dialogType: 0
-    fadeType: 0
-    pathIndex: 0
-    owner: 0
-    dialogName: 
-    dialogText: 
-    backgroundSpr: 
-    standingSpr: 
-    addLike: 0
-    choiceLoop: 0
-    choiceEventType: 
-    choiceText: 
-    choiceDialog: 
-    gameType: 0
-    cutSceneEvents: 
-    nextIndex: 0
-    usePosition: 0
-    targetPosition: 
-    positionSpeed: 0
-    useRotation: 0
-    targetRotation: 
-    rotationSpeed: 0
-    animatroTriger: 
-    objectType: 0
-    active: 0
-    imageName: 
+  S04_1_After:
   - dialogType: 1
     fadeType: 0
     pathIndex: 0
@@ -1828,7 +2333,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 1
-    pathIndex: 4
+    pathIndex: 5
     owner: 0
     dialogName: 
     dialogText: 
@@ -1852,7 +2357,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S04_1_Festival:
+  S05_1_Festival:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0
@@ -2624,7 +3129,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 1
-    pathIndex: 5
+    pathIndex: 6
     owner: 0
     dialogName: 
     dialogText: 
@@ -2648,7 +3153,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S05_2_Home:
+  S06_2_Home:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0
@@ -3660,7 +4165,7 @@ MonoBehaviour:
     imageName: 
   - dialogType: 0
     fadeType: 1
-    pathIndex: 6
+    pathIndex: 7
     owner: 0
     dialogName: 
     dialogText: 
@@ -3684,7 +4189,7 @@ MonoBehaviour:
     objectType: 0
     active: 0
     imageName: 
-  S06_3_Restroom:
+  S07_3_Restroom:
   - dialogType: 0
     fadeType: 0
     pathIndex: 0

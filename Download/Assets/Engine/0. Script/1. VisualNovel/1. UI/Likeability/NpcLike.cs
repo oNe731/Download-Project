@@ -102,7 +102,7 @@ namespace VisualNovel
                 m_images[i].sprite = spriteOff;
         }
 
-        private void Active_Heart(bool active)
+        public void Active_Heart(bool active)
         {
             for (int i = 0; i < m_heart.Length; i++)
                 m_heart[i].SetActive(active);
