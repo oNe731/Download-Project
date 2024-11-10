@@ -31,6 +31,9 @@ public class Panel_Folder : Panel_Popup
     private Sprite[] m_pathButton;
     private GameObject m_dropDownPanel;
 
+    private bool m_isEvent = false;
+    private float m_sensitiv;
+
     public string Path => m_path;
     public FolderButton FolderButton => m_folderButton;
 
@@ -41,6 +44,8 @@ public class Panel_Folder : Panel_Popup
 
     public FolderBox SelectFolderBox => m_folderBox; 
     public Transform FavoriteTransform => m_favoriteTransform;
+
+    public bool IsEvent => m_isEvent;
 
     public Panel_Folder() : base()
     {
@@ -79,13 +84,13 @@ public class Panel_Folder : Panel_Popup
                         m_isButtonClick = false;
                         m_pathText.enabled = false;
 
-                        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "Zip"));
+                        WindowFile file = GameManager.Ins.Window.Get_WindowFile(GameManager.Ins.Window.Get_FullFilePath(GameManager.Ins.Window.BackgroundPath, "POGELAND"));
                         FolderData folderData = (FolderData)file.FileData.windowSubData;
                         List<FoldersData> foldersDatas = new List<FoldersData>();
                         foldersDatas.Add(new FoldersData(folderData.childFolders));
-                        Set_FolderData("C:\\Users\\user\\Desktop\\Zip", foldersDatas);
+                        Set_FolderData("C:\\Users\\user\\Desktop\\POGELAND", foldersDatas);
 
-                        // 삭제 이벤트 실행
+                        // 마스터 다이얼로그 재생
                         if (m_eventBool[(int)EVENT.EVENT_GAMEZIP] == false)
                             Start_Event(EVENT.EVENT_GAMEZIP);
                         break;
@@ -134,10 +139,9 @@ public class Panel_Folder : Panel_Popup
                 case (int)TYPE.TYPE_GAMEZIP:
                     m_isButtonClick = true;
                     m_pathText.enabled = true;
-
-                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_NOVEL, "오싹오싹 밴드부", () => GameManager.Ins.Window.WindowButton.Button_VisualNovel());
-                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_WESTERN, "THE LEGEND COWBOY", () => GameManager.Ins.Window.WindowButton.Button_Western());
-                    GameManager.Ins.Window.FileIconSlots.Add_FileIcon(WindowManager.FILETYPE.TYPE_HORROR, "THE HOSPITAL", () => GameManager.Ins.Window.WindowButton.Button_Horror());
+                    m_inputPopupButton = true;
+                    m_scrollRect.scrollSensitivity = m_sensitiv;
+                    m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = true;
                     break;
 
                 case (int)TYPE.TYPE_FILESAVE:
@@ -175,6 +179,7 @@ public class Panel_Folder : Panel_Popup
         m_scrollRect = m_object.transform.GetChild(3).GetComponent<ScrollRect>();
         m_fileInput = m_object.transform.GetChild(4).GetComponent<FileInput>();
         m_fileInput.Start_FileInput();
+        m_object.transform.GetChild(1).GetComponent<PopupFrame>().Set_OwnerPanel(this);
 
         m_beforeButton = m_object.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Image>();
         m_nextButton   = m_object.transform.GetChild(2).GetChild(1).GetChild(2).GetComponent<Image>();
@@ -196,23 +201,23 @@ public class Panel_Folder : Panel_Popup
         switch (type)
         {
             case EVENT.EVENT_GAMEZIP:
-                GameManager.Ins.StartCoroutine(Destroy_GameIcon());
+                m_inputPopupButton = false;
+                m_scrollRect.verticalNormalizedPosition = 1f;
+                m_sensitiv = m_scrollRect.scrollSensitivity;
+                m_scrollRect.scrollSensitivity = 0f;
+                m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = false;
+
+                GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_Zip");
+                GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
                 break;
         }
     }
 
-    private IEnumerator Destroy_GameIcon()
+    public IEnumerator Destroy_GameIcon()
     {
+        m_isEvent = true;
         while (true)
         {
-            m_inputPopupButton = false;
-            yield return new WaitForSeconds(1.0f);
-
-            m_scrollRect.verticalNormalizedPosition = 1f;
-            float sensitiv = m_scrollRect.scrollSensitivity;
-            m_scrollRect.scrollSensitivity = 0f;
-            m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = false;
-
             int currentIndex = 0;
             int childCount = m_folderTransform.childCount;
             for (int i = 0; i < childCount; ++i)
@@ -250,12 +255,9 @@ public class Panel_Folder : Panel_Popup
                     currentIndex++;
                 }
             }
-
-            m_inputPopupButton = true;
-            m_scrollRect.scrollSensitivity = sensitiv;
-            m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = true;
             break;
         }
+        m_isEvent = false;
     }
     #endregion
 

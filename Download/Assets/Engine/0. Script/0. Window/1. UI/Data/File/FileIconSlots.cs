@@ -155,7 +155,7 @@ public class FileIconSlots : WindowData
         }
     }
 
-    public int Get_WindowFileCount() // 바탕화면에 존재하는 파일 세로로 정보 읽기
+    public int Get_WindowFileCount() // 바탕화면에 존재하는 파일 개수 읽기
     {
         int Count = 0;
 
@@ -176,5 +176,74 @@ public class FileIconSlots : WindowData
         }
 
         return Count;
+    }
+
+    public FileIconSlot Get_FileIconSlot(WindowManager.FILETYPE fileType)
+    {
+        int RowIndex = 0;
+        int ColumnIndex = 0;
+        for (int i = 0; i < m_slotCount; ++i)
+        {
+            FileIconSlot slot = m_files[RowIndex][ColumnIndex];
+            if (slot.Empty == false)
+            {
+                if(slot.File.FileData.fileType == fileType)
+                {
+                    return slot;
+                }
+            }
+
+            RowIndex++; // ColumnIndex++;
+            if (RowIndex >= 6) // if (ColumnIndex >= 12)
+            {
+                ColumnIndex++; // RowIndex++;
+                RowIndex = 0; // ColumnIndex = 0;
+            }
+        }
+
+        return null;
+    }
+
+    public void Set_AllIconClick(bool click)
+    {
+        int RowIndex = 0;
+        int ColumnIndex = 0;
+        for (int i = 0; i < m_slotCount; ++i)
+        {
+            FileIconSlot slot = m_files[RowIndex][ColumnIndex];
+            slot.IsClickState = click;
+
+            RowIndex++; // ColumnIndex++;
+            if (RowIndex >= 6) // if (ColumnIndex >= 12)
+            {
+                ColumnIndex++; // RowIndex++;
+                RowIndex = 0; // ColumnIndex = 0;
+            }
+        }
+    }
+
+    public void Set_AllIconClick(WindowManager.FILETYPE fileType, bool click)
+    {
+        int RowIndex = 0;
+        int ColumnIndex = 0;
+        for (int i = 0; i < m_slotCount; ++i)
+        {
+            FileIconSlot slot = m_files[RowIndex][ColumnIndex];
+            if (slot.Empty == false)
+            {
+                if (slot.File.FileData.fileType == fileType)
+                {
+                    slot.IsClickState = click;
+                    break;
+                }
+            }
+
+            RowIndex++; // ColumnIndex++;
+            if (RowIndex >= 6) // if (ColumnIndex >= 12)
+            {
+                ColumnIndex++; // RowIndex++;
+                RowIndex = 0; // ColumnIndex = 0;
+            }
+        }
     }
 }

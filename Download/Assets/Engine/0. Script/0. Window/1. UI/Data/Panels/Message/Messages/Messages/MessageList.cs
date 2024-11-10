@@ -46,6 +46,7 @@ public class MessageList : WindowData
         }
         else
         {
+            GameManager.Ins.Window.Message.Change_UnreadCount(-1);
             m_object.transform.GetChild(5).gameObject.SetActive(false);
         }
     }

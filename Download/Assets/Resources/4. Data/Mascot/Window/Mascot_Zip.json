@@ -1,0 +1,413 @@
+[
+  {
+    "dialogEvent": 1, // 애니메이션 대기
+
+    "dialogText": "",
+    "animationTriger": "Wv1",
+
+    "setPosition": true, // 시작 위치 설정
+    "startPosition": [ 0, 0 ],
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "짜잔~~~!!!",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "거기 너. 안녕?",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "네가 얼타는 동안\n내 소개를 하도록 하지!",
+    "animationTriger": "Wv2",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "나는 게임마스터 Mr.벌룬!",
+    "animationTriger": "Wv3",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "너 같은 순진무구한 플레이어들이 이렇게 불러주면\n게임을 더 재미있게 즐길 수 있도록 가이드 하는 역할이지.",
+    "animationTriger": "Wv4",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 2,
+
+    "dialogText": "자 여기 바라만 봐도 행복해지는\n내 게임들을 봐!",
+    "animationTriger": "Wv5",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": true, // 이동 위치 설정
+    "targetPosition": [ -348.0, 0 ]
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "...",
+    "animationTriger": "Wv6",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "*흐으음....",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "근데... 게임이 너무 많은 걸?",
+    "animationTriger": "Wv7",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "그래! 지우자.",
+    "animationTriger": "Wv8",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    // 압축 파일 삭제 이벤트 시작
+    "dialogEvent": 3,
+
+    "dialogText": "",
+    "animationTriger": "Wv9",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 압축 파일 지워지는 중인 상태
+    "dialogEvent": 0,
+
+    "dialogText": "걱정 마.\n네가 생각하는 것 보다 큰 일이 아니니까.",
+    "animationTriger": "Wv10",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 압축 파일 지워지는 중인 상태
+    "dialogEvent": 0,
+
+    "dialogText": "점점 가벼워지는 게 느껴져!",
+    "animationTriger": "Wv11",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    // 압축파일 파일 삭제 완료 시 다음 대사 진행
+    "dialogEvent": 4,
+
+    "dialogText": "",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "휴... 이제야\n딱 필요한 것들만 남았군.",
+    "animationTriger": "Wv12",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    // 손가락을 팅기면 zip 파일 창이 사라지고 게임 3개가 특정 위치에 생성
+    "dialogEvent": 5,
+
+    "dialogText": "이것들은 내가 손수 깔아주도록 하지.",
+    "animationTriger": "Wv13",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "하하, 감사 인사는 넣어두라고.",
+    "animationTriger": "Wv14",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  // 미연시 게임 유도 시작
+  {
+    "dialogEvent": 2,
+
+    "dialogText": "히히! 그럼 뭐부터 건드려 볼까?",
+    "animationTriger": "Wv15",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": true, // 이동 위치 설정
+    "targetPosition": [ 0, 0 ]
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "오!",
+    "animationTriger": "Wv16",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "이제 슬슬 크리스마스도 다가오는데,\n애인은 있나?",
+    "animationTriger": "Wv17",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "흠...",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "얼굴도.......",
+    "animationTriger": "Wv18",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "썩....\n나빠 보이지는.......",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": ".......않는데 말이지",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 2,
+
+    "dialogText": "여튼, 이런 널\n겨울에 혼자 내버려 두지 않을!",
+    "animationTriger": "Wv19",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": true, // 이동 위치 설정
+    "targetPosition": [ -472.2, 322.6 ]
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "너의 화이트 크리스마스를\n핑크빛으로 물들여줄 환상적인 게임!",
+    "animationTriger": "Wv20",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "오싹오싹 밴드부!",
+    "animationTriger": "Wv21",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "네가 그렇게 대단한 사람이\n아니더라도 상관없어.",
+    "animationTriger": "Wv22",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "그럼에도 불구하고\n널 열렬하게 사랑해줄 소녀들이\n이곳에 한 가득 있으니까!",
+    "animationTriger": "Wv23",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 미연시 클릭 가능
+    "dialogEvent": 7,
+
+    "dialogText": "자, 어서!\n클릭해봐!",
+    "animationTriger": "Wv24",
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "",
+    "animationTriger": "Wv24_1",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 미연시를 5초간 실행하지 않으면 다음 다이얼로그 진행
+    "dialogEvent": 6,
+
+    "dialogText": "",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "어이 뭐해!\n어서 클릭하지 않고!",
+    "animationTriger": "Wv25",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "지금 사랑에 가득 찬 소녀들이\n널 기다리고 있다고!",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "소녀들을 바람맞힐 셈이야?",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "",
+    "animationTriger": "Wv26",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  }
+]

@@ -9,6 +9,7 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
 
     private Vector2 m_offset;
     private RectTransform m_rectTransform;
+    private Panel_Popup m_panel = null;
 
     private void Awake()
     {
@@ -17,11 +18,17 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (m_panel != null && m_panel.InputPopupButton == false)
+            return;
+
         Sort_Popup();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (m_panel != null && m_panel.InputPopupButton == false)
+            return;
+
         Sort_Popup();
 
         // 오프셋 계산
@@ -30,6 +37,9 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (m_panel != null && m_panel.InputPopupButton == false)
+            return;
+
         // 창 이동
         Vector2 localPointerPosition;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(m_rectTransform.parent as RectTransform, eventData.position, eventData.pressEventCamera, out localPointerPosition))
@@ -41,5 +51,10 @@ public class PopupFrame : MonoBehaviour, IPointerClickHandler, IBeginDragHandler
         Panel_Popup panel = GameManager.Ins.Window.Get_Popup(m_parent.gameObject);
         if (panel != null)
             GameManager.Ins.Window.Sort_PopupIndex(panel.FileType);
+    }
+
+    public void Set_OwnerPanel(Panel_Popup panel)
+    {
+        m_panel = panel;
     }
 }

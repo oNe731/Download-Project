@@ -15,8 +15,12 @@ public class Panel_Message : Panel_Popup
     private List<ContactList> m_contactLists = new List<ContactList>();
     private List<AlamList>    m_alamLists    = new List<AlamList>();
 
+    private int m_unreadCount = 0;
+
     private Transform m_messageTransform;
+
     public Transform MessageTransform => m_messageTransform;
+    public int UnreadCount { get => m_unreadCount; set => m_unreadCount = value; }
 
     public Panel_Message() : base()
     {
@@ -73,6 +77,9 @@ public class Panel_Message : Panel_Popup
             messageList.Object.SetActive(true);
         else
             messageList.Object.SetActive(false);
+
+        // 바탕화면 아이콘 상태 변경
+        Change_UnreadCount(1);
     }
 
     public void Add_Call(List<CallData> callData)
@@ -148,6 +155,16 @@ public class Panel_Message : Panel_Popup
                 for (int i = 0; i < m_alamLists.Count; ++i)
                     m_alamLists[i].Object.SetActive(active);
                 break;
+        }
+    }
+
+    public void Change_UnreadCount(int addCount)
+    {
+        m_unreadCount += addCount;
+        FileIconSlot slot = GameManager.Ins.Window.FileIconSlots.Get_FileIconSlot(WindowManager.FILETYPE.TYPE_MESSAGE);
+        if(slot != null)
+        {
+            slot.Update_FileIconState();
         }
     }
     #endregion

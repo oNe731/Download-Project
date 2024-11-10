@@ -59,7 +59,7 @@ public class ChatBox : MonoBehaviour
                 GameManager.Ins.Window.Chatting.Active_Popup(false);
 
                 GameManager.Ins.Window.Internet.Set_InternetData(m_chatting.text, (int)Panel_Internet.TYPE.TYPE_GAMESITE);
-                GameManager.Ins.Window.Internet.Active_Popup(true);
+                GameManager.Ins.Window.Internet.Active_Popup(true, (int)Panel_Internet.TYPE.TYPE_GAMESITE);
                 break;
         }
     }

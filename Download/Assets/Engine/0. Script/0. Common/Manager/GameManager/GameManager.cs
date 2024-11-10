@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
     private static GameManager m_instance = null;
 
     private string m_playerName = "";
+    private Mascot m_mascot;
 
     private List<StageManager> m_stages;
+    private int m_preStage = -1;
     private int m_curStage = -1;
 
     private bool m_isGame = false;
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Ins => m_instance;
     public string PlayerName { get => m_playerName; set => m_playerName = value; }
+    public Mascot Mascot => m_mascot;
     public WindowManager Window => (WindowManager)m_stages[(int)StageManager.STAGE.LEVEL_WINDOW];
     public VisualNovelManager Novel => (VisualNovelManager)m_stages[(int)StageManager.STAGE.LEVEL_VISUALNOVEL];
     public WesternManager Western => (WesternManager)m_stages[(int)StageManager.STAGE.LEVEL_WESTERN];
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     public SettingManager Setting => m_settingManager;
     public ResourceManager Resource => m_resourceManager;
     public AudioSource AudioSource => m_audioSource;
+    public int PreStage => m_preStage;
 
     private void Awake()
     {
@@ -51,6 +55,8 @@ public class GameManager : MonoBehaviour
             m_resourceManager = gameObject.AddComponent<ResourceManager>();
             gameObject.AddComponent<FPS>();
 
+            m_mascot = transform.GetChild(0).GetComponent<Mascot>();
+            m_mascot.Initialize_Mascot();
             m_audioSource = GetComponent<AudioSource>();
 
             // ¸Å´ÏÀú
@@ -97,7 +103,12 @@ public class GameManager : MonoBehaviour
     public void Change_Scene(StageManager.STAGE stage)
     {
         if (m_curStage != -1)
+        {
+            m_preStage = m_curStage;
             m_stages[(int)m_curStage].Exit_Stage();
+
+            m_mascot.gameObject.SetActive(false);
+        }
 
         m_curStage = (int)stage;
         m_stages[(int)m_curStage].Enter_Stage();

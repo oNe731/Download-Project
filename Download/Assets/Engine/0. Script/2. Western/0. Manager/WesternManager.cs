@@ -78,11 +78,6 @@ public class WesternManager : StageManager
         GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
     }
 
-    protected override void In_Game()
-    {
-        base.In_Game();
-    }
-
     public override void Update_Stage()
     {
         if (m_levelController == null)

@@ -175,57 +175,71 @@ public class WindowManager : StageManager
         for (int i = 0; i < m_popups.Count; ++i)
             m_popups[i].Load_Scene();
 
-        // 첫 방문이라면 배경화면 아이콘 추가
-        if (m_isVisit == false) 
+        // 이전 레벨에 따른 기능 처리
+        bool gameStart = true;
+        int preStage = GameManager.Ins.PreStage;
+        switch(preStage)
         {
-            m_isVisit = true;
+            case (int)STAGE.LEVEL_VISUALNOVEL:
+                // 클리어시 연출 재생
+                break;
 
-            m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷",  () => Internet.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER,   "내 폴더", () => Folder.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE,  "메시지",  () => Message.Active_Popup(true, 0));
-            m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO,     "메모장",  () => Memo.Active_Popup(true, 0));
-            #region 휴지통
-            m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_TRASHBIN, "휴지통", () => Recyclebin.Active_Popup(true, 0));
-            WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "휴지통");
-            WindowFileData data = trashbinFile.FileData;
-            FolderData folderdata = new FolderData();
-            folderdata.childFolders = new List<WindowFileData>();
-            data.windowSubData = folderdata;
-            trashbinFile.Set_FileData(data);
-            #endregion
-            #region 사진
-            m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_PICTURE, "사진");
-            WindowFile wallpaperFile = Get_WindowFile(m_backgroundPath + "\\" + "사진");
-            WindowFileData wallpaperData = wallpaperFile.FileData;
-            ImageData Imagedata = new ImageData();
-            Imagedata.fileName = "사진";
-            Imagedata.fileType  = "PNG (.png)";
-            Imagedata.imageSize = "2.38MB (2,505,547 바이트)";
-            Imagedata.diskSize  = "2.39MB (2,506,752 바이트)";
-            wallpaperData.windowSubData = Imagedata;
-            wallpaperFile.Set_FileData(wallpaperData);
-            wallpaperFile.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile.FileIndex));
-            #endregion
+            case (int)STAGE.LEVEL_WESTERN:
+                break;
 
-            Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
-            //Message.Add_Call(GameManager.Ins.Load_JsonData<CallData>("4. Data/0. Window/Chatting/Call_Temp"));
-            //Message.Add_Contact(GameManager.Ins.Load_JsonData<ContactData>("4. Data/0. Window/Chatting/Contact_Temp"));
+            case (int)STAGE.LEVEL_HORROR:
+                break;
 
+            default:
+                if (m_isVisit == true)
+                    return;
+                m_isVisit = true;
 
-            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(1, 3, WindowManager.FILETYPE.TYPE_NOVEL, "오싹오싹 밴드부", () => GameManager.Ins.Window.WindowButton.Button_VisualNovel());
-            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(3, 7, WindowManager.FILETYPE.TYPE_WESTERN, "THE LEGEND COWBOY", () => GameManager.Ins.Window.WindowButton.Button_Western());
-            GameManager.Ins.Window.FileIconSlots.Add_FileIcon(2, 10, WindowManager.FILETYPE.TYPE_HORROR, "THE HOSPITAL", () => GameManager.Ins.Window.WindowButton.Button_Horror());
-        }
-        else
-        {
-            // 이전 씬에 따른 처리
-            //*
+                #region 화면 아이콘 및 파일 생성
+                m_fileIconSlots.Add_FileIcon(0, 0, FILETYPE.TYPE_INTERNET, "인터넷", () => Internet.Active_Popup(true, 0));
+                m_fileIconSlots.Add_FileIcon(1, 0, FILETYPE.TYPE_FOLDER, "내 폴더", () => Folder.Active_Popup(true, 0));
+                m_fileIconSlots.Add_FileIcon(2, 0, FILETYPE.TYPE_MESSAGE, "메시지", () => Message.Active_Popup(true, 0));
+                m_fileIconSlots.Add_FileIcon(3, 0, FILETYPE.TYPE_MEMO, "메모장", () => Memo.Active_Popup(true, 0));
+                #region 휴지통
+                m_fileIconSlots.Add_FileIcon(4, 0, FILETYPE.TYPE_TRASHBIN, "휴지통", () => Recyclebin.Active_Popup(true, 0));
+                WindowFile trashbinFile = Get_WindowFile(m_backgroundPath + "\\" + "휴지통");
+                WindowFileData data = trashbinFile.FileData;
+                FolderData folderdata = new FolderData();
+                folderdata.childFolders = new List<WindowFileData>();
+                data.windowSubData = folderdata;
+                trashbinFile.Set_FileData(data);
+                #endregion
+                #region 사진
+                m_fileIconSlots.Add_FileIcon(5, 0, FILETYPE.TYPE_PICTURE, "사진");
+                WindowFile wallpaperFile = Get_WindowFile(m_backgroundPath + "\\" + "사진");
+                WindowFileData wallpaperData = wallpaperFile.FileData;
+                ImageData Imagedata = new ImageData();
+                Imagedata.fileName = "사진";
+                Imagedata.fileType = "PNG (.png)";
+                Imagedata.imageSize = "2.38MB (2,505,547 바이트)";
+                Imagedata.diskSize = "2.39MB (2,506,752 바이트)";
+                wallpaperData.windowSubData = Imagedata;
+                wallpaperFile.Set_FileData(wallpaperData);
+                wallpaperFile.Set_FileAction(() => Picture.Active_Popup(true, wallpaperFile.FileIndex));
+                #endregion
+                #endregion
+
+                // 경고 패널 생성
+                gameStart = false;
+                Transform canvas = GameObject.Find("Canvas").transform;
+                GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Tutorial/Panel_Tutorial", canvas.GetChild(3));
+
+                //GameManager.Ins.Window.FileIconSlots.Add_FileIcon(1, 3, WindowManager.FILETYPE.TYPE_NOVEL, "오싹오싹 밴드부", () => GameManager.Ins.Window.WindowButton.Button_VisualNovel());
+                //GameManager.Ins.Window.FileIconSlots.Add_FileIcon(3, 7, WindowManager.FILETYPE.TYPE_WESTERN, "THE LEGEND COWBOY", () => GameManager.Ins.Window.WindowButton.Button_Western());
+                //GameManager.Ins.Window.FileIconSlots.Add_FileIcon(2, 10, WindowManager.FILETYPE.TYPE_HORROR, "THE HOSPITAL", () => GameManager.Ins.Window.WindowButton.Button_Horror());
+
+                break;
         }
 
         // 게임 시작
         Cursor.lockState = CursorLockMode.None;
         GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game(gameStart));
     }
 
     public override void Update_Stage()

@@ -22,6 +22,7 @@ public class Panel_Tutorial : MonoBehaviour
             "도중 신체에 이상이 생기시거나 불편한 감정이 드신다면 게임을 중단하시고, 도우미에게 반드시 도움을 요청하세요.\n\n" +
             "[닫기]를 누르시면, 본격적으로 다운로드 일루전과의 모험이 시작됩니다.\n\n" +
             "{{PLAYER_NAME}} 님, 환영합니다.";
+        m_detail[1] = m_detail[1].Replace("{{PLAYER_NAME}}", GameManager.Ins.PlayerName);
 
         Button_Next();
     }
@@ -42,8 +43,11 @@ public class Panel_Tutorial : MonoBehaviour
         }
         else
         {
+            // 메세지 전송 (게임 사이트)
+            GameManager.Ins.Window.Message.Add_Message(GameManager.Ins.Load_JsonData<ChattingData>("4. Data/0. Window/Chatting/Chatting_GameSite"));
+
             // 게임 시작
-            // 이전까지 화면 앱 눌리지 않음
+            GameManager.Ins.IsGame = true;
 
             // 창 삭제
             GameManager.Ins.Resource.Destroy(gameObject);

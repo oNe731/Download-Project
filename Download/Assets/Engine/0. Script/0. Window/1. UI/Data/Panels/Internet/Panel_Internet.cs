@@ -102,6 +102,7 @@ public class Panel_Internet : Panel_Popup
         {
             case EVENT.EVENT_GAMESITE: // 창 기본 버튼 비활성화
                 m_inputPopupButton = false;
+                GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
                 break;
 
             case EVENT.EVENT_ERROR: // 에러창 생성

@@ -14,7 +14,7 @@ public class IconButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (m_owner == null)
+        if (m_owner == null || GameManager.Ins.IsGame == false || m_owner.IsClickState == false)
             return;
 
         m_owner.OnPointerClick();

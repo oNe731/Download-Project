@@ -20,7 +20,7 @@ public abstract class Panel_Popup : WindowData
     public bool Select => m_select;
     public int ActiveType => m_activeType;
     public IconSlot Slot { set => m_slot = value; }
-    public bool InputPopupButton { set => m_inputPopupButton = value; }
+    public bool InputPopupButton { get => m_inputPopupButton; set => m_inputPopupButton = value; }
     public bool IsButtonClick { get => m_isButtonClick; set => m_isButtonClick = value; }
 
     public Panel_Popup() : base()

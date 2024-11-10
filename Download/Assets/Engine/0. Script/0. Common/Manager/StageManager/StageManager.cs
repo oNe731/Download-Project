@@ -51,9 +51,9 @@ public abstract class StageManager
 
     protected abstract void Load_Scene();
 
-    protected virtual void In_Game()
+    protected virtual void In_Game(bool gameStart = true)
     {
-        GameManager.Ins.IsGame = true;
+        GameManager.Ins.IsGame = gameStart;
     }
 
     public virtual void Update_Stage()
