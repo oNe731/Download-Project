@@ -207,7 +207,7 @@ public class Panel_Folder : Panel_Popup
                 m_scrollRect.scrollSensitivity = 0f;
                 m_scrollRect.gameObject.transform.GetChild(1).gameObject.GetComponent<Scrollbar>().enabled = false;
 
-                GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_Zip");
+                GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_Zip", false);
                 GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
                 break;
         }

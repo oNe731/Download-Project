@@ -8,7 +8,8 @@ public class Mascot : MonoBehaviour
     [SerializeField] private TMP_Text m_dialogTxt;
     [SerializeField] private Animator m_animator;
 
-    private bool m_isUpdate = true;
+    private bool m_isUpdate = false;
+    private bool m_isfinishClose = false;
     private float m_time = 0;
     private GameObject m_balloon;
     private RectTransform m_rt = null;
@@ -19,9 +20,11 @@ public class Mascot : MonoBehaviour
     private Coroutine m_dialogTextCoroutine = null;
     private bool m_isTyping = false;
     private int m_dialogIndex = 0;
-    private float m_typeSpeed = 0.07f;
+    private float m_typeSpeed = 0.05f;
 
     private float m_waitTime = 2f;
+
+    public RectTransform Rt => m_rt;
 
     public void Initialize_Mascot()
     {
@@ -29,9 +32,10 @@ public class Mascot : MonoBehaviour
         m_rt = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
     }
 
-    public void Start_Dialog(string path)
+    public void Start_Dialog(string path, bool finishClose)
     {
         m_dialogs = GameManager.Ins.Load_JsonData<DialogData_Mascot>(path);
+        m_isfinishClose = finishClose;
 
         m_isUpdate = true;
         m_isTyping = false;
@@ -101,7 +105,8 @@ public class Mascot : MonoBehaviour
         }
         else // 다이얼로그 종료
         {
-            //gameObject.SetActive(false);
+            if(m_isfinishClose == true)
+                gameObject.SetActive(false);
         }
     }
 

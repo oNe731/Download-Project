@@ -70,7 +70,7 @@ namespace Western
             m_citizenText.Add("없던 수전증이라도 생겼냐옹?");
             m_citizenText.Add("두 눈 똑바로 뜨라옹");
             m_citizenText.Add("어이! 나 여기있다옹");
-            m_citizenText.Add("내 움직임을 얏본 대가다옹");
+            m_citizenText.Add("내 움직임을 얕본 대가다옹");
             m_citizenText.Add("흥, 별거없군");
             m_citizenText.Add("고양이 앞에서 한 눈을 팔다니");
             m_citizenText.Add("고양이 목숨이 몇개인지 알아?");
@@ -110,7 +110,6 @@ namespace Western
 
             // 다이얼로그 시작
             GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
-
             GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
         }
 

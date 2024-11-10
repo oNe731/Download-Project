@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     private Dictionary<string, Texture2D> m_cursorImage = new Dictionary<string, Texture2D>();
 
     private bool m_eventUpdate = false;
+
+    public bool IsFade => m_isFade;
     public bool EventUpdate { get => m_eventUpdate; set => m_eventUpdate = value; }
 
     private void Start()
