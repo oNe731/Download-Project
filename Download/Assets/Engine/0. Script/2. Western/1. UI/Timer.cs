@@ -23,7 +23,7 @@ namespace Western
         private void Awake()
         {
             // 1, 2, 3, 4, 5 .. 순서로 로드
-            m_numberSprite = GameManager.Ins.Resource.LoadAll<Sprite>("1. Graphic/2D/2. Western/UI/Play/Timer/");
+            m_numberSprite = GameManager.Ins.Resource.LoadAll<Sprite>("1. Graphic/2D/2. Western/UI/Play/Round1/Timer/");
             m_maxCount = m_numberSprite.Length;
                 
             m_currentImage = GetComponent<Image>();

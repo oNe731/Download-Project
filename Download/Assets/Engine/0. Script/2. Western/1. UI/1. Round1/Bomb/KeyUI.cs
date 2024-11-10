@@ -21,16 +21,16 @@ namespace Western
             switch (m_keyType)
             {
                 case KeyCode.Q:
-                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Bomb/Q");
+                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Round1/Bomb/Q");
                     break;
                 case KeyCode.W:
-                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Bomb/W");
+                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Round1/Bomb/W");
                     break;
                 case KeyCode.E:
-                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Bomb/E");
+                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Round1/Bomb/E");
                     break;
                 case KeyCode.R:
-                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Bomb/R");
+                    m_Image.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/2. Western/UI/Play/Round1/Bomb/R");
                     break;
             }
         }
