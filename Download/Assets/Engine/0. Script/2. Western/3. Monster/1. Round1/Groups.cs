@@ -12,7 +12,7 @@ namespace Western
         public Group[] Group => m_groups;
         public int CurrentIndex
         {
-            get => m_currentIndex;
+            get => m_currentIndex; set => m_currentIndex = value;
         }
 
         private void Start()
@@ -68,7 +68,9 @@ namespace Western
 
         public void Destroy_Timer()
         {
-            m_groups[m_currentIndex].Destroy_Timer();
+            Western_PlayLv1 level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>();
+            if (level != null)
+                level.Destroy_Timer();
         }
 
         public bool Check_ElementCriminal(int groupIndex, Person.ElementType element)

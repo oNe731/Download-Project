@@ -10,6 +10,7 @@ namespace Western
         protected GameObject m_stage = null;
         protected Groups m_groups = null;
         protected GameObject m_targetUI = null;
+        protected GameObject m_timer = null;
         protected CameraWalk m_camera = null;
         protected GameObject m_readyGoUI = null;
 
@@ -53,6 +54,12 @@ namespace Western
         {
             base.Initialize_Level(levelController);
 
+
+        }
+
+        public override void Enter_Level()
+        {
+            m_criminalText.Clear();
             m_criminalText.Add("캬옹!!!");
             m_criminalText.Add("으악!");
             m_criminalText.Add("크흑...숨길 수 있었는데");
@@ -64,6 +71,7 @@ namespace Western
             m_criminalText.Add("내 은신을 간파하다니...");
             m_criminalText.Add("당신은 전설의...!");
 
+            m_citizenText.Clear();
             m_citizenText.Add("후후후...");
             m_citizenText.Add("선량한 시민을 고르셨군");
             m_citizenText.Add("하하! 멍청한 녀석이다옹");
@@ -74,6 +82,22 @@ namespace Western
             m_citizenText.Add("흥, 별거없군");
             m_citizenText.Add("고양이 앞에서 한 눈을 팔다니");
             m_citizenText.Add("고양이 목숨이 몇개인지 알아?");
+
+            base.Enter_Level();
+            m_heartUI.Reset_Heart();
+
+            // 스테이지 생성
+            m_stage = GameManager.Ins.Western.Stage.transform.GetChild(1).gameObject;
+            m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
+            m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
+            m_operation.SetActive(true);
+
+            // 카메라 설정
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
+            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
+            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
+            camera.Change_Position(new Vector3(0f, 0.62f, m_groups.Start_Position(0).z));
+            camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
 
             // 폭탄 이벤트 추가
             m_eventIndex = new List<int>();
@@ -88,29 +112,31 @@ namespace Western
                 availableNumbers.RemoveAt(randomIndex);
             }
             m_eventIndex.Sort();
+
+            if (GameManager.Ins.Western.LevelController.Prelevel != (int)WesternManager.LEVELSTATE.LS_PlayLv1)
+            {
+                // 다이얼로그 시작
+                GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
+                GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
+            }
+            else
+            {
+                // 튜토리얼 제외 후 게임 시작
+                GameManager.Ins.IsGame = true;
+                GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Set_ReadyStart());
+                GameManager.Ins.Sound.Stop_AudioSourceBGM();
+            }
         }
 
-        public override void Enter_Level()
+        private void Set_ReadyStart()
         {
-            base.Enter_Level();
-            m_heartUI.Reset_Heart();
+            m_life = 5;
 
-            // 스테이지 생성
-            m_stage = GameManager.Ins.Western.Stage.transform.GetChild(1).gameObject;
-            m_groups = m_stage.transform.Find("Group").GetComponent<Groups>();
-            m_bar = m_stage.transform.GetChild(0).transform.GetChild(3).GetComponent<Bar>();
-            m_operation.SetActive(true);
+            m_isTutorial = true;
+            m_stateType = STATETYPE.TYPE_GAMESTART;
 
-            // 카메라 설정
-            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_3D);
-            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
-            CameraCutscene camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
-            camera.Change_Position(new Vector3(0f, 0.62f, m_groups.Start_Position().z));
-            camera.Change_Rotation(new Vector3(2.43f, 0f, 0f));
-
-            // 다이얼로그 시작
-            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Start_Dialog());
-            GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
+            GameManager.Ins.Resource.Destroy(m_groups.Group[0].gameObject);
+            m_groups.CurrentIndex = 0;
         }
 
         public override void Play_Level() // 튜토리얼 진행 후 Ready Go UI 출력 후 해당 함수 호출
@@ -378,6 +404,9 @@ namespace Western
             GameObject uiObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_SpeechBubble", GameObject.Find("Canvas").transform);
             uiObject.GetComponent<SpeechBubble>().PersonType = type;
             uiObject.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(position + new Vector3(0f, 0.5f, 0f));
+
+            //Debug.Log("타입:" + type + ", 사용 대사 인덱스: " + index + ", 개수: " + textlist.Count);
+
             uiObject.transform.GetChild(0).GetComponent<TMP_Text>().text = textlist[index];
             textlist.RemoveAt(index);
         }
@@ -415,6 +444,46 @@ namespace Western
         public void LayDown_Group(bool nextMove = false)
         {
             m_groups.LayDown_Group(nextMove);
+        }
+
+        public void Create_Timer(float timerSpeed)
+        {
+            Destroy_Timer();
+
+            m_timer = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Timer", Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
+            RectTransform timerTransform = m_timer.GetComponent<RectTransform>();
+            timerTransform.anchoredPosition = new Vector2(0f, 281f);
+
+            Timer timer = m_timer.GetComponent<Timer>();
+            timer.Start_Timer(timerSpeed);
+        }
+
+        public void Destroy_Timer()
+        {
+            if (m_timer != null)
+                GameManager.Ins.Resource.Destroy(m_timer);
+        }
+
+        public void Restart_Game()
+        {
+            // 게임 재시작
+            GameManager.Ins.Western.LevelController.Change_Level((int)WesternManager.LEVELSTATE.LS_PlayLv1, true);
+        }
+
+        public void Over_Game()
+        {
+            // 이전 요소 삭제
+            GameManager.Ins.IsGame = false;
+
+            GameManager.Ins.UI.EventUpdate = true;
+            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/Panel_Fail", GameObject.Find("Canvas").transform), 0f, false);
+        }
+
+        public void Destroy_Element()
+        {
+            Destroy_Timer();
+            if (m_targetUI != null)
+                GameManager.Ins.Resource.Destroy(m_targetUI);
         }
     }
 }

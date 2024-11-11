@@ -98,10 +98,4 @@ public class WesternManager : StageManager
     {
         base.Exit_Stage();
     }
-
-
-    public void Over_Game()
-    {
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/Panel_Fail", GameObject.Find("Canvas").transform), 0f, true);
-    }
 }

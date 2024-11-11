@@ -29,17 +29,9 @@ public class Western_Round1 : Level
     public override void Enter_Level()
     {
         WesternManager WM = GameManager.Ins.Western;
-        if(WM.Stage == null)
-        {
-            WM.Stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/1Stage");
-            WM.Stage.name = "1Stage";
-        }
-        if(WM.Stage.name != "1Stage")
-        {
-            GameManager.Ins.Resource.Destroy(WM.Stage);
-            WM.Stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/1Stage");
-            WM.Stage.name = "1Stage";
-        }
+        GameManager.Ins.Resource.Destroy(WM.Stage);
+        WM.Stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/1Stage");
+        WM.Stage.name = "1Stage";
 
         m_dialogPlay  = WM.Stage.transform.GetChild(0).GetChild(2).gameObject.GetComponent<Dialog_PlayWT>();
         m_MainPanel   = WM.Stage.transform.GetChild(0).GetChild(1).gameObject;

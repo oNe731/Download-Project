@@ -47,7 +47,9 @@ namespace Western
                         }
                         else
                         {
-                            GameManager.Ins.Western.Over_Game();
+                            Western_PlayLv1 level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>();
+                            if (level != null)
+                                level.Over_Game();
                         }
 
                         m_update = false;

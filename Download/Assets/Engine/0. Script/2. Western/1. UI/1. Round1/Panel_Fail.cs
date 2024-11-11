@@ -30,10 +30,17 @@ namespace Western
             m_texts[5] = "영웅이 지는 책임의 무게는 가볍지 않다고.";
             m_texts[6] = "정신 똑바로 차려.";
 
-            GameManager.Ins.UI.Start_FadeIn(0f, Color.black);
-            GameManager.Ins.IsGame = false;
             m_currentTextIndex = 0;
             m_dialogText.text = "";
+
+            Western_PlayLv1 level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>();
+            if (level != null)
+                level.Destroy_Element();
+
+            GameManager.Ins.UI.EventUpdate = true;
+            GameManager.Ins.UI.Start_FadeIn(0f, Color.black);
+
+            GameManager.Ins.Sound.Stop_AudioSourceBGM();
             StartCoroutine(Start_Sequence());
         }
 

@@ -171,7 +171,7 @@ namespace Western
             if (groupTr == null)
                 return;
 
-            GameObject Bomb = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/Bomb", Vector3.zero, Quaternion.identity);
+            GameObject Bomb = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/Common/Bomb", Vector3.zero, Quaternion.identity, GameManager.Ins.Western.Stage.transform);
             int dir = Random.Range(0, 2); // 0, 1
             if (dir == 0) // ¿ÞÂÊ¿¡ »ý¼º
                 Bomb.transform.localPosition = groupTr.position + new Vector3(-3f, 0.8f, -0.1f);

@@ -8,7 +8,6 @@ namespace Western
     {
         [SerializeField] private GameObject[] m_person;
         private Groups m_groups = null;
-        private GameObject m_timer = null;
 
         private int m_groupIndex;
         private int m_criminalIndex;
@@ -52,10 +51,6 @@ namespace Western
             }
         }
 
-        private void Update()
-        {
-        }
-
         public void WakeUp_Group(bool useEvent, bool isCount, float timerSpeed)
         {
             StartCoroutine(WakeUp(useEvent, isCount, timerSpeed));
@@ -93,9 +88,15 @@ namespace Western
                             Use_Event();
 
                         if (isCount) // 카운트 시작
-                            Start_Count(timerSpeed);
+                        {
+                            Western_PlayLv1 level = GameManager.Ins.Western.LevelController.Get_CurrentLevel<Western_PlayLv1>();
+                            if (level != null)
+                                level.Create_Timer(timerSpeed);
+                        }
                         else
+                        {
                             GameManager.Ins.Western.IsShoot = true;
+                        }
                     }
 
                     m_grouptransform.rotation = Quaternion.Slerp(m_grouptransform.rotation, m_wakeUpQuaternion, m_wakeUpRotationSpeed * Time.deltaTime);
@@ -144,18 +145,6 @@ namespace Western
             yield break;
         }
 
-        private void Start_Count(float timerSpeed)
-        {
-            Destroy_Timer();
-
-            m_timer = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_Timer", Vector3.zero, Quaternion.identity, GameObject.Find("Canvas").transform);
-            RectTransform timerTransform = m_timer.GetComponent<RectTransform>();
-            timerTransform.anchoredPosition = new Vector2(0f, 281f);
-
-            Timer timer = m_timer.GetComponent<Timer>();
-            timer.Start_Timer(timerSpeed);
-        }
-
         public GameObject Get_Criminal()
         {
             return m_person[m_criminalIndex];
@@ -175,12 +164,6 @@ namespace Western
             }
 
             return null;
-        }
-
-        public void Destroy_Timer()
-        {
-            if (m_timer != null)
-                Destroy(m_timer);
         }
 
         private void Use_Event()
@@ -212,7 +195,7 @@ namespace Western
             GameObject secondBomb = null;
             if(createCount == 2)
             {
-                secondBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
+                secondBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity, GameManager.Ins.Western.Stage.transform);
                 secondBomb.SetActive(false); 
             }
 
@@ -222,7 +205,7 @@ namespace Western
                 {
                     if (count == 0) // 첫 번째 생성
                     {
-                        GameObject firstBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity);
+                        GameObject firstBomb = GameManager.Ins.Resource.Create(bombPrefab, Vector3.zero, Quaternion.identity, GameManager.Ins.Western.Stage.transform);
                         if (dir == 0) // 왼쪽에 생성
                             firstBomb.transform.localPosition = leftSpawnPosition;
                         else if (dir == 1) // 오른쪽에 생성
