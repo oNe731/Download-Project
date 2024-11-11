@@ -1,0 +1,90 @@
+[
+  {
+    "dialogEvent": 2, // 이동 대기
+
+    "dialogText": "",
+    "animationTriger": "Vn13", // 등장
+
+    "setPosition": true, // 시작 위치 설정
+    "startPosition": [ 0, -600 ],
+    "movePosition": true, // 이동 위치 설정
+    "targetPosition": [ 0, 0 ]
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "이런, 너무 어려웠나?",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "다시 기회를 줄게!",
+    "animationTriger": "Vn14", // 박수
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "이번엔 꼭 성공해봐.",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "즐길 준비 됐지?",
+    "animationTriger": "Vn5", // 손가락
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 다시 감기 연출 다음 대사 재생
+    "dialogEvent": 9,
+
+    "dialogText": "그럼...",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "다시 시작하는 거야",
+    "animationTriger": "Vn16", // 재시작
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 완료 시 배경 블랙 삭제 및 재시작 
+    "dialogEvent": 10,
+
+    "dialogText": "",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  }
+]

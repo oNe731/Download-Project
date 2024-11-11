@@ -34,6 +34,8 @@ namespace VisualNovel
         private GameObject m_itemText = null;
         private Coroutine m_ItemTextCoroutine = null;
 
+        private PanelFail m_failPanel = null;
+
         public GameObject Stage { get => m_stage; }
         public HallwayExit Exit { get => m_exit; }
         public HallwayPlayer Player { get => m_player; }
@@ -41,6 +43,8 @@ namespace VisualNovel
         public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
         public List<HallwayLight> Light { get => m_Light; set => m_Light = value; }
         public GameObject ItemText => m_itemText;
+
+        public PanelFail FailPanel => m_failPanel;
 
         public override void Initialize_Level(LevelController levelController)
         {
@@ -223,10 +227,7 @@ namespace VisualNovel
         {
             Animator handAnimator = null;
             CameraCutscene camera = null;
-            GameObject redPanel = null;
 
-            //float time = 0f;
-            //bool fadeOut = false;
 
             // 게임 실패 : 얀데레한테 잡힐 시 컷씬 진행 후 복도 시작부터 다시 시작 (재도전 UI 출력)
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
@@ -238,33 +239,22 @@ namespace VisualNovel
             handObject.transform.localPosition = new Vector3(0f, -0.01f, 9.05f);
             handAnimator = handObject.transform.GetChild(0).GetComponent<Animator>();
 
-            while (true)//fadeOut == false)
+            while (true)
             {
-                if(GameManager.Ins.IsGame == false)
-                    yield return null;
-
-                //if (redPanel == null)
-                //{
+                if(GameManager.Ins.IsGame == true)
+                {
                     if (camera != null && Camera.main.fieldOfView <= 25f && handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && !handAnimator.IsInTransition(0))
                     {
                         m_yandere.GetComponent<AudioSource>().enabled = false;
-                        redPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Fail", GameObject.Find("Canvas").transform);
-                        redPanel.GetComponent<PanelFail>().Start_PanelFail(handObject);
+                        GameObject obj = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Fail", GameObject.Find("Canvas").transform);
+                        m_failPanel = obj.GetComponent<PanelFail>();
+                        m_failPanel.Start_PanelFail(handObject);
                         break;
                     }
-                //}
-                //else
-                //{
-                    //time += Time.deltaTime;
-                    //if (fadeOut == false && time > 1f)
-                    //{
-                    //    fadeOut = true;
-                    //    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
-                    //}
-                //}
+                }
+
                 yield return null;
             }
-
             yield break;
         }
 

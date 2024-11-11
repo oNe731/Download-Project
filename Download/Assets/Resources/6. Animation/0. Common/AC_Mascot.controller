@@ -316,6 +316,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-7091028972683694815
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Vn16
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -6002847356650331117}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8469388
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &-6965785374460085181
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -426,7 +451,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Mascot|VisualNovel_16_ReStart
+  m_Name: Vn16
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1157,10 +1182,11 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Mascot|VisualNovel_14_GameOver01_Clap
+  m_Name: Vn14
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: 7443184445189301838}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1677,34 +1703,34 @@ AnimatorStateMachine:
     m_Position: {x: -1670, y: 400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6042236944530621188}
-    m_Position: {x: -360, y: 310, z: 0}
+    m_Position: {x: -460, y: 680, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8606300934882869535}
-    m_Position: {x: -3550, y: 1030, z: 0}
+    m_Position: {x: -300, y: 810, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2741057489200729654}
-    m_Position: {x: -3550, y: 1120, z: 0}
+    m_Position: {x: -300, y: 900, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1119555296744936631}
-    m_Position: {x: -3550, y: 1220, z: 0}
+    m_Position: {x: -300, y: 1000, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6002847356650331117}
-    m_Position: {x: -3550, y: 1320, z: 0}
+    m_Position: {x: -300, y: 1100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4625813545619555909}
-    m_Position: {x: -3230, y: 1020, z: 0}
+    m_Position: {x: -40, y: 950, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7607270184407601611}
-    m_Position: {x: -3230, y: 1110, z: 0}
+    m_Position: {x: -40, y: 1040, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4850054678010615568}
-    m_Position: {x: -3230, y: 1210, z: 0}
+    m_Position: {x: -40, y: 1140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1751168957468243119}
-    m_Position: {x: -2900, y: 1020, z: 0}
+    m_Position: {x: 210, y: 1080, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8856103849256763378}
-    m_Position: {x: -2900, y: 1110, z: 0}
+    m_Position: {x: 210, y: 1170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5152658130733850225}
     m_Position: {x: 2230, y: -520, z: 0}
@@ -1751,6 +1777,7 @@ AnimatorStateMachine:
   m_AnyStateTransitions:
   - {fileID: -7395416770951732158}
   - {fileID: -4050709378848364277}
+  - {fileID: 6452200159238414715}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
@@ -2218,6 +2245,30 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: Vn13
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Vn14
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Vn5
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Vn16
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -2366,10 +2417,11 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Mascot|VisualNovel_05_FingerSnap
+  m_Name: Vn5
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: -7091028972683694815}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -3060,6 +3112,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &4365989547420871752
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Vn14
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -2741057489200729654}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8913044
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &4445357003407075972
 AnimatorState:
   serializedVersion: 6
@@ -3502,6 +3579,31 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1101 &6452200159238414715
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Vn13
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 8606300934882869535}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &6583805476186055424
 AnimatorState:
   serializedVersion: 6
@@ -3658,6 +3760,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &7443184445189301838
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Vn5
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1119555296744936631}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.8913044
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &7485061970971730358
 AnimatorState:
   serializedVersion: 6
@@ -3975,10 +4102,11 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature_Mascot|VisualNovel_13_GameOver01_Appear
+  m_Name: Vn13
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions: []
+  m_Transitions:
+  - {fileID: 4365989547420871752}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0

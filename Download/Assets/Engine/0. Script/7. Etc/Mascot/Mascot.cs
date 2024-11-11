@@ -24,6 +24,7 @@ public class Mascot : MonoBehaviour
 
     private float m_waitTime = 2f;
 
+    public bool IsUpdate { get => m_isUpdate; set => m_isUpdate = value; }
     public RectTransform Rt => m_rt;
 
     public void Initialize_Mascot()
@@ -104,6 +105,32 @@ public class Mascot : MonoBehaviour
 
                 case DialogData_Mascot.DIALOGTYPE.DET_NOVELEXIT:
                     Update_NovelExit();
+                    break;
+
+                case DialogData_Mascot.DIALOGTYPE.DET_NOVELRETURN:
+                    m_isUpdate = false;
+                    // 기본 다이얼로그 업데이트 
+                    Update_None();
+                    // 다시 감기 연출 재생
+                    VisualNovel.Novel_Day3Chase level = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<VisualNovel.Novel_Day3Chase>();
+                    if(level != null)
+                    {
+                        if(level.FailPanel != null)
+                            level.FailPanel.Panel_Return();
+                    }
+                    break;
+
+                case DialogData_Mascot.DIALOGTYPE.DET_NOVELRESTART:
+                    // 재시작
+                    VisualNovel.Novel_Day3Chase levels = GameManager.Ins.Novel.LevelController.Get_CurrentLevel<VisualNovel.Novel_Day3Chase>();
+                    if (levels != null)
+                    {
+                        if (levels.FailPanel != null)
+                            levels.FailPanel.Button_Yes();
+                    }
+
+                    // 다이얼로그 종료
+                    gameObject.SetActive(false);
                     break;
             }
         }
