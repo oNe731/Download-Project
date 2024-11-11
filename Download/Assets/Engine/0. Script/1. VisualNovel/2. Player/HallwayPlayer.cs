@@ -26,7 +26,11 @@ namespace VisualNovel
         public void Update()
         {
             if (GameManager.Ins.IsGame == false)
+            {
+                if(m_rigidbody.isKinematic == false)
+                    m_rigidbody.velocity = Vector3.zero;
                 return;
+            }
 
             if (!m_isLock)
                 Input_Player();

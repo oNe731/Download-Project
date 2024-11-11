@@ -9,6 +9,7 @@ public abstract class StageManager
     protected STAGE  m_stageLevel = STAGE.LEVEL_END;
     protected string m_sceneName;
     protected bool   m_isVisit = false;
+    protected bool   m_isClear = false;
 
     protected LevelController m_levelController = null;
 
@@ -16,7 +17,7 @@ public abstract class StageManager
     public STAGE StageLevel => m_stageLevel;
     public string SceneName => m_sceneName;
     public LevelController LevelController => m_levelController;
-
+    public bool IsClear { get => m_isClear; set => m_isClear = value; }
 
     public StageManager()
     {

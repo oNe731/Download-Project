@@ -1,0 +1,46 @@
+[
+  {
+    "dialogEvent": 2, // 이동 대기
+
+    "dialogText": "",
+    "animationTriger": "Vn12",
+
+    "setPosition": true, // 시작 위치 설정
+    "startPosition": [ 0, -600 ],
+    "movePosition": true, // 이동 위치 설정
+    "targetPosition": [ 0, 0 ]
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "축하해! 열쇠를 진짜 다 모았네!",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  { // 비상구 활성화
+    "dialogEvent": 8,
+
+    "dialogText": "지도좀 봐, 비상구가 생겼어!",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  },
+  {
+    "dialogEvent": 0,
+
+    "dialogText": "드디어 나갈 수 있어!",
+    "animationTriger": "",
+
+    "setPosition": false,
+    "startPosition": null,
+    "movePosition": false,
+    "targetPosition": null
+  }
+]

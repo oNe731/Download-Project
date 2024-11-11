@@ -101,6 +101,10 @@ public class Mascot : MonoBehaviour
                 case DialogData_Mascot.DIALOGTYPE.DET_CLICKNOVEL:
                     Update_ClickNovel();
                     break;
+
+                case DialogData_Mascot.DIALOGTYPE.DET_NOVELEXIT:
+                    Update_NovelExit();
+                    break;
             }
         }
         else // 다이얼로그 종료
@@ -204,6 +208,19 @@ public class Mascot : MonoBehaviour
 
         // 미연시 클릭 가능
         GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(WindowManager.FILETYPE.TYPE_NOVEL, true);
+    }
+
+    private void Update_NovelExit()
+    {
+        VisualNovel.Novel_Day3Chase level =GameManager.Ins.Novel.LevelController.Get_CurrentLevel<VisualNovel.Novel_Day3Chase>();
+        if (level == null)
+            return;
+
+        // 비상구 활성화
+        level.Exit.gameObject.SetActive(true);
+
+        // 다이얼로그 업데이트
+        Update_None();
     }
 
     IEnumerator Wait_Anim(string trigerName)

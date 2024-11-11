@@ -14,6 +14,7 @@ namespace VisualNovel
 
         private GameObject m_stage;
         private Image m_key;
+        private HallwayExit m_exit;
 
         private GameObject m_playerBodyObj;
         private GameObject m_yandereObj;
@@ -34,6 +35,7 @@ namespace VisualNovel
         private Coroutine m_ItemTextCoroutine = null;
 
         public GameObject Stage { get => m_stage; }
+        public HallwayExit Exit { get => m_exit; }
         public HallwayPlayer Player { get => m_player; }
         public HallwayYandere Yandere { get => m_yandere; }
         public Animator YandereAnimator { get => m_yandereObj.GetComponentInChildren<Animator>(); }
@@ -57,6 +59,8 @@ namespace VisualNovel
                 m_stage = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/Map/Chase");
                 m_player = m_stage.transform.GetChild(2).GetChild(1).GetComponent<HallwayPlayer>();
                 m_key = m_stage.transform.GetChild(1).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>();
+                m_exit = m_stage.transform.GetChild(2).GetChild(2).GetComponent<HallwayExit>();
+                m_exit.Set_HallwayExit(m_player);
 
                 // 플레이어 바디 생성
                 m_playerBodyObj = GameManager.Ins.Resource.LoadCreate("1. Graphic/3D/1. VisualNovel/Character/Mesh/Player/Mesh_VisualNovel_Player_Chair");
@@ -111,6 +115,8 @@ namespace VisualNovel
             m_key.fillAmount = 0f;
             if (m_itemText != null)
                 m_itemText.SetActive(false);
+
+            m_exit.gameObject.SetActive(false);
 
             // 조명
             for (int i = 0; i < m_Light.Count; ++i)
@@ -169,25 +175,38 @@ namespace VisualNovel
         {
         }
 
-        private void Clear_ChaseGame() // 비상구에 충돌 시 호출
+        private void Clear_ChaseGame()
         {
-            // 게임 클리어 : CD 5개 다 모을 시 컷씬 진행 후 전환
-            GameManager.Ins.StartCoroutine(Clear_Game());
+            GameManager.Ins.StartCoroutine(Wait_StartDialog());
         }
 
-        private IEnumerator Clear_Game()
+        private IEnumerator Wait_StartDialog()
         {
-            ////* 임시
-            GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/Panel_Clear", GameObject.Find("Canvas").transform);
-            float time = 0f;
-            while (time < 1f)
+            float time = 0;
+            while(time > 1.5f)
             {
                 time += Time.deltaTime;
                 yield return null;
             }
 
-            GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-            GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
+            // 마스코트 다이얼로그 재생
+            GameManager.Ins.IsGame = false;
+            GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/VisualNovel/Mascot_ChaseClear", true);
+            GameManager.Ins.StartCoroutine(Wait_DialogGame());
+            yield break;
+        }
+
+        private IEnumerator Wait_DialogGame()
+        {
+            while (true)
+            {
+                if (GameManager.Ins.Mascot.gameObject.activeSelf == false)
+                    break;
+
+                yield return null;
+            }
+
+            GameManager.Ins.IsGame = true;
             yield break;
         }
 
@@ -360,30 +379,37 @@ namespace VisualNovel
             m_CdCurrentCount++;
             m_key.fillAmount = (float)m_CdCurrentCount / m_CdMaxCount;
 
-            Update_Light();
-
-            // 대사 출력
-            if (m_itemText == null)
+            if(m_CdCurrentCount < m_CdMaxCount)
             {
-                m_itemText = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/UI_ItemText", m_stage.transform.GetChild(1));
-                m_itemText.SetActive(false);
+                Update_Light();
+
+                // 대사 출력
+                if (m_itemText == null)
+                {
+                    m_itemText = GameManager.Ins.Resource.LoadCreate("5. Prefab/1. VisualNovel/UI/UI_ItemText", m_stage.transform.GetChild(1));
+                    m_itemText.SetActive(false);
+                }
+
+                switch (m_CdCurrentCount)
+                {
+                    case 1:
+                        // 속도 감소 및 컷씬 재생
+                        m_player.MoveSpeed = 200f;
+                        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Appear_Monster(), 1f, false);
+                        break;
+
+                    case 2:
+                        Change_Text("나에게서 멀어지려하지마...");
+                        break;
+
+                    case 3:
+                        Change_Text("이제 그만 돌아와요!");
+                        break;
+                }
             }
-
-            switch (m_CdCurrentCount)
+            else // 탈출조건 성립
             {
-                case 1:
-                    // 속도 감소 및 컷씬 재생
-                    m_player.MoveSpeed = 200f;
-                    GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => Appear_Monster(), 1f, false);
-                    break;
-
-                case 2:
-                    Change_Text("나에게서 멀어지려하지마...");
-                    break;
-
-                case 3:
-                    Change_Text("이제 그만 돌아와요!");
-                    break;
+                Clear_ChaseGame();
             }
         }
 
