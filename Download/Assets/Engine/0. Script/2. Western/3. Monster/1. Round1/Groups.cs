@@ -55,9 +55,9 @@ namespace Western
             return new Vector3(nextPosition.x, nextPosition.y, nextPosition.z - 1.83f);
         }
 
-        public Vector3 Start_Position()
+        public Vector3 Start_Position(int startIndex = 0)
         {
-            Vector3 currentPosition = m_groups[0].gameObject.transform.position;
+            Vector3 currentPosition = m_groups[startIndex].gameObject.transform.position;
             return new Vector3(currentPosition.x, currentPosition.y, currentPosition.z - 1.83f);
         }
 

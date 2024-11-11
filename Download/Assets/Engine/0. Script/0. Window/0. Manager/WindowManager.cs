@@ -191,13 +191,24 @@ public class WindowManager : StageManager
                 else // 옵션창으로 돌아왔을 경우
                 {
                     GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(true);
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_WESTERN, false);
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_HORROR, false);
                 }
                 break;
 
             case (int)STAGE.LEVEL_WESTERN:
-                break;
-
-            case (int)STAGE.LEVEL_HORROR:
+                // 클리어시 연출 재생
+                if (GameManager.Ins.Western.IsClear == true)
+                {
+                    //gameStart = false;
+                    //GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
+                    //GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_NovelClear", false);
+                }
+                else // 옵션창으로 돌아왔을 경우
+                {
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(true);
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_HORROR, false);
+                }
                 break;
 
             default:
@@ -238,11 +249,6 @@ public class WindowManager : StageManager
                 gameStart = false;
                 Transform canvas = GameObject.Find("Canvas").transform;
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Tutorial/Panel_Tutorial", canvas.GetChild(3));
-
-                GameManager.Ins.Window.FileIconSlots.Add_FileIcon(1, 3, WindowManager.FILETYPE.TYPE_NOVEL, "오싹오싹 밴드부", () => GameManager.Ins.Window.WindowButton.Button_VisualNovel());
-                GameManager.Ins.Window.FileIconSlots.Add_FileIcon(3, 7, WindowManager.FILETYPE.TYPE_WESTERN, "THE LEGEND COWBOY", () => GameManager.Ins.Window.WindowButton.Button_Western());
-                GameManager.Ins.Window.FileIconSlots.Add_FileIcon(2, 10, WindowManager.FILETYPE.TYPE_HORROR, "THE HOSPITAL", () => GameManager.Ins.Window.WindowButton.Button_Horror());
-
                 break;
         }
 
@@ -259,6 +265,8 @@ public class WindowManager : StageManager
 
         //if (Input.GetKeyDown(KeyCode.R))
         //{
+        //    GameManager.Ins.IsGame = false;
+        //    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
         //    GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_NovelClear", false);
         //}
     }

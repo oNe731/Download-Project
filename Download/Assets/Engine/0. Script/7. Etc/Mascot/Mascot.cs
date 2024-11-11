@@ -196,6 +196,7 @@ public class Mascot : MonoBehaviour
                 case DialogData_Mascot.DIALOGTYPE.DET_CLICKWESTERN:
                     Update_None();
                     // 서부 클릭 가능
+                    GameManager.Ins.IsGame = true;
                     GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(WindowManager.FILETYPE.TYPE_WESTERN, true);
                     break;
             }

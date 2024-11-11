@@ -194,7 +194,7 @@ namespace VisualNovel
             }
 
             // 마스코트 다이얼로그 재생
-            GameManager.Ins.IsGame = false;
+            GameManager.Ins.Novel.Set_Pause(true, false);
             GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/VisualNovel/Mascot_ChaseClear", true);
             GameManager.Ins.StartCoroutine(Wait_DialogGame());
             yield break;
@@ -210,7 +210,7 @@ namespace VisualNovel
                 yield return null;
             }
 
-            GameManager.Ins.IsGame = true;
+            GameManager.Ins.Novel.Set_Pause(false, false);
             yield break;
         }
 
