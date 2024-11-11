@@ -102,22 +102,6 @@ public class WesternManager : StageManager
 
     public void Over_Game()
     {
-        GameManager.Ins.StartCoroutine(Clear_Game());
-    }
-
-    private IEnumerator Clear_Game()
-    {
-        ////* 임시
-        GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/Panel_Fail", GameObject.Find("Canvas").transform);
-        float time = 0f;
-        while (time < 1f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_END);
-        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW), 1f, false);
-        yield break;
+        GameManager.Ins.UI.Start_FadeOut(1f, Color.black, () => GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/Panel_Fail", GameObject.Find("Canvas").transform), 0f, true);
     }
 }

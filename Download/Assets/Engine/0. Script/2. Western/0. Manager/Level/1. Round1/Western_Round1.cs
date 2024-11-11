@@ -43,7 +43,7 @@ public class Western_Round1 : Level
 
         m_dialogPlay  = WM.Stage.transform.GetChild(0).GetChild(2).gameObject.GetComponent<Dialog_PlayWT>();
         m_MainPanel   = WM.Stage.transform.GetChild(0).GetChild(1).gameObject;
-        m_playButton  = WM.Stage.transform.GetChild(0).GetChild(1).GetChild(6).gameObject;
+        m_playButton  = WM.Stage.transform.GetChild(0).GetChild(1).GetChild(2).gameObject;
         m_heartUI     = WM.Stage.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<HeartUI>();
         m_statusBarUI = WM.Stage.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<StatusBarUI>();
         m_gun         = WM.Stage.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Gun>();
