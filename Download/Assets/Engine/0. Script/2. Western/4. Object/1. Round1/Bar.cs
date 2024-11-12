@@ -67,7 +67,8 @@ public class Bar : MonoBehaviour
                 m_peoples.Dance_Peoples();
 
                 // 하늘에서 꽃가루 파티클이 떨어진다.
-                GameObject particle = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Particle_Flower");
+                WesternManager WM = GameManager.Ins.Western;
+                GameObject particle = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Particle_Flower", WM.Stage.transform);
                 particle.transform.position = new Vector3(0f, 1.471f, 19.72f);
                 particle.transform.rotation = Quaternion.Euler(new Vector3(68.88f, - 90f, -90f));
 

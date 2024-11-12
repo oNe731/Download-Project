@@ -200,6 +200,8 @@ public class WindowManager : StageManager
                 // 클리어시 연출 재생
                 if (GameManager.Ins.Western.IsClear == true)
                 {
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_HORROR, true);
+
                     //gameStart = false;
                     //GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
                     //GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_NovelClear", false);
