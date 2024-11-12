@@ -38,7 +38,7 @@ public class ObjPc : MonoBehaviour
 
                     GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_CUTSCENE);
                     m_camera = (CameraCutscene)GameManager.Ins.Camera.Get_CurCamera();
-                    m_camera.Start_Position(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.3f), 1f);
+                    m_camera.Start_Position(new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.3f), 0.5f);
                     m_camera.Start_FOV(30f, 10f);
 
                     m_state = State.ST_WAIT;

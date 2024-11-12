@@ -75,7 +75,7 @@ public class WesternManager : StageManager
         GameManager.Ins.UI.EventUpdate = true;
         GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => In_Game());
 
-        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_MainBGM", true, 1f);
+        GameManager.Ins.Sound.Play_AudioSourceBGM("Western_StartBGM", true, 1f);
     }
 
     public override void Update_Stage()

@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour
 
         #region 서부 게임 사운드
         #region BGM
+        m_bgm.Add("Western_StartBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Western_1_BGM_Start"));
         m_bgm.Add("Western_MainBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Main"));
         m_bgm.Add("Western_WantedBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Wanted"));
         m_bgm.Add("Western_Play1BGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/BGM/Play1"));

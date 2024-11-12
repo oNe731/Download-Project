@@ -39,10 +39,10 @@ namespace Western
             m_player.Set_Lock(true);
 
             m_playerPortrait = stage.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<PlayerPortrait>();
-            m_gun            = stage.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Gun>();
-            m_playerDialog   = stage.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<PlayerDialog>();
-            m_PlayerMemo     = stage.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<PlayerMemo>();
-            m_playerStatus   = stage.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<PlayerStatusBar>();
+            m_gun = stage.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Gun>();
+            m_playerDialog = stage.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<PlayerDialog>();
+            m_PlayerMemo = stage.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<PlayerMemo>();
+            m_playerStatus = stage.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<PlayerStatusBar>();
 
             // 카메라 설정
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_FOLLOW);
@@ -51,9 +51,10 @@ namespace Western
 
             GameManager.Ins.Western.IsShoot = false;
             Cursor.lockState = CursorLockMode.None;
-            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => GameManager.Ins.StartCoroutine(Update_ReadyGo()));}
+            GameManager.Ins.UI.Start_FadeIn(1f, Color.black, () => Play_Level());
+        }
 
-        public override void Play_Level() // 튜토리얼 진행 후 Ready Go UI 출력 후 해당 함수 호출
+        public override void Play_Level() // 바로 시작
         {
             // 플레이어 조작 가능
             m_player.Set_Lock(false);
@@ -79,38 +80,6 @@ namespace Western
 
         public override void Exit_Level()
         {
-        }
-
-        protected IEnumerator Update_ReadyGo()
-        {
-            m_uiIndex = 0;
-            m_readyGoUI = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/UI_ReadyGo", GameObject.Find("Canvas").transform);
-            Animator animator = m_readyGoUI.GetComponent<Animator>();
-
-            while (m_uiIndex < 2)
-            {
-                if (m_uiIndex == 0 && animator.GetCurrentAnimatorStateInfo(0).IsName("AM_Ready") == true)
-                {
-                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)  // 애니메이션 종료일 시
-                    {
-                        m_readyGoUI.GetComponent<Animator>().SetBool("IsReadyGo", true);
-                        m_uiIndex++;
-                    }
-                }
-                else if (m_uiIndex == 1 && animator.GetCurrentAnimatorStateInfo(0).IsName("AM_Go") == true)
-                {
-                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)  // 애니메이션 종료일 시
-                    {
-                        GameManager.Ins.Resource.Destroy(m_readyGoUI);
-                        Play_Level();
-                        m_uiIndex++;
-                    }
-                }
-
-                yield return null;
-            }
-
-            yield break;
         }
     }
 }
