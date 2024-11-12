@@ -18,6 +18,9 @@ namespace VisualNovel
             DT_CUTSCENE,  // ÄÆ¾À ¹× Ä«¸Þ¶ó/ ½¦ÀÌÅ·
         }
 
+        public string bgm;
+        public string effect;
+
         public DIALOG_TYPE dialogType;
 
         [JsonConverter(typeof(DialogSubDataConverter))]

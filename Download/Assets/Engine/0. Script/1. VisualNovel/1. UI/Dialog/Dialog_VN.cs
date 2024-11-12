@@ -52,6 +52,9 @@ namespace VisualNovel
         private int m_eventBeforeIndex = -1;
         private Coroutine m_eventCoroutines = null;
 
+        // »ç¿îµå
+        private string m_bgmIndex = "0";
+
         private bool m_cutScene = false;
         public bool CutScene { set => m_cutScene = value; }
 
@@ -98,6 +101,20 @@ namespace VisualNovel
             {
                 if (m_dialogIndex < m_dialogs.Count)
                 {
+                    if(m_dialogs[m_dialogIndex].bgm != "")
+                    {
+                        if (m_bgmIndex != m_dialogs[m_dialogIndex].bgm)
+                        {
+                            m_bgmIndex = m_dialogs[m_dialogIndex].bgm;
+                            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_" + m_dialogs[m_dialogIndex].bgm, true, 1f);
+                        }
+                        else
+                        {
+                            m_bgmIndex = "0";
+                            GameManager.Ins.Sound.Stop_AudioSourceBGM();
+                        }
+                    }
+
                     switch (m_dialogs[m_dialogIndex].dialogType)
                     {
                         case DialogData_VN.DIALOG_TYPE.DT_FADE:
@@ -1212,8 +1229,11 @@ namespace VisualNovel
             for (int i = 0; i < sheetList.Count; ++i)
             {
                 DialogData_VN data = new DialogData_VN();
-                data.dialogType = (DialogData_VN.DIALOG_TYPE)sheetList[i].dialogType;
 
+                data.bgm = sheetList[i].bgm;
+                data.effect = sheetList[i].effect;
+
+                data.dialogType = (DialogData_VN.DIALOG_TYPE)sheetList[i].dialogType;
                 switch (data.dialogType)
                 {
                     case DialogData_VN.DIALOG_TYPE.DT_FADE:

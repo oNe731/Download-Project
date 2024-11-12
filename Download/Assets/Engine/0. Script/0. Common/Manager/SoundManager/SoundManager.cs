@@ -55,6 +55,14 @@ public class SoundManager : MonoBehaviour
         m_bgm.Add("VisualNovel_CellarBGM",        GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Cellar"));
         m_bgm.Add("VisualNovel_YandereAppearBGM", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/YandereAppear"));
         m_bgm.Add("VisualNovel_ChaseBGM",         GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Chase"));
+
+        m_bgm.Add("VisualNovel_1", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_01_BGM_Basic"));
+        m_bgm.Add("VisualNovel_2", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_02_BGM_Calm"));
+        m_bgm.Add("VisualNovel_3", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_03_BGM_Tension"));
+        m_bgm.Add("VisualNovel_4", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_04_BGM_Weird"));
+        m_bgm.Add("VisualNovel_5", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_05_BGM_Happy_Rain"));
+        m_bgm.Add("VisualNovel_6", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_06_BGM_Relax_Rain"));
+        m_bgm.Add("VisualNovel_25", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/VisualNovel_25_CharacterStory"));
         #endregion
 
         #region Effect

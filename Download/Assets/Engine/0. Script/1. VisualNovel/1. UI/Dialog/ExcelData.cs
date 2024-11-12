@@ -4,6 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class ExcelData
 {
+    public string bgm;
+    public string effect;
+
     public int dialogType;
 
     public int fadeType;
