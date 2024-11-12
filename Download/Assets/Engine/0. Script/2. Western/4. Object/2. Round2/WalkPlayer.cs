@@ -24,10 +24,15 @@ public class WalkPlayer : MonoBehaviour
 
     private Vector3 m_startPosition;
 
+    private AudioSource m_audioSource;
+    private float m_soundTime = 0f;
+
     public float StartHeight { set => m_startHeight = value; }
 
     private void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
+
         m_startPosition = transform.position;
         m_startHeight = m_startPosition.y;
         m_currentHeight = m_startPosition.y;
@@ -97,6 +102,7 @@ public class WalkPlayer : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
+                Play_WalkSound();
                 m_playerStatus.Update_Value(m_startPosition, transform.position);
 
                 // ÀüÁø
@@ -125,5 +131,17 @@ public class WalkPlayer : MonoBehaviour
 
         if(m_playerStatus != null)
             m_playerStatus.Stop_Value();
+    }
+
+    protected void Play_WalkSound()
+    {
+        m_soundTime += Time.deltaTime;
+        if (m_soundTime >= 0.5f)
+        {
+            m_soundTime = 0f;
+
+            int Index = Random.Range(1, 6);
+            GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Western_Walk" + Index.ToString(), false, 1f);
+        }
     }
 }

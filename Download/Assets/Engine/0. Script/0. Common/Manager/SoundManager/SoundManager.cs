@@ -99,6 +99,16 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("Western_Panel_Rotation",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/GameObject/PanelRotation"));
         m_effect.Add("Western_Criminal_Caught", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/GameObject/CriminalCaught"));
         m_effect.Add("Western_Clear_Dialogue",  GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/UI/Clear/ClearDialogue"));
+
+        m_effect.Add("Western_CatShoot", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_9_CatShoot"));
+        m_effect.Add("Western_WomanCry", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_21_WomanCry"));
+        m_effect.Add("Western_WomanScream", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_22_WomanScream"));
+
+        m_effect.Add("Western_Walk1", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_15_Walk/Western_15_Walk1"));
+        m_effect.Add("Western_Walk2", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_15_Walk/Western_15_Walk2"));
+        m_effect.Add("Western_Walk3", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_15_Walk/Western_15_Walk3"));
+        m_effect.Add("Western_Walk4", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_15_Walk/Western_15_Walk4"));
+        m_effect.Add("Western_Walk5", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/2. Western/Effect/Western_15_Walk/Western_15_Walk5"));
         #endregion
         #endregion
 

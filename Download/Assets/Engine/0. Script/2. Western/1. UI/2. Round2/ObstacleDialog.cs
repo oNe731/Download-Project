@@ -16,14 +16,21 @@ public class ObstacleDialog : MonoBehaviour
     private float m_waitTime = 2f;
 
     private string[] m_texts;
+    private string[] m_sounds;
     private Coroutine m_dialogTextCoroutine = null;
     private bool m_isTyping = false;
     private int m_dialogIndex = 0;
     private float m_typeSpeed = 0.05f;
 
-    public void Start_Dialog(string[] texts, float startTime)
+    private AudioSource m_audioSource;
+
+    public void Start_Dialog(string[] texts, string[] sounds, float startTime)
     {
+        m_audioSource = transform.GetComponent<AudioSource>();
+
         m_texts = texts;
+        m_sounds = sounds;
+
         m_startTime = startTime;
         m_isStart = false;
 
@@ -71,6 +78,9 @@ public class ObstacleDialog : MonoBehaviour
         // 다이얼로그 진행
         if (m_dialogIndex < m_texts.Length)
         {
+            if(m_sounds[m_dialogIndex] != "")
+                GameManager.Ins.Sound.Play_AudioSource(m_audioSource, m_sounds[m_dialogIndex], false, 1f);
+
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
             m_dialogTextCoroutine = StartCoroutine(Type_Text(m_dialogIndex));

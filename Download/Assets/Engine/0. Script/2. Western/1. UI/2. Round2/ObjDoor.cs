@@ -32,6 +32,8 @@ public class ObjDoor : MonoBehaviour
 
     private IEnumerator Move_Door()
     {
+        GetComponent<AudioSource>().Play();
+
         bool isLock = false;
         m_player.Set_Lock(true);
 

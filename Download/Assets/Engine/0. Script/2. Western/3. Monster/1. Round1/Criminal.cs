@@ -14,6 +14,8 @@ namespace Western
 
         public override void Initialize(int groupIndex, int personIndex, Groups groups, Group group)
         {
+            m_audioSource = GetComponent<AudioSource>();
+
             base.Initialize(groupIndex, personIndex, groups, group);
             m_personType = PERSONTYPE.PT_CRIMINAL;
 
@@ -44,6 +46,8 @@ namespace Western
                     // 연기 이펙트 생성
                     GameObject smoke = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/1Stage/Effect/Effect_GunSmoke"); // 스케일 0.1
                     smoke.transform.position = new Vector3(transform.position.x - 0.518f, transform.position.y - 0.3729f, transform.position.z - 0.018f);
+
+                    GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Western_CatShoot", false, 1f);
                 }
             }
         }

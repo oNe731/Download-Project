@@ -49,9 +49,11 @@ public class ObjPc : MonoBehaviour
                 if(m_camera.IsPosition == false)
                 {
                     m_time += Time.deltaTime;
-                    if (m_time > 1f)
+                    if (m_time > 2f)
                     {
                         m_time = 0f;
+
+                        transform.GetComponent<AudioSource>().Stop();
 
                         // 화면 메테리얼 주인공 얼굴로 교체
                         transform.GetChild(1).GetChild(0).GetComponent<MeshRenderer>().material = GameManager.Ins.Resource.Load<Material>("1. Graphic/3D/2. Western/Map/Stage2/Meterial/3D/2_Computer2");

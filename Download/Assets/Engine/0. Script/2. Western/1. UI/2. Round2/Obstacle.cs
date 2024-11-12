@@ -48,6 +48,7 @@ public class Obstacle : MonoBehaviour
                             break;
 
                         case TYPE.TP_AYAKA:
+                            GetComponent<AudioSource>().Play();
                             StartCoroutine(WakeDown());
                             StartCoroutine(RotateChild());
                             break;
@@ -145,6 +146,7 @@ public class Obstacle : MonoBehaviour
     private void Active_Text()
     {
         string[] texts;
+        string[] sounds;
         float horizontal;
         float height;
         switch (m_type)
@@ -154,7 +156,9 @@ public class Obstacle : MonoBehaviour
                 height = 2.2f;
                 texts = new string[1];
                 texts[0] = "*야옹";
-                Create_SpeechBubble(texts, horizontal, height);
+                sounds = new string[1];
+                sounds[0] = "Western_Criminal_Caught";
+                Create_SpeechBubble(texts, sounds, horizontal, height);
                 break;
 
             case TYPE.TP_MOM:
@@ -171,7 +175,18 @@ public class Obstacle : MonoBehaviour
                 texts[7] = "이러지마.";
                 texts[8] = "...";
                 texts[9] = "*우는 소리";
-                Create_SpeechBubble(texts, horizontal, height);
+                sounds = new string[10];
+                sounds[0] = "";
+                sounds[1] = "";
+                sounds[2] = "";
+                sounds[3] = "";
+                sounds[4] = "";
+                sounds[5] = "";
+                sounds[6] = "";
+                sounds[7] = "";
+                sounds[8] = "";
+                sounds[9] = "Western_WomanCry";
+                Create_SpeechBubble(texts, sounds, horizontal, height);
                 break;
 
             case TYPE.TP_AYAKA:
@@ -186,12 +201,21 @@ public class Obstacle : MonoBehaviour
                 texts[5] = "컥...";
                 texts[6] = "...";
                 texts[7] = "*고통에 몸부림 치는 소리";
-                Create_SpeechBubble(texts, horizontal, height);
+                sounds = new string[1];
+                sounds[0] = "";
+                sounds[1] = "";
+                sounds[2] = "";
+                sounds[3] = "";
+                sounds[4] = "";
+                sounds[5] = "";
+                sounds[6] = "";
+                sounds[7] = "";
+                Create_SpeechBubble(texts, sounds, horizontal, height);
                 break;
         }
     }
 
-    private void Create_SpeechBubble(string[] texts, float horizontal, float height)
+    private void Create_SpeechBubble(string[] texts, string[] m_sounds, float horizontal, float height)
     {
         if (texts == null)
             return;
@@ -199,11 +223,18 @@ public class Obstacle : MonoBehaviour
         // 말풍선 UI
         GameObject uiObject = GameManager.Ins.Resource.LoadCreate("5. Prefab/2. Western/UI/DialogBox", GameObject.Find("Canvas").transform);
         uiObject.GetComponent<Transform>().position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(horizontal, height, 0f));
-        uiObject.GetComponent<ObstacleDialog>().Start_Dialog(texts, 0f);
+        uiObject.GetComponent<ObstacleDialog>().Start_Dialog(texts, m_sounds, 0f);
     }
 
     public void Attacked_Obstacle()
     {
+        AudioSource[] audioSource = transform.GetChild(0).GetComponents<AudioSource>();
+        if(audioSource != null)
+        {
+            for(int i = 0; i < audioSource.Length; ++i)
+                audioSource[i].Play();
+        }
+
         if(m_type == TYPE.TP_CAT)
         {
             // 판넬 변화
@@ -221,6 +252,9 @@ public class Obstacle : MonoBehaviour
         {
             // 판넬 변화
             transform.GetChild(0).GetComponent<MeshRenderer>().material = GameManager.Ins.Resource.Load<Material>("1. Graphic/3D/2. Western/Character/Round2/Western_Atteck/2_Pannel_Mom_2");
+
+            // 비명소리
+            GameManager.Ins.Sound.Play_AudioSource(GetComponent<AudioSource>(), "Western_WomanScream", false, 1f);
         }
         else if(m_type == TYPE.TP_AYAKA)
         {

@@ -5,12 +5,14 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     private ParticleSystem m_particleSystem;
-
+    private AudioSource m_particleaudioSource;
     private AudioSource m_audioSource;
 
     private void Start()
     {
         m_particleSystem = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+        m_particleaudioSource = transform.GetChild(0).GetChild(0).GetComponent<AudioSource>();
+
         m_audioSource = GetComponent<AudioSource>();
     }
 
@@ -26,5 +28,7 @@ public class Gun : MonoBehaviour
         // ¿Ã∆Â∆Æ
         m_particleSystem.gameObject.SetActive(true);
         m_particleSystem.Play();
+
+        m_particleaudioSource.Play();
     }
 }
