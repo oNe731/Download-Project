@@ -9,8 +9,8 @@ public class HorrorManager : StageManager
 
     private Dictionary<string, Sprite> m_noteElementIcon = new Dictionary<string, Sprite>();
 
-    private HorrorPlayer  m_player;
-    private UIPopup       m_popupUI = null;
+    private HorrorPlayer m_player;
+    private UIPopup m_popupUI = null;
     private UIInstruction m_instructionUI = null;
 
     public Dictionary<string, Sprite> NoteElementIcon => m_noteElementIcon;
@@ -46,15 +46,77 @@ public class HorrorManager : StageManager
         m_noteElementIcon.Add("Icon_Key_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Key/Icon_Key_1"));
         m_noteElementIcon.Add("Icon_Key_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Item/Key/Icon_Key_2"));
 
-        m_noteElementIcon.Add("Icon_clue_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_1"));
-        m_noteElementIcon.Add("Icon_clue_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_2"));
-        m_noteElementIcon.Add("Icon_clue_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/Clue/Icon_clue_3"));
-        m_noteElementIcon.Add("Icon_A306File_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_1"));
-        m_noteElementIcon.Add("Icon_A306File_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_2"));
-        m_noteElementIcon.Add("Icon_A306File_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306File/UI_horror_ClueItem_A306File_3"));
+        m_noteElementIcon.Add("Icon_A306_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306/UI_horror_ClueItem_A306File_1"));
+        m_noteElementIcon.Add("Icon_A306_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306/UI_horror_ClueItem_A306File_2"));
+        m_noteElementIcon.Add("Icon_A306_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A306/UI_horror_ClueItem_A306File_3"));
+
+        m_noteElementIcon.Add("Icon_A440_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A440/UI_horror_ClueItem_A440_1"));
+        m_noteElementIcon.Add("Icon_A440_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A440/UI_horror_ClueItem_A440_2"));
+        m_noteElementIcon.Add("Icon_A440_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/A440/UI_horror_ClueItem_A440_3"));
+
         m_noteElementIcon.Add("Icon_clueNumber_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_1"));
         m_noteElementIcon.Add("Icon_clueNumber_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_2"));
         m_noteElementIcon.Add("Icon_clueNumber_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/ClueNumber/Icon_clueNumber_3"));
+
+        m_noteElementIcon.Add("Icon_EP14-2_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/EP14-2/UI_horror_ClueItem_EP14-2_1"));
+        m_noteElementIcon.Add("Icon_EP14-2_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/EP14-2/UI_horror_ClueItem_EP14-2_2"));
+        m_noteElementIcon.Add("Icon_EP14-2_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/EP14-2/UI_horror_ClueItem_EP14-2_3"));
+
+        m_noteElementIcon.Add("Icon_S1_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S1/UI_horror_ClueItem_S1_1"));
+        m_noteElementIcon.Add("Icon_S1_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S1/UI_horror_ClueItem_S1_2"));
+        m_noteElementIcon.Add("Icon_S1_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S1/UI_horror_ClueItem_S1_3"));
+
+        m_noteElementIcon.Add("Icon_S2_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S2/UI_horror_ClueItem_S2_1"));
+        m_noteElementIcon.Add("Icon_S2_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S2/UI_horror_ClueItem_S2_2"));
+        m_noteElementIcon.Add("Icon_S2_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S2/UI_horror_ClueItem_S2_3"));
+
+        m_noteElementIcon.Add("Icon_S3_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S3/UI_horror_ClueItem_S3_1"));
+        m_noteElementIcon.Add("Icon_S3_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S3/UI_horror_ClueItem_S3_2"));
+        m_noteElementIcon.Add("Icon_S3_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S3/UI_horror_ClueItem_S3_3"));
+
+        m_noteElementIcon.Add("Icon_S4_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S4/UI_horror_ClueItem_S4_1"));
+        m_noteElementIcon.Add("Icon_S4_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S4/UI_horror_ClueItem_S4_2"));
+        m_noteElementIcon.Add("Icon_S4_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S4/UI_horror_ClueItem_S4_3"));
+
+        m_noteElementIcon.Add("Icon_S5_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S5/UI_horror_ClueItem_S5_1"));
+        m_noteElementIcon.Add("Icon_S5_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S5/UI_horror_ClueItem_S5_2"));
+        m_noteElementIcon.Add("Icon_S5_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S5/UI_horror_ClueItem_S5_3"));
+
+        m_noteElementIcon.Add("Icon_S6_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S6/UI_horror_ClueItem_S6_1"));
+        m_noteElementIcon.Add("Icon_S6_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S6/UI_horror_ClueItem_S6_2"));
+        m_noteElementIcon.Add("Icon_S6_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S6/UI_horror_ClueItem_S6_3"));
+
+        m_noteElementIcon.Add("Icon_S7_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S7/UI_horror_ClueItem_S7_1"));
+        m_noteElementIcon.Add("Icon_S7_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S7/UI_horror_ClueItem_S7_2"));
+        m_noteElementIcon.Add("Icon_S7_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S7/UI_horror_ClueItem_S7_3"));
+
+        m_noteElementIcon.Add("Icon_S8_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S8/UI_horror_ClueItem_S8_1"));
+        m_noteElementIcon.Add("Icon_S8_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S8/UI_horror_ClueItem_S8_2"));
+        m_noteElementIcon.Add("Icon_S8_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S8/UI_horror_ClueItem_S8_3"));
+
+        m_noteElementIcon.Add("Icon_S9_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S9/UI_horror_ClueItem_S9_1"));
+        m_noteElementIcon.Add("Icon_S9_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S9/UI_horror_ClueItem_S9_2"));
+        m_noteElementIcon.Add("Icon_S9_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S9/UI_horror_ClueItem_S9_3"));
+
+        m_noteElementIcon.Add("Icon_S10_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S10/UI_horror_ClueItem_S10_1"));
+        m_noteElementIcon.Add("Icon_S10_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S10/UI_horror_ClueItem_S10_2"));
+        m_noteElementIcon.Add("Icon_S10_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S10/UI_horror_ClueItem_S10_3"));
+
+        m_noteElementIcon.Add("Icon_S11_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S11/UI_horror_ClueItem_S11_1"));
+        m_noteElementIcon.Add("Icon_S11_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S11/UI_horror_ClueItem_S11_2"));
+        m_noteElementIcon.Add("Icon_S11_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S11/UI_horror_ClueItem_S11_3"));
+
+        m_noteElementIcon.Add("Icon_S12_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S12/UI_horror_ClueItem_S12_1"));
+        m_noteElementIcon.Add("Icon_S12_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S12/UI_horror_ClueItem_S12_2"));
+        m_noteElementIcon.Add("Icon_S12_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S12/UI_horror_ClueItem_S12_3"));
+
+        m_noteElementIcon.Add("Icon_S13_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S13/UI_horror_ClueItem_S13_1"));
+        m_noteElementIcon.Add("Icon_S13_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S13/UI_horror_ClueItem_S13_2"));
+        m_noteElementIcon.Add("Icon_S13_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S13/UI_horror_ClueItem_S13_3"));
+
+        m_noteElementIcon.Add("Icon_S14_1", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S14/UI_horror_ClueItem_S14_1"));
+        m_noteElementIcon.Add("Icon_S14_2", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S14/UI_horror_ClueItem_S14_2"));
+        m_noteElementIcon.Add("Icon_S14_3", GameManager.Ins.Resource.Load<Sprite>(basicPath + "Clue/S14/UI_horror_ClueItem_S14_3"));
     }
 
     public override void Enter_Stage()
@@ -107,7 +169,7 @@ public class HorrorManager : StageManager
         m_levelController.Update_Level();
 
 #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F2))
             m_levelController.Change_Level((int)LEVEL.LV_2STAGE);
 #endif
     }
@@ -124,11 +186,11 @@ public class HorrorManager : StageManager
     {
         base.Exit_Stage();
     }
-    
+
     public override void Set_Pause(bool pause, bool Setcursur)
     {
         base.Set_Pause(pause, Setcursur);
-        if(Player != null)
+        if (Player != null)
             Player.Stop_Player(pause);
     }
 
