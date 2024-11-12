@@ -33,7 +33,7 @@ public class Panel_Picture : Panel_Popup
         m_fileType = WindowManager.FILETYPE.TYPE_PICTURE;
 
         ResourceManager RM = GameManager.Ins.Resource;
-        m_pictureSprite.Add("Wallpaper", RM.Load<Sprite>("1. Graphic/2D/0. Window/WindowWallpaper"));
+        m_pictureSprite.Add("»çÁø", RM.Load<Sprite>("1. Graphic/2D/0. Window/WindowWallpaper"));
         //m_pictureSprite.Add("", RM.Load<Sprite>(""));
         //m_pictureSprite.Add("", RM.Load<Sprite>(""));
 

@@ -15,10 +15,15 @@ public class FolderBox : MonoBehaviour, IPointerClickHandler
     private float m_lastClickTime = 0f;
     private const float m_doubleClickThreshold = 1f; // 더블 클릭을 인정할 시간 간격 (초 단위)
 
+    private AudioSource m_audioSource;
+
     public WindowFile FileData => m_fileData;
+    public AudioSource AudioSource => m_audioSource;
 
     public void Set_FolderBox(WindowFile file)
     {
+        m_audioSource = GetComponent<AudioSource>();
+
         m_fileData = file;
 
         transform.GetChild(0).GetComponent<Image>().sprite = GameManager.Ins.Window.Get_FileSprite(m_fileData.FileData.fileType);

@@ -34,6 +34,20 @@ public class SoundManager : MonoBehaviour
 
     private void Load_Resource()
     {
+        #region 윈도우 게임 사운드
+        m_effect.Add("Window_Login", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_02_Login"));
+        m_effect.Add("Window_SiteBgm", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_04_SiteBgm"));
+
+        m_effect.Add("Window_Click", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_03_Click"));
+        m_effect.Add("Window_MascotSpeak", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_21_Mascot_Speak"));
+
+        m_effect.Add("Window_DeleteHit", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_10_DeleteGame&Hit"));
+        m_effect.Add("Window_Knock", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_11_Novel_Knock"));
+        m_effect.Add("Window_broken", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_12_Novel_broken"));
+        m_effect.Add("Window_Golfhit", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_14_Ayaka_Golf_hit"));
+        m_effect.Add("Window_Golfdrop", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/0. Window/Window_15_Ayaka_Golf_drop"));
+        #endregion
+
         #region 미연시 게임 사운드
         #region BGM
         m_bgm.Add("VisualNovel_ScriptBGM",        GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/BGM/Script"));

@@ -29,6 +29,8 @@ public class GameRouletteText : MonoBehaviour
         m_blackImage = GetComponent<Image>();
         m_blackImage.color = new Color(m_blackImage.color.r, m_blackImage.color.g, m_blackImage.color.b, 0f);
         m_targetColor = new Color(m_blackImage.color.r, m_blackImage.color.g, m_blackImage.color.b, 0.5f);
+
+        GetComponent<AudioSource>().Play();
     }
 
     private void Update()

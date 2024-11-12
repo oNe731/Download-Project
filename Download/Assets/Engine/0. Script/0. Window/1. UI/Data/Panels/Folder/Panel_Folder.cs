@@ -229,6 +229,8 @@ public class Panel_Folder : Panel_Popup
                     int fileIndex = (int)folderBox.FileData.FileData.fileType;
                     if (fileIndex >= (int)WindowManager.FILETYPE.TYPE_BLACKOUT && fileIndex <= (int)WindowManager.FILETYPE.TYPE_THET || fileIndex == 18)
                     {
+                        GameManager.Ins.Sound.Play_AudioSource(folderBox.AudioSource, "Window_DeleteHit", false, 1f);
+
                         // 삭제 박스 활성화
                         folderBox.Set_ClickImage(FolderBox.BOXIMAGE.BT_DESTROY);
                         yield return new WaitForSeconds(0.5f);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WindowManager : StageManager
 {
@@ -200,17 +201,25 @@ public class WindowManager : StageManager
                 // 클리어시 연출 재생
                 if (GameManager.Ins.Western.IsClear == true)
                 {
-                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_HORROR, true);
-
-                    //gameStart = false;
-                    //GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
-                    //GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_NovelClear", false);
+                    gameStart = false;
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
+                    GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_WesternClear", false);
                 }
                 else // 옵션창으로 돌아왔을 경우
                 {
                     GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(true);
                     GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(FILETYPE.TYPE_HORROR, false);
                 }
+
+                // 시체 및 파리 이펙트 생성
+                GameObject effectPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Mascot/effectPanel", GameObject.Find("Canvas").transform.GetChild(0));
+                effectPanel.GetComponent<Image>().sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/VisualNovel/Window_SceneEffect_FlyingBodies_Icon");
+                effectPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(530f, -100f);
+                effectPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(930f, 330f);
+                effectPanel.transform.localScale = new Vector3(0.16895814f, 0.1689581f, 0.1689581f);
+
+                GameObject flyPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Mascot/flyPanel", GameObject.Find("Canvas").transform.GetChild(0));
+                flyPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(530f, -25f);
                 break;
 
             default:
@@ -247,6 +256,9 @@ public class WindowManager : StageManager
                 #endregion
                 #endregion
 
+                // 로그인 소리
+                GameManager.Ins.Sound.Play_ManagerAudioSource("Window_Login", false, 1f);
+
                 // 경고 패널 생성
                 gameStart = false;
                 Transform canvas = GameObject.Find("Canvas").transform;
@@ -264,13 +276,6 @@ public class WindowManager : StageManager
     {
         for (int i = 0; i < m_popups.Count; ++i)
             m_popups[i].Update_Data();
-
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    GameManager.Ins.IsGame = false;
-        //    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(false);
-        //    GameManager.Ins.Mascot.Start_Dialog("4. Data/Mascot/Window/Mascot_NovelClear", false);
-        //}
     }
 
     public override void LateUpdate_Stage()

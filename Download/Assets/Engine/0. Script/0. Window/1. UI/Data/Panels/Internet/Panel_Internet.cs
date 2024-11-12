@@ -36,6 +36,10 @@ public class Panel_Internet : Panel_Popup
                     break;
             }
         }
+        else
+        {
+            Object.GetComponent<AudioSource>().Stop();
+        }
     }
 
     public override void Load_Scene()
@@ -88,6 +92,9 @@ public class Panel_Internet : Panel_Popup
                 Start_Event(EVENT.EVENT_GAMESITE);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page1", m_siteTransform);
                 GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Internet/GameSite/Panel_Page2", m_siteTransform);
+                
+                m_object.SetActive(true);
+                GameManager.Ins.Sound.Play_AudioSource(m_object.GetComponent<AudioSource>(), "Window_SiteBgm", true, 1f);
                 break;
         }
     }

@@ -41,5 +41,7 @@ public class GameClickImage : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(m_active);
         if (m_active == true)
             m_text.SetActive(true);
+
+        GetComponent<AudioSource>().Play();
     }
 }

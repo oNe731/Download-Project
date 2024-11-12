@@ -14,6 +14,8 @@ public class Mascot : MonoBehaviour
     private float m_time = 0;
     private GameObject m_balloon;
     private RectTransform m_rt = null;
+    private AudioSource m_audioSource;
+    private AudioSource m_talkSource;
 
     private Coroutine m_event = null;
     private Coroutine m_moves = null;
@@ -33,6 +35,8 @@ public class Mascot : MonoBehaviour
     {
         m_balloon = transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
         m_rt = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
+        m_audioSource = GetComponent<AudioSource>();
+        m_talkSource = transform.GetChild(0).GetComponent<AudioSource>();
     }
 
     public void Start_Dialog(string path, bool finishClose)
@@ -199,6 +203,19 @@ public class Mascot : MonoBehaviour
                     GameManager.Ins.IsGame = true;
                     GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(WindowManager.FILETYPE.TYPE_WESTERN, true);
                     break;
+
+                case DialogData_Mascot.DIALOGTYPE.DET_SOUND:
+                    if (m_event != null)
+                        StopCoroutine(m_event);
+                    m_event = StartCoroutine(Play_Sound());
+                    break;
+
+                case DialogData_Mascot.DIALOGTYPE.DET_CLICKHORROR:
+                    Update_None();
+                    // 서부 클릭 가능
+                    GameManager.Ins.IsGame = true;
+                    GameManager.Ins.Window.FileIconSlots.Set_AllIconClick(WindowManager.FILETYPE.TYPE_HORROR, true);
+                    break;
             }
         }
         else // 다이얼로그 종료
@@ -218,6 +235,7 @@ public class Mascot : MonoBehaviour
         // 다이얼로그 내용 업데이트
         if (string.IsNullOrEmpty(m_dialogs[m_dialogIndex].dialogText) == false)
         {
+            m_talkSource.Play();
             m_balloon.SetActive(true);
             if (m_dialogTextCoroutine != null)
                 StopCoroutine(m_dialogTextCoroutine);
@@ -514,6 +532,8 @@ public class Mascot : MonoBehaviour
         // 미연시 파일 초기화
         GameManager.Ins.Window.FileIconSlots.Remove_FileIcon("C:\\Users\\user\\Desktop\\오싹오싹 밴드부");
         // 아이콘이 찢어짐
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Window_broken", false, 1f);
+
         GameObject effectPanel = GameManager.Ins.Resource.LoadCreate("5. Prefab/0. Window/UI/Mascot/effectPanel", GameObject.Find("Canvas").transform);
         effectPanel.name = "Ayaka";
         effectPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-389.5f, 287.7f);
@@ -586,6 +606,8 @@ public class Mascot : MonoBehaviour
 
     IEnumerator Wait_AyakaAttack(string trigerName)
     {
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Window_DeleteHit", false, 1f);
+
         m_isUpdate = false;
         while (true)
         {
@@ -610,6 +632,7 @@ public class Mascot : MonoBehaviour
     IEnumerator Wait_GolfSwing(string trigerName)
     {
         m_isUpdate = false;
+
         while (true)
         {
             if (m_animator.IsInTransition(0) == false)
@@ -625,6 +648,7 @@ public class Mascot : MonoBehaviour
             yield return null;
         }
 
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Window_Golfhit", false, 1f);
         GameObject canvas = GameObject.Find("Canvas");
         if (canvas != null)
         {
@@ -667,6 +691,7 @@ public class Mascot : MonoBehaviour
         }
         standingRect.anchoredPosition = endPosition;
 
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "Window_Golfdrop", false, 1f);
         iconImage.sprite = GameManager.Ins.Resource.Load<Sprite>("1. Graphic/2D/1. VisualNovel/UI/VisualNovel/Window_SceneEffect_FlyingBodies_Icon");
         standingRect.sizeDelta = new Vector2(930f, 330f);
         effectPanel.transform.localScale = new Vector3(0.16895814f, 0.1689581f, 0.1689581f);
@@ -674,6 +699,18 @@ public class Mascot : MonoBehaviour
         m_isUpdate = true;
         Update_DialogIndex();
         yield break;
+    }
+
+    IEnumerator Play_Sound()
+    {
+        m_isUpdate = false;
+
+        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, m_dialogs[m_dialogIndex].dialogText, false, 1f);
+        yield return new WaitForSeconds(m_audioSource.clip.length);
+
+        m_isUpdate = true;
+        m_dialogIndex++;
+        Update_DialogIndex();
     }
     #endregion
 
