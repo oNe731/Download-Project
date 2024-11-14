@@ -23,7 +23,8 @@ namespace VisualNovel
             dialog.Reset_Skip();
             dialog.Start_Dialog(0);
 
-            GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ScriptBGM", true, 1f);
+            //GameManager.Ins.Sound.Play_AudioSourceBGM("VisualNovel_ScriptBGM", true, 1f);
+            GameManager.Ins.Sound.Stop_AudioSourceBGM();
             GameManager.Ins.Camera.Change_Camera(CAMERATYPE.CT_BASIC_2D);
         }
 

@@ -80,7 +80,7 @@ namespace Western
             m_citizenText.Add("어이! 나 여기있다옹");
             m_citizenText.Add("내 움직임을 얕본 대가다옹");
             m_citizenText.Add("흥, 별거없군");
-            m_citizenText.Add("고양이 앞에서 한 눈을 팔다니");
+            m_citizenText.Add("고양이 앞에서 한눈을 팔다니");
             m_citizenText.Add("고양이 목숨이 몇개인지 알아?");
 
             base.Enter_Level();

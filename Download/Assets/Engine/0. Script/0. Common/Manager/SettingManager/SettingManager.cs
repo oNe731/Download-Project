@@ -136,7 +136,10 @@ public class SettingManager : MonoBehaviour
     {
         // 레벨별로
         StageManager.STAGE level = GameManager.Ins.CurStage.StageLevel;
-        if (level == StageManager.STAGE.LEVEL_VISUALNOVEL || level == StageManager.STAGE.LEVEL_WESTERN || level == StageManager.STAGE.LEVEL_HORROR)
+        if (level == StageManager.STAGE.LEVEL_HORROR)
+            return;
+
+        if (level == StageManager.STAGE.LEVEL_VISUALNOVEL || level == StageManager.STAGE.LEVEL_WESTERN)
         {
             // 윈도우로 이동
             GameManager.Ins.Change_Scene(StageManager.STAGE.LEVEL_WINDOW);

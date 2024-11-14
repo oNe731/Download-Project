@@ -24,7 +24,9 @@ public class Portal : MonoBehaviour
     private void Active_Ending()
     {
         // 임시 엔딩
+        GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(true);
+
         GameManager.Ins.UI.EventUpdate = true;
-        GameManager.Ins.UI.Start_FadeIn(0f, Color.black, () => GameObject.Find("Canvas").transform.GetChild(6).gameObject.SetActive(true));
+        GameManager.Ins.UI.Start_FadeIn(1f, Color.black);
     }
 }

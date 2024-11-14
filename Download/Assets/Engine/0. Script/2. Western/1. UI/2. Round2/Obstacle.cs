@@ -201,7 +201,7 @@ public class Obstacle : MonoBehaviour
                 texts[5] = "컥...";
                 texts[6] = "...";
                 texts[7] = "*고통에 몸부림 치는 소리";
-                sounds = new string[1];
+                sounds = new string[8];
                 sounds[0] = "";
                 sounds[1] = "";
                 sounds[2] = "";
