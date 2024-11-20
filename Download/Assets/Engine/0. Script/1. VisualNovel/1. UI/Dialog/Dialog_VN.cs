@@ -20,7 +20,7 @@ namespace VisualNovel
             ET_END
         }
 
-        private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_END }
+        private enum SKIPTYPE { ST_NONE, ST_SPEED1, ST_SPEED2, ST_SPEED3, ST_SPEED4, ST_END }
 
         [Header("GameObject")]
         [SerializeField] private GameObject m_darkPanelObj;
@@ -775,7 +775,7 @@ namespace VisualNovel
                 return;
 
             m_skipType++;
-            if (m_skipType > SKIPTYPE.ST_SPEED2)
+            if (m_skipType > SKIPTYPE.ST_SPEED4)
                 m_skipType = SKIPTYPE.ST_NONE;
 
             switch (m_skipType)
@@ -794,6 +794,18 @@ namespace VisualNovel
                     if (m_dialogSkip != null)
                         StopCoroutine(m_dialogSkip);
                     m_dialogSkip = StartCoroutine(Dialog_Skip(0.1f));
+                    break;
+                case SKIPTYPE.ST_SPEED3:
+                    m_skipTxt.text = "Skipx3";
+                    if (m_dialogSkip != null)
+                        StopCoroutine(m_dialogSkip);
+                    m_dialogSkip = StartCoroutine(Dialog_Skip(0.05f));
+                    break;
+                case SKIPTYPE.ST_SPEED4:
+                    m_skipTxt.text = "Skipx4";
+                    if (m_dialogSkip != null)
+                        StopCoroutine(m_dialogSkip);
+                    m_dialogSkip = StartCoroutine(Dialog_Skip(0.025f));
                     break;
             }
         }

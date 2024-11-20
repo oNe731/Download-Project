@@ -98,6 +98,23 @@ public class GameManager : MonoBehaviour
             return;
 
         m_stages[(int)m_curStage].LateUpdate_Stage();
+
+        // Temp
+        //if(Input.GetKey(KeyCode.LeftControl))
+        //{
+        //    if(Input.GetKeyDown(KeyCode.F1))
+        //    {
+        //        Change_Scene(StageManager.STAGE.LEVEL_VISUALNOVEL);
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.F2))
+        //    {
+        //        Change_Scene(StageManager.STAGE.LEVEL_WESTERN);
+        //    }
+        //    else if (Input.GetKeyDown(KeyCode.F3))
+        //    {
+        //        Change_Scene(StageManager.STAGE.LEVEL_HORROR);
+        //    }
+        //}
     }
 
     public void Change_Scene(StageManager.STAGE stage)
