@@ -21,7 +21,7 @@ public class GameBackground : MonoBehaviour
     private void Update()
     {
         m_time += Time.deltaTime;
-        if(m_time >= 4f)
+        if(m_time >= 3f)
         {
             m_time = 0f;
             Change_Sprite();
