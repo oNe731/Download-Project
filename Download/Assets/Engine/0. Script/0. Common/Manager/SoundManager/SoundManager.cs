@@ -80,6 +80,48 @@ public class SoundManager : MonoBehaviour
         m_effect.Add("VisualNovel_Player_Steps_2", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps3"));
         m_effect.Add("VisualNovel_Player_Steps_3", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps4"));
         m_effect.Add("VisualNovel_Player_Steps_4", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/ChaseGame/PlayerSteps/Steps5"));
+
+        // 목소리
+        m_effect.Add("VisualNovel_MI01", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice1-1 MiNacheu_Laugh"));
+        m_effect.Add("VisualNovel_MI02", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice1-2 MiNacheu_Respond_Positive"));
+        m_effect.Add("VisualNovel_MI03", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice1-3 MiNacheu_Embarrass_1"));
+        m_effect.Add("VisualNovel_MI04", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice1-3 MiNacheu_Embarrass_2"));
+        m_effect.Add("VisualNovel_MI05", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice1-4 MiNacheu_Sigh"));
+
+        m_effect.Add("VisualNovel_KI01", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-1 Ayaka_Laugh"));
+        m_effect.Add("VisualNovel_KI02", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-2 Ayaka_Respond_Positive"));
+        m_effect.Add("VisualNovel_KI03", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-3 Ayaka_Respond_Denial"));
+        m_effect.Add("VisualNovel_KI04", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-4 Ayaka_Laugh_Dreary"));
+        m_effect.Add("VisualNovel_KI05", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-5 Ayaka_Laugh_Madness_1"));
+        m_effect.Add("VisualNovel_KI06", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice2-5 Ayaka_Laugh_Madness_2"));
+ 
+        m_effect.Add("VisualNovel_SA01", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice3-1 Heena_Laugh"));
+        m_effect.Add("VisualNovel_SA02", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice3-2 Heena_Respond_Positive"));
+        m_effect.Add("VisualNovel_SA03", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice3-3 Heena_Respond_Denial"));
+        m_effect.Add("VisualNovel_SA04", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Voice/VisualNovel_Voice3-4 Heena_Sigh"));
+
+        // 효과음
+        m_effect.Add("VisualNovel_EF07", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_07_Effect_Cat"));
+        m_effect.Add("VisualNovel_EF08", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_08_Effect_Clap"));
+        m_effect.Add("VisualNovel_EF09", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_09_Effect_Open"));
+        m_effect.Add("VisualNovel_EF10", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_10_Effect_Camera"));
+        m_effect.Add("VisualNovel_EF11", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_11_Effect_CameraBroke"));
+        m_effect.Add("VisualNovel_EF12", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_12_Effect_Hammer"));
+        m_effect.Add("VisualNovel_EF13", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_13_Effect_OpenDoor"));
+        m_effect.Add("VisualNovel_EF14", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_14_Effect_GetLike"));
+        m_effect.Add("VisualNovel_EF15", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_15_Effect_Choice"));
+        m_effect.Add("VisualNovel_EF16", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_16_Effect_Button"));
+        m_effect.Add("VisualNovel_EF17", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_17_Effect_ScaryPicture_1"));
+        m_effect.Add("VisualNovel_EF18", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_18_Shoot_TimeOver"));
+        m_effect.Add("VisualNovel_EF19", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_19_Shoot_GetItem"));
+        m_effect.Add("VisualNovel_EF20", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_20_Chase_DoorBeat"));
+        m_effect.Add("VisualNovel_EF21", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_21_Chase_DoorKick"));
+        m_effect.Add("VisualNovel_EF22", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_22_Chase_ElectricSaw"));
+        m_effect.Add("VisualNovel_EF23", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_23_Chase_GetKey"));
+        m_effect.Add("VisualNovel_EF24", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_24_Chase_Exit"));
+        m_effect.Add("VisualNovel_EF25", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_25_CharacterStory"));
+        m_effect.Add("VisualNovel_EF26", GameManager.Ins.Resource.Load<AudioClip>("2. Sound/1. VisualNovel/Effect/Novel/Effect/VisualNovel_26_Effect_ScaryPicture_2"));
+
         #endregion
         #endregion
 

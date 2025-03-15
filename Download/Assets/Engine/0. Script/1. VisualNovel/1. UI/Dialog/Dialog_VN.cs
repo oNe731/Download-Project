@@ -54,6 +54,7 @@ namespace VisualNovel
 
         // »ç¿îµå
         private string m_bgmIndex = "0";
+        private AudioSource m_audioSource;
 
         private bool m_cutScene = false;
         public bool CutScene { set => m_cutScene = value; }
@@ -67,6 +68,8 @@ namespace VisualNovel
             m_standingImg = new Image[m_standingObj.Length];
             for (int i = 0; i < m_standingObj.Length; i++)
                 m_standingImg[i] = m_standingObj[i].GetComponent<Image>();
+
+            m_audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -101,6 +104,7 @@ namespace VisualNovel
             {
                 if (m_dialogIndex < m_dialogs.Count)
                 {
+                    // BGM
                     if(m_dialogs[m_dialogIndex].bgm != "")
                     {
                         if (m_bgmIndex != m_dialogs[m_dialogIndex].bgm)
@@ -113,6 +117,16 @@ namespace VisualNovel
                             m_bgmIndex = "0";
                             GameManager.Ins.Sound.Stop_AudioSourceBGM();
                         }
+                    }
+
+                    // Effect
+                    if (m_dialogs[m_dialogIndex].effect != "")
+                    {
+                        GameManager.Ins.Sound.Play_AudioSource(m_audioSource, "VisualNovel_" + m_dialogs[m_dialogIndex].effect, false, 1f);
+                    }
+                    else
+                    {
+                        m_audioSource.Stop();
                     }
 
                     switch (m_dialogs[m_dialogIndex].dialogType)
